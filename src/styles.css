@@ -8,7 +8,8 @@
 
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; background: #f5f7fa; }
-button { font: inherit; cursor: pointer; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
 
 .app-shell { min-height: 100vh; display: flex; flex-direction: column; }
 .topbar {
@@ -22,7 +23,7 @@ button { font: inherit; cursor: pointer; }
 }
 .topbar h1 { margin: 4px 0 0; font-size: 2rem; letter-spacing: .03em; }
 .eyebrow { margin: 0; text-transform: uppercase; font-size: .72rem; letter-spacing: .12em; color: #607086; font-weight: 700; }
-.login-button, .secondary {
+.login-button, .secondary, .back-button {
   border: 1px solid #c9d2de;
   background: white;
   border-radius: 10px;
@@ -37,7 +38,7 @@ main { flex: 1; }
   padding: 72px 6vw;
   align-items: stretch;
 }
-.hero-copy, .hero-panel, .card {
+.hero-copy, .hero-panel, .card, .login-card, .welcome-card {
   background: white;
   border: 1px solid #e2e7ee;
   border-radius: 18px;
@@ -60,14 +61,59 @@ main { flex: 1; }
 .section-heading h3 { margin: 5px 0 0; font-size: 2rem; }
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .card { padding: 24px; }
-.icon-wrap { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: #eef2f7; }
+.icon-wrap, .login-card-icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: #eef2f7; }
 .card h4 { margin: 18px 0 8px; font-size: 1.1rem; }
 .card p { margin: 0; color: #68768a; line-height: 1.6; }
 footer { padding: 24px 6vw; border-top: 1px solid #e1e6ec; color: #718096; background: white; }
 
+.login-page { min-height: 100vh; background: #f5f7fa; }
+.login-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 6vw;
+  background: white;
+  border-bottom: 1px solid #e6eaf0;
+}
+.back-button { display: inline-flex; align-items: center; gap: 8px; }
+.brand-compact { display: grid; gap: 3px; }
+.brand-compact strong { font-size: 1.4rem; letter-spacing: .03em; }
+.login-main {
+  min-height: calc(100vh - 92px);
+  display: grid;
+  grid-template-columns: 1fr minmax(360px, 480px);
+  gap: 60px;
+  align-items: center;
+  padding: 64px 8vw;
+}
+.login-intro { max-width: 650px; }
+.login-intro h2 { margin: 18px 0 14px; font-size: clamp(2.4rem, 5vw, 4.5rem); line-height: 1; letter-spacing: -.04em; }
+.login-intro > p { color: #5d6b7d; line-height: 1.75; font-size: 1.05rem; }
+.security-note { margin-top: 28px; display: flex; align-items: center; gap: 10px; color: #4b5b6e; font-weight: 700; }
+.login-card { padding: 34px; }
+.login-card h3 { margin: 18px 0 24px; font-size: 1.45rem; }
+.login-card label { display: grid; gap: 8px; margin-bottom: 18px; font-weight: 700; color: #334155; }
+.login-card input, .login-card select {
+  width: 100%;
+  border: 1px solid #cfd7e2;
+  border-radius: 10px;
+  padding: 13px 14px;
+  background: white;
+  color: #15202b;
+  outline: none;
+}
+.login-card input:focus, .login-card select:focus { border-color: #7b8ba0; box-shadow: 0 0 0 3px rgba(123, 139, 160, .13); }
+.login-submit { width: 100%; margin-top: 4px; }
+.text-button { width: 100%; margin-top: 12px; border: 0; background: transparent; color: #526175; font-weight: 700; padding: 8px; }
+.demo-dashboard { padding: 72px 6vw; }
+.welcome-card { max-width: 760px; padding: 42px; }
+.welcome-card h2 { margin: 18px 0 12px; font-size: clamp(2rem, 5vw, 3.6rem); }
+.welcome-card p { color: #607086; line-height: 1.7; }
+
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; padding-top: 40px; }
   .grid { grid-template-columns: 1fr 1fr; }
+  .login-main { grid-template-columns: 1fr; gap: 34px; }
 }
 
 @media (max-width: 620px) {
@@ -76,4 +122,7 @@ footer { padding: 24px 6vw; border-top: 1px solid #e1e6ec; color: #718096; backg
   .grid { grid-template-columns: 1fr; }
   .hero { padding-left: 20px; padding-right: 20px; }
   .modules { padding-left: 20px; padding-right: 20px; }
+  .login-header { align-items: flex-start; padding-left: 20px; padding-right: 20px; }
+  .login-main { padding: 40px 20px; }
+  .login-card { padding: 26px; }
 }
