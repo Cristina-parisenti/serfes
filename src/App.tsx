@@ -5,12 +5,12 @@ import {
   Bell,
   CalendarDays,
   ChevronRight,
+  Gamepad2,
   LayoutDashboard,
   LogOut,
   School,
   Search,
   ShieldCheck,
-  Sparkles,
   Trophy,
   UserRound,
   Users,
@@ -36,6 +36,16 @@ const profiles = [
   'Árbitro ou profissional habilitado',
 ];
 
+function EsportsSymbol() {
+  return (
+    <div className="esports-symbol" aria-hidden="true">
+      <div className="esports-symbol-inner">
+        <Gamepad2 size={23} />
+      </div>
+    </div>
+  );
+}
+
 export function App() {
   const [view, setView] = useState<'home' | 'login' | 'dashboard'>('home');
   const [profile, setProfile] = useState(profiles[0]);
@@ -54,31 +64,33 @@ export function App() {
           <button className="ghost-button" onClick={() => setView('home')}>
             <ArrowLeft size={16} /> Voltar
           </button>
-          <div>
-            <p className="eyebrow">Sistema Estadual Integrado de Regulação e Fomento aos E-sports</p>
-            <h1 className="brand-title">SERFES</h1>
+          <div className="brand-cluster">
+            <EsportsSymbol />
+            <div>
+              <p className="eyebrow">Sistema Estadual Integrado de Regulação e Fomento aos E-sports</p>
+              <h1 className="brand-title">SERFES</h1>
+            </div>
           </div>
         </header>
 
         <main className="login-layout">
           <section className="glass-card intro-card">
             <span className="pill">Acesso restrito</span>
-            <h2>Interface mais clara, moderna e profissional.</h2>
+            <h2>Acesse o SERFES</h2>
             <p>
-              Esta versão organiza o acesso por perfis, melhora a leitura visual e prepara o sistema para
-              crescer com cadastros, painéis e fluxos administrativos.
+              Utilize suas credenciais para acessar as funcionalidades disponíveis ao seu perfil.
+              Nesta fase do protótipo, utilize somente informações fictícias.
             </p>
-            <div className="chip-cloud">
-              {profiles.map((item) => (
-                <span key={item} className={item === profile ? 'chip active' : 'chip'}>{item}</span>
-              ))}
+            <div className="login-highlight">
+              <ShieldCheck size={20} />
+              <span>Ambiente de testes preparado para os próximos módulos do sistema.</span>
             </div>
           </section>
 
           <form className="glass-card form-card" onSubmit={handleLogin}>
             <div className="icon-box"><UserRound size={22} /></div>
             <h3>Entrar no sistema</h3>
-            <p className="muted">Use dados fictícios para teste. O login ainda é demonstrativo.</p>
+            <p className="muted">Selecione seu perfil e informe as credenciais demonstrativas.</p>
 
             <label>
               Perfil de acesso
@@ -122,9 +134,12 @@ export function App() {
     return (
       <div className="dashboard-shell">
         <aside className="sidebar">
-          <div>
-            <p className="eyebrow eyebrow-light">Painel administrativo</p>
-            <h2 className="sidebar-title">SERFES</h2>
+          <div className="sidebar-brand-wrap">
+            <EsportsSymbol />
+            <div>
+              <p className="eyebrow eyebrow-light">Painel administrativo</p>
+              <h2 className="sidebar-title">SERFES</h2>
+            </div>
           </div>
 
           <nav className="sidebar-nav">
@@ -209,9 +224,12 @@ export function App() {
   return (
     <div className="page-shell">
       <header className="site-header">
-        <div>
-          <p className="eyebrow">Sistema Estadual Integrado de Regulação e Fomento aos E-sports</p>
-          <h1 className="brand-title">SERFES</h1>
+        <div className="brand-cluster">
+          <EsportsSymbol />
+          <div>
+            <p className="eyebrow">Sistema Estadual Integrado de Regulação e Fomento aos E-sports</p>
+            <h1 className="brand-title">SERFES</h1>
+          </div>
         </div>
         <div className="header-actions">
           <button className="secondary-button">Portal público</button>
@@ -223,7 +241,7 @@ export function App() {
         <section className="hero-section">
           <div className="glass-card hero-card">
             <span className="pill">Plataforma pública estadual</span>
-            <h2>Governança, organização e fomento responsável aos e-sports.</h2>
+            <h2>Sistema Estadual Integrado de Regulação e Fomento aos E-sports</h2>
             <p>
               Ambiente integrado para competições, atletas, escolas, organizadores, integridade,
               legislação e indicadores do setor.
@@ -238,29 +256,28 @@ export function App() {
             <div className="glass-card dark-card">
               <div className="card-row">
                 <span className="eyebrow eyebrow-light">Visão geral</span>
-                <Sparkles size={18} />
+                <Gamepad2 size={18} />
               </div>
               <div className="metric"><strong>12</strong><span>competições ativas</span></div>
               <div className="metric"><strong>248</strong><span>atletas monitorados</span></div>
               <div className="metric"><strong>21</strong><span>municípios participantes</span></div>
             </div>
+
             <div className="glass-card summary-card">
-              <p className="eyebrow">Perfis de acesso</p>
-              <h3>Usuários do sistema</h3>
-              <div className="chip-cloud compact">
-                {profiles.slice(0, 4).map((item) => (
-                  <span key={item} className="chip">{item}</span>
-                ))}
-              </div>
+              <p className="eyebrow">Acesso e informação</p>
+              <h3>Um ambiente único para consulta e gestão</h3>
+              <p className="muted">
+                Consulte informações públicas do setor e acesse a área restrita para realizar as rotinas de gestão do SERFES.
+              </p>
             </div>
           </div>
         </section>
 
         <section className="module-section">
           <div className="section-head">
-            <p className="eyebrow">Melhoria geral da interface</p>
+            <p className="eyebrow">Estrutura do sistema</p>
             <h3>Módulos principais</h3>
-            <p className="muted">Base visual mais moderna, com melhor hierarquia, contraste e navegação.</p>
+            <p className="muted">Funcionalidades centrais previstas para a primeira versão do SERFES.</p>
           </div>
           <div className="module-grid">
             {modules.map(([title, text, Icon]) => (
@@ -274,7 +291,7 @@ export function App() {
         </section>
       </main>
 
-      <footer className="site-footer">SERFES • Protótipo com interface aprimorada</footer>
+      <footer className="site-footer">SERFES • Sistema Estadual Integrado de Regulação e Fomento aos E-sports</footer>
     </div>
   );
 }
