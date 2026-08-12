@@ -1,4 +1,14 @@
-import { Trophy, Users, School, ShieldCheck, CalendarDays, BarChart3 } from 'lucide-react';
+import { FormEvent, useState } from 'react';
+import {
+  ArrowLeft,
+  BarChart3,
+  CalendarDays,
+  School,
+  ShieldCheck,
+  Trophy,
+  UserRound,
+  Users,
+} from 'lucide-react';
 
 const cards = [
   { title: 'Competições', text: 'Cadastrar, acompanhar e homologar competições oficiais.', icon: Trophy },
@@ -9,7 +19,118 @@ const cards = [
   { title: 'Indicadores', text: 'Visualizar dados consolidados para apoio à gestão pública.', icon: BarChart3 },
 ];
 
+const profiles = [
+  'Administrador estadual',
+  'Gestor municipal',
+  'Atleta',
+  'Responsável legal',
+  'Instituição de ensino',
+  'Organizador de competição',
+  'Equipe ou entidade esportiva',
+  'Árbitro ou profissional habilitado',
+];
+
 export function App() {
+  const [view, setView] = useState<'home' | 'login' | 'demo'>('home');
+  const [profile, setProfile] = useState('Administrador estadual');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  function handleLogin(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setView('demo');
+  }
+
+  if (view === 'login') {
+    return (
+      <div className="login-page">
+        <header className="login-header">
+          <button className="back-button" onClick={() => setView('home')}>
+            <ArrowLeft size={18} /> Voltar
+          </button>
+          <div className="brand-compact">
+            <p className="eyebrow">Sistema Estadual Integrado de Regulação e Fomento aos E-sports</p>
+            <strong>SERFES</strong>
+          </div>
+        </header>
+
+        <main className="login-main">
+          <section className="login-intro">
+            <span className="tag">Área restrita</span>
+            <h2>Acesse o SERFES</h2>
+            <p>
+              Escolha o perfil de acesso e informe suas credenciais. Nesta etapa do protótipo,
+              o login é apenas demonstrativo e não utiliza dados reais.
+            </p>
+            <div className="security-note">
+              <ShieldCheck size={20} />
+              <span>Use somente informações fictícias durante os testes.</span>
+            </div>
+          </section>
+
+          <form className="login-card" onSubmit={handleLogin}>
+            <div className="login-card-icon"><UserRound size={24} /></div>
+            <h3>Identificação do usuário</h3>
+
+            <label>
+              Perfil de acesso
+              <select value={profile} onChange={(event) => setProfile(event.target.value)}>
+                {profiles.map((item) => <option key={item}>{item}</option>)}
+              </select>
+            </label>
+
+            <label>
+              E-mail
+              <input
+                type="email"
+                placeholder="usuario@exemplo.com"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+              />
+            </label>
+
+            <label>
+              Senha
+              <input
+                type="password"
+                placeholder="Digite uma senha fictícia"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+              />
+            </label>
+
+            <button className="primary login-submit" type="submit">Entrar no sistema</button>
+            <button className="text-button" type="button">Esqueci minha senha</button>
+          </form>
+        </main>
+      </div>
+    );
+  }
+
+  if (view === 'demo') {
+    return (
+      <div className="app-shell">
+        <header className="topbar">
+          <div>
+            <p className="eyebrow">Área restrita • acesso demonstrativo</p>
+            <h1>SERFES</h1>
+          </div>
+          <button className="login-button" onClick={() => setView('home')}>Sair</button>
+        </header>
+        <main className="demo-dashboard">
+          <section className="welcome-card">
+            <span className="tag">Perfil selecionado</span>
+            <h2>{profile}</h2>
+            <p>Login demonstrativo realizado com sucesso. O próximo passo será criar o painel específico deste perfil.</p>
+          </section>
+        </main>
+        <footer>SERFES • Protótipo inicial</footer>
+      </div>
+    );
+  }
+
   return (
     <div className="app-shell">
       <header className="topbar">
@@ -17,7 +138,7 @@ export function App() {
           <p className="eyebrow">Sistema Estadual Integrado de Regulação e Fomento aos E-sports</p>
           <h1>SERFES</h1>
         </div>
-        <button className="login-button">Entrar</button>
+        <button className="login-button" onClick={() => setView('login')}>Entrar</button>
       </header>
 
       <main>
@@ -59,9 +180,7 @@ export function App() {
         </section>
       </main>
 
-      <footer>
-        SERFES • Protótipo inicial
-      </footer>
+      <footer>SERFES • Protótipo inicial</footer>
     </div>
   );
 }
