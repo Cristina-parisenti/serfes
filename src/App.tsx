@@ -114,16 +114,15 @@ function EsportsSymbol() {
   );
 }
 
-function isUnder18(birthDate: string): boolean | null {
+function isUnder18(birthDate: string, referenceDate = new Date()): boolean | null {
   if (!birthDate) return null;
   const [year, month, day] = birthDate.split('-').map(Number);
   if (!year || !month || !day) return null;
 
-  const today = new Date();
-  let age = today.getFullYear() - year;
+  let age = referenceDate.getFullYear() - year;
   const birthdayHasNotOccurred =
-    today.getMonth() + 1 < month ||
-    (today.getMonth() + 1 === month && today.getDate() < day);
+    referenceDate.getMonth() + 1 < month ||
+    (referenceDate.getMonth() + 1 === month && referenceDate.getDate() < day);
 
   if (birthdayHasNotOccurred) age -= 1;
   return age < 18;
@@ -152,6 +151,7 @@ export function App() {
   const [password, setPassword] = useState('');
   const [athleteSaved, setAthleteSaved] = useState(false);
   const [formAttempted, setFormAttempted] = useState(false);
+  const [ageReferenceDate, setAgeReferenceDate] = useState(() => new Date());
 
   const [athleteName, setAthleteName] = useState('');
   const [athleteBirthDate, setAthleteBirthDate] = useState('');
@@ -162,6 +162,9 @@ export function App() {
   const [athleteInstitution, setAthleteInstitution] = useState('');
   const [athleteNickname, setAthleteNickname] = useState('');
   const [athleteGame, setAthleteGame] = useState('');
+  const [enrollmentStatus, setEnrollmentStatus] = useState('Sim');
+  const [schoolMunicipality, setSchoolMunicipality] = useState('');
+  const [schoolNetwork, setSchoolNetwork] = useState('');
 
   const [responsibleName, setResponsibleName] = useState('');
   const [responsibleRg, setResponsibleRg] = useState('');
@@ -178,7 +181,7 @@ export function App() {
 
   const isAthlete = profile === 'Atleta';
   const isStateAdmin = profile === 'Administrador estadual';
-  const minorStatus = isUnder18(athleteBirthDate);
+  const minorStatus = isUnder18(athleteBirthDate, ageReferenceDate);
   const selectedCompetition = competitions.find((competition) => competition.id === selectedCompetitionId) ?? null;
   const authorizationDate = currentDateLong();
 
@@ -206,12 +209,24 @@ export function App() {
     return () => { active = false; };
   }, []);
 
+  useEffect(() => {
+    const refreshAgeReference = () => setAgeReferenceDate(new Date());
+    const timer = window.setInterval(refreshAgeReference, 60 * 60 * 1000);
+    window.addEventListener('focus', refreshAgeReference);
+
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener('focus', refreshAgeReference);
+    };
+  }, []);
+
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setAthleteSaved(false);
     setRegistrations({});
     setSelectedCompetitionId(null);
     setRegistrationMessage('');
+    setAgeReferenceDate(new Date());
     setDashboardSection(profile === 'Atleta' ? 'athleteHome' : 'overview');
     setView('dashboard');
   }
@@ -228,6 +243,12 @@ export function App() {
       athleteMunicipality.length > 0 &&
       minorStatus !== null;
 
+    const schoolFieldsValid = enrollmentStatus !== 'Sim' || (
+      schoolMunicipality.length > 0 &&
+      schoolNetwork.length > 0 &&
+      athleteInstitution.trim().length > 0
+    );
+
     const responsibleFieldsValid = minorStatus !== true || (
       responsibleName.trim().length > 0 &&
       responsibleRg.trim().length > 0 &&
@@ -236,7 +257,7 @@ export function App() {
       isValidPhone(responsiblePhone)
     );
 
-    if (!mainFieldsValid || !responsibleFieldsValid) return;
+    if (!mainFieldsValid || !schoolFieldsValid || !responsibleFieldsValid) return;
 
     setAthleteSaved(true);
     setFormAttempted(false);
@@ -246,6 +267,7 @@ export function App() {
 
   function requestCompetitionRegistration(competitionId: string) {
     setRegistrationMessage('');
+    setAgeReferenceDate(new Date());
 
     if (!athleteSaved) {
       setRegistrationMessage('Antes da inscrição em uma competição, complete e salve o seu cadastro.');
@@ -268,6 +290,7 @@ export function App() {
 
   function viewCompetitionAuthorization(competitionId: string) {
     setSelectedCompetitionId(competitionId);
+    setAgeReferenceDate(new Date());
     setDashboardSection('competitionAuthorization');
   }
 
@@ -606,15 +629,63 @@ export function App() {
                   </section>
 
                   <section className="glass-card form-section">
-                    <div className="form-section-title"><div className="icon-box green-box"><School size={20} /></div><div><h4>Vínculo escolar</h4><p>Informações para validação da situação escolar quando aplicável.</p></div></div>
+                    <div className="form-section-title"><div className="icon-box green-box"><School size={20} /></div><div><h4>Vínculo escolar</h4><p>Selecione o município e a rede de ensino antes de informar a escola.</p></div></div>
                     <div className="form-grid">
-                      <label>Está matriculado em instituição de ensino?<select required defaultValue="Sim"><option>Sim</option><option>Não</option></select></label>
-                      <label>Rede de ensino<select defaultValue="Estadual"><option>Estadual</option><option>Federal</option><option>Municipal</option><option>Privada</option></select></label>
-                      <label>Instituição de ensino<input value={athleteInstitution} onChange={(e) => setAthleteInstitution(e.target.value)} placeholder="Nome da instituição" /></label>
-                      <label>Nível de ensino<select defaultValue=""><option value="">Selecione</option><option>Ensino fundamental</option><option>Ensino médio</option><option>Ensino superior</option><option>Outro</option></select></label>
-                      <label>Situação da matrícula<select defaultValue="Ativa"><option>Ativa</option><option>Em validação</option><option>Não se aplica</option></select></label>
+                      <label>Está matriculado em instituição de ensino?
+                        <select required value={enrollmentStatus} onChange={(e) => {
+                          const nextValue = e.target.value;
+                          setEnrollmentStatus(nextValue);
+                          if (nextValue !== 'Sim') {
+                            setSchoolMunicipality('');
+                            setSchoolNetwork('');
+                            setAthleteInstitution('');
+                          }
+                        }}>
+                          <option>Sim</option><option>Não</option>
+                        </select>
+                      </label>
+                      <label>Município da instituição
+                        <select
+                          required={enrollmentStatus === 'Sim'}
+                          disabled={enrollmentStatus !== 'Sim'}
+                          value={schoolMunicipality}
+                          onChange={(e) => {
+                            setSchoolMunicipality(e.target.value);
+                            setSchoolNetwork('');
+                            setAthleteInstitution('');
+                          }}
+                        >
+                          <option value="" disabled>{municipalities.length ? 'Selecione' : 'Carregando municípios...'}</option>
+                          {municipalities.map((municipality) => <option key={`school-${municipality}`}>{municipality}</option>)}
+                        </select>
+                      </label>
+                      <label>Rede de ensino
+                        <select
+                          required={enrollmentStatus === 'Sim'}
+                          disabled={enrollmentStatus !== 'Sim' || !schoolMunicipality}
+                          value={schoolNetwork}
+                          onChange={(e) => {
+                            setSchoolNetwork(e.target.value);
+                            setAthleteInstitution('');
+                          }}
+                        >
+                          <option value="" disabled>Selecione</option>
+                          <option>Estadual</option><option>Federal</option><option>Municipal</option><option>Privada</option>
+                        </select>
+                      </label>
+                      <label>Escola
+                        <input
+                          required={enrollmentStatus === 'Sim'}
+                          disabled={enrollmentStatus !== 'Sim' || !schoolMunicipality || !schoolNetwork}
+                          value={athleteInstitution}
+                          onChange={(e) => setAthleteInstitution(e.target.value)}
+                          placeholder={!schoolMunicipality ? 'Selecione primeiro o município' : !schoolNetwork ? 'Selecione primeiro a rede' : 'Nome da escola'}
+                        />
+                      </label>
+                      <label>Nível de ensino<select disabled={enrollmentStatus !== 'Sim'} defaultValue=""><option value="">Selecione</option><option>Ensino fundamental</option><option>Ensino médio</option><option>Ensino superior</option><option>Outro</option></select></label>
+                      <label>Situação da matrícula<select disabled={enrollmentStatus !== 'Sim'} defaultValue="Ativa"><option>Ativa</option><option>Em validação</option><option>Não se aplica</option></select></label>
                     </div>
-                    <a className="secondary-button" href="https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml" target="_blank" rel="noreferrer">Consultar escolas na base oficial da SEED/PR</a>
+                    {schoolNetwork === 'Estadual' && <a className="secondary-button" href="https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml" target="_blank" rel="noreferrer">Consultar base oficial da SEED/PR</a>}
                   </section>
 
                   <section className="glass-card form-section authorization-section">
