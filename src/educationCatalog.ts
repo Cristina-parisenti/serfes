@@ -33,6 +33,15 @@ export type HigherEducationPayload = {
 
 export const SCHOOL_NETWORKS: SchoolNetwork[] = ['Federal', 'Estadual', 'Municipal', 'Privada'];
 
+export function normalizeEducationText(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
 // Regra operacional do protótipo para a sequência regular de escolarização.
 // Não representa idade mínima legal para ingresso no ensino superior: a LDB exige
 // conclusão do ensino médio (ou equivalente) e classificação em processo seletivo.
