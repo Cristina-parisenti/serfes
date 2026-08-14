@@ -275,7 +275,7 @@ export function App() {
     }
 
     if (minorStatus === true && !responsibleName) {
-      setRegistrationMessage('Complete os dados do responsável legal antes de solicitar a inscrição.');
+      setRegistrationMessage('Complete as informações do responsável legal antes de solicitar a inscrição.');
       return;
     }
 
@@ -392,7 +392,7 @@ export function App() {
                   <article className="glass-card panel-card">
                     <div className="panel-head"><div><p className="eyebrow">Participação</p><h4>Próximas etapas</h4></div></div>
                     <div className="list-card"><strong>1</strong><span>Complete seu cadastro pessoal.</span></div>
-                    <div className="list-card"><strong>2</strong><span>Se menor de idade, complete os dados do responsável legal.</span></div>
+                    <div className="list-card"><strong>2</strong><span>Se menor de idade, complete as informações do responsável legal.</span></div>
                     <button className="line-action" onClick={() => setDashboardSection('athleteCompetitions')}><span>3. Consultar competições e solicitar inscrição</span><ChevronRight size={16} /></button>
                   </article>
                 </section>
@@ -439,7 +439,7 @@ export function App() {
                             <span>{registrationStatus === 'Aguardando assinatura' ? 'O termo específico desta competição precisa ser assinado pelo responsável legal.' : 'A solicitação foi registrada e seguirá para as etapas de validação.'}</span>
                           </div>
                         ) : (
-                          <p className="competition-description">A inscrição utiliza os dados já informados no cadastro do atleta. Para menores de 18 anos, será gerado um termo específico desta competição.</p>
+                          <p className="competition-description">A inscrição utiliza as informações já registradas no cadastro do atleta. Para menores de 18 anos, será gerado um termo específico desta competição.</p>
                         )}
                         <div className="competition-card-actions">
                           {!registrationStatus && <button className="primary-button" type="button" onClick={() => requestCompetitionRegistration(competition.id)}>Solicitar inscrição</button>}
@@ -462,7 +462,7 @@ export function App() {
                     <button className="back-link" onClick={() => setDashboardSection('athleteCompetitions')}><ArrowLeft size={16} /> Voltar para minhas competições</button>
                     <p className="eyebrow">Autorização específica da competição</p>
                     <h3>{selectedCompetition.name}</h3>
-                    <p className="muted">O documento abaixo reúne os dados já cadastrados do atleta e do responsável com as informações desta competição.</p>
+                    <p className="muted">O documento abaixo reúne as informações já cadastradas do atleta e do responsável legal com os dados desta competição.</p>
                   </div>
                 </section>
 
@@ -503,7 +503,7 @@ export function App() {
                   <div className="signature-flow no-print">
                     <div className="signature-step complete">
                       <span>1</span>
-                      <div><strong>Termo gerado</strong><small>Dados do cadastro e da competição reunidos automaticamente.</small></div>
+                      <div><strong>Termo gerado</strong><small>Informações do cadastro e da competição reunidas automaticamente.</small></div>
                     </div>
                     <div className="signature-step current govbr-step">
                       <span>2</span>
@@ -592,7 +592,11 @@ export function App() {
                     <div className="form-grid">
                       <label>Nome completo<input required value={athleteName} onChange={(e) => setAthleteName(e.target.value)} placeholder="Ex.: Atleta Exemplo" /></label>
                       <label>Nome social<input placeholder="Opcional" /></label>
-                      <label>Data de nascimento<input required type="date" value={athleteBirthDate} onChange={(e) => setAthleteBirthDate(e.target.value)} /></label>
+                      <label>Data de nascimento
+                        <input required type="date" value={athleteBirthDate} onChange={(e) => setAthleteBirthDate(e.target.value)} />
+                        {minorStatus === true && <small className="field-help">Atleta menor de 18 anos. As informações gerais do responsável legal serão solicitadas abaixo e reutilizadas nas autorizações de cada competição.</small>}
+                        {minorStatus === false && <small className="field-help">Atleta com 18 anos ou mais. Não será necessária autorização de responsável legal para participação nas competições.</small>}
+                      </label>
                       <label>CPF
                         <input required inputMode="numeric" maxLength={14} className={athleteCpfInvalid ? 'invalid' : ''} value={athleteCpf} onChange={(e) => setAthleteCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
                         {athleteCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
@@ -688,37 +692,27 @@ export function App() {
                     {schoolNetwork === 'Estadual' && <a className="secondary-button" href="https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml" target="_blank" rel="noreferrer">Consultar base oficial da SEED/PR</a>}
                   </section>
 
-                  <section className="glass-card form-section authorization-section">
-                    <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Dados do responsável legal</h4><p>Informações gerais utilizadas, quando necessário, na geração dos termos de autorização por competição.</p></div></div>
-                    <div className="form-grid">
-                      {minorStatus === true && (
-                        <>
-                          <label>Nome completo<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Nome completo" /></label>
-                          <label>RG<input required value={responsibleRg} onChange={(e) => setResponsibleRg(e.target.value)} placeholder="00.000.000-0" /></label>
-                          <label>CPF
-                            <input required inputMode="numeric" maxLength={14} className={responsibleCpfInvalid ? 'invalid' : ''} value={responsibleCpf} onChange={(e) => setResponsibleCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
-                            {responsibleCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
-                          </label>
-                          <label>E-mail
-                            <input required type="email" className={responsibleEmailInvalid ? 'invalid' : ''} value={responsibleEmail} onChange={(e) => setResponsibleEmail(e.target.value)} placeholder="email@exemplo.demo" />
-                            {responsibleEmailInvalid && <small className="field-error">Informe um endereço de e-mail válido.</small>}
-                          </label>
-                          <label>Telefone
-                            <input required inputMode="tel" maxLength={15} className={responsiblePhoneInvalid ? 'invalid' : ''} value={responsiblePhone} onChange={(e) => setResponsiblePhone(formatPhone(e.target.value))} placeholder="(00) 00000-0000" />
-                            {responsiblePhoneInvalid && <small className="field-error">Informe DDD + telefone, com 10 ou 11 dígitos.</small>}
-                          </label>
-                        </>
-                      )}
-                    </div>
-
-                    {minorStatus === true && (
-                      <div className="warning-note"><AlertTriangle size={18} /><span>A autorização será gerada separadamente para cada competição no momento da inscrição.</span></div>
-                    )}
-
-                    {athleteBirthDate && minorStatus === false && (
-                      <div className="login-highlight"><CheckCircle2 size={18} /><span>Não há necessidade de informar responsável legal para este cadastro.</span></div>
-                    )}
-                  </section>
+                  {minorStatus === true && (
+                    <section className="glass-card form-section authorization-section">
+                      <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal</h4><p>Informações gerais que serão reutilizadas automaticamente nos termos específicos de cada competição.</p></div></div>
+                      <div className="form-grid">
+                        <label>Nome completo<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Nome completo" /></label>
+                        <label>RG<input required value={responsibleRg} onChange={(e) => setResponsibleRg(e.target.value)} placeholder="00.000.000-0" /></label>
+                        <label>CPF
+                          <input required inputMode="numeric" maxLength={14} className={responsibleCpfInvalid ? 'invalid' : ''} value={responsibleCpf} onChange={(e) => setResponsibleCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
+                          {responsibleCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
+                        </label>
+                        <label>E-mail
+                          <input required type="email" className={responsibleEmailInvalid ? 'invalid' : ''} value={responsibleEmail} onChange={(e) => setResponsibleEmail(e.target.value)} placeholder="email@exemplo.demo" />
+                          {responsibleEmailInvalid && <small className="field-error">Informe um endereço de e-mail válido.</small>}
+                        </label>
+                        <label>Telefone
+                          <input required inputMode="tel" maxLength={15} className={responsiblePhoneInvalid ? 'invalid' : ''} value={responsiblePhone} onChange={(e) => setResponsiblePhone(formatPhone(e.target.value))} placeholder="(00) 00000-0000" />
+                          {responsiblePhoneInvalid && <small className="field-error">Informe DDD + telefone, com 10 ou 11 dígitos.</small>}
+                        </label>
+                      </div>
+                    </section>
+                  )}
 
                   <section className="glass-card form-section">
                     <div className="form-section-title"><div className="icon-box"><FileText size={20} /></div><div><h4>Documentos</h4><p>Área demonstrativa para futura conferência documental.</p></div></div>
