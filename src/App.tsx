@@ -176,6 +176,8 @@ export function App() {
   const [enrollmentStatus, setEnrollmentStatus] = useState('Sim');
   const [schoolMunicipality, setSchoolMunicipality] = useState('');
   const [schoolNetwork, setSchoolNetwork] = useState('');
+  const [schoolLevel, setSchoolLevel] = useState('');
+  const [schoolYear, setSchoolYear] = useState('');
 
   const [responsibleName, setResponsibleName] = useState('');
   const [responsibleRg, setResponsibleRg] = useState('');
@@ -257,10 +259,13 @@ export function App() {
       !nicknameHasBlockedContent(athleteNickname) &&
       athleteMunicipality.length > 0;
 
+    const schoolYearRequired = schoolLevel === 'Ensino fundamental' || schoolLevel === 'Ensino médio';
     const schoolFieldsValid = enrollmentStatus !== 'Sim' || (
       schoolMunicipality.length > 0 &&
       schoolNetwork.length > 0 &&
-      athleteInstitution.trim().length > 0
+      athleteInstitution.trim().length > 0 &&
+      schoolLevel.length > 0 &&
+      (!schoolYearRequired || schoolYear.length > 0)
     );
 
     const responsibleFieldsValid = minorStatus !== true || (
@@ -668,6 +673,8 @@ export function App() {
                                 setSchoolMunicipality('');
                                 setSchoolNetwork('');
                                 setAthleteInstitution('');
+                                setSchoolLevel('');
+                                setSchoolYear('');
                               }
                             }}>
                               <option>Sim</option><option>Não</option>
@@ -711,21 +718,44 @@ export function App() {
                               placeholder={!schoolMunicipality ? 'Selecione primeiro o município' : !schoolNetwork ? 'Selecione primeiro a rede' : 'Nome da escola'}
                             />
                           </label>
-                          <label>Nível de ensino<select disabled={enrollmentStatus !== 'Sim'} defaultValue=""><option value="">Selecione</option><option>Ensino fundamental</option><option>Ensino médio</option><option>Ensino superior</option><option>Outro</option></select></label>
-                          <label>Ano escolar
-                            <select disabled={enrollmentStatus !== 'Sim'} defaultValue="">
-                              <option value="">Selecione</option>
-                              <option>6º ano do ensino fundamental</option>
-                              <option>7º ano do ensino fundamental</option>
-                              <option>8º ano do ensino fundamental</option>
-                              <option>9º ano do ensino fundamental</option>
-                              <option>1ª série do ensino médio</option>
-                              <option>2ª série do ensino médio</option>
-                              <option>3ª série do ensino médio</option>
+                          <label>Nível de ensino
+                            <select
+                              required={enrollmentStatus === 'Sim'}
+                              disabled={enrollmentStatus !== 'Sim'}
+                              value={schoolLevel}
+                              onChange={(e) => {
+                                setSchoolLevel(e.target.value);
+                                setSchoolYear('');
+                              }}
+                            >
+                              <option value="" disabled>Selecione</option>
+                              <option>Ensino fundamental</option>
+                              <option>Ensino médio</option>
+                              <option>Ensino superior</option>
                               <option>Outro</option>
-                              <option>Não se aplica</option>
                             </select>
                           </label>
+                          {(schoolLevel === 'Ensino fundamental' || schoolLevel === 'Ensino médio') && (
+                            <label>Ano escolar
+                              <select required value={schoolYear} onChange={(e) => setSchoolYear(e.target.value)}>
+                                <option value="" disabled>Selecione</option>
+                                {schoolLevel === 'Ensino fundamental' ? (
+                                  <>
+                                    <option>6º ano</option>
+                                    <option>7º ano</option>
+                                    <option>8º ano</option>
+                                    <option>9º ano</option>
+                                  </>
+                                ) : (
+                                  <>
+                                    <option>1º ano</option>
+                                    <option>2º ano</option>
+                                    <option>3º ano</option>
+                                  </>
+                                )}
+                              </select>
+                            </label>
+                          )}
                         </div>
                         {schoolNetwork === 'Estadual' && <a className="secondary-button" href="https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml" target="_blank" rel="noreferrer">Consultar base oficial da SEED/PR</a>}
                       </section>
