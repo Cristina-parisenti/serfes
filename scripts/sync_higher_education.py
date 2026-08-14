@@ -3,8 +3,8 @@ import csv
 import io
 import json
 import re
+import subprocess
 import unicodedata
-import urllib.request
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,15 +21,17 @@ def norm(value):
 
 
 def fetch(url):
-    req = urllib.request.Request(
+    command = [
+        'curl', '-L', '--fail', '--silent', '--show-error',
+        '--retry', '6', '--retry-delay', '4', '--retry-all-errors',
+        '--connect-timeout', '30', '--max-time', '600',
+        '-A', 'Mozilla/5.0 (compatible; SERFES-Higher-Education-Sync/2.1)',
         url,
-        headers={
-            'User-Agent': 'Mozilla/5.0 (compatible; SERFES-Higher-Education-Sync/2.0)',
-            'Accept': '*/*',
-        },
-    )
-    with urllib.request.urlopen(req, timeout=180) as response:
-        return response.read()
+    ]
+    completed = subprocess.run(command, check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if completed.returncode != 0:
+        raise RuntimeError(f'Falha ao baixar a fonte oficial do Inep: {completed.stderr.decode("utf-8", "replace").strip()}')
+    return completed.stdout
 
 
 def decode(raw):
@@ -80,10 +82,7 @@ def network_from_category(category):
 
 def find_course_member(zf):
     members = [name for name in zf.namelist() if name.lower().endswith('.csv')]
-    preferred = [
-        name for name in members
-        if 'cadastro' in norm(name) and 'curso' in norm(name)
-    ]
+    preferred = [name for name in members if 'cadastro' in norm(name) and 'curso' in norm(name)]
     if not preferred:
         preferred = [name for name in members if 'curso' in norm(name)]
     if not preferred:
