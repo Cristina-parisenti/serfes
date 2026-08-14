@@ -1,0 +1,90 @@
+name: Patch ClassInd eligibility
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-classind-eligibility.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Patch athlete eligibility flow
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('src/App.tsx')
+          text = path.read_text(encoding='utf-8')
+
+          replacements = []
+
+          replacements.append((
+          """import './competition.css';\nimport './validation.css';\nimport {\n  formatCpf,""",
+          """import './competition.css';\nimport './gameEligibility.css';\nimport './validation.css';\nimport {\n  ClassindRatingsPayload,\n  GAME_CATALOG,\n  classificationLabel,\n  classificationMinimumAge,\n  getClassindRecord,\n  getGameCatalogEntry,\n} from './gameCatalog';\nimport {\n  formatCpf,"""))
+
+          replacements.append((
+          """    game: 'EA Sports FC',\n    period: '10 a 12 de outubro de 2026',""",
+          """    game: 'EA FC',\n    officialGameTitle: 'EA Sports FC 26',\n    period: '10 a 12 de outubro de 2026',"""))
+
+          replacements.append((
+          """    id: 'copa-rocket-league-2026',\n    name: 'Copa Paraná de Rocket League Escolar',\n    game: 'Rocket League',""",
+          """    id: 'copa-fortnite-2026',\n    name: 'Copa Paraná de Fortnite Escolar',\n    game: 'Fortnite',\n    officialGameTitle: 'Fortnite',"""))
+
+          replacements.append((
+          """    game: 'League of Legends',\n    period: '21 e 22 de novembro de 2026',""",
+          """    game: 'League of Legends',\n    officialGameTitle: 'League of Legends',\n    period: '21 e 22 de novembro de 2026',"""))
+
+          replacements.append((
+          """  const [selectedCompetitionId, setSelectedCompetitionId] = useState<string | null>(null);\n  const [registrationMessage, setRegistrationMessage] = useState('');\n\n  const isAthlete = profile === 'Atleta';""",
+          """  const [selectedCompetitionId, setSelectedCompetitionId] = useState<string | null>(null);\n  const [registrationMessage, setRegistrationMessage] = useState('');\n  const [classindRatings, setClassindRatings] = useState<ClassindRatingsPayload | null>(null);\n  const [classindRatingsError, setClassindRatingsError] = useState(false);\n\n  const isAthlete = profile === 'Atleta';"""))
+
+          replacements.append((
+          """  const selectedCompetition = competitions.find((competition) => competition.id === selectedCompetitionId) ?? null;\n  const authorizationDate = currentDateLong();\n\n  const nicknameBlocked = athleteNickname.length > 0 && nicknameHasBlockedContent(athleteNickname);""",
+          """  const selectedCompetition = competitions.find((competition) => competition.id === selectedCompetitionId) ?? null;\n  const authorizationDate = currentDateLong();\n  const selectedGameCatalog = getGameCatalogEntry(athleteGame);\n  const selectedGameClassind = selectedGameCatalog ? getClassindRecord(classindRatings, selectedGameCatalog.id) : null;\n  const selectedGameMinimumAge = classificationMinimumAge(selectedGameClassind?.classification ?? null);\n  const selectedGameVerified = selectedGameClassind?.status === 'verified' && selectedGameMinimumAge !== null;\n  const gameAgeBlocked = selectedGameVerified && athleteAge !== null && athleteAge < selectedGameMinimumAge;\n\n  const nicknameBlocked = athleteNickname.length > 0 && nicknameHasBlockedContent(athleteNickname);"""))
+
+          replacements.append((
+          """  useEffect(() => {\n    const refreshAgeReference = () => setAgeReferenceDate(new Date());""",
+          """  useEffect(() => {\n    let active = true;\n    fetch(`${import.meta.env.BASE_URL}classind-ratings.json`, { cache: 'no-store' })\n      .then((response) => {\n        if (!response.ok) throw new Error('Não foi possível carregar o catálogo ClassInd.');\n        return response.json() as Promise<ClassindRatingsPayload>;\n      })\n      .then((data) => {\n        if (active) {\n          setClassindRatings(data);\n          setClassindRatingsError(false);\n        }\n      })\n      .catch(() => {\n        if (active) setClassindRatingsError(true);\n      });\n    return () => { active = false; };\n  }, []);\n\n  useEffect(() => {\n    const refreshAgeReference = () => setAgeReferenceDate(new Date());"""))
+
+          replacements.append((
+          """      !athleteTooYoung &&\n      athleteAge !== null &&\n      isValidCpf(athleteCpf) &&""",
+          """      !athleteTooYoung &&\n      !gameAgeBlocked &&\n      athleteAge !== null &&\n      isValidCpf(athleteCpf) &&"""))
+
+          replacements.append((
+          """    if (!athleteSaved) {\n      setRegistrationMessage('Antes da inscrição em uma competição, complete e salve o seu cadastro.');\n      return;\n    }\n\n    if (minorStatus === true && !responsibleName) {""",
+          """    if (!athleteSaved) {\n      setRegistrationMessage('Antes da inscrição em uma competição, complete e salve o seu cadastro.');\n      return;\n    }\n\n    const competition = competitions.find((item) => item.id === competitionId);\n    const competitionCatalog = competition ? getGameCatalogEntry(competition.officialGameTitle || competition.game) : null;\n    const competitionRating = competitionCatalog ? getClassindRecord(classindRatings, competitionCatalog.id) : null;\n    const competitionMinimumAge = classificationMinimumAge(competitionRating?.classification ?? null);\n    if (competitionRating?.status === 'verified' && athleteAge !== null && competitionMinimumAge !== null && athleteAge < competitionMinimumAge) {\n      setRegistrationMessage(`Inscrição indisponível: a classificação indicativa vigente para ${competition?.officialGameTitle || competition?.game} é ${classificationLabel(competitionRating.classification)}.`);\n      return;\n    }\n\n    if (minorStatus === true && !responsibleName) {"""))
+
+          replacements.append((
+          """                  {formAttempted && (athleteTooYoung || nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && (""",
+          """                  {formAttempted && (athleteTooYoung || gameAgeBlocked || nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && ("""))
+
+          old_options = """                              <option value=\"\" disabled>Selecione</option>\n                              <option>Free Fire</option>\n                              <option>Tekken</option>\n                              <option>Street Fighter</option>\n                              <option>EA FC</option>\n                              <option>PES</option>\n                              <option>Fortnite</option>\n                              <option>Valorant</option>\n                              <option>League of Legends</option>\n                              <option>Counter Strike</option>\n                              <option>Brawl Stars</option>\n                              <option>Clash Royale</option>\n                              <option>Just Dance</option>"""
+          new_options = """                              <option value=\"\" disabled>Selecione</option>\n                              {GAME_CATALOG.map((game) => <option key={game.id}>{game.name}</option>)}"""
+          replacements.append((old_options, new_options))
+
+          replacements.append((
+          """                            </select>\n                          </label>\n                        </div>\n                      </section>\n\n                      <section className=\"glass-card form-section\">\n                        <div className=\"form-section-title\"><div className=\"icon-box green-box\"><School size={20} /></div><div><h4>Vínculo escolar</h4>""",
+          """                            </select>\n                            {athleteGame && selectedGameCatalog && (\n                              <div className={`game-eligibility-note ${selectedGameVerified ? (gameAgeBlocked ? 'blocked' : 'allowed') : 'pending'}`}>\n                                {selectedGameVerified ? (\n                                  <>\n                                    <strong>{gameAgeBlocked ? 'Modalidade incompatível com a idade informada' : 'Modalidade compatível com a idade informada'}</strong>\n                                    <small>Classificação de referência: {classificationLabel(selectedGameClassind?.classification ?? null)}{selectedGameClassind?.officialTitle ? ` — ${selectedGameClassind.officialTitle}` : ''}.</small>\n                                  </>\n                                ) : (\n                                  <>\n                                    <strong>Classificação oficial pendente de sincronização</strong>\n                                    <small>A estrutura de elegibilidade já está ativa. Assim que o catálogo oficial for conectado, o SERFES comparará automaticamente a idade do atleta com a classificação vigente.</small>\n                                  </>\n                                )}\n                                {selectedGameCatalog.requiresExactVersion && <small>A verificação definitiva será refeita na inscrição, usando o título/versão exatos informados pela competição.</small>}\n                                <a className=\"game-eligibility-source\" href={classindRatings?.sourceUrl || 'https://classindportal.mj.gov.br/consulta-jogos'} target=\"_blank\" rel=\"noreferrer\">Consultar ClassInd/MJSP</a>\n                                {classindRatingsError && <small className=\"field-error\">A fonte local de classificação não pôde ser carregada. Tente novamente.</small>}\n                              </div>\n                            )}\n                          </label>\n                        </div>\n                      </section>\n\n                      <section className=\"glass-card form-section\">\n                        <div className=\"form-section-title\"><div className=\"icon-box green-box\"><School size={20} /></div><div><h4>Vínculo escolar</h4>"""))
+
+          for old, new in replacements:
+              if old not in text:
+                  raise SystemExit('Expected block not found:\n' + old[:300])
+              text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit change
+        run: |
+          git config user.name "Cristina-parisenti"
+          git config user.email "crislu88@hotmail.com"
+          git add src/App.tsx
+          git commit -m "Add ClassInd age eligibility flow"
+          git push
