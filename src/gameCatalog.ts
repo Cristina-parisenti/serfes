@@ -40,8 +40,25 @@ export const GAME_CATALOG: GameCatalogEntry[] = [
   { id: 'just-dance', name: 'Just Dance', aliases: ['Just Dance'], requiresExactVersion: true },
 ];
 
+function normalizeGameName(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
 export function getGameCatalogEntry(name: string) {
-  return GAME_CATALOG.find((game) => game.name === name) ?? null;
+  const normalized = normalizeGameName(name);
+  if (!normalized) return null;
+
+  return GAME_CATALOG.find((game) =>
+    game.aliases.some((alias) => {
+      const normalizedAlias = normalizeGameName(alias);
+      return normalized === normalizedAlias || normalized.startsWith(`${normalizedAlias} `);
+    }),
+  ) ?? null;
 }
 
 export function getClassindRecord(payload: ClassindRatingsPayload | null, gameId: string) {
