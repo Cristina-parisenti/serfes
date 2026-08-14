@@ -61,8 +61,24 @@ export function getGameCatalogEntry(name: string) {
   ) ?? null;
 }
 
-export function getClassindRecord(payload: ClassindRatingsPayload | null, gameId: string) {
-  return payload?.records.find((record) => record.gameId === gameId) ?? null;
+export function getClassindRecord(payload: ClassindRatingsPayload | null, gameId: string, officialTitle?: string) {
+  const records = payload?.records.filter((record) => record.gameId === gameId) ?? [];
+  if (!records.length) return null;
+
+  if (officialTitle) {
+    const normalizedTitle = normalizeGameName(officialTitle);
+    const exact = records.find((record) => record.officialTitle && normalizeGameName(record.officialTitle) === normalizedTitle);
+    if (exact) return exact;
+
+    const compatible = records.find((record) => {
+      if (!record.officialTitle) return false;
+      const normalizedOfficial = normalizeGameName(record.officialTitle);
+      return normalizedTitle.startsWith(`${normalizedOfficial} `) || normalizedOfficial.startsWith(`${normalizedTitle} `);
+    });
+    if (compatible) return compatible;
+  }
+
+  return records.find((record) => record.status === 'verified') ?? records[0] ?? null;
 }
 
 export function classificationMinimumAge(classification: ClassindAgeRating | null) {
@@ -75,4 +91,12 @@ export function classificationLabel(classification: ClassindAgeRating | null) {
   if (classification === null) return 'Pendente de verificação oficial';
   if (classification === 'L') return 'Livre';
   return `${classification} anos`;
+}
+
+export function isClassindRecordFresh(record: ClassindRatingRecord | null, maxAgeDays = 45) {
+  if (!record?.sourceUpdatedAt) return false;
+  const sourceDate = new Date(record.sourceUpdatedAt);
+  if (Number.isNaN(sourceDate.getTime())) return false;
+  const ageMs = Date.now() - sourceDate.getTime();
+  return ageMs >= 0 && ageMs <= maxAgeDays * 24 * 60 * 60 * 1000;
 }
