@@ -3,11 +3,13 @@ import csv
 import io
 import json
 import re
+import subprocess
 import sys
 import time
 import unicodedata
 import urllib.error
 import urllib.request
+from urllib.parse import urlparse
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -60,6 +62,40 @@ def fetch_bytes(url, attempts=4, timeout=45):
             last_error = exc
             if attempt + 1 < attempts:
                 time.sleep(3 * (attempt + 1))
+
+    host = urlparse(url).hostname
+    if host == 'dados.mj.gov.br':
+        try:
+            dns_req = urllib.request.Request(
+                f'https://dns.google/resolve?name={host}&type=A',
+                headers={'Accept': 'application/dns-json', 'User-Agent': 'SERFES-ClassInd-Sync/1.0'},
+            )
+            with urllib.request.urlopen(dns_req, timeout=20) as response:
+                dns_payload = json.load(response)
+            ips = [
+                item.get('data') for item in dns_payload.get('Answer', [])
+                if item.get('type') == 1 and item.get('data')
+            ]
+            for ip in ips:
+                result = subprocess.run(
+                    [
+                        'curl', '--fail', '--silent', '--show-error', '--location',
+                        '--connect-timeout', '20', '--max-time', str(max(timeout * 2, 60)),
+                        '--retry', '2', '--retry-delay', '2',
+                        '--resolve', f'{host}:443:{ip}',
+                        '-H', 'User-Agent: SERFES-ClassInd-Sync/1.0',
+                        url,
+                    ],
+                    capture_output=True,
+                    check=False,
+                )
+                if result.returncode == 0 and result.stdout:
+                    print(f'Fonte oficial acessada com resolução DNS alternativa ({ip}).', file=sys.stderr)
+                    return result.stdout
+                last_error = result.stderr.decode('utf-8', errors='replace').strip() or last_error
+        except Exception as exc:
+            last_error = exc
+
     raise RuntimeError(f'Falha ao acessar fonte oficial: {url}: {last_error}')
 
 
