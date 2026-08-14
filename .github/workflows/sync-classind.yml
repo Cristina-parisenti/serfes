@@ -1,0 +1,42 @@
+name: Sincronizar ClassInd oficial
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 11 * * *'
+  push:
+    paths:
+      - 'scripts/sync_classind.py'
+      - '.github/workflows/sync-classind.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: classind-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Sincronizar dados oficiais do ClassInd
+        run: python scripts/sync_classind.py
+
+      - name: Publicar catálogo atualizado no repositório
+        run: |
+          if git diff --quiet -- public/classind-ratings.json; then
+            echo "Nenhuma alteração no catálogo ClassInd."
+            exit 0
+          fi
+
+          git config user.name "SERFES ClassInd Sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add public/classind-ratings.json
+          git commit -m "Atualizar classificações oficiais do ClassInd"
+          git push
