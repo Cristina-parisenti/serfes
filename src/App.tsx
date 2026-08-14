@@ -383,10 +383,7 @@ export function App() {
                     <div className="form-grid">
                       <label>Nome completo<input required value={athleteName} onChange={(e) => setAthleteName(e.target.value)} placeholder="Ex.: Atleta Exemplo" /></label>
                       <label>Nome social<input placeholder="Opcional" /></label>
-                      <label>Data de nascimento
-                        <input required type="date" value={athleteBirthDate} onChange={(e) => setAthleteBirthDate(e.target.value)} />
-                        {athleteBirthDate && <small className="field-help">O SERFES identificou automaticamente: {minorStatus ? 'menor de 18 anos' : '18 anos ou mais'}.</small>}
-                      </label>
+                      <label>Data de nascimento<input required type="date" value={athleteBirthDate} onChange={(e) => setAthleteBirthDate(e.target.value)} /></label>
                       <label>CPF
                         <input required inputMode="numeric" maxLength={14} className={athleteCpfInvalid ? 'invalid' : ''} value={athleteCpf} onChange={(e) => setAthleteCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
                         {athleteCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
@@ -405,7 +402,6 @@ export function App() {
                           {municipalities.map((municipality) => <option key={municipality}>{municipality}</option>)}
                         </select>
                         {municipalitiesError && <small className="field-error">Não foi possível carregar a relação oficial do IBGE. Tente novamente.</small>}
-                        {!municipalitiesError && <small className="field-help">Relação carregada automaticamente a partir da API de Localidades do IBGE.</small>}
                       </label>
                       <label>UF<select value="PR" disabled><option>PR</option></select></label>
                     </div>
@@ -437,11 +433,6 @@ export function App() {
                   <section className="glass-card form-section authorization-section">
                     <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal e autorização</h4><p>A exigência do termo é definida automaticamente a partir da data de nascimento.</p></div></div>
                     <div className="form-grid">
-                      <label>Situação etária
-                        <input readOnly value={!athleteBirthDate ? 'Aguardando data de nascimento' : minorStatus ? 'Menor de 18 anos — autorização obrigatória' : '18 anos ou mais — autorização não exigida'} />
-                      </label>
-                      <label>Situação do termo<input readOnly value={signatureStatus} /></label>
-
                       {minorStatus === true && (
                         <>
                           <label>Nome do responsável legal<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Responsável Exemplo" /></label>
