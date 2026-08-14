@@ -21,6 +21,22 @@
   display: none;
 }
 
+/* Mantém inputs e selects do cadastro com a mesma altura visual. */
+.athlete-form .form-grid > label {
+  align-content: start;
+}
+
+.athlete-form .form-grid > label > input,
+.athlete-form .form-grid > label > select {
+  height: 50px;
+  min-height: 50px;
+}
+
+/* No campo Ano escolar, a opção "Não se aplica" não é disponibilizada. */
+.athlete-form .form-section:nth-of-type(3) .form-grid > label:nth-child(6) select option:last-child {
+  display: none;
+}
+
 input.invalid,
 select.invalid {
   border-color: var(--red);
