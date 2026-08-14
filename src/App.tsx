@@ -245,7 +245,8 @@ export function App() {
 
   useEffect(() => {
     let active = true;
-    fetch(`${import.meta.env.BASE_URL}classind-ratings.json`, { cache: 'no-store' })
+    const classindBasePath = window.location.pathname.startsWith('/serfes') ? '/serfes/' : '/';
+    fetch(`${classindBasePath}classind-ratings.json`, { cache: 'no-store' })
       .then((response) => {
         if (!response.ok) throw new Error('Não foi possível carregar o catálogo ClassInd.');
         return response.json() as Promise<ClassindRatingsPayload>;
@@ -338,11 +339,12 @@ export function App() {
     }
 
     const competition = competitions.find((item) => item.id === competitionId);
-    const competitionCatalog = competition ? getGameCatalogEntry(competition.officialGameTitle || competition.game) : null;
+    const competitionGameTitle = competition?.officialGameTitle ?? '';
+    const competitionCatalog = competitionGameTitle ? getGameCatalogEntry(competitionGameTitle) : null;
     const competitionRating = competitionCatalog ? getClassindRecord(classindRatings, competitionCatalog.id) : null;
     const competitionMinimumAge = classificationMinimumAge(competitionRating?.classification ?? null);
     if (competitionRating?.status === 'verified' && athleteAge !== null && competitionMinimumAge !== null && athleteAge < competitionMinimumAge) {
-      setRegistrationMessage(`Inscrição indisponível: a classificação indicativa vigente para ${competition?.officialGameTitle || competition?.game} é ${classificationLabel(competitionRating.classification)}.`);
+      setRegistrationMessage(`Inscrição indisponível: a classificação indicativa vigente para ${competitionGameTitle} é ${classificationLabel(competitionRating.classification)}.`);
       return;
     }
 
