@@ -13,6 +13,7 @@ import {
   LayoutDashboard,
   LogOut,
   Plus,
+  Printer,
   School,
   Search,
   ShieldCheck,
@@ -21,6 +22,7 @@ import {
   Users,
 } from 'lucide-react';
 import './authorization.css';
+import './competition.css';
 import './validation.css';
 import {
   formatCpf,
@@ -57,8 +59,52 @@ const athleteRows = [
   { name: 'Atleta Gamma', nick: 'GAMMA7', game: 'EA Sports FC', city: 'Maringá', school: 'Não informado', status: 'Aguardando responsável', tone: 'red' },
 ] as const;
 
-type DashboardSection = 'overview' | 'athleteHome' | 'athletes' | 'athleteForm';
+const competitions = [
+  {
+    id: 'jogos-escolares-2026',
+    name: 'Jogos Eletrônicos Escolares do Paraná 2026',
+    game: 'EA Sports FC',
+    period: '10 a 12 de outubro de 2026',
+    location: 'Curitiba/PR',
+    organizer: 'Secretaria de Esportes do Estado do Paraná',
+    partner: 'Instituição parceira demonstrativa',
+    category: 'Escolar',
+    status: 'Inscrições abertas',
+  },
+  {
+    id: 'copa-rocket-league-2026',
+    name: 'Copa Paraná de Rocket League Escolar',
+    game: 'Rocket League',
+    period: '7 e 8 de novembro de 2026',
+    location: 'Londrina/PR',
+    organizer: 'Secretaria de Esportes do Estado do Paraná',
+    partner: 'Instituição parceira demonstrativa',
+    category: 'Escolar',
+    status: 'Inscrições abertas',
+  },
+  {
+    id: 'circuito-lol-2026',
+    name: 'Circuito Estadual Escolar de League of Legends',
+    game: 'League of Legends',
+    period: '21 e 22 de novembro de 2026',
+    location: 'Maringá/PR',
+    organizer: 'Secretaria de Esportes do Estado do Paraná',
+    partner: 'Instituição parceira demonstrativa',
+    category: 'Escolar',
+    status: 'Inscrições abertas',
+  },
+] as const;
+
+type DashboardSection =
+  | 'overview'
+  | 'athleteHome'
+  | 'athletes'
+  | 'athleteForm'
+  | 'athleteCompetitions'
+  | 'competitionAuthorization';
+
 type Municipality = { id: number; nome: string };
+type RegistrationStatus = 'Aguardando assinatura' | 'Inscrição enviada';
 
 function EsportsSymbol() {
   return (
@@ -81,6 +127,21 @@ function isUnder18(birthDate: string): boolean | null {
 
   if (birthdayHasNotOccurred) age -= 1;
   return age < 18;
+}
+
+function formatInputDate(value: string) {
+  if (!value) return '';
+  const [year, month, day] = value.split('-').map(Number);
+  if (!year || !month || !day) return '';
+  return new Intl.DateTimeFormat('pt-BR').format(new Date(year, month - 1, day));
+}
+
+function currentDateLong() {
+  return new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date());
 }
 
 export function App() {
@@ -111,9 +172,15 @@ export function App() {
   const [municipalities, setMunicipalities] = useState<string[]>([]);
   const [municipalitiesError, setMunicipalitiesError] = useState(false);
 
+  const [registrations, setRegistrations] = useState<Record<string, RegistrationStatus>>({});
+  const [selectedCompetitionId, setSelectedCompetitionId] = useState<string | null>(null);
+  const [registrationMessage, setRegistrationMessage] = useState('');
+
   const isAthlete = profile === 'Atleta';
   const isStateAdmin = profile === 'Administrador estadual';
   const minorStatus = isUnder18(athleteBirthDate);
+  const selectedCompetition = competitions.find((competition) => competition.id === selectedCompetitionId) ?? null;
+  const authorizationDate = currentDateLong();
 
   const nicknameBlocked = athleteNickname.length > 0 && nicknameHasBlockedContent(athleteNickname);
   const athleteCpfInvalid = athleteCpf.length > 0 && !isValidCpf(athleteCpf);
@@ -142,6 +209,9 @@ export function App() {
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setAthleteSaved(false);
+    setRegistrations({});
+    setSelectedCompetitionId(null);
+    setRegistrationMessage('');
     setDashboardSection(profile === 'Atleta' ? 'athleteHome' : 'overview');
     setView('dashboard');
   }
@@ -159,6 +229,8 @@ export function App() {
       minorStatus !== null;
 
     const responsibleFieldsValid = minorStatus !== true || (
+      responsibleName.trim().length > 0 &&
+      responsibleRg.trim().length > 0 &&
       isValidCpf(responsibleCpf) &&
       isValidEmail(responsibleEmail) &&
       isValidPhone(responsiblePhone)
@@ -168,7 +240,35 @@ export function App() {
 
     setAthleteSaved(true);
     setFormAttempted(false);
+    setRegistrationMessage('');
     setDashboardSection(isAthlete ? 'athleteHome' : 'athletes');
+  }
+
+  function requestCompetitionRegistration(competitionId: string) {
+    setRegistrationMessage('');
+
+    if (!athleteSaved) {
+      setRegistrationMessage('Antes da inscrição em uma competição, complete e salve o seu cadastro.');
+      return;
+    }
+
+    if (minorStatus === true && !responsibleName) {
+      setRegistrationMessage('Complete os dados do responsável legal antes de solicitar a inscrição.');
+      return;
+    }
+
+    const nextStatus: RegistrationStatus = minorStatus === true ? 'Aguardando assinatura' : 'Inscrição enviada';
+    setRegistrations((current) => ({ ...current, [competitionId]: nextStatus }));
+    setSelectedCompetitionId(competitionId);
+
+    if (minorStatus === true) {
+      setDashboardSection('competitionAuthorization');
+    }
+  }
+
+  function viewCompetitionAuthorization(competitionId: string) {
+    setSelectedCompetitionId(competitionId);
+    setDashboardSection('competitionAuthorization');
   }
 
   if (view === 'login') {
@@ -218,7 +318,7 @@ export function App() {
               <>
                 <button className={`nav-item ${dashboardSection === 'athleteHome' ? 'active' : ''}`} onClick={() => setDashboardSection('athleteHome')}><LayoutDashboard size={18} /> Início</button>
                 <button className={`nav-item ${dashboardSection === 'athleteForm' ? 'active' : ''}`} onClick={() => setDashboardSection('athleteForm')}><UserRound size={18} /> Meu cadastro</button>
-                <button className="nav-item"><Trophy size={18} /> Minhas competições</button>
+                <button className={`nav-item ${dashboardSection === 'athleteCompetitions' || dashboardSection === 'competitionAuthorization' ? 'active' : ''}`} onClick={() => setDashboardSection('athleteCompetitions')}><Trophy size={18} /> Minhas competições</button>
                 <button className="nav-item"><ShieldCheck size={18} /> Integridade e apoio</button>
               </>
             ) : (
@@ -245,10 +345,13 @@ export function App() {
           <main className="dashboard-content">
             {dashboardSection === 'athleteHome' && isAthlete && (
               <>
-                {athleteSaved && <div className="success-banner"><CheckCircle2 size={19} /><div><strong>Seu cadastro demonstrativo foi salvo.</strong><span>Nesta fase do protótipo, os dados ainda não são armazenados.</span></div></div>}
+                {athleteSaved && <div className="success-banner"><CheckCircle2 size={19} /><div><strong>Seu cadastro demonstrativo foi salvo.</strong><span>Agora você pode consultar as competições disponíveis.</span></div></div>}
                 <section className="hero-panel">
                   <div><span className="pill">Minha área</span><h3>Bem-vindo ao seu espaço no SERFES</h3><p>Complete seu cadastro e acompanhe somente informações relacionadas ao seu próprio perfil.</p></div>
-                  <button className="primary-button" onClick={() => setDashboardSection('athleteForm')}><UserRound size={17} /> Preencher meu cadastro</button>
+                  <button className="primary-button" onClick={() => setDashboardSection(athleteSaved ? 'athleteCompetitions' : 'athleteForm')}>
+                    {athleteSaved ? <Trophy size={17} /> : <UserRound size={17} />}
+                    {athleteSaved ? 'Ver competições' : 'Preencher meu cadastro'}
+                  </button>
                 </section>
                 <section className="athlete-summary-grid">
                   <article className="mini-status blue"><strong>1</strong><span>Meu cadastro</span></article>
@@ -267,10 +370,132 @@ export function App() {
                     <div className="panel-head"><div><p className="eyebrow">Participação</p><h4>Próximas etapas</h4></div></div>
                     <div className="list-card"><strong>1</strong><span>Complete seu cadastro pessoal.</span></div>
                     <div className="list-card"><strong>2</strong><span>Se menor de idade, complete os dados do responsável legal.</span></div>
-                    <div className="list-card"><strong>3</strong><span>Ao se inscrever em cada competição, o termo específico será gerado para assinatura do responsável.</span></div>
+                    <button className="line-action" onClick={() => setDashboardSection('athleteCompetitions')}><span>3. Consultar competições e solicitar inscrição</span><ChevronRight size={16} /></button>
                   </article>
                 </section>
                 <p className="prototype-note">Esta área é individual. O atleta não visualiza cadastros, documentos ou dados pessoais de outros atletas.</p>
+              </>
+            )}
+
+            {dashboardSection === 'athleteCompetitions' && isAthlete && (
+              <>
+                <section className="section-toolbar">
+                  <div>
+                    <p className="eyebrow">Participação esportiva</p>
+                    <h3>Minhas competições</h3>
+                    <p className="muted">Consulte competições disponíveis e acompanhe a situação das suas solicitações de inscrição.</p>
+                  </div>
+                </section>
+
+                {registrationMessage && (
+                  <div className="warning-note competition-warning">
+                    <AlertTriangle size={18} />
+                    <span>{registrationMessage}</span>
+                    <button type="button" className="secondary-button compact-button" onClick={() => setDashboardSection('athleteForm')}>Ir para meu cadastro</button>
+                  </div>
+                )}
+
+                <section className="competition-grid">
+                  {competitions.map((competition) => {
+                    const registrationStatus = registrations[competition.id];
+                    return (
+                      <article className="glass-card competition-card" key={competition.id}>
+                        <div className="competition-card-head">
+                          <span className="status-badge green">{competition.status}</span>
+                          <span className="competition-category">{competition.category}</span>
+                        </div>
+                        <h4>{competition.name}</h4>
+                        <div className="competition-meta">
+                          <span><Gamepad2 size={16} /> {competition.game}</span>
+                          <span><CalendarDays size={16} /> {competition.period}</span>
+                          <span><Trophy size={16} /> {competition.location}</span>
+                        </div>
+                        {registrationStatus ? (
+                          <div className={`competition-registration-status ${registrationStatus === 'Aguardando assinatura' ? 'pending' : 'sent'}`}>
+                            <strong>{registrationStatus}</strong>
+                            <span>{registrationStatus === 'Aguardando assinatura' ? 'O termo específico desta competição precisa ser assinado pelo responsável legal.' : 'A solicitação foi registrada e seguirá para as etapas de validação.'}</span>
+                          </div>
+                        ) : (
+                          <p className="competition-description">A inscrição utiliza os dados já informados no cadastro do atleta. Para menores de 18 anos, será gerado um termo específico desta competição.</p>
+                        )}
+                        <div className="competition-card-actions">
+                          {!registrationStatus && <button className="primary-button" type="button" onClick={() => requestCompetitionRegistration(competition.id)}>Solicitar inscrição</button>}
+                          {registrationStatus === 'Aguardando assinatura' && <button className="primary-button" type="button" onClick={() => viewCompetitionAuthorization(competition.id)}><FileSignature size={17} /> Ver termo para assinatura</button>}
+                          {registrationStatus === 'Inscrição enviada' && <span className="status-badge blue">Solicitação registrada</span>}
+                        </div>
+                      </article>
+                    );
+                  })}
+                </section>
+
+                <p className="prototype-note">As competições, datas e instituições exibidas nesta tela são fictícias e servem exclusivamente para demonstração do fluxo.</p>
+              </>
+            )}
+
+            {dashboardSection === 'competitionAuthorization' && isAthlete && selectedCompetition && minorStatus === true && (
+              <>
+                <section className="section-toolbar form-heading">
+                  <div>
+                    <button className="back-link" onClick={() => setDashboardSection('athleteCompetitions')}><ArrowLeft size={16} /> Voltar para minhas competições</button>
+                    <p className="eyebrow">Autorização específica da competição</p>
+                    <h3>{selectedCompetition.name}</h3>
+                    <p className="muted">O documento abaixo reúne os dados já cadastrados do atleta e do responsável com as informações desta competição.</p>
+                  </div>
+                </section>
+
+                <section className="competition-summary-bar">
+                  <div><strong>Modalidade</strong><span>{selectedCompetition.game}</span></div>
+                  <div><strong>Período</strong><span>{selectedCompetition.period}</span></div>
+                  <div><strong>Local</strong><span>{selectedCompetition.location}</span></div>
+                  <div><strong>Situação</strong><span>Aguardando assinatura</span></div>
+                </section>
+
+                <section className="term-preview" aria-label="Termo de autorização da competição">
+                  <div className="term-toolbar no-print">
+                    <div><p className="eyebrow">Documento da inscrição</p><h4>Termo de autorização</h4></div>
+                    <button type="button" className="secondary-button" onClick={() => window.print()}><Printer size={17} /> Imprimir / salvar em PDF</button>
+                  </div>
+
+                  <article className="term-paper">
+                    <h3>TERMO DE AUTORIZAÇÃO PARA PARTICIPAÇÃO DE ESTUDANTE EM COMPETIÇÃO DE ESPORTES ELETRÔNICOS ESCOLARES</h3>
+                    <p>Eu, <strong>{responsibleName}</strong>, portador(a) do RG nº <strong>{responsibleRg}</strong> e inscrito(a) no CPF nº <strong>{responsibleCpf}</strong>, na qualidade de responsável legal pelo(a) estudante <strong>{athleteName}</strong>, regularmente matriculado(a) na instituição de ensino <strong>{athleteInstitution || '_______________________________'}</strong>, autorizo sua participação voluntária na competição <strong>{selectedCompetition.name}</strong>, a ser realizada no período de <strong>{selectedCompetition.period}</strong>, em <strong>{selectedCompetition.location}</strong>.</p>
+                    <p>Declaro estar ciente de que a iniciativa possui caráter educacional, formativo e recreativo, sendo organizada por <strong>{selectedCompetition.organizer}</strong>, em parceria com <strong>{selectedCompetition.partner}</strong>, com o objetivo de promover o desenvolvimento de competências digitais, sociais e esportivas.</p>
+                    <p>Autorizo, ainda, a participação do(a) estudante nas atividades previstas na programação, incluindo partidas, treinamentos e demais ações correlatas, bem como o uso gratuito de sua imagem, voz e nome, para fins institucionais e de divulgação do evento, em meios físicos e digitais, nos termos da legislação aplicável.</p>
+                    <p>Autorizo, por fim, o tratamento dos dados pessoais do(a) estudante e do responsável legal, estritamente para fins de inscrição, organização e registro da atividade, em conformidade com a Lei Geral de Proteção de Dados (LGPD).</p>
+                    <p>Por fim, declaro que as informações prestadas são verdadeiras, estando ciente de que eventual inexatidão poderá implicar o cancelamento da participação.</p>
+
+                    <div className="term-fields">
+                      <p><strong>Estudante:</strong> {athleteName}</p>
+                      <p><strong>CPF do estudante:</strong> {athleteCpf}</p>
+                      <p><strong>Data de nascimento:</strong> {formatInputDate(athleteBirthDate)}</p>
+                      <p><strong>Nickname:</strong> {athleteNickname}</p>
+                      <p><strong>Jogo:</strong> {selectedCompetition.game}</p>
+                      <p><strong>Telefone do responsável:</strong> {responsiblePhone}</p>
+                      <p><strong>E-mail do responsável:</strong> {responsibleEmail}</p>
+                      <p><strong>Local e data:</strong> {athleteMunicipality ? `${athleteMunicipality}/PR` : selectedCompetition.location}, {authorizationDate}.</p>
+                      <p><strong>Assinatura eletrônica do responsável legal:</strong> {responsibleName} — CPF {responsibleCpf}</p>
+                    </div>
+                  </article>
+
+                  <div className="signature-flow no-print">
+                    <div className="signature-step complete">
+                      <span>1</span>
+                      <div><strong>Termo gerado</strong><small>Dados do cadastro e da competição reunidos automaticamente.</small></div>
+                    </div>
+                    <div className="signature-step current govbr-step">
+                      <span>2</span>
+                      <div>
+                        <strong>Assinatura com GOV.BR</strong>
+                        <small>O responsável assinará eletronicamente quando a integração institucional estiver habilitada.</small>
+                        <button type="button" className="govbr-button" disabled title="A integração real dependerá da habilitação institucional da API de assinatura eletrônica.">Assinar com GOV.BR — integração futura</button>
+                      </div>
+                    </div>
+                    <div className="signature-step">
+                      <span>3</span>
+                      <div><strong>Validação pelo SERFES</strong><small>Após a assinatura válida, a inscrição seguirá para validação e homologação.</small></div>
+                    </div>
+                  </div>
+                </section>
               </>
             )}
 
@@ -392,7 +617,7 @@ export function App() {
                   </section>
 
                   <section className="glass-card form-section authorization-section">
-                    <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal</h4><p>Dados solicitados quando o atleta for menor de 18 anos.</p></div></div>
+                    <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal</h4><p>Dados do responsável legal, quando necessários para a participação do atleta.</p></div></div>
                     <div className="form-grid">
                       {minorStatus === true && (
                         <>
@@ -415,11 +640,11 @@ export function App() {
                     </div>
 
                     {minorStatus === true && (
-                      <div className="warning-note"><AlertTriangle size={18} /><span>A autorização não será geral. Ao solicitar a inscrição em cada competição, o SERFES gerará um termo específico com os dados do atleta, do responsável e daquele evento para assinatura.</span></div>
+                      <div className="warning-note"><AlertTriangle size={18} /><span>A autorização será gerada separadamente para cada competição no momento da inscrição.</span></div>
                     )}
 
                     {athleteBirthDate && minorStatus === false && (
-                      <div className="login-highlight"><CheckCircle2 size={18} /><span>O atleta possui 18 anos ou mais. Os dados do responsável legal não são exigidos.</span></div>
+                      <div className="login-highlight"><CheckCircle2 size={18} /><span>Não há necessidade de informar responsável legal para este cadastro.</span></div>
                     )}
                   </section>
 
@@ -428,9 +653,9 @@ export function App() {
                     <div className="document-grid">
                       <div className="document-item"><FileText size={18} /><div><strong>Documento de identificação</strong><span>Não anexado</span></div></div>
                       <div className="document-item"><FileText size={18} /><div><strong>Comprovante de vínculo escolar</strong><span>Não anexado</span></div></div>
-                      {minorStatus === true && <div className="document-item"><FileSignature size={18} /><div><strong>Autorizações por competição</strong><span>Serão geradas na inscrição de cada evento</span></div></div>}
+                      <div className="document-item"><FileSignature size={18} /><div><strong>Autorizações por competição</strong><span>{minorStatus === true ? 'Geradas no momento da inscrição' : 'Não se aplica'}</span></div></div>
                     </div>
-                    <p className="prototype-note">O envio real de documentos e a assinatura eletrônica serão habilitados somente após a definição do armazenamento seguro e da integração institucional correspondente.</p>
+                    <p className="prototype-note">Cada competição poderá possuir uma autorização própria, vinculada à respectiva solicitação de inscrição.</p>
                   </section>
 
                   <div className="form-actions">
