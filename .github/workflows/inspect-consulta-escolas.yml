@@ -18,9 +18,14 @@ jobs:
           with urllib.request.urlopen(req,timeout=40) as r:
               html=r.read().decode('utf-8','replace')
           print('bytes',len(html))
-          for pattern in ['javax.faces.ViewState','Rede de Ensino','codigoMunicipio','codigoEstab','rede','escola','form']:
-              print('\n###',pattern)
-              for m in list(re.finditer(pattern,html,re.I))[:10]:
-                  a=max(0,m.start()-260); b=min(len(html),m.end()+500)
-                  print(re.sub(r'\s+',' ',html[a:b]))
+          for ident in ['municipio_input','redeEnsino_input','escola_input']:
+              print('\n###',ident)
+              m=re.search(r'<select[^>]+id="[^"]*'+re.escape(ident)+r'".*?</select>',html,re.I|re.S)
+              if m: print(re.sub(r'\s+',' ',m.group(0)))
+              else: print('not found')
+          print('\n### ajax scripts')
+          for m in re.finditer(r'PrimeFaces\.ab\([^;]{0,900}',html,re.I):
+              s=m.group(0)
+              if 'municipio' in s or 'redeEnsino' in s or 'escola' in s:
+                  print(re.sub(r'\s+',' ',s))
           PY
