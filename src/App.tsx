@@ -602,36 +602,37 @@ export function App() {
                       </label>
                       <label>Modalidade principal<select required value={athleteGame} onChange={(e) => setAthleteGame(e.target.value)}><option value="" disabled>Selecione</option><option>Valorant</option><option>League of Legends</option><option>EA Sports FC</option><option>Counter-Strike 2</option><option>Rocket League</option><option>Outra</option></select></label>
                       <label>Equipe ou entidade<input placeholder="Opcional" /></label>
-                      <label>Tempo de prática<select defaultValue=""><option value="">Selecione</option><option>Até 1 ano</option><option>1 a 3 anos</option><option>Mais de 3 anos</option></select></label>
                     </div>
                   </section>
 
                   <section className="glass-card form-section">
-                    <div className="form-section-title"><div className="icon-box green-box"><School size={20} /></div><div><h4>Vínculo educacional</h4><p>Informações para validação da situação escolar quando aplicável.</p></div></div>
+                    <div className="form-section-title"><div className="icon-box green-box"><School size={20} /></div><div><h4>Vínculo escolar</h4><p>Informações para validação da situação escolar quando aplicável.</p></div></div>
                     <div className="form-grid">
                       <label>Está matriculado em instituição de ensino?<select required defaultValue="Sim"><option>Sim</option><option>Não</option></select></label>
-                      <label>Instituição de ensino<input value={athleteInstitution} onChange={(e) => setAthleteInstitution(e.target.value)} placeholder="Nome fictício da instituição" /></label>
+                      <label>Rede de ensino<select defaultValue="Estadual"><option>Estadual</option><option>Federal</option><option>Municipal</option><option>Privada</option></select></label>
+                      <label>Instituição de ensino<input value={athleteInstitution} onChange={(e) => setAthleteInstitution(e.target.value)} placeholder="Nome da instituição" /></label>
                       <label>Nível de ensino<select defaultValue=""><option value="">Selecione</option><option>Ensino fundamental</option><option>Ensino médio</option><option>Ensino superior</option><option>Outro</option></select></label>
                       <label>Situação da matrícula<select defaultValue="Ativa"><option>Ativa</option><option>Em validação</option><option>Não se aplica</option></select></label>
                     </div>
+                    <a className="secondary-button" href="https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml" target="_blank" rel="noreferrer">Consultar escolas na base oficial da SEED/PR</a>
                   </section>
 
                   <section className="glass-card form-section authorization-section">
-                    <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal</h4><p>Dados do responsável legal, quando necessários para a participação do atleta.</p></div></div>
+                    <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Dados do responsável legal</h4><p>Informações gerais utilizadas, quando necessário, na geração dos termos de autorização por competição.</p></div></div>
                     <div className="form-grid">
                       {minorStatus === true && (
                         <>
-                          <label>Nome do responsável legal<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Responsável Exemplo" /></label>
-                          <label>RG do responsável<input required value={responsibleRg} onChange={(e) => setResponsibleRg(e.target.value)} placeholder="00.000.000-0" /></label>
-                          <label>CPF do responsável
+                          <label>Nome completo<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Nome completo" /></label>
+                          <label>RG<input required value={responsibleRg} onChange={(e) => setResponsibleRg(e.target.value)} placeholder="00.000.000-0" /></label>
+                          <label>CPF
                             <input required inputMode="numeric" maxLength={14} className={responsibleCpfInvalid ? 'invalid' : ''} value={responsibleCpf} onChange={(e) => setResponsibleCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
                             {responsibleCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
                           </label>
-                          <label>E-mail do responsável
-                            <input required type="email" className={responsibleEmailInvalid ? 'invalid' : ''} value={responsibleEmail} onChange={(e) => setResponsibleEmail(e.target.value)} placeholder="responsavel@exemplo.demo" />
+                          <label>E-mail
+                            <input required type="email" className={responsibleEmailInvalid ? 'invalid' : ''} value={responsibleEmail} onChange={(e) => setResponsibleEmail(e.target.value)} placeholder="email@exemplo.demo" />
                             {responsibleEmailInvalid && <small className="field-error">Informe um endereço de e-mail válido.</small>}
                           </label>
-                          <label>Telefone do responsável
+                          <label>Telefone
                             <input required inputMode="tel" maxLength={15} className={responsiblePhoneInvalid ? 'invalid' : ''} value={responsiblePhone} onChange={(e) => setResponsiblePhone(formatPhone(e.target.value))} placeholder="(00) 00000-0000" />
                             {responsiblePhoneInvalid && <small className="field-error">Informe DDD + telefone, com 10 ou 11 dígitos.</small>}
                           </label>
