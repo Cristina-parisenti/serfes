@@ -36,3 +36,5 @@ jobs:
           git add src/App.tsx
           git commit -m "Update athlete game catalog"
           git push
+
+# one-time trigger
