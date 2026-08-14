@@ -1,0 +1,61 @@
+export type ClassindAgeRating = 'L' | 6 | 10 | 12 | 14 | 16 | 18;
+export type ClassindRecordStatus = 'verified' | 'pending' | 'not-found';
+
+export type GameCatalogEntry = {
+  id: string;
+  name: string;
+  aliases: string[];
+  requiresExactVersion: boolean;
+};
+
+export type ClassindRatingRecord = {
+  gameId: string;
+  officialTitle: string | null;
+  classification: ClassindAgeRating | null;
+  status: ClassindRecordStatus;
+  sourceRecordId: string | null;
+  sourceUpdatedAt: string | null;
+  verifiedAt: string | null;
+};
+
+export type ClassindRatingsPayload = {
+  source: 'ClassInd/MJSP';
+  sourceUrl: string;
+  generatedAt: string | null;
+  records: ClassindRatingRecord[];
+};
+
+export const GAME_CATALOG: GameCatalogEntry[] = [
+  { id: 'free-fire', name: 'Free Fire', aliases: ['Free Fire', 'Garena Free Fire'], requiresExactVersion: false },
+  { id: 'tekken', name: 'Tekken', aliases: ['Tekken'], requiresExactVersion: true },
+  { id: 'street-fighter', name: 'Street Fighter', aliases: ['Street Fighter'], requiresExactVersion: true },
+  { id: 'ea-fc', name: 'EA FC', aliases: ['EA FC', 'EA Sports FC', 'FIFA'], requiresExactVersion: true },
+  { id: 'pes', name: 'PES', aliases: ['PES', 'Pro Evolution Soccer', 'eFootball'], requiresExactVersion: true },
+  { id: 'fortnite', name: 'Fortnite', aliases: ['Fortnite'], requiresExactVersion: false },
+  { id: 'valorant', name: 'Valorant', aliases: ['Valorant'], requiresExactVersion: false },
+  { id: 'league-of-legends', name: 'League of Legends', aliases: ['League of Legends'], requiresExactVersion: false },
+  { id: 'counter-strike', name: 'Counter Strike', aliases: ['Counter Strike', 'Counter-Strike', 'Counter-Strike 2', 'CS2'], requiresExactVersion: true },
+  { id: 'brawl-stars', name: 'Brawl Stars', aliases: ['Brawl Stars'], requiresExactVersion: false },
+  { id: 'clash-royale', name: 'Clash Royale', aliases: ['Clash Royale'], requiresExactVersion: false },
+  { id: 'just-dance', name: 'Just Dance', aliases: ['Just Dance'], requiresExactVersion: true },
+];
+
+export function getGameCatalogEntry(name: string) {
+  return GAME_CATALOG.find((game) => game.name === name) ?? null;
+}
+
+export function getClassindRecord(payload: ClassindRatingsPayload | null, gameId: string) {
+  return payload?.records.find((record) => record.gameId === gameId) ?? null;
+}
+
+export function classificationMinimumAge(classification: ClassindAgeRating | null) {
+  if (classification === null) return null;
+  if (classification === 'L') return 0;
+  return classification;
+}
+
+export function classificationLabel(classification: ClassindAgeRating | null) {
+  if (classification === null) return 'Pendente de verificação oficial';
+  if (classification === 'L') return 'Livre';
+  return `${classification} anos`;
+}
