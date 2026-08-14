@@ -75,7 +75,7 @@ export function getClassindRecord(payload: ClassindRatingsPayload | null, gameId
       const normalizedOfficial = normalizeGameName(record.officialTitle);
       return normalizedTitle.startsWith(`${normalizedOfficial} `) || normalizedOfficial.startsWith(`${normalizedTitle} `);
     });
-    if (compatible) return compatible;
+    return compatible ?? null;
   }
 
   return records.find((record) => record.status === 'verified') ?? records[0] ?? null;
