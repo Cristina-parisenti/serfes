@@ -1,5 +1,6 @@
 name: Sincronizar ClassInd oficial
 
+# Sincronização diária da base aberta oficial do MJSP/ClassInd.
 on:
   workflow_dispatch:
   schedule:
