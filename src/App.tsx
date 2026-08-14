@@ -910,7 +910,6 @@ export function App() {
                               <option value="" disabled>Selecione</option>
                               {availableEducationLevels.map((level) => <option key={level}>{level}</option>)}
                             </select>
-                            {athleteAge !== null && <small className="field-help">O SERFES mostra somente níveis compatíveis com a idade informada, conforme a regra operacional do cadastro.</small>}
                           </label>
                           <label>{schoolLevel === 'Ensino superior' ? 'Instituição de ensino superior' : 'Escola'}
                             {institutionCatalogReady ? (
@@ -929,10 +928,10 @@ export function App() {
                                 disabled={enrollmentStatus !== 'Sim' || !schoolMunicipality || !schoolNetwork || !schoolLevel}
                                 value={athleteInstitution}
                                 onChange={(e) => setAthleteInstitution(e.target.value)}
-                                placeholder={!schoolLevel ? 'Selecione primeiro o nível de ensino' : 'Base oficial em sincronização — informe temporariamente'}
+                                placeholder={!schoolLevel ? 'Selecione primeiro o nível de ensino' : 'Informe temporariamente a instituição'}
                               />
                             )}
-                            {schoolLevel && !institutionCatalogReady && <small className="field-help">A fonte oficial ainda está em processo de sincronização no protótipo. O campo manual permanece disponível temporariamente.</small>}
+                            {schoolLevel && !institutionCatalogReady && <small className="field-help">{schoolLevel === 'Ensino superior' ? 'A consulta automatizada ao e-MEC ainda não está disponível. Informe temporariamente a instituição.' : 'O catálogo oficial da SEED/PR está sendo sincronizado. Informe temporariamente a escola.'}</small>}
                             {schoolLevel !== 'Ensino superior' && schoolDirectoryError && <small className="field-error">Não foi possível carregar o catálogo da Consulta Escolas/SEED-PR.</small>}
                             {schoolLevel === 'Ensino superior' && higherEducationError && <small className="field-error">Não foi possível carregar o catálogo do MEC/e-MEC.</small>}
                           </label>
@@ -951,12 +950,12 @@ export function App() {
                                 list="higher-education-courses"
                                 value={higherEducationCourse}
                                 onChange={(e) => setHigherEducationCourse(e.target.value)}
-                                placeholder={higherEducation?.courses.length ? 'Digite ou selecione o curso' : 'Catálogo oficial em sincronização'}
+                                placeholder={higherEducation?.courses.length ? 'Digite ou selecione o curso' : 'Informe o curso'}
                               />
                               <datalist id="higher-education-courses">
                                 {(higherEducation?.courses ?? []).map((course) => <option key={course} value={course} />)}
                               </datalist>
-                              <small className="field-help">As denominações serão mantidas pelo catálogo oficial do MEC/e-MEC. Enquanto a fonte automática não estiver disponível, o preenchimento permanece manual.</small>
+                              <small className="field-help">O Cadastro e-MEC será a fonte oficial deste campo. Enquanto a consulta automatizada não estiver disponível, informe o curso manualmente.</small>
                             </label>
                           )}
                         </div>
