@@ -1,0 +1,27 @@
+.field-error {
+  display: block;
+  margin-top: .42rem;
+  color: var(--red);
+  font-size: .78rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.field-help {
+  display: block;
+  margin-top: .42rem;
+  color: var(--muted);
+  font-size: .76rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+input.invalid,
+select.invalid {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(216,58,58,.09);
+}
+
+.municipality-loading {
+  color: var(--muted);
+}
