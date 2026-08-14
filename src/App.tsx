@@ -114,10 +114,13 @@ function EsportsSymbol() {
   );
 }
 
-function isUnder18(birthDate: string, referenceDate = new Date()): boolean | null {
+function calculateAge(birthDate: string, referenceDate = new Date()): number | null {
   if (!birthDate) return null;
   const [year, month, day] = birthDate.split('-').map(Number);
   if (!year || !month || !day) return null;
+
+  const birth = new Date(year, month - 1, day);
+  if (Number.isNaN(birth.getTime()) || birth > referenceDate) return null;
 
   let age = referenceDate.getFullYear() - year;
   const birthdayHasNotOccurred =
@@ -125,7 +128,7 @@ function isUnder18(birthDate: string, referenceDate = new Date()): boolean | nul
     (referenceDate.getMonth() + 1 === month && referenceDate.getDate() < day);
 
   if (birthdayHasNotOccurred) age -= 1;
-  return age < 18;
+  return age;
 }
 
 function formatInputDate(value: string) {
@@ -141,6 +144,14 @@ function currentDateLong() {
     month: 'long',
     year: 'numeric',
   }).format(new Date());
+}
+
+function todayInputValue() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 export function App() {
@@ -181,7 +192,9 @@ export function App() {
 
   const isAthlete = profile === 'Atleta';
   const isStateAdmin = profile === 'Administrador estadual';
-  const minorStatus = isUnder18(athleteBirthDate, ageReferenceDate);
+  const athleteAge = calculateAge(athleteBirthDate, ageReferenceDate);
+  const athleteTooYoung = athleteAge !== null && athleteAge < 12;
+  const minorStatus = athleteAge === null ? null : athleteAge < 18;
   const selectedCompetition = competitions.find((competition) => competition.id === selectedCompetitionId) ?? null;
   const authorizationDate = currentDateLong();
 
@@ -236,12 +249,13 @@ export function App() {
     setFormAttempted(true);
 
     const mainFieldsValid =
+      !athleteTooYoung &&
+      athleteAge !== null &&
       isValidCpf(athleteCpf) &&
       isValidEmail(athleteEmail) &&
       isValidPhone(athletePhone) &&
       !nicknameHasBlockedContent(athleteNickname) &&
-      athleteMunicipality.length > 0 &&
-      minorStatus !== null;
+      athleteMunicipality.length > 0;
 
     const schoolFieldsValid = enrollmentStatus !== 'Sim' || (
       schoolMunicipality.length > 0 &&
@@ -268,6 +282,11 @@ export function App() {
   function requestCompetitionRegistration(competitionId: string) {
     setRegistrationMessage('');
     setAgeReferenceDate(new Date());
+
+    if (athleteTooYoung) {
+      setRegistrationMessage('A inscrição não está disponível para atletas com menos de 12 anos.');
+      return;
+    }
 
     if (!athleteSaved) {
       setRegistrationMessage('Antes da inscrição em uma competição, complete e salve o seu cadastro.');
@@ -455,7 +474,7 @@ export function App() {
               </>
             )}
 
-            {dashboardSection === 'competitionAuthorization' && isAthlete && selectedCompetition && minorStatus === true && (
+            {dashboardSection === 'competitionAuthorization' && isAthlete && selectedCompetition && minorStatus === true && !athleteTooYoung && (
               <>
                 <section className="section-toolbar form-heading">
                   <div>
@@ -583,7 +602,7 @@ export function App() {
                 </section>
 
                 <form className="athlete-form" onSubmit={handleAthleteSubmit}>
-                  {formAttempted && (nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && (
+                  {formAttempted && (athleteTooYoung || nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && (
                     <div className="warning-note"><AlertTriangle size={18} /><span>Revise os campos destacados antes de salvar o cadastro.</span></div>
                   )}
 
@@ -591,26 +610,26 @@ export function App() {
                     <div className="form-section-title"><div className="icon-box"><UserRound size={20} /></div><div><h4>Identificação</h4><p>Dados básicos para individualização do atleta.</p></div></div>
                     <div className="form-grid">
                       <label>Nome completo<input required value={athleteName} onChange={(e) => setAthleteName(e.target.value)} placeholder="Ex.: Atleta Exemplo" /></label>
-                      <label>Nome social<input placeholder="Opcional" /></label>
                       <label>Data de nascimento
-                        <input required type="date" value={athleteBirthDate} onChange={(e) => setAthleteBirthDate(e.target.value)} />
-                        {minorStatus === true && <small className="field-help">Atleta menor de 18 anos. As informações gerais do responsável legal serão solicitadas abaixo e reutilizadas nas autorizações de cada competição.</small>}
-                        {minorStatus === false && <small className="field-help">Atleta com 18 anos ou mais. Não será necessária autorização de responsável legal para participação nas competições.</small>}
+                        <input required type="date" max={todayInputValue()} value={athleteBirthDate} onChange={(e) => setAthleteBirthDate(e.target.value)} />
+                        {athleteTooYoung && <small className="field-error">Cadastro indisponível: o SERFES aceita atletas a partir de 12 anos.</small>}
+                        {!athleteTooYoung && minorStatus === true && <small className="field-help">Atleta entre 12 e 17 anos. As informações do responsável legal serão solicitadas abaixo e reaproveitadas na autorização de cada competição.</small>}
+                        {minorStatus === false && <small className="field-help">Atleta com 18 anos ou mais. Não será exigida autorização do responsável legal.</small>}
                       </label>
                       <label>CPF
-                        <input required inputMode="numeric" maxLength={14} className={athleteCpfInvalid ? 'invalid' : ''} value={athleteCpf} onChange={(e) => setAthleteCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
+                        <input required disabled={athleteTooYoung} inputMode="numeric" maxLength={14} className={athleteCpfInvalid ? 'invalid' : ''} value={athleteCpf} onChange={(e) => setAthleteCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
                         {athleteCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
                       </label>
                       <label>E-mail
-                        <input required type="email" className={athleteEmailInvalid ? 'invalid' : ''} value={athleteEmail} onChange={(e) => setAthleteEmail(e.target.value)} placeholder="atleta@exemplo.demo" />
+                        <input required disabled={athleteTooYoung} type="email" className={athleteEmailInvalid ? 'invalid' : ''} value={athleteEmail} onChange={(e) => setAthleteEmail(e.target.value)} placeholder="atleta@exemplo.demo" />
                         {athleteEmailInvalid && <small className="field-error">Informe um endereço de e-mail válido.</small>}
                       </label>
                       <label>Telefone
-                        <input required inputMode="tel" maxLength={15} className={athletePhoneInvalid ? 'invalid' : ''} value={athletePhone} onChange={(e) => setAthletePhone(formatPhone(e.target.value))} placeholder="(00) 00000-0000" />
+                        <input required disabled={athleteTooYoung} inputMode="tel" maxLength={15} className={athletePhoneInvalid ? 'invalid' : ''} value={athletePhone} onChange={(e) => setAthletePhone(formatPhone(e.target.value))} placeholder="(00) 00000-0000" />
                         {athletePhoneInvalid && <small className="field-error">Informe DDD + telefone, com 10 ou 11 dígitos.</small>}
                       </label>
                       <label>Município
-                        <select required value={athleteMunicipality} onChange={(e) => setAthleteMunicipality(e.target.value)}>
+                        <select required disabled={athleteTooYoung} value={athleteMunicipality} onChange={(e) => setAthleteMunicipality(e.target.value)}>
                           <option value="" disabled>{municipalities.length ? 'Selecione' : 'Carregando municípios...'}</option>
                           {municipalities.map((municipality) => <option key={municipality}>{municipality}</option>)}
                         </select>
@@ -620,113 +639,134 @@ export function App() {
                     </div>
                   </section>
 
-                  <section className="glass-card form-section">
-                    <div className="form-section-title"><div className="icon-box yellow-box"><Gamepad2 size={20} /></div><div><h4>Perfil esportivo</h4><p>Informações de participação no ecossistema de e-sports.</p></div></div>
-                    <div className="form-grid">
-                      <label>Nickname
-                        <input required className={nicknameBlocked ? 'invalid' : ''} value={athleteNickname} onChange={(e) => setAthleteNickname(e.target.value)} placeholder="Nome utilizado nas competições" maxLength={24} />
-                        {nicknameBlocked ? <small className="field-error">Este nickname contém termo potencialmente ofensivo ou incompatível com as regras do SERFES.</small> : <small className="field-help">Nicknames ofensivos, discriminatórios ou com palavrões serão bloqueados.</small>}
-                      </label>
-                      <label>Modalidade principal<select required value={athleteGame} onChange={(e) => setAthleteGame(e.target.value)}><option value="" disabled>Selecione</option><option>Valorant</option><option>League of Legends</option><option>EA Sports FC</option><option>Counter-Strike 2</option><option>Rocket League</option><option>Outra</option></select></label>
-                      <label>Equipe ou entidade<input placeholder="Opcional" /></label>
-                    </div>
-                  </section>
+                  {!athleteTooYoung && (
+                    <>
+                      <section className="glass-card form-section">
+                        <div className="form-section-title"><div className="icon-box yellow-box"><Gamepad2 size={20} /></div><div><h4>Perfil esportivo</h4><p>Informações de participação no ecossistema de e-sports.</p></div></div>
+                        <div className="form-grid">
+                          <label>Nickname
+                            <input required className={nicknameBlocked ? 'invalid' : ''} value={athleteNickname} onChange={(e) => setAthleteNickname(e.target.value)} placeholder="Nome utilizado nas competições" maxLength={24} />
+                            {nicknameBlocked ? <small className="field-error">Este nickname contém termo potencialmente ofensivo ou incompatível com as regras do SERFES.</small> : <small className="field-help">Nicknames ofensivos, discriminatórios ou com palavrões serão bloqueados.</small>}
+                          </label>
+                          <label>Modalidade principal
+                            <select required value={athleteGame} onChange={(e) => setAthleteGame(e.target.value)}>
+                              <option value="" disabled>Selecione</option>
+                              <option>Valorant</option><option>League of Legends</option><option>EA Sports FC</option><option>Counter-Strike 2</option><option>Rocket League</option><option>Outra</option>
+                            </select>
+                          </label>
+                        </div>
+                      </section>
 
-                  <section className="glass-card form-section">
-                    <div className="form-section-title"><div className="icon-box green-box"><School size={20} /></div><div><h4>Vínculo escolar</h4><p>Selecione o município e a rede de ensino antes de informar a escola.</p></div></div>
-                    <div className="form-grid">
-                      <label>Está matriculado em instituição de ensino?
-                        <select required value={enrollmentStatus} onChange={(e) => {
-                          const nextValue = e.target.value;
-                          setEnrollmentStatus(nextValue);
-                          if (nextValue !== 'Sim') {
-                            setSchoolMunicipality('');
-                            setSchoolNetwork('');
-                            setAthleteInstitution('');
-                          }
-                        }}>
-                          <option>Sim</option><option>Não</option>
-                        </select>
-                      </label>
-                      <label>Município da instituição
-                        <select
-                          required={enrollmentStatus === 'Sim'}
-                          disabled={enrollmentStatus !== 'Sim'}
-                          value={schoolMunicipality}
-                          onChange={(e) => {
-                            setSchoolMunicipality(e.target.value);
-                            setSchoolNetwork('');
-                            setAthleteInstitution('');
-                          }}
-                        >
-                          <option value="" disabled>{municipalities.length ? 'Selecione' : 'Carregando municípios...'}</option>
-                          {municipalities.map((municipality) => <option key={`school-${municipality}`}>{municipality}</option>)}
-                        </select>
-                      </label>
-                      <label>Rede de ensino
-                        <select
-                          required={enrollmentStatus === 'Sim'}
-                          disabled={enrollmentStatus !== 'Sim' || !schoolMunicipality}
-                          value={schoolNetwork}
-                          onChange={(e) => {
-                            setSchoolNetwork(e.target.value);
-                            setAthleteInstitution('');
-                          }}
-                        >
-                          <option value="" disabled>Selecione</option>
-                          <option>Estadual</option><option>Federal</option><option>Municipal</option><option>Privada</option>
-                        </select>
-                      </label>
-                      <label>Escola
-                        <input
-                          required={enrollmentStatus === 'Sim'}
-                          disabled={enrollmentStatus !== 'Sim' || !schoolMunicipality || !schoolNetwork}
-                          value={athleteInstitution}
-                          onChange={(e) => setAthleteInstitution(e.target.value)}
-                          placeholder={!schoolMunicipality ? 'Selecione primeiro o município' : !schoolNetwork ? 'Selecione primeiro a rede' : 'Nome da escola'}
-                        />
-                      </label>
-                      <label>Nível de ensino<select disabled={enrollmentStatus !== 'Sim'} defaultValue=""><option value="">Selecione</option><option>Ensino fundamental</option><option>Ensino médio</option><option>Ensino superior</option><option>Outro</option></select></label>
-                      <label>Situação da matrícula<select disabled={enrollmentStatus !== 'Sim'} defaultValue="Ativa"><option>Ativa</option><option>Em validação</option><option>Não se aplica</option></select></label>
-                    </div>
-                    {schoolNetwork === 'Estadual' && <a className="secondary-button" href="https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml" target="_blank" rel="noreferrer">Consultar base oficial da SEED/PR</a>}
-                  </section>
+                      <section className="glass-card form-section">
+                        <div className="form-section-title"><div className="icon-box green-box"><School size={20} /></div><div><h4>Vínculo escolar</h4><p>Selecione o município e a rede de ensino antes de informar a escola.</p></div></div>
+                        <div className="form-grid">
+                          <label>Está matriculado em instituição de ensino?
+                            <select required value={enrollmentStatus} onChange={(e) => {
+                              const nextValue = e.target.value;
+                              setEnrollmentStatus(nextValue);
+                              if (nextValue !== 'Sim') {
+                                setSchoolMunicipality('');
+                                setSchoolNetwork('');
+                                setAthleteInstitution('');
+                              }
+                            }}>
+                              <option>Sim</option><option>Não</option>
+                            </select>
+                          </label>
+                          <label>Município da instituição
+                            <select
+                              required={enrollmentStatus === 'Sim'}
+                              disabled={enrollmentStatus !== 'Sim'}
+                              value={schoolMunicipality}
+                              onChange={(e) => {
+                                setSchoolMunicipality(e.target.value);
+                                setSchoolNetwork('');
+                                setAthleteInstitution('');
+                              }}
+                            >
+                              <option value="" disabled>{municipalities.length ? 'Selecione' : 'Carregando municípios...'}</option>
+                              {municipalities.map((municipality) => <option key={`school-${municipality}`}>{municipality}</option>)}
+                            </select>
+                          </label>
+                          <label>Rede de ensino
+                            <select
+                              required={enrollmentStatus === 'Sim'}
+                              disabled={enrollmentStatus !== 'Sim' || !schoolMunicipality}
+                              value={schoolNetwork}
+                              onChange={(e) => {
+                                setSchoolNetwork(e.target.value);
+                                setAthleteInstitution('');
+                              }}
+                            >
+                              <option value="" disabled>Selecione</option>
+                              <option>Estadual</option><option>Federal</option><option>Municipal</option><option>Privada</option>
+                            </select>
+                          </label>
+                          <label>Escola
+                            <input
+                              required={enrollmentStatus === 'Sim'}
+                              disabled={enrollmentStatus !== 'Sim' || !schoolMunicipality || !schoolNetwork}
+                              value={athleteInstitution}
+                              onChange={(e) => setAthleteInstitution(e.target.value)}
+                              placeholder={!schoolMunicipality ? 'Selecione primeiro o município' : !schoolNetwork ? 'Selecione primeiro a rede' : 'Nome da escola'}
+                            />
+                          </label>
+                          <label>Nível de ensino<select disabled={enrollmentStatus !== 'Sim'} defaultValue=""><option value="">Selecione</option><option>Ensino fundamental</option><option>Ensino médio</option><option>Ensino superior</option><option>Outro</option></select></label>
+                          <label>Ano escolar
+                            <select disabled={enrollmentStatus !== 'Sim'} defaultValue="">
+                              <option value="">Selecione</option>
+                              <option>6º ano do ensino fundamental</option>
+                              <option>7º ano do ensino fundamental</option>
+                              <option>8º ano do ensino fundamental</option>
+                              <option>9º ano do ensino fundamental</option>
+                              <option>1ª série do ensino médio</option>
+                              <option>2ª série do ensino médio</option>
+                              <option>3ª série do ensino médio</option>
+                              <option>Outro</option>
+                              <option>Não se aplica</option>
+                            </select>
+                          </label>
+                        </div>
+                        {schoolNetwork === 'Estadual' && <a className="secondary-button" href="https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml" target="_blank" rel="noreferrer">Consultar base oficial da SEED/PR</a>}
+                      </section>
 
-                  {minorStatus === true && (
-                    <section className="glass-card form-section authorization-section">
-                      <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal</h4><p>Informações gerais que serão reutilizadas automaticamente nos termos específicos de cada competição.</p></div></div>
-                      <div className="form-grid">
-                        <label>Nome completo<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Nome completo" /></label>
-                        <label>RG<input required value={responsibleRg} onChange={(e) => setResponsibleRg(e.target.value)} placeholder="00.000.000-0" /></label>
-                        <label>CPF
-                          <input required inputMode="numeric" maxLength={14} className={responsibleCpfInvalid ? 'invalid' : ''} value={responsibleCpf} onChange={(e) => setResponsibleCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
-                          {responsibleCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
-                        </label>
-                        <label>E-mail
-                          <input required type="email" className={responsibleEmailInvalid ? 'invalid' : ''} value={responsibleEmail} onChange={(e) => setResponsibleEmail(e.target.value)} placeholder="email@exemplo.demo" />
-                          {responsibleEmailInvalid && <small className="field-error">Informe um endereço de e-mail válido.</small>}
-                        </label>
-                        <label>Telefone
-                          <input required inputMode="tel" maxLength={15} className={responsiblePhoneInvalid ? 'invalid' : ''} value={responsiblePhone} onChange={(e) => setResponsiblePhone(formatPhone(e.target.value))} placeholder="(00) 00000-0000" />
-                          {responsiblePhoneInvalid && <small className="field-error">Informe DDD + telefone, com 10 ou 11 dígitos.</small>}
-                        </label>
-                      </div>
-                    </section>
+                      {minorStatus === true && (
+                        <section className="glass-card form-section authorization-section">
+                          <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal</h4><p>Informações gerais que serão reutilizadas automaticamente nos termos específicos de cada competição.</p></div></div>
+                          <div className="form-grid">
+                            <label>Nome completo<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Nome completo" /></label>
+                            <label>RG<input required value={responsibleRg} onChange={(e) => setResponsibleRg(e.target.value)} placeholder="00.000.000-0" /></label>
+                            <label>CPF
+                              <input required inputMode="numeric" maxLength={14} className={responsibleCpfInvalid ? 'invalid' : ''} value={responsibleCpf} onChange={(e) => setResponsibleCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
+                              {responsibleCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
+                            </label>
+                            <label>E-mail
+                              <input required type="email" className={responsibleEmailInvalid ? 'invalid' : ''} value={responsibleEmail} onChange={(e) => setResponsibleEmail(e.target.value)} placeholder="email@exemplo.demo" />
+                              {responsibleEmailInvalid && <small className="field-error">Informe um endereço de e-mail válido.</small>}
+                            </label>
+                            <label>Telefone
+                              <input required inputMode="tel" maxLength={15} className={responsiblePhoneInvalid ? 'invalid' : ''} value={responsiblePhone} onChange={(e) => setResponsiblePhone(formatPhone(e.target.value))} placeholder="(00) 00000-0000" />
+                              {responsiblePhoneInvalid && <small className="field-error">Informe DDD + telefone, com 10 ou 11 dígitos.</small>}
+                            </label>
+                          </div>
+                        </section>
+                      )}
+
+                      <section className="glass-card form-section">
+                        <div className="form-section-title"><div className="icon-box"><FileText size={20} /></div><div><h4>Documentos</h4><p>Área demonstrativa para futura conferência documental.</p></div></div>
+                        <div className="document-grid">
+                          <div className="document-item"><FileText size={18} /><div><strong>Documento de identificação</strong><span>Não anexado</span></div></div>
+                          <div className="document-item"><FileText size={18} /><div><strong>Comprovante de vínculo escolar</strong><span>Não anexado</span></div></div>
+                          <div className="document-item"><FileSignature size={18} /><div><strong>Autorizações por competição</strong><span>{minorStatus === true ? 'Geradas no momento da inscrição' : 'Não se aplica'}</span></div></div>
+                        </div>
+                        <p className="prototype-note">Cada competição poderá possuir uma autorização própria, vinculada à respectiva solicitação de inscrição.</p>
+                      </section>
+                    </>
                   )}
-
-                  <section className="glass-card form-section">
-                    <div className="form-section-title"><div className="icon-box"><FileText size={20} /></div><div><h4>Documentos</h4><p>Área demonstrativa para futura conferência documental.</p></div></div>
-                    <div className="document-grid">
-                      <div className="document-item"><FileText size={18} /><div><strong>Documento de identificação</strong><span>Não anexado</span></div></div>
-                      <div className="document-item"><FileText size={18} /><div><strong>Comprovante de vínculo escolar</strong><span>Não anexado</span></div></div>
-                      <div className="document-item"><FileSignature size={18} /><div><strong>Autorizações por competição</strong><span>{minorStatus === true ? 'Geradas no momento da inscrição' : 'Não se aplica'}</span></div></div>
-                    </div>
-                    <p className="prototype-note">Cada competição poderá possuir uma autorização própria, vinculada à respectiva solicitação de inscrição.</p>
-                  </section>
 
                   <div className="form-actions">
                     <button type="button" className="secondary-button" onClick={() => setDashboardSection(isAthlete ? 'athleteHome' : 'athletes')}>Cancelar</button>
-                    <button type="submit" className="primary-button"><CheckCircle2 size={17} /> Salvar cadastro demonstrativo</button>
+                    <button type="submit" className="primary-button" disabled={athleteTooYoung}><CheckCircle2 size={17} /> Salvar cadastro demonstrativo</button>
                   </div>
                 </form>
               </>
