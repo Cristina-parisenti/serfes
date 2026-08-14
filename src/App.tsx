@@ -656,7 +656,18 @@ export function App() {
                           <label>Modalidade principal
                             <select required value={athleteGame} onChange={(e) => setAthleteGame(e.target.value)}>
                               <option value="" disabled>Selecione</option>
-                              <option>Valorant</option><option>League of Legends</option><option>EA Sports FC</option><option>Counter-Strike 2</option><option>Rocket League</option><option>Outra</option>
+                              <option>Free Fire</option>
+                              <option>Tekken</option>
+                              <option>Street Fighter</option>
+                              <option>EA FC</option>
+                              <option>PES</option>
+                              <option>Fortnite</option>
+                              <option>Valorant</option>
+                              <option>League of Legends</option>
+                              <option>Counter Strike</option>
+                              <option>Brawl Stars</option>
+                              <option>Clash Royale</option>
+                              <option>Just Dance</option>
                             </select>
                           </label>
                         </div>
