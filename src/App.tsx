@@ -993,7 +993,6 @@ export function App() {
                                 <option>Tutor(a)</option>
                                 <option>Guardião(ã)</option>
                               </select>
-                              <small className="field-help">Avós, tios e outras pessoas só devem ser indicados quando tiverem condição jurídica de responsável legal.</small>
                             </label>
                             {responsibleNeedsProof && (
                               <label>Documento comprobatório da responsabilidade legal
