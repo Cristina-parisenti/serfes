@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import {
   AlertTriangle,
   ArrowLeft,
@@ -22,6 +22,15 @@ import {
   Users,
 } from 'lucide-react';
 import './authorization.css';
+import './validation.css';
+import {
+  formatCpf,
+  formatPhone,
+  isValidCpf,
+  isValidEmail,
+  isValidPhone,
+  nicknameHasBlockedContent,
+} from './formValidation';
 
 const modules = [
   ['Competições', 'Gestão de inscrições, calendários, chaves, resultados e homologação.', Trophy],
@@ -50,6 +59,7 @@ const athleteRows = [
 ] as const;
 
 type DashboardSection = 'overview' | 'athleteHome' | 'athletes' | 'athleteForm';
+type Municipality = { id: number; nome: string };
 
 function EsportsSymbol() {
   return (
@@ -69,13 +79,18 @@ export function App() {
   const [athleteSaved, setAthleteSaved] = useState(false);
   const [termVisible, setTermVisible] = useState(false);
   const [signatureStatus, setSignatureStatus] = useState<'Não se aplica' | 'Em preenchimento' | 'Pronto para assinatura'>('Não se aplica');
+  const [formAttempted, setFormAttempted] = useState(false);
 
   const [athleteName, setAthleteName] = useState('');
   const [athleteBirthDate, setAthleteBirthDate] = useState('');
+  const [athleteCpf, setAthleteCpf] = useState('');
   const [athleteEmail, setAthleteEmail] = useState('');
+  const [athletePhone, setAthletePhone] = useState('');
+  const [athleteMunicipality, setAthleteMunicipality] = useState('');
   const [athleteInstitution, setAthleteInstitution] = useState('');
   const [athleteNickname, setAthleteNickname] = useState('');
   const [athleteGame, setAthleteGame] = useState('');
+
   const [responsibleName, setResponsibleName] = useState('');
   const [responsibleRg, setResponsibleRg] = useState('');
   const [responsibleCpf, setResponsibleCpf] = useState('');
@@ -85,8 +100,35 @@ export function App() {
   const [partnerInstitution, setPartnerInstitution] = useState('');
   const [authorizationLocation, setAuthorizationLocation] = useState('');
 
+  const [municipalities, setMunicipalities] = useState<string[]>([]);
+  const [municipalitiesError, setMunicipalitiesError] = useState(false);
+
   const isAthlete = profile === 'Atleta';
   const isStateAdmin = profile === 'Administrador estadual';
+
+  const nicknameBlocked = athleteNickname.length > 0 && nicknameHasBlockedContent(athleteNickname);
+  const athleteCpfInvalid = athleteCpf.length > 0 && !isValidCpf(athleteCpf);
+  const athleteEmailInvalid = athleteEmail.length > 0 && !isValidEmail(athleteEmail);
+  const athletePhoneInvalid = athletePhone.length > 0 && !isValidPhone(athletePhone);
+  const responsibleCpfInvalid = responsibleCpf.length > 0 && !isValidCpf(responsibleCpf);
+  const responsibleEmailInvalid = responsibleEmail.length > 0 && !isValidEmail(responsibleEmail);
+  const responsiblePhoneInvalid = responsiblePhone.length > 0 && !isValidPhone(responsiblePhone);
+
+  useEffect(() => {
+    let active = true;
+    fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/41/municipios?orderBy=nome')
+      .then((response) => {
+        if (!response.ok) throw new Error('Não foi possível carregar os municípios.');
+        return response.json() as Promise<Municipality[]>;
+      })
+      .then((data) => {
+        if (active) setMunicipalities(data.map((item) => item.nome));
+      })
+      .catch(() => {
+        if (active) setMunicipalitiesError(true);
+      });
+    return () => { active = false; };
+  }, []);
 
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -103,7 +145,25 @@ export function App() {
 
   function handleAthleteSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setFormAttempted(true);
+
+    const mainFieldsValid =
+      isValidCpf(athleteCpf) &&
+      isValidEmail(athleteEmail) &&
+      isValidPhone(athletePhone) &&
+      !nicknameHasBlockedContent(athleteNickname) &&
+      athleteMunicipality.length > 0;
+
+    const responsibleFieldsValid = minor !== 'Sim' || (
+      isValidCpf(responsibleCpf) &&
+      isValidEmail(responsibleEmail) &&
+      isValidPhone(responsiblePhone)
+    );
+
+    if (!mainFieldsValid || !responsibleFieldsValid) return;
+
     setAthleteSaved(true);
+    setFormAttempted(false);
     setDashboardSection(isAthlete ? 'athleteHome' : 'athletes');
   }
 
@@ -277,24 +337,47 @@ export function App() {
                 </section>
 
                 <form className="athlete-form" onSubmit={handleAthleteSubmit}>
+                  {formAttempted && (nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && (
+                    <div className="warning-note"><AlertTriangle size={18} /><span>Revise os campos destacados antes de salvar o cadastro.</span></div>
+                  )}
+
                   <section className="glass-card form-section">
                     <div className="form-section-title"><div className="icon-box"><UserRound size={20} /></div><div><h4>Identificação</h4><p>Dados básicos para individualização do atleta.</p></div></div>
                     <div className="form-grid">
                       <label>Nome completo<input required value={athleteName} onChange={(e) => setAthleteName(e.target.value)} placeholder="Ex.: Atleta Exemplo" /></label>
                       <label>Nome social<input placeholder="Opcional" /></label>
                       <label>Data de nascimento<input required type="date" value={athleteBirthDate} onChange={(e) => setAthleteBirthDate(e.target.value)} /></label>
-                      <label>CPF fictício<input required placeholder="000.000.000-00" /></label>
-                      <label>E-mail<input required type="email" value={athleteEmail} onChange={(e) => setAthleteEmail(e.target.value)} placeholder="atleta@exemplo.demo" /></label>
-                      <label>Telefone<input placeholder="(00) 00000-0000" /></label>
-                      <label>Município<select required defaultValue=""><option value="" disabled>Selecione</option><option>Curitiba</option><option>Londrina</option><option>Maringá</option><option>Outro município</option></select></label>
-                      <label>UF<select defaultValue="PR"><option>PR</option></select></label>
+                      <label>CPF
+                        <input required inputMode="numeric" maxLength={14} className={athleteCpfInvalid ? 'invalid' : ''} value={athleteCpf} onChange={(e) => setAthleteCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
+                        {athleteCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
+                      </label>
+                      <label>E-mail
+                        <input required type="email" className={athleteEmailInvalid ? 'invalid' : ''} value={athleteEmail} onChange={(e) => setAthleteEmail(e.target.value)} placeholder="atleta@exemplo.demo" />
+                        {athleteEmailInvalid && <small className="field-error">Informe um endereço de e-mail válido.</small>}
+                      </label>
+                      <label>Telefone
+                        <input required inputMode="tel" maxLength={15} className={athletePhoneInvalid ? 'invalid' : ''} value={athletePhone} onChange={(e) => setAthletePhone(formatPhone(e.target.value))} placeholder="(00) 00000-0000" />
+                        {athletePhoneInvalid && <small className="field-error">Informe DDD + telefone, com 10 ou 11 dígitos.</small>}
+                      </label>
+                      <label>Município
+                        <select required value={athleteMunicipality} onChange={(e) => setAthleteMunicipality(e.target.value)}>
+                          <option value="" disabled>{municipalities.length ? 'Selecione' : 'Carregando municípios...'}</option>
+                          {municipalities.map((municipality) => <option key={municipality}>{municipality}</option>)}
+                        </select>
+                        {municipalitiesError && <small className="field-error">Não foi possível carregar a relação oficial do IBGE. Tente novamente.</small>}
+                        {!municipalitiesError && <small className="field-help">Relação carregada automaticamente a partir da API de Localidades do IBGE.</small>}
+                      </label>
+                      <label>UF<select value="PR" disabled><option>PR</option></select></label>
                     </div>
                   </section>
 
                   <section className="glass-card form-section">
                     <div className="form-section-title"><div className="icon-box yellow-box"><Gamepad2 size={20} /></div><div><h4>Perfil esportivo</h4><p>Informações de participação no ecossistema de e-sports.</p></div></div>
                     <div className="form-grid">
-                      <label>Nickname<input required value={athleteNickname} onChange={(e) => setAthleteNickname(e.target.value)} placeholder="Nome utilizado nas competições" /></label>
+                      <label>Nickname
+                        <input required className={nicknameBlocked ? 'invalid' : ''} value={athleteNickname} onChange={(e) => setAthleteNickname(e.target.value)} placeholder="Nome utilizado nas competições" maxLength={24} />
+                        {nicknameBlocked ? <small className="field-error">Este nickname contém termo potencialmente ofensivo ou incompatível com as regras do SERFES.</small> : <small className="field-help">Nicknames ofensivos, discriminatórios ou com palavrões serão bloqueados.</small>}
+                      </label>
                       <label>Modalidade principal<select required value={athleteGame} onChange={(e) => setAthleteGame(e.target.value)}><option value="" disabled>Selecione</option><option>Valorant</option><option>League of Legends</option><option>EA Sports FC</option><option>Counter-Strike 2</option><option>Rocket League</option><option>Outra</option></select></label>
                       <label>Equipe ou entidade<input placeholder="Opcional" /></label>
                       <label>Tempo de prática<select defaultValue=""><option value="">Selecione</option><option>Até 1 ano</option><option>1 a 3 anos</option><option>Mais de 3 anos</option></select></label>
@@ -320,9 +403,18 @@ export function App() {
                         <>
                           <label>Nome do responsável legal<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Responsável Exemplo" /></label>
                           <label>RG do responsável<input required value={responsibleRg} onChange={(e) => setResponsibleRg(e.target.value)} placeholder="00.000.000-0" /></label>
-                          <label>CPF fictício do responsável<input required value={responsibleCpf} onChange={(e) => setResponsibleCpf(e.target.value)} placeholder="000.000.000-00" /></label>
-                          <label>E-mail do responsável<input required type="email" value={responsibleEmail} onChange={(e) => setResponsibleEmail(e.target.value)} placeholder="responsavel@exemplo.demo" /></label>
-                          <label>Telefone do responsável<input required value={responsiblePhone} onChange={(e) => setResponsiblePhone(e.target.value)} placeholder="(00) 00000-0000" /></label>
+                          <label>CPF do responsável
+                            <input required inputMode="numeric" maxLength={14} className={responsibleCpfInvalid ? 'invalid' : ''} value={responsibleCpf} onChange={(e) => setResponsibleCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
+                            {responsibleCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
+                          </label>
+                          <label>E-mail do responsável
+                            <input required type="email" className={responsibleEmailInvalid ? 'invalid' : ''} value={responsibleEmail} onChange={(e) => setResponsibleEmail(e.target.value)} placeholder="responsavel@exemplo.demo" />
+                            {responsibleEmailInvalid && <small className="field-error">Informe um endereço de e-mail válido.</small>}
+                          </label>
+                          <label>Telefone do responsável
+                            <input required inputMode="tel" maxLength={15} className={responsiblePhoneInvalid ? 'invalid' : ''} value={responsiblePhone} onChange={(e) => setResponsiblePhone(formatPhone(e.target.value))} placeholder="(00) 00000-0000" />
+                            {responsiblePhoneInvalid && <small className="field-error">Informe DDD + telefone, com 10 ou 11 dígitos.</small>}
+                          </label>
                           <label>Local para assinatura<input value={authorizationLocation} onChange={(e) => setAuthorizationLocation(e.target.value)} placeholder="Ex.: Curitiba/PR" /></label>
                           <label>Período da competição<input value={competitionPeriod} onChange={(e) => setCompetitionPeriod(e.target.value)} placeholder="Ex.: 10 a 12/10/2026" /></label>
                           <label>Instituição parceira<input value={partnerInstitution} onChange={(e) => setPartnerInstitution(e.target.value)} placeholder="Informação definida pela organização" /></label>
