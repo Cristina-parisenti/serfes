@@ -204,7 +204,6 @@ export function App() {
 
   const [responsibleName, setResponsibleName] = useState('');
   const [responsibleLegalCapacity, setResponsibleLegalCapacity] = useState('');
-  const [responsibleOtherCapacity, setResponsibleOtherCapacity] = useState('');
   const [responsibleProofDocument, setResponsibleProofDocument] = useState<File | null>(null);
   const [responsibleCpf, setResponsibleCpf] = useState('');
   const [responsibleEmail, setResponsibleEmail] = useState('');
@@ -256,10 +255,8 @@ export function App() {
   const athleteCpfInvalid = athleteCpf.length > 0 && !isValidCpf(athleteCpf);
   const athleteEmailInvalid = athleteEmail.length > 0 && !isValidEmail(athleteEmail);
   const athletePhoneInvalid = athletePhone.length > 0 && !isValidPhone(athletePhone);
-  const responsibleNeedsProof = ['Tutor(a)', 'Guardião(ã) judicial', 'Outro responsável legal'].includes(responsibleLegalCapacity);
-  const responsibleCapacityLabel = responsibleLegalCapacity === 'Outro responsável legal'
-    ? responsibleOtherCapacity.trim() || 'Outro responsável legal'
-    : responsibleLegalCapacity;
+  const responsibleNeedsProof = ['Tutor(a)', 'Guardião(ã)'].includes(responsibleLegalCapacity);
+  const responsibleCapacityLabel = responsibleLegalCapacity;
   const responsibleCpfInvalid = responsibleCpf.length > 0 && !isValidCpf(responsibleCpf);
   const responsibleEmailInvalid = responsibleEmail.length > 0 && !isValidEmail(responsibleEmail);
   const responsiblePhoneInvalid = responsiblePhone.length > 0 && !isValidPhone(responsiblePhone);
@@ -397,7 +394,6 @@ export function App() {
     const responsibleFieldsValid = minorStatus !== true || (
       responsibleName.trim().length > 0 &&
       responsibleLegalCapacity.length > 0 &&
-      (responsibleLegalCapacity !== 'Outro responsável legal' || responsibleOtherCapacity.trim().length > 0) &&
       (!responsibleNeedsProof || responsibleProofDocument !== null) &&
       isValidCpf(responsibleCpf) &&
       isValidEmail(responsibleEmail) &&
@@ -981,31 +977,24 @@ export function App() {
                           <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal</h4><p>Informações gerais que serão reutilizadas automaticamente nos termos específicos de cada competição.</p></div></div>
                           <div className="form-grid">
                             <label>Nome completo<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Nome completo" /></label>
-                            <label>Condição do responsável legal
+                            <label>Qualificação do responsável legal
                               <select
                                 required
                                 value={responsibleLegalCapacity}
                                 onChange={(e) => {
                                   const next = e.target.value;
                                   setResponsibleLegalCapacity(next);
-                                  if (next !== 'Outro responsável legal') setResponsibleOtherCapacity('');
-                                  if (!['Tutor(a)', 'Guardião(ã) judicial', 'Outro responsável legal'].includes(next)) setResponsibleProofDocument(null);
+                                  if (!['Tutor(a)', 'Guardião(ã)'].includes(next)) setResponsibleProofDocument(null);
                                 }}
                               >
                                 <option value="" disabled>Selecione</option>
                                 <option>Mãe</option>
                                 <option>Pai</option>
                                 <option>Tutor(a)</option>
-                                <option>Guardião(ã) judicial</option>
-                                <option>Outro responsável legal</option>
+                                <option>Guardião(ã)</option>
                               </select>
                               <small className="field-help">Avós, tios e outras pessoas só devem ser indicados quando tiverem condição jurídica de responsável legal.</small>
                             </label>
-                            {responsibleLegalCapacity === 'Outro responsável legal' && (
-                              <label>Informe a condição ou vínculo
-                                <input required value={responsibleOtherCapacity} onChange={(e) => setResponsibleOtherCapacity(e.target.value)} placeholder="Descreva a condição jurídica do responsável" />
-                              </label>
-                            )}
                             {responsibleNeedsProof && (
                               <label>Documento comprobatório da responsabilidade legal
                                 <input
@@ -1014,7 +1003,7 @@ export function App() {
                                   accept=".pdf,.jpg,.jpeg,.png"
                                   onChange={(e) => setResponsibleProofDocument(e.target.files?.[0] ?? null)}
                                 />
-                                <small className="field-help">Para tutor, guardião judicial ou outro responsável legal, anexe o termo, decisão judicial ou documento equivalente que comprove a representação.</small>
+                                <small className="field-help">Para tutor ou guardião, anexe o termo, decisão judicial ou documento equivalente que comprove a representação.</small>
                                 {responsibleProofDocument && <small className="field-help">Arquivo selecionado: {responsibleProofDocument.name}</small>}
                               </label>
                             )}
