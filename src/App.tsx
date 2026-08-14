@@ -1,13 +1,17 @@
 import { FormEvent, useState } from 'react';
 import {
+  AlertTriangle,
   ArrowLeft,
   BarChart3,
   Bell,
   CalendarDays,
+  CheckCircle2,
   ChevronRight,
+  FileText,
   Gamepad2,
   LayoutDashboard,
   LogOut,
+  Plus,
   School,
   Search,
   ShieldCheck,
@@ -36,6 +40,12 @@ const profiles = [
   'Árbitro ou profissional habilitado',
 ];
 
+const athleteRows = [
+  { name: 'Atleta Alpha', nick: 'ALPHA01', game: 'Valorant', city: 'Curitiba', school: 'Vínculo confirmado', status: 'Validado', tone: 'green' },
+  { name: 'Jogadora Beta', nick: 'BETA.GG', game: 'League of Legends', city: 'Londrina', school: 'Em análise', status: 'Pendente', tone: 'yellow' },
+  { name: 'Atleta Gamma', nick: 'GAMMA7', game: 'EA Sports FC', city: 'Maringá', school: 'Não informado', status: 'Aguardando responsável', tone: 'red' },
+] as const;
+
 function EsportsSymbol() {
   return (
     <div className="esports-symbol" aria-hidden="true">
@@ -48,13 +58,23 @@ function EsportsSymbol() {
 
 export function App() {
   const [view, setView] = useState<'home' | 'login' | 'dashboard'>('home');
+  const [dashboardSection, setDashboardSection] = useState<'overview' | 'athletes' | 'athleteForm'>('overview');
   const [profile, setProfile] = useState(profiles[0]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [minor, setMinor] = useState('Não');
+  const [athleteSaved, setAthleteSaved] = useState(false);
 
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setDashboardSection('overview');
     setView('dashboard');
+  }
+
+  function handleAthleteSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setAthleteSaved(true);
+    setDashboardSection('athletes');
   }
 
   if (view === 'login') {
@@ -143,9 +163,13 @@ export function App() {
           </div>
 
           <nav className="sidebar-nav">
-            <button className="nav-item active"><LayoutDashboard size={18} /> Visão geral</button>
+            <button className={`nav-item ${dashboardSection === 'overview' ? 'active' : ''}`} onClick={() => setDashboardSection('overview')}>
+              <LayoutDashboard size={18} /> Visão geral
+            </button>
             <button className="nav-item"><Trophy size={18} /> Competições</button>
-            <button className="nav-item"><Users size={18} /> Atletas</button>
+            <button className={`nav-item ${dashboardSection === 'athletes' || dashboardSection === 'athleteForm' ? 'active' : ''}`} onClick={() => setDashboardSection('athletes')}>
+              <Users size={18} /> Atletas
+            </button>
             <button className="nav-item"><School size={18} /> Escolas</button>
             <button className="nav-item"><ShieldCheck size={18} /> Integridade</button>
             <button className="nav-item"><BarChart3 size={18} /> Indicadores</button>
@@ -174,47 +198,215 @@ export function App() {
           </header>
 
           <main className="dashboard-content">
-            <section className="hero-panel">
-              <div>
-                <span className="pill">Perfil selecionado</span>
-                <h3>{profile}</h3>
-                <p>Layout-base para cadastros, painéis e rotinas principais do SERFES.</p>
-              </div>
-              <button className="primary-button">Novo registro</button>
-            </section>
-
-            <section className="stats-grid">
-              <article className="stat-card featured"><span>Competições</span><strong>12</strong><small>+3 neste mês</small></article>
-              <article className="stat-card"><span>Atletas</span><strong>248</strong><small>18 pendências</small></article>
-              <article className="stat-card"><span>Escolas</span><strong>57</strong><small>9 em validação</small></article>
-              <article className="stat-card"><span>Municípios</span><strong>21</strong><small>4 aderentes recentes</small></article>
-            </section>
-
-            <section className="panel-grid">
-              <article className="glass-card panel-card">
-                <div className="panel-head">
+            {dashboardSection === 'overview' && (
+              <>
+                <section className="hero-panel">
                   <div>
-                    <p className="eyebrow">Ações rápidas</p>
-                    <h4>Atalhos principais</h4>
+                    <span className="pill">Perfil selecionado</span>
+                    <h3>{profile}</h3>
+                    <p>Layout-base para cadastros, painéis e rotinas principais do SERFES.</p>
                   </div>
-                </div>
-                <button className="line-action"><span>Cadastrar competição</span><ChevronRight size={16} /></button>
-                <button className="line-action"><span>Adicionar atleta</span><ChevronRight size={16} /></button>
-                <button className="line-action"><span>Validar escola</span><ChevronRight size={16} /></button>
-              </article>
+                  <button className="primary-button" onClick={() => setDashboardSection('athleteForm')}>
+                    <Plus size={17} /> Novo registro
+                  </button>
+                </section>
 
-              <article className="glass-card panel-card">
-                <div className="panel-head">
+                <section className="stats-grid">
+                  <article className="stat-card featured"><span>Competições</span><strong>12</strong><small>+3 neste mês</small></article>
+                  <article className="stat-card"><span>Atletas</span><strong>248</strong><small>18 pendências</small></article>
+                  <article className="stat-card"><span>Escolas</span><strong>57</strong><small>9 em validação</small></article>
+                  <article className="stat-card"><span>Municípios</span><strong>21</strong><small>4 aderentes recentes</small></article>
+                </section>
+
+                <section className="panel-grid">
+                  <article className="glass-card panel-card">
+                    <div className="panel-head">
+                      <div>
+                        <p className="eyebrow">Ações rápidas</p>
+                        <h4>Atalhos principais</h4>
+                      </div>
+                    </div>
+                    <button className="line-action"><span>Cadastrar competição</span><ChevronRight size={16} /></button>
+                    <button className="line-action" onClick={() => setDashboardSection('athleteForm')}><span>Adicionar atleta</span><ChevronRight size={16} /></button>
+                    <button className="line-action"><span>Validar escola</span><ChevronRight size={16} /></button>
+                  </article>
+
+                  <article className="glass-card panel-card">
+                    <div className="panel-head">
+                      <div>
+                        <p className="eyebrow">Agenda</p>
+                        <h4>Próximos eventos</h4>
+                      </div>
+                    </div>
+                    <div className="list-card"><strong>18/08</strong><span>Prazo de inscrições dos Jogos Escolares</span></div>
+                    <div className="list-card"><strong>22/08</strong><span>Reunião com organizadores</span></div>
+                    <div className="list-card"><strong>29/08</strong><span>Homologação de resultados</span></div>
+                  </article>
+                </section>
+              </>
+            )}
+
+            {dashboardSection === 'athletes' && (
+              <>
+                <section className="section-toolbar">
                   <div>
-                    <p className="eyebrow">Agenda</p>
-                    <h4>Próximos eventos</h4>
+                    <p className="eyebrow">Gestão de atletas</p>
+                    <h3>Atletas cadastrados</h3>
+                    <p className="muted">Consulte vínculos, documentação e situação de elegibilidade.</p>
                   </div>
-                </div>
-                <div className="list-card"><strong>18/08</strong><span>Prazo de inscrições dos Jogos Escolares</span></div>
-                <div className="list-card"><strong>22/08</strong><span>Reunião com organizadores</span></div>
-                <div className="list-card"><strong>29/08</strong><span>Homologação de resultados</span></div>
-              </article>
-            </section>
+                  <button className="primary-button" onClick={() => setDashboardSection('athleteForm')}>
+                    <Plus size={17} /> Cadastrar atleta
+                  </button>
+                </section>
+
+                {athleteSaved && (
+                  <div className="success-banner">
+                    <CheckCircle2 size={19} />
+                    <div><strong>Cadastro demonstrativo concluído.</strong><span>Os dados não foram armazenados; esta tela ainda é um protótipo.</span></div>
+                  </div>
+                )}
+
+                <section className="athlete-summary-grid">
+                  <article className="mini-status blue"><strong>248</strong><span>Total cadastrado</span></article>
+                  <article className="mini-status green"><strong>214</strong><span>Validados</span></article>
+                  <article className="mini-status yellow"><strong>18</strong><span>Em análise</span></article>
+                  <article className="mini-status red"><strong>16</strong><span>Com pendências</span></article>
+                </section>
+
+                <section className="glass-card table-card">
+                  <div className="table-toolbar">
+                    <label className="search-box table-search">
+                      <Search size={16} />
+                      <input type="text" placeholder="Buscar por nome, nickname ou município" />
+                    </label>
+                    <select className="compact-select" defaultValue="Todos os status">
+                      <option>Todos os status</option>
+                      <option>Validado</option>
+                      <option>Pendente</option>
+                      <option>Aguardando responsável</option>
+                    </select>
+                  </div>
+
+                  <div className="table-shell">
+                    <table className="data-table">
+                      <thead>
+                        <tr><th>Atleta</th><th>Modalidade</th><th>Município</th><th>Vínculo escolar</th><th>Situação</th></tr>
+                      </thead>
+                      <tbody>
+                        {athleteRows.map((athlete) => (
+                          <tr key={athlete.nick}>
+                            <td><strong>{athlete.name}</strong><small>{athlete.nick}</small></td>
+                            <td>{athlete.game}</td>
+                            <td>{athlete.city}</td>
+                            <td>{athlete.school}</td>
+                            <td><span className={`status-badge ${athlete.tone}`}>{athlete.status}</span></td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="prototype-note">Nomes e quantitativos exibidos nesta página são fictícios e servem exclusivamente para demonstração.</p>
+                </section>
+              </>
+            )}
+
+            {dashboardSection === 'athleteForm' && (
+              <>
+                <section className="section-toolbar form-heading">
+                  <div>
+                    <button className="back-link" onClick={() => setDashboardSection('athletes')}><ArrowLeft size={16} /> Voltar para atletas</button>
+                    <p className="eyebrow">Novo cadastro</p>
+                    <h3>Cadastrar atleta</h3>
+                    <p className="muted">Preencha apenas dados fictícios durante esta fase de desenvolvimento.</p>
+                  </div>
+                </section>
+
+                <form className="athlete-form" onSubmit={handleAthleteSubmit}>
+                  <section className="glass-card form-section">
+                    <div className="form-section-title">
+                      <div className="icon-box"><UserRound size={20} /></div>
+                      <div><h4>Identificação</h4><p>Dados básicos para individualização do atleta.</p></div>
+                    </div>
+                    <div className="form-grid">
+                      <label>Nome completo<input required placeholder="Ex.: Atleta Exemplo" /></label>
+                      <label>Nome social<input placeholder="Opcional" /></label>
+                      <label>Data de nascimento<input required type="date" /></label>
+                      <label>CPF fictício<input required placeholder="000.000.000-00" /></label>
+                      <label>E-mail<input required type="email" placeholder="atleta@exemplo.demo" /></label>
+                      <label>Telefone<input placeholder="(00) 00000-0000" /></label>
+                      <label>Município<select required defaultValue=""><option value="" disabled>Selecione</option><option>Curitiba</option><option>Londrina</option><option>Maringá</option><option>Outro município</option></select></label>
+                      <label>UF<select defaultValue="PR"><option>PR</option></select></label>
+                    </div>
+                  </section>
+
+                  <section className="glass-card form-section">
+                    <div className="form-section-title">
+                      <div className="icon-box yellow-box"><Gamepad2 size={20} /></div>
+                      <div><h4>Perfil esportivo</h4><p>Informações de participação no ecossistema de e-sports.</p></div>
+                    </div>
+                    <div className="form-grid">
+                      <label>Nickname<input required placeholder="Nome utilizado nas competições" /></label>
+                      <label>Modalidade principal<select required defaultValue=""><option value="" disabled>Selecione</option><option>Valorant</option><option>League of Legends</option><option>EA Sports FC</option><option>Counter-Strike 2</option><option>Outra</option></select></label>
+                      <label>Equipe ou entidade<input placeholder="Opcional" /></label>
+                      <label>Tempo de prática<select defaultValue=""><option value="">Selecione</option><option>Até 1 ano</option><option>1 a 3 anos</option><option>Mais de 3 anos</option></select></label>
+                    </div>
+                  </section>
+
+                  <section className="glass-card form-section">
+                    <div className="form-section-title">
+                      <div className="icon-box green-box"><School size={20} /></div>
+                      <div><h4>Vínculo educacional</h4><p>Informações para validação da situação escolar quando aplicável.</p></div>
+                    </div>
+                    <div className="form-grid">
+                      <label>Está matriculado em instituição de ensino?<select required defaultValue="Sim"><option>Sim</option><option>Não</option></select></label>
+                      <label>Instituição de ensino<input placeholder="Nome fictício da instituição" /></label>
+                      <label>Nível de ensino<select defaultValue=""><option value="">Selecione</option><option>Ensino fundamental</option><option>Ensino médio</option><option>Ensino superior</option><option>Outro</option></select></label>
+                      <label>Situação da matrícula<select defaultValue="Ativa"><option>Ativa</option><option>Em validação</option><option>Não se aplica</option></select></label>
+                    </div>
+                  </section>
+
+                  <section className="glass-card form-section">
+                    <div className="form-section-title">
+                      <div className="icon-box red-box"><ShieldCheck size={20} /></div>
+                      <div><h4>Responsável legal e autorizações</h4><p>Necessário quando o atleta for menor de idade.</p></div>
+                    </div>
+                    <div className="form-grid">
+                      <label>Atleta menor de 18 anos?<select value={minor} onChange={(event) => setMinor(event.target.value)}><option>Não</option><option>Sim</option></select></label>
+                      <label>Termo de autorização<select defaultValue={minor === 'Sim' ? 'Pendente' : 'Não se aplica'} key={minor}><option>Não se aplica</option><option>Pendente</option><option>Recebido</option><option>Validado</option></select></label>
+                      {minor === 'Sim' && (
+                        <>
+                          <label>Nome do responsável legal<input required placeholder="Responsável Exemplo" /></label>
+                          <label>CPF fictício do responsável<input required placeholder="000.000.000-00" /></label>
+                          <label>E-mail do responsável<input required type="email" placeholder="responsavel@exemplo.demo" /></label>
+                          <label>Telefone do responsável<input required placeholder="(00) 00000-0000" /></label>
+                        </>
+                      )}
+                    </div>
+                    {minor === 'Sim' && (
+                      <div className="warning-note"><AlertTriangle size={18} /><span>O cadastro de menor ficará pendente até a validação do responsável legal e da autorização correspondente.</span></div>
+                    )}
+                  </section>
+
+                  <section className="glass-card form-section">
+                    <div className="form-section-title">
+                      <div className="icon-box"><FileText size={20} /></div>
+                      <div><h4>Documentos</h4><p>Área demonstrativa para futura conferência documental.</p></div>
+                    </div>
+                    <div className="document-grid">
+                      <div className="document-item"><FileText size={18} /><div><strong>Documento de identificação</strong><span>Não anexado</span></div></div>
+                      <div className="document-item"><FileText size={18} /><div><strong>Comprovante de vínculo escolar</strong><span>Não anexado</span></div></div>
+                      <div className="document-item"><FileText size={18} /><div><strong>Autorização do responsável</strong><span>{minor === 'Sim' ? 'Pendente' : 'Não se aplica'}</span></div></div>
+                    </div>
+                    <p className="prototype-note">O envio real de documentos será implementado somente quando houver armazenamento seguro e regras de proteção de dados definidas.</p>
+                  </section>
+
+                  <div className="form-actions">
+                    <button type="button" className="secondary-button" onClick={() => setDashboardSection('athletes')}>Cancelar</button>
+                    <button type="submit" className="primary-button"><CheckCircle2 size={17} /> Salvar cadastro demonstrativo</button>
+                  </div>
+                </form>
+              </>
+            )}
           </main>
         </div>
       </div>
