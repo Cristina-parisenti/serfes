@@ -1,0 +1,82 @@
+name: Inspect ClassInd dataset
+
+on:
+  push:
+    paths:
+      - '.github/workflows/inspect-classind.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect official ClassInd open data
+        run: |
+          python - <<'PY'
+          import csv, io, json, re, unicodedata, urllib.request
+
+          PACKAGE_URL = 'https://dados.mj.gov.br/api/3/action/package_show?id=classind-sistema-gerencial-da-classificacao-indicativa'
+          with urllib.request.urlopen(PACKAGE_URL, timeout=30) as response:
+              package = json.load(response)['result']
+
+          print('PACKAGE:', package.get('title'))
+          resources = package.get('resources', [])
+          for r in resources:
+              print('RESOURCE:', r.get('name'), '|', r.get('format'), '|', r.get('url'), '| modified:', r.get('last_modified'))
+
+          csv_resource = next((r for r in resources if (r.get('format') or '').upper() == 'CSV' and 'jogo' in (r.get('name') or '').lower() and 'rpg' not in (r.get('name') or '').lower()), None)
+          if not csv_resource:
+              raise SystemExit('CSV de jogos eletrônicos não localizado')
+
+          print('USING:', csv_resource['url'])
+          req = urllib.request.Request(csv_resource['url'], headers={'User-Agent':'SERFES-prototype/1.0'})
+          with urllib.request.urlopen(req, timeout=60) as response:
+              raw = response.read()
+
+          text = None
+          for enc in ('utf-8-sig','latin-1','cp1252'):
+              try:
+                  text = raw.decode(enc)
+                  break
+              except UnicodeDecodeError:
+                  pass
+          if text is None:
+              raise SystemExit('Falha ao decodificar CSV')
+
+          sample = text[:10000]
+          delimiter = ';' if sample.count(';') >= sample.count(',') else ','
+          reader = csv.DictReader(io.StringIO(text), delimiter=delimiter)
+          print('DELIMITER:', repr(delimiter))
+          print('HEADERS:', reader.fieldnames)
+
+          def norm(s):
+              s = unicodedata.normalize('NFKD', str(s or '')).encode('ascii','ignore').decode().lower()
+              return re.sub(r'[^a-z0-9]+',' ',s).strip()
+
+          terms = [
+            'Free Fire','Tekken','Street Fighter','EA FC','FIFA','PES','eFootball',
+            'Fortnite','Valorant','League of Legends','Counter Strike','Counter-Strike',
+            'Brawl Stars','Clash Royale','Just Dance'
+          ]
+          nterms = [(t,norm(t)) for t in terms]
+          found = {t: [] for t in terms}
+
+          rows = list(reader)
+          print('ROW_COUNT:', len(rows))
+          for row in rows:
+              joined = ' | '.join(str(v or '') for v in row.values())
+              nj = norm(joined)
+              for original, nt in nterms:
+                  if nt and nt in nj:
+                      if len(found[original]) < 8:
+                          found[original].append(row)
+
+          for term, matches in found.items():
+              if not matches:
+                  continue
+              print('\n===', term, '===')
+              for row in matches:
+                  print(json.dumps(row, ensure_ascii=False))
+          PY
