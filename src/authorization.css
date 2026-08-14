@@ -91,6 +91,7 @@
   border-radius: 18px;
   background: #fff;
   border: 1px solid var(--border);
+  align-items: stretch;
 }
 
 .signature-step {
@@ -101,6 +102,7 @@
   border-radius: 14px;
   background: #f8fbfd;
   border: 1px solid #e1eaf2;
+  min-width: 0;
 }
 
 .signature-step > span {
@@ -117,7 +119,8 @@
 
 .signature-step div {
   display: grid;
-  gap: .25rem;
+  gap: .35rem;
+  width: 100%;
 }
 
 .signature-step small {
@@ -146,14 +149,16 @@
 }
 
 .govbr-button {
-  grid-column: 1 / -1;
+  width: 100%;
+  margin-top: .35rem;
   border: 1px solid #b8c7d5;
   background: #eef3f7;
   color: #7a8794;
-  border-radius: 13px;
-  padding: .9rem 1rem;
+  border-radius: 11px;
+  padding: .65rem .75rem;
   font-weight: 800;
   cursor: not-allowed;
+  font-size: .82rem;
 }
 
 @media (max-width: 850px) {
@@ -164,10 +169,6 @@
 
   .signature-flow {
     grid-template-columns: 1fr;
-  }
-
-  .govbr-button {
-    grid-column: auto;
   }
 }
 
