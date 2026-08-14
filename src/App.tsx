@@ -203,7 +203,6 @@ export function App() {
   const [higherEducationCourse, setHigherEducationCourse] = useState('');
 
   const [responsibleName, setResponsibleName] = useState('');
-  const [responsibleRg, setResponsibleRg] = useState('');
   const [responsibleCpf, setResponsibleCpf] = useState('');
   const [responsibleEmail, setResponsibleEmail] = useState('');
   const [responsiblePhone, setResponsiblePhone] = useState('');
@@ -390,7 +389,6 @@ export function App() {
 
     const responsibleFieldsValid = minorStatus !== true || (
       responsibleName.trim().length > 0 &&
-      responsibleRg.trim().length > 0 &&
       isValidCpf(responsibleCpf) &&
       isValidEmail(responsibleEmail) &&
       isValidPhone(responsiblePhone)
@@ -662,7 +660,7 @@ export function App() {
 
                   <article className="term-paper">
                     <h3>TERMO DE AUTORIZAÇÃO PARA PARTICIPAÇÃO DE ESTUDANTE EM COMPETIÇÃO DE ESPORTES ELETRÔNICOS ESCOLARES</h3>
-                    <p>Eu, <strong>{responsibleName}</strong>, portador(a) do RG nº <strong>{responsibleRg}</strong> e inscrito(a) no CPF nº <strong>{responsibleCpf}</strong>, na qualidade de responsável legal pelo(a) estudante <strong>{athleteName}</strong>, regularmente matriculado(a) na instituição de ensino <strong>{athleteInstitution || '_______________________________'}</strong>, autorizo sua participação voluntária na competição <strong>{selectedCompetition.name}</strong>, a ser realizada no período de <strong>{selectedCompetition.period}</strong>, em <strong>{selectedCompetition.location}</strong>.</p>
+                    <p>Eu, <strong>{responsibleName}</strong>, inscrito(a) no CPF nº <strong>{responsibleCpf}</strong>, na qualidade de responsável legal pelo(a) estudante <strong>{athleteName}</strong>, regularmente matriculado(a) na instituição de ensino <strong>{athleteInstitution || '_______________________________'}</strong>, autorizo sua participação voluntária na competição <strong>{selectedCompetition.name}</strong>, a ser realizada no período de <strong>{selectedCompetition.period}</strong>, em <strong>{selectedCompetition.location}</strong>.</p>
                     <p>Declaro estar ciente de que a iniciativa possui caráter educacional, formativo e recreativo, sendo organizada por <strong>{selectedCompetition.organizer}</strong>, em parceria com <strong>{selectedCompetition.partner}</strong>, com o objetivo de promover o desenvolvimento de competências digitais, sociais e esportivas.</p>
                     <p>Autorizo, ainda, a participação do(a) estudante nas atividades previstas na programação, incluindo partidas, treinamentos e demais ações correlatas, bem como o uso gratuito de sua imagem, voz e nome, para fins institucionais e de divulgação do evento, em meios físicos e digitais, nos termos da legislação aplicável.</p>
                     <p>Autorizo, por fim, o tratamento dos dados pessoais do(a) estudante e do responsável legal, estritamente para fins de inscrição, organização e registro da atividade, em conformidade com a Lei Geral de Proteção de Dados (LGPD).</p>
@@ -973,7 +971,6 @@ export function App() {
                           <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal</h4><p>Informações gerais que serão reutilizadas automaticamente nos termos específicos de cada competição.</p></div></div>
                           <div className="form-grid">
                             <label>Nome completo<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Nome completo" /></label>
-                            <label>RG<input required value={responsibleRg} onChange={(e) => setResponsibleRg(e.target.value)} placeholder="00.000.000-0" /></label>
                             <label>CPF
                               <input required inputMode="numeric" maxLength={14} className={responsibleCpfInvalid ? 'invalid' : ''} value={responsibleCpf} onChange={(e) => setResponsibleCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
                               {responsibleCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
