@@ -1,0 +1,68 @@
+name: Patch ClassInd safety
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-classind-safety.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Aplicar conferência de atualização e bloqueio seguro
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('src/App.tsx')
+          text = path.read_text(encoding='utf-8')
+
+          replacements = [
+            (
+              """  getClassindRecord,\n  getGameCatalogEntry,\n} from './gameCatalog';""",
+              """  getClassindRecord,\n  getGameCatalogEntry,\n  isClassindRecordFresh,\n} from './gameCatalog';"""
+            ),
+            (
+              """  const selectedGameClassind = selectedGameCatalog ? getClassindRecord(classindRatings, selectedGameCatalog.id) : null;\n  const selectedGameMinimumAge = classificationMinimumAge(selectedGameClassind?.classification ?? null);\n  const selectedGameVerified = selectedGameClassind?.status === 'verified' && selectedGameMinimumAge !== null;\n  const gameAgeBlocked = selectedGameVerified && athleteAge !== null && athleteAge < selectedGameMinimumAge;""",
+              """  const selectedGameClassind = selectedGameCatalog ? getClassindRecord(classindRatings, selectedGameCatalog.id) : null;\n  const selectedGameMinimumAge = classificationMinimumAge(selectedGameClassind?.classification ?? null);\n  const selectedGameFresh = isClassindRecordFresh(selectedGameClassind);\n  const selectedGameNeedsExactVersion = selectedGameCatalog?.requiresExactVersion ?? false;\n  const selectedGameVerified = !selectedGameNeedsExactVersion && selectedGameClassind?.status === 'verified' && selectedGameMinimumAge !== null && selectedGameFresh;\n  const gameAgeBlocked = selectedGameVerified && athleteAge !== null && athleteAge < selectedGameMinimumAge;"""
+            ),
+            (
+              """  function requestCompetitionRegistration(competitionId: string) {\n    setRegistrationMessage('');\n    setAgeReferenceDate(new Date());""",
+              """  async function requestCompetitionRegistration(competitionId: string) {\n    setRegistrationMessage('');\n    setAgeReferenceDate(new Date());"""
+            ),
+            (
+              """    const competition = competitions.find((item) => item.id === competitionId);\n    const competitionGameTitle = competition?.officialGameTitle ?? '';\n    const competitionCatalog = competitionGameTitle ? getGameCatalogEntry(competitionGameTitle) : null;\n    const competitionRating = competitionCatalog ? getClassindRecord(classindRatings, competitionCatalog.id) : null;\n    const competitionMinimumAge = classificationMinimumAge(competitionRating?.classification ?? null);\n    if (competitionRating?.status === 'verified' && athleteAge !== null && competitionMinimumAge !== null && athleteAge < competitionMinimumAge) {\n      setRegistrationMessage(`Inscrição indisponível: a classificação indicativa vigente para ${competitionGameTitle} é ${classificationLabel(competitionRating.classification)}.`);\n      return;\n    }""",
+              """    const competition = competitions.find((item) => item.id === competitionId);\n    const competitionGameTitle = competition?.officialGameTitle ?? '';\n    const competitionCatalog = competitionGameTitle ? getGameCatalogEntry(competitionGameTitle) : null;\n\n    const classindBasePath = window.location.pathname.startsWith('/serfes') ? '/serfes/' : '/';\n    let latestRatings: ClassindRatingsPayload;\n    try {\n      const response = await fetch(`${classindBasePath}classind-ratings.json?check=${Date.now()}`, { cache: 'no-store' });\n      if (!response.ok) throw new Error('Fonte local indisponível');\n      latestRatings = await response.json() as ClassindRatingsPayload;\n      setClassindRatings(latestRatings);\n      setClassindRatingsError(false);\n    } catch {\n      setClassindRatingsError(true);\n      setRegistrationMessage('Inscrição aguardando verificação: não foi possível conferir a classificação indicativa oficial mais recente.');\n      return;\n    }\n\n    const competitionRating = competitionCatalog ? getClassindRecord(latestRatings, competitionCatalog.id, competitionGameTitle) : null;\n    const competitionMinimumAge = classificationMinimumAge(competitionRating?.classification ?? null);\n    const competitionRatingFresh = isClassindRecordFresh(competitionRating);\n\n    if (!competitionRating || competitionRating.status !== 'verified' || competitionMinimumAge === null) {\n      setRegistrationMessage('Inscrição aguardando verificação: a classificação indicativa oficial desta modalidade está pendente.');\n      return;\n    }\n\n    if (!competitionRatingFresh) {\n      setRegistrationMessage('Inscrição aguardando verificação: a fonte oficial de classificação está desatualizada e exige nova conferência antes da liberação.');\n      return;\n    }\n\n    if (athleteAge !== null && athleteAge < competitionMinimumAge) {\n      setRegistrationMessage(`Inscrição indisponível: a classificação indicativa vigente para ${competitionGameTitle} é ${classificationLabel(competitionRating.classification)}.`);\n      return;\n    }"""
+            ),
+            (
+              """                                {selectedGameVerified ? (\n                                  <>\n                                    <strong>{gameAgeBlocked ? 'Modalidade incompatível com a idade informada' : 'Modalidade compatível com a idade informada'}</strong>\n                                    <small>Classificação de referência: {classificationLabel(selectedGameClassind?.classification ?? null)}{selectedGameClassind?.officialTitle ? ` — ${selectedGameClassind.officialTitle}` : ''}.</small>\n                                  </>\n                                ) : (\n                                  <>\n                                    <strong>Classificação oficial pendente de sincronização</strong>\n                                    <small>A estrutura de elegibilidade já está ativa. Assim que o catálogo oficial for conectado, o SERFES comparará automaticamente a idade do atleta com a classificação vigente.</small>\n                                  </>\n                                )}\n                                {selectedGameCatalog.requiresExactVersion && <small>A verificação definitiva será refeita na inscrição, usando o título/versão exatos informados pela competição.</small>}""",
+              """                                {selectedGameNeedsExactVersion ? (\n                                  <>\n                                    <strong>Classificação verificada na inscrição</strong>\n                                    <small>Esta modalidade possui títulos ou versões específicos. O SERFES fará a conferência oficial usando o jogo exato informado pela competição.</small>\n                                  </>\n                                ) : selectedGameVerified ? (\n                                  <>\n                                    <strong>{gameAgeBlocked ? 'Modalidade incompatível com a idade informada' : 'Modalidade compatível com a idade informada'}</strong>\n                                    <small>Classificação de referência: {classificationLabel(selectedGameClassind?.classification ?? null)}{selectedGameClassind?.officialTitle ? ` — ${selectedGameClassind.officialTitle}` : ''}.</small>\n                                  </>\n                                ) : selectedGameClassind?.status === 'verified' && !selectedGameFresh ? (\n                                  <>\n                                    <strong>Fonte oficial desatualizada</strong>\n                                    <small>O SERFES não fará liberação automática até que a base oficial seja atualizada e sincronizada novamente.</small>\n                                  </>\n                                ) : (\n                                  <>\n                                    <strong>Classificação oficial pendente de sincronização</strong>\n                                    <small>O SERFES não fará liberação automática enquanto não houver classificação oficial validada para esta modalidade.</small>\n                                  </>\n                                )}\n                                {selectedGameCatalog.requiresExactVersion && <small>A verificação definitiva será refeita na inscrição, usando o título/versão exatos informados pela competição.</small>}"""
+            ),
+          ]
+
+          for old, new in replacements:
+              if old not in text:
+                  raise SystemExit('Bloco esperado não encontrado:\n' + old[:400])
+              text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Validar build
+        run: |
+          npm install
+          npm run build
+
+      - name: Commit
+        run: |
+          git config user.name "Cristina-parisenti"
+          git config user.email "crislu88@hotmail.com"
+          git add src/App.tsx
+          git commit -m "Block competition release on stale or pending ClassInd data"
+          git push
