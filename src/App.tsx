@@ -977,7 +977,7 @@ export function App() {
                           <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal</h4><p>Informações gerais que serão reutilizadas automaticamente nos termos específicos de cada competição.</p></div></div>
                           <div className="form-grid">
                             <label>Nome completo<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Nome completo" /></label>
-                            <label>Qualificação do responsável legal
+                            <label>Qualificação
                               <select
                                 required
                                 value={responsibleLegalCapacity}
