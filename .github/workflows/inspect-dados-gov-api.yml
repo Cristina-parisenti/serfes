@@ -1,0 +1,40 @@
+name: Inspect Dados.gov MEC API
+
+on:
+  push:
+    paths:
+      - '.github/workflows/inspect-dados-gov-api.yml'
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe public endpoints
+        run: |
+          python - <<'PY'
+          import urllib.request
+          slug='sistema-e-mec---cursos-de-graduacao-do-brasil'
+          candidates=[
+            f'https://dados.gov.br/api/publico/conjuntos-dados/{slug}',
+            f'https://dados.gov.br/api/publico/conjunto-dados/{slug}',
+            f'https://dados.gov.br/api/publico/conjuntos-dados/slug/{slug}',
+            f'https://dados.gov.br/api/publico/conjuntos-dados?slug={slug}',
+            f'https://dados.gov.br/api/publico/conjuntos-dados/buscar/{slug}',
+          ]
+          for url in candidates:
+              try:
+                  req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Accept':'application/json,text/plain,*/*'})
+                  with urllib.request.urlopen(req,timeout=30) as r:
+                      raw=r.read(2500).decode('utf-8','replace')
+                      print('\nURL',url,'STATUS',r.status,'FINAL',r.geturl(),'BODY',raw)
+              except Exception as exc:
+                  print('\nURL',url,'ERR',exc)
+          for url in ['https://dados.gov.br/static/js/app.a2f69268.js.map']:
+              try:
+                  req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'})
+                  with urllib.request.urlopen(req,timeout=30) as r:
+                      raw=r.read(1000)
+                      print('\nMAP',url,'STATUS',r.status,'BYTES_PREFIX',len(raw),'HEAD',raw[:300])
+              except Exception as exc:
+                  print('\nMAP ERR',exc)
+          PY
