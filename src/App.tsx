@@ -32,6 +32,7 @@ import {
   classificationMinimumAge,
   getClassindRecord,
   getGameCatalogEntry,
+  isClassindRecordFresh,
 } from './gameCatalog';
 import {
   formatCpf,
@@ -216,7 +217,9 @@ export function App() {
   const selectedGameCatalog = getGameCatalogEntry(athleteGame);
   const selectedGameClassind = selectedGameCatalog ? getClassindRecord(classindRatings, selectedGameCatalog.id) : null;
   const selectedGameMinimumAge = classificationMinimumAge(selectedGameClassind?.classification ?? null);
-  const selectedGameVerified = selectedGameClassind?.status === 'verified' && selectedGameMinimumAge !== null;
+  const selectedGameFresh = isClassindRecordFresh(selectedGameClassind);
+  const selectedGameNeedsExactVersion = selectedGameCatalog?.requiresExactVersion ?? false;
+  const selectedGameVerified = !selectedGameNeedsExactVersion && selectedGameClassind?.status === 'verified' && selectedGameMinimumAge !== null && selectedGameFresh;
   const gameAgeBlocked = selectedGameVerified && athleteAge !== null && athleteAge < selectedGameMinimumAge;
 
   const nicknameBlocked = athleteNickname.length > 0 && nicknameHasBlockedContent(athleteNickname);
@@ -324,7 +327,7 @@ export function App() {
     setDashboardSection(isAthlete ? 'athleteHome' : 'athletes');
   }
 
-  function requestCompetitionRegistration(competitionId: string) {
+  async function requestCompetitionRegistration(competitionId: string) {
     setRegistrationMessage('');
     setAgeReferenceDate(new Date());
 
@@ -341,9 +344,36 @@ export function App() {
     const competition = competitions.find((item) => item.id === competitionId);
     const competitionGameTitle = competition?.officialGameTitle ?? '';
     const competitionCatalog = competitionGameTitle ? getGameCatalogEntry(competitionGameTitle) : null;
-    const competitionRating = competitionCatalog ? getClassindRecord(classindRatings, competitionCatalog.id) : null;
+
+    const classindBasePath = window.location.pathname.startsWith('/serfes') ? '/serfes/' : '/';
+    let latestRatings: ClassindRatingsPayload;
+    try {
+      const response = await fetch(`${classindBasePath}classind-ratings.json?check=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error('Fonte local indisponível');
+      latestRatings = await response.json() as ClassindRatingsPayload;
+      setClassindRatings(latestRatings);
+      setClassindRatingsError(false);
+    } catch {
+      setClassindRatingsError(true);
+      setRegistrationMessage('Inscrição aguardando verificação: não foi possível conferir a classificação indicativa oficial mais recente.');
+      return;
+    }
+
+    const competitionRating = competitionCatalog ? getClassindRecord(latestRatings, competitionCatalog.id, competitionGameTitle) : null;
     const competitionMinimumAge = classificationMinimumAge(competitionRating?.classification ?? null);
-    if (competitionRating?.status === 'verified' && athleteAge !== null && competitionMinimumAge !== null && athleteAge < competitionMinimumAge) {
+    const competitionRatingFresh = isClassindRecordFresh(competitionRating);
+
+    if (!competitionRating || competitionRating.status !== 'verified' || competitionMinimumAge === null) {
+      setRegistrationMessage('Inscrição aguardando verificação: a classificação indicativa oficial desta modalidade está pendente.');
+      return;
+    }
+
+    if (!competitionRatingFresh) {
+      setRegistrationMessage('Inscrição aguardando verificação: a fonte oficial de classificação está desatualizada e exige nova conferência antes da liberação.');
+      return;
+    }
+
+    if (athleteAge !== null && athleteAge < competitionMinimumAge) {
       setRegistrationMessage(`Inscrição indisponível: a classificação indicativa vigente para ${competitionGameTitle} é ${classificationLabel(competitionRating.classification)}.`);
       return;
     }
@@ -710,15 +740,25 @@ export function App() {
                             </select>
                             {athleteGame && selectedGameCatalog && (
                               <div className={`game-eligibility-note ${selectedGameVerified ? (gameAgeBlocked ? 'blocked' : 'allowed') : 'pending'}`}>
-                                {selectedGameVerified ? (
+                                {selectedGameNeedsExactVersion ? (
+                                  <>
+                                    <strong>Classificação verificada na inscrição</strong>
+                                    <small>Esta modalidade possui títulos ou versões específicos. O SERFES fará a conferência oficial usando o jogo exato informado pela competição.</small>
+                                  </>
+                                ) : selectedGameVerified ? (
                                   <>
                                     <strong>{gameAgeBlocked ? 'Modalidade incompatível com a idade informada' : 'Modalidade compatível com a idade informada'}</strong>
                                     <small>Classificação de referência: {classificationLabel(selectedGameClassind?.classification ?? null)}{selectedGameClassind?.officialTitle ? ` — ${selectedGameClassind.officialTitle}` : ''}.</small>
                                   </>
+                                ) : selectedGameClassind?.status === 'verified' && !selectedGameFresh ? (
+                                  <>
+                                    <strong>Fonte oficial desatualizada</strong>
+                                    <small>O SERFES não fará liberação automática até que a base oficial seja atualizada e sincronizada novamente.</small>
+                                  </>
                                 ) : (
                                   <>
                                     <strong>Classificação oficial pendente de sincronização</strong>
-                                    <small>A estrutura de elegibilidade já está ativa. Assim que o catálogo oficial for conectado, o SERFES comparará automaticamente a idade do atleta com a classificação vigente.</small>
+                                    <small>O SERFES não fará liberação automática enquanto não houver classificação oficial validada para esta modalidade.</small>
                                   </>
                                 )}
                                 {selectedGameCatalog.requiresExactVersion && <small>A verificação definitiva será refeita na inscrição, usando o título/versão exatos informados pela competição.</small>}
