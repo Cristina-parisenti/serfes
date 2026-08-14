@@ -1,0 +1,73 @@
+.age-minor {
+  background: var(--yellow-soft) !important;
+  color: #7b5d00 !important;
+  border-color: #f0df94 !important;
+  font-weight: 750;
+}
+
+.auto-minor-banner,
+.auto-adult-banner {
+  margin: 1rem 0;
+  padding: 1rem 1.05rem;
+  border-radius: 15px;
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.auto-minor-banner {
+  display: flex;
+  gap: .65rem;
+  align-items: flex-start;
+  background: var(--yellow-soft);
+  color: #715500;
+  border: 1px solid #f0df94;
+}
+
+.auto-adult-banner {
+  background: var(--green-soft);
+  color: #167b50;
+  border: 1px solid #c7ebd9;
+}
+
+.adult-confirmation {
+  border-top: 5px solid var(--green);
+}
+
+.signature-flow.signature-flow-inline {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.signature-flow-inline .signature-step {
+  height: 100%;
+}
+
+.signature-flow-inline .signature-step > div {
+  width: 100%;
+  align-content: start;
+}
+
+.signature-flow-inline .govbr-button {
+  grid-column: auto;
+  width: 100%;
+  margin-top: .7rem;
+  padding: .72rem .8rem;
+  font-size: .82rem;
+}
+
+.gov-signature-step {
+  order: 2;
+}
+
+@media (min-width: 851px) {
+  .signature-flow.signature-flow-inline {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 850px) {
+  .signature-flow.signature-flow-inline {
+    grid-template-columns: 1fr;
+  }
+}
