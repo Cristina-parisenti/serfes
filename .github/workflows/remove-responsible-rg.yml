@@ -1,0 +1,54 @@
+name: Remove guardian RG
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-responsible-rg.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Remove RG from guardian data and term
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('src/App.tsx')
+          t = p.read_text(encoding='utf-8')
+
+          replacements = [
+            ("  const [responsibleRg, setResponsibleRg] = useState('');\n", ""),
+            ("      responsibleRg.trim().length > 0 &&\n", ""),
+            ("                    <p>Eu, <strong>{responsibleName}</strong>, portador(a) do RG nº <strong>{responsibleRg}</strong> e inscrito(a) no CPF nº <strong>{responsibleCpf}</strong>, na qualidade de responsável legal pelo(a) estudante <strong>{athleteName}</strong>, regularmente matriculado(a) na instituição de ensino <strong>{athleteInstitution || '_______________________________'}</strong>, autorizo sua participação voluntária na competição <strong>{selectedCompetition.name}</strong>, a ser realizada no período de <strong>{selectedCompetition.period}</strong>, em <strong>{selectedCompetition.location}</strong>.</p>",
+             "                    <p>Eu, <strong>{responsibleName}</strong>, inscrito(a) no CPF nº <strong>{responsibleCpf}</strong>, na qualidade de responsável legal pelo(a) estudante <strong>{athleteName}</strong>, regularmente matriculado(a) na instituição de ensino <strong>{athleteInstitution || '_______________________________'}</strong>, autorizo sua participação voluntária na competição <strong>{selectedCompetition.name}</strong>, a ser realizada no período de <strong>{selectedCompetition.period}</strong>, em <strong>{selectedCompetition.location}</strong>.</p>"),
+            ("                            <label>RG<input required value={responsibleRg} onChange={(e) => setResponsibleRg(e.target.value)} placeholder=\"00.000.000-0\" /></label>\n", ""),
+          ]
+
+          for old, new in replacements:
+              if old not in t:
+                  raise SystemExit(f'Expected block not found: {old[:80]!r}')
+              t = t.replace(old, new, 1)
+
+          p.write_text(t, encoding='utf-8')
+          PY
+
+      - name: Validate build
+        run: |
+          npm install
+          npm run build
+
+      - name: Commit
+        run: |
+          git config user.name "Cristina-parisenti"
+          git config user.email "crislu88@hotmail.com"
+          git add src/App.tsx
+          git commit -m "Remove RG from guardian registration and authorization"
+          git pull --rebase origin main
+          git push origin main
