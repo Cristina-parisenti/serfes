@@ -5,12 +5,12 @@ import json
 import re
 import unicodedata
 import urllib.request
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
-IES_URL = 'https://dadosabertos.mec.gov.br/images/conteudo/Ind-ensino-superior/2022/PDA_Lista_Instituicoes_Ensino_Superior_do_Brasil_EMEC.csv'
-COURSES_URL = 'https://dadosabertos.mec.gov.br/images/conteudo/Ind-ensino-superior/2022/PDA_Dados_Cursos_Graduacao_Brasil.csv'
-TECH_URL = 'https://dadosabertos.mec.gov.br/images/conteudo/cncst/cncst_2024_setec_dados.csv'
+INEP_ZIP_URL = 'https://download.inep.gov.br/microdados/microdados_censo_da_educacao_superior_2024.zip'
+INEP_SOURCE_URL = 'https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/microdados/censo-da-educacao-superior'
 EMEC_URL = 'https://emec.mec.gov.br/emec/nova-index/'
 OUTPUT = Path('public/higher-education.json')
 
@@ -21,13 +21,19 @@ def norm(value):
 
 
 def fetch(url):
-    req = urllib.request.Request(url, headers={'User-Agent': 'SERFES-Higher-Education-Sync/1.0'})
-    with urllib.request.urlopen(req, timeout=90) as response:
+    req = urllib.request.Request(
+        url,
+        headers={
+            'User-Agent': 'Mozilla/5.0 (compatible; SERFES-Higher-Education-Sync/2.0)',
+            'Accept': '*/*',
+        },
+    )
+    with urllib.request.urlopen(req, timeout=180) as response:
         return response.read()
 
 
 def decode(raw):
-    for encoding in ('utf-8-sig', 'latin-1'):
+    for encoding in ('utf-8-sig', 'cp1252', 'latin-1'):
         try:
             return raw.decode(encoding)
         except UnicodeDecodeError:
@@ -37,13 +43,13 @@ def decode(raw):
 
 def rows_from(raw):
     text = decode(raw)
-    sample = text[:10000]
+    sample = text[:20000]
     try:
         dialect = csv.Sniffer().sniff(sample, delimiters=';,\t|')
         delimiter = dialect.delimiter
     except Exception:
         delimiter = ';'
-    return list(csv.DictReader(io.StringIO(text), delimiter=delimiter))
+    return csv.DictReader(io.StringIO(text), delimiter=delimiter)
 
 
 def field(row, *candidates):
@@ -62,83 +68,92 @@ def field(row, *candidates):
 
 def network_from_category(category):
     value = norm(category)
-    if 'federal' in value and ('public' in value or 'publica' in value):
+    numeric = re.sub(r'\D', '', value)
+    if numeric == '1' or 'federal' in value:
         return 'Federal'
-    if 'estadual' in value and ('public' in value or 'publica' in value):
+    if numeric == '2' or 'estadual' in value:
         return 'Estadual'
-    if 'municipal' in value and ('public' in value or 'publica' in value):
+    if numeric == '3' or 'municipal' in value:
         return 'Municipal'
     return 'Privada'
 
 
-def load_institutions():
-    rows = rows_from(fetch(IES_URL))
-    institutions = {}
-    for row in rows:
-        uf = field(row, 'UF', 'Sigla da UF', 'SG_UF_IES')
-        if norm(uf) != 'pr':
-            continue
-        situation = field(row, 'Situação da IES', 'Situacao da IES', 'SITUACAO_IES')
-        if situation and 'ativa' not in norm(situation):
-            continue
-        name = field(row, 'Nome da IES', 'Instituição de Ensino Superior', 'NO_IES')
-        municipality = field(row, 'Município', 'Municipio', 'NO_MUNICIPIO_IES')
-        if not name or not municipality:
-            continue
-        ies_id = field(row, 'Código da IES', 'Codigo da IES', 'CO_IES') or name
-        acronym = field(row, 'Sigla', 'Sigla da IES', 'SG_IES') or None
-        category = field(row, 'Categoria da IES', 'Categoria Administrativa', 'DS_CATEGORIA_ADMINISTRATIVA')
-        record = {
-            'id': str(ies_id),
-            'name': name,
-            'acronym': acronym,
-            'municipality': municipality,
-            'network': network_from_category(category),
-        }
-        institutions[(record['id'], norm(municipality))] = record
-    return sorted(institutions.values(), key=lambda item: (norm(item['municipality']), item['network'], norm(item['name'])))
-
-
-def load_course_names():
-    names = set()
-    for row in rows_from(fetch(COURSES_URL)):
-        situation = field(row, 'Situação do Curso', 'Situacao do Curso', 'SITUACAO_CURSO')
-        if situation and 'ativo' not in norm(situation):
-            continue
-        name = field(row, 'Nome do Curso', 'Curso', 'NO_CURSO')
-        if name:
-            names.add(re.sub(r'\s+', ' ', name).strip())
-
-    try:
-        tech_rows = rows_from(fetch(TECH_URL))
-        for row in tech_rows:
-            name = field(row, 'Denominação do Curso', 'Denominacao do Curso', 'Nome do Curso', 'Curso')
-            if name:
-                names.add(re.sub(r'\s+', ' ', name).strip())
-    except Exception as exc:
-        print(f'AVISO: catálogo tecnológico 2024 indisponível: {exc}')
-
-    return sorted(names, key=norm)
+def find_course_member(zf):
+    members = [name for name in zf.namelist() if name.lower().endswith('.csv')]
+    preferred = [
+        name for name in members
+        if 'cadastro' in norm(name) and 'curso' in norm(name)
+    ]
+    if not preferred:
+        preferred = [name for name in members if 'curso' in norm(name)]
+    if not preferred:
+        raise RuntimeError('Arquivo de cadastro de cursos não localizado no pacote oficial do Inep.')
+    preferred.sort(key=lambda name: (0 if '2024' in name else 1, len(name)))
+    return preferred[0]
 
 
 def main():
-    institutions = load_institutions()
-    courses = load_course_names()
-    if len(institutions) < 50:
-        raise RuntimeError(f'Catálogo de IES do Paraná incompleto: {len(institutions)} registros.')
+    raw_zip = fetch(INEP_ZIP_URL)
+    with zipfile.ZipFile(io.BytesIO(raw_zip)) as zf:
+        member = find_course_member(zf)
+        print(f'Arquivo oficial selecionado: {member}')
+        raw_courses = zf.read(member)
+
+    institutions = {}
+    course_names = set()
+    pr_rows = 0
+
+    for row in rows_from(raw_courses):
+        uf = field(row, 'SG_UF', 'SG_UF_IES', 'UF', 'Sigla da UF')
+        if norm(uf) != 'pr':
+            continue
+
+        institution_name = field(row, 'NO_IES', 'Nome da IES', 'Instituição de Ensino Superior')
+        institution_id = field(row, 'CO_IES', 'Código da IES', 'Codigo da IES') or institution_name
+        municipality = field(row, 'NO_MUNICIPIO', 'NO_MUNICIPIO_IES', 'Município', 'Municipio')
+        course_name = field(row, 'NO_CURSO', 'Nome do Curso', 'Curso')
+        category = field(row, 'TP_CATEGORIA_ADMINISTRATIVA', 'Categoria Administrativa', 'Categoria da IES')
+
+        if not institution_name or not municipality:
+            continue
+
+        pr_rows += 1
+        key = (str(institution_id), norm(municipality))
+        if key not in institutions:
+            institutions[key] = {
+                'id': str(institution_id),
+                'name': institution_name,
+                'acronym': None,
+                'municipality': municipality,
+                'network': network_from_category(category),
+            }
+
+        if course_name:
+            course_names.add(re.sub(r'\s+', ' ', course_name).strip())
+
+    institution_list = sorted(
+        institutions.values(),
+        key=lambda item: (norm(item['municipality']), item['network'], norm(item['name'])),
+    )
+    courses = sorted(course_names, key=norm)
+
+    if len(institution_list) < 50:
+        raise RuntimeError(f'Catálogo de IES do Paraná incompleto: {len(institution_list)} registros.')
     if len(courses) < 100:
-        raise RuntimeError(f'Catálogo de cursos incompleto: {len(courses)} nomes.')
+        raise RuntimeError(f'Catálogo de cursos do Paraná incompleto: {len(courses)} denominações.')
 
     payload = {
-        'source': 'MEC/e-MEC',
-        'sourceUrl': EMEC_URL,
+        'source': 'INEP/Censo da Educação Superior 2024 (cadastro originado do e-MEC)',
+        'sourceUrl': INEP_SOURCE_URL,
+        'emecUrl': EMEC_URL,
+        'dataYear': 2024,
         'generatedAt': datetime.now(timezone.utc).isoformat(),
-        'institutions': institutions,
+        'institutions': institution_list,
         'courses': courses,
     }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print(f'{len(institutions)} IES do Paraná e {len(courses)} denominações de cursos catalogadas.')
+    print(f'{len(institution_list)} registros de IES/localidades do Paraná e {len(courses)} denominações de cursos catalogadas a partir de {pr_rows} linhas do Censo Superior 2024.')
 
 
 if __name__ == '__main__':
