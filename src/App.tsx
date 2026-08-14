@@ -46,6 +46,8 @@ const athleteRows = [
   { name: 'Atleta Gamma', nick: 'GAMMA7', game: 'EA Sports FC', city: 'Maringá', school: 'Não informado', status: 'Aguardando responsável', tone: 'red' },
 ] as const;
 
+type DashboardSection = 'overview' | 'athleteHome' | 'athletes' | 'athleteForm';
+
 function EsportsSymbol() {
   return (
     <div className="esports-symbol" aria-hidden="true">
@@ -58,23 +60,27 @@ function EsportsSymbol() {
 
 export function App() {
   const [view, setView] = useState<'home' | 'login' | 'dashboard'>('home');
-  const [dashboardSection, setDashboardSection] = useState<'overview' | 'athletes' | 'athleteForm'>('overview');
+  const [dashboardSection, setDashboardSection] = useState<DashboardSection>('overview');
   const [profile, setProfile] = useState(profiles[0]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [minor, setMinor] = useState('Não');
   const [athleteSaved, setAthleteSaved] = useState(false);
 
+  const isAthlete = profile === 'Atleta';
+  const isStateAdmin = profile === 'Administrador estadual';
+
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setDashboardSection('overview');
+    setAthleteSaved(false);
+    setDashboardSection(profile === 'Atleta' ? 'athleteHome' : 'overview');
     setView('dashboard');
   }
 
   function handleAthleteSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setAthleteSaved(true);
-    setDashboardSection('athletes');
+    setDashboardSection(isAthlete ? 'athleteHome' : 'athletes');
   }
 
   if (view === 'login') {
@@ -115,9 +121,7 @@ export function App() {
             <label>
               Perfil de acesso
               <select value={profile} onChange={(event) => setProfile(event.target.value)}>
-                {profiles.map((item) => (
-                  <option key={item}>{item}</option>
-                ))}
+                {profiles.map((item) => <option key={item}>{item}</option>)}
               </select>
             </label>
 
@@ -157,22 +161,39 @@ export function App() {
           <div className="sidebar-brand-wrap">
             <EsportsSymbol />
             <div>
-              <p className="eyebrow eyebrow-light">Painel administrativo</p>
+              <p className="eyebrow eyebrow-light">{isAthlete ? 'Área do atleta' : 'Painel administrativo'}</p>
               <h2 className="sidebar-title">SERFES</h2>
             </div>
           </div>
 
           <nav className="sidebar-nav">
-            <button className={`nav-item ${dashboardSection === 'overview' ? 'active' : ''}`} onClick={() => setDashboardSection('overview')}>
-              <LayoutDashboard size={18} /> Visão geral
-            </button>
-            <button className="nav-item"><Trophy size={18} /> Competições</button>
-            <button className={`nav-item ${dashboardSection === 'athletes' || dashboardSection === 'athleteForm' ? 'active' : ''}`} onClick={() => setDashboardSection('athletes')}>
-              <Users size={18} /> Atletas
-            </button>
-            <button className="nav-item"><School size={18} /> Escolas</button>
-            <button className="nav-item"><ShieldCheck size={18} /> Integridade</button>
-            <button className="nav-item"><BarChart3 size={18} /> Indicadores</button>
+            {isAthlete ? (
+              <>
+                <button className={`nav-item ${dashboardSection === 'athleteHome' ? 'active' : ''}`} onClick={() => setDashboardSection('athleteHome')}>
+                  <LayoutDashboard size={18} /> Início
+                </button>
+                <button className={`nav-item ${dashboardSection === 'athleteForm' ? 'active' : ''}`} onClick={() => setDashboardSection('athleteForm')}>
+                  <UserRound size={18} /> Meu cadastro
+                </button>
+                <button className="nav-item"><Trophy size={18} /> Minhas competições</button>
+                <button className="nav-item"><ShieldCheck size={18} /> Integridade e apoio</button>
+              </>
+            ) : (
+              <>
+                <button className={`nav-item ${dashboardSection === 'overview' ? 'active' : ''}`} onClick={() => setDashboardSection('overview')}>
+                  <LayoutDashboard size={18} /> Visão geral
+                </button>
+                <button className="nav-item"><Trophy size={18} /> Competições</button>
+                {isStateAdmin && (
+                  <button className={`nav-item ${dashboardSection === 'athletes' || dashboardSection === 'athleteForm' ? 'active' : ''}`} onClick={() => setDashboardSection('athletes')}>
+                    <Users size={18} /> Atletas
+                  </button>
+                )}
+                <button className="nav-item"><School size={18} /> Escolas</button>
+                <button className="nav-item"><ShieldCheck size={18} /> Integridade</button>
+                <button className="nav-item"><BarChart3 size={18} /> Indicadores</button>
+              </>
+            )}
           </nav>
 
           <button className="sidebar-exit" onClick={() => setView('home')}>
@@ -186,29 +207,88 @@ export function App() {
               <p className="eyebrow">Área restrita • demonstração</p>
               <h2>Olá, {profile}</h2>
             </div>
-            <div className="header-tools">
-              <label className="search-box">
-                <Search size={16} />
-                <input type="text" placeholder="Pesquisar no sistema" />
-              </label>
-              <button className="icon-button" aria-label="Notificações">
-                <Bell size={18} />
-              </button>
-            </div>
+            {!isAthlete && (
+              <div className="header-tools">
+                <label className="search-box">
+                  <Search size={16} />
+                  <input type="text" placeholder="Pesquisar no sistema" />
+                </label>
+                <button className="icon-button" aria-label="Notificações"><Bell size={18} /></button>
+              </div>
+            )}
           </header>
 
           <main className="dashboard-content">
-            {dashboardSection === 'overview' && (
+            {dashboardSection === 'athleteHome' && isAthlete && (
+              <>
+                {athleteSaved && (
+                  <div className="success-banner">
+                    <CheckCircle2 size={19} />
+                    <div><strong>Seu cadastro demonstrativo foi salvo.</strong><span>Nesta fase do protótipo, os dados ainda não são armazenados.</span></div>
+                  </div>
+                )}
+
+                <section className="hero-panel">
+                  <div>
+                    <span className="pill">Minha área</span>
+                    <h3>Bem-vindo ao seu espaço no SERFES</h3>
+                    <p>Complete seu cadastro e acompanhe somente informações relacionadas ao seu próprio perfil.</p>
+                  </div>
+                  <button className="primary-button" onClick={() => setDashboardSection('athleteForm')}>
+                    <UserRound size={17} /> Preencher meu cadastro
+                  </button>
+                </section>
+
+                <section className="athlete-summary-grid">
+                  <article className="mini-status blue"><strong>1</strong><span>Meu cadastro</span></article>
+                  <article className="mini-status yellow"><strong>Pendente</strong><span>Validação cadastral</span></article>
+                  <article className="mini-status green"><strong>—</strong><span>Vínculo escolar</span></article>
+                  <article className="mini-status red"><strong>—</strong><span>Autorização responsável</span></article>
+                </section>
+
+                <section className="panel-grid">
+                  <article className="glass-card panel-card">
+                    <div className="panel-head">
+                      <div>
+                        <p className="eyebrow">Meu cadastro</p>
+                        <h4>Etapas pessoais</h4>
+                      </div>
+                    </div>
+                    <button className="line-action" onClick={() => setDashboardSection('athleteForm')}><span>Preencher ou atualizar meus dados</span><ChevronRight size={16} /></button>
+                    <button className="line-action"><span>Acompanhar validação escolar</span><ChevronRight size={16} /></button>
+                    <button className="line-action"><span>Consultar meus documentos</span><ChevronRight size={16} /></button>
+                  </article>
+
+                  <article className="glass-card panel-card">
+                    <div className="panel-head">
+                      <div>
+                        <p className="eyebrow">Participação</p>
+                        <h4>Próximas etapas</h4>
+                      </div>
+                    </div>
+                    <div className="list-card"><strong>1</strong><span>Complete seu cadastro pessoal.</span></div>
+                    <div className="list-card"><strong>2</strong><span>Aguarde as validações exigidas para seu perfil.</span></div>
+                    <div className="list-card"><strong>3</strong><span>Depois, consulte competições disponíveis para inscrição.</span></div>
+                  </article>
+                </section>
+
+                <p className="prototype-note">Esta área é individual. O atleta não visualiza cadastros, documentos ou dados pessoais de outros atletas.</p>
+              </>
+            )}
+
+            {dashboardSection === 'overview' && !isAthlete && (
               <>
                 <section className="hero-panel">
                   <div>
                     <span className="pill">Perfil selecionado</span>
                     <h3>{profile}</h3>
-                    <p>Layout-base para cadastros, painéis e rotinas principais do SERFES.</p>
+                    <p>Área de gestão do SERFES conforme as permissões atribuídas ao perfil.</p>
                   </div>
-                  <button className="primary-button" onClick={() => setDashboardSection('athleteForm')}>
-                    <Plus size={17} /> Novo registro
-                  </button>
+                  {isStateAdmin && (
+                    <button className="primary-button" onClick={() => setDashboardSection('athleteForm')}>
+                      <Plus size={17} /> Novo atleta
+                    </button>
+                  )}
                 </section>
 
                 <section className="stats-grid">
@@ -220,24 +300,14 @@ export function App() {
 
                 <section className="panel-grid">
                   <article className="glass-card panel-card">
-                    <div className="panel-head">
-                      <div>
-                        <p className="eyebrow">Ações rápidas</p>
-                        <h4>Atalhos principais</h4>
-                      </div>
-                    </div>
+                    <div className="panel-head"><div><p className="eyebrow">Ações rápidas</p><h4>Atalhos principais</h4></div></div>
                     <button className="line-action"><span>Cadastrar competição</span><ChevronRight size={16} /></button>
-                    <button className="line-action" onClick={() => setDashboardSection('athleteForm')}><span>Adicionar atleta</span><ChevronRight size={16} /></button>
+                    {isStateAdmin && <button className="line-action" onClick={() => setDashboardSection('athletes')}><span>Gerenciar atletas</span><ChevronRight size={16} /></button>}
                     <button className="line-action"><span>Validar escola</span><ChevronRight size={16} /></button>
                   </article>
 
                   <article className="glass-card panel-card">
-                    <div className="panel-head">
-                      <div>
-                        <p className="eyebrow">Agenda</p>
-                        <h4>Próximos eventos</h4>
-                      </div>
-                    </div>
+                    <div className="panel-head"><div><p className="eyebrow">Agenda</p><h4>Próximos eventos</h4></div></div>
                     <div className="list-card"><strong>18/08</strong><span>Prazo de inscrições dos Jogos Escolares</span></div>
                     <div className="list-card"><strong>22/08</strong><span>Reunião com organizadores</span></div>
                     <div className="list-card"><strong>29/08</strong><span>Homologação de resultados</span></div>
@@ -246,13 +316,13 @@ export function App() {
               </>
             )}
 
-            {dashboardSection === 'athletes' && (
+            {dashboardSection === 'athletes' && isStateAdmin && (
               <>
                 <section className="section-toolbar">
                   <div>
-                    <p className="eyebrow">Gestão de atletas</p>
+                    <p className="eyebrow">Gestão estadual de atletas</p>
                     <h3>Atletas cadastrados</h3>
-                    <p className="muted">Consulte vínculos, documentação e situação de elegibilidade.</p>
+                    <p className="muted">Consulta administrativa de vínculos, documentação e situação de elegibilidade.</p>
                   </div>
                   <button className="primary-button" onClick={() => setDashboardSection('athleteForm')}>
                     <Plus size={17} /> Cadastrar atleta
@@ -275,30 +345,19 @@ export function App() {
 
                 <section className="glass-card table-card">
                   <div className="table-toolbar">
-                    <label className="search-box table-search">
-                      <Search size={16} />
-                      <input type="text" placeholder="Buscar por nome, nickname ou município" />
-                    </label>
+                    <label className="search-box table-search"><Search size={16} /><input type="text" placeholder="Buscar por nome, nickname ou município" /></label>
                     <select className="compact-select" defaultValue="Todos os status">
-                      <option>Todos os status</option>
-                      <option>Validado</option>
-                      <option>Pendente</option>
-                      <option>Aguardando responsável</option>
+                      <option>Todos os status</option><option>Validado</option><option>Pendente</option><option>Aguardando responsável</option>
                     </select>
                   </div>
-
                   <div className="table-shell">
                     <table className="data-table">
-                      <thead>
-                        <tr><th>Atleta</th><th>Modalidade</th><th>Município</th><th>Vínculo escolar</th><th>Situação</th></tr>
-                      </thead>
+                      <thead><tr><th>Atleta</th><th>Modalidade</th><th>Município</th><th>Vínculo escolar</th><th>Situação</th></tr></thead>
                       <tbody>
                         {athleteRows.map((athlete) => (
                           <tr key={athlete.nick}>
                             <td><strong>{athlete.name}</strong><small>{athlete.nick}</small></td>
-                            <td>{athlete.game}</td>
-                            <td>{athlete.city}</td>
-                            <td>{athlete.school}</td>
+                            <td>{athlete.game}</td><td>{athlete.city}</td><td>{athlete.school}</td>
                             <td><span className={`status-badge ${athlete.tone}`}>{athlete.status}</span></td>
                           </tr>
                         ))}
@@ -310,23 +369,22 @@ export function App() {
               </>
             )}
 
-            {dashboardSection === 'athleteForm' && (
+            {dashboardSection === 'athleteForm' && (isAthlete || isStateAdmin) && (
               <>
                 <section className="section-toolbar form-heading">
                   <div>
-                    <button className="back-link" onClick={() => setDashboardSection('athletes')}><ArrowLeft size={16} /> Voltar para atletas</button>
-                    <p className="eyebrow">Novo cadastro</p>
-                    <h3>Cadastrar atleta</h3>
+                    <button className="back-link" onClick={() => setDashboardSection(isAthlete ? 'athleteHome' : 'athletes')}>
+                      <ArrowLeft size={16} /> {isAthlete ? 'Voltar para minha área' : 'Voltar para atletas'}
+                    </button>
+                    <p className="eyebrow">{isAthlete ? 'Meu cadastro' : 'Novo cadastro'}</p>
+                    <h3>{isAthlete ? 'Preencher meu cadastro de atleta' : 'Cadastrar atleta'}</h3>
                     <p className="muted">Preencha apenas dados fictícios durante esta fase de desenvolvimento.</p>
                   </div>
                 </section>
 
                 <form className="athlete-form" onSubmit={handleAthleteSubmit}>
                   <section className="glass-card form-section">
-                    <div className="form-section-title">
-                      <div className="icon-box"><UserRound size={20} /></div>
-                      <div><h4>Identificação</h4><p>Dados básicos para individualização do atleta.</p></div>
-                    </div>
+                    <div className="form-section-title"><div className="icon-box"><UserRound size={20} /></div><div><h4>Identificação</h4><p>Dados básicos para individualização do atleta.</p></div></div>
                     <div className="form-grid">
                       <label>Nome completo<input required placeholder="Ex.: Atleta Exemplo" /></label>
                       <label>Nome social<input placeholder="Opcional" /></label>
@@ -340,10 +398,7 @@ export function App() {
                   </section>
 
                   <section className="glass-card form-section">
-                    <div className="form-section-title">
-                      <div className="icon-box yellow-box"><Gamepad2 size={20} /></div>
-                      <div><h4>Perfil esportivo</h4><p>Informações de participação no ecossistema de e-sports.</p></div>
-                    </div>
+                    <div className="form-section-title"><div className="icon-box yellow-box"><Gamepad2 size={20} /></div><div><h4>Perfil esportivo</h4><p>Informações de participação no ecossistema de e-sports.</p></div></div>
                     <div className="form-grid">
                       <label>Nickname<input required placeholder="Nome utilizado nas competições" /></label>
                       <label>Modalidade principal<select required defaultValue=""><option value="" disabled>Selecione</option><option>Valorant</option><option>League of Legends</option><option>EA Sports FC</option><option>Counter-Strike 2</option><option>Outra</option></select></label>
@@ -353,10 +408,7 @@ export function App() {
                   </section>
 
                   <section className="glass-card form-section">
-                    <div className="form-section-title">
-                      <div className="icon-box green-box"><School size={20} /></div>
-                      <div><h4>Vínculo educacional</h4><p>Informações para validação da situação escolar quando aplicável.</p></div>
-                    </div>
+                    <div className="form-section-title"><div className="icon-box green-box"><School size={20} /></div><div><h4>Vínculo educacional</h4><p>Informações para validação da situação escolar quando aplicável.</p></div></div>
                     <div className="form-grid">
                       <label>Está matriculado em instituição de ensino?<select required defaultValue="Sim"><option>Sim</option><option>Não</option></select></label>
                       <label>Instituição de ensino<input placeholder="Nome fictício da instituição" /></label>
@@ -366,10 +418,7 @@ export function App() {
                   </section>
 
                   <section className="glass-card form-section">
-                    <div className="form-section-title">
-                      <div className="icon-box red-box"><ShieldCheck size={20} /></div>
-                      <div><h4>Responsável legal e autorizações</h4><p>Necessário quando o atleta for menor de idade.</p></div>
-                    </div>
+                    <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal e autorizações</h4><p>Necessário quando o atleta for menor de idade.</p></div></div>
                     <div className="form-grid">
                       <label>Atleta menor de 18 anos?<select value={minor} onChange={(event) => setMinor(event.target.value)}><option>Não</option><option>Sim</option></select></label>
                       <label>Termo de autorização<select defaultValue={minor === 'Sim' ? 'Pendente' : 'Não se aplica'} key={minor}><option>Não se aplica</option><option>Pendente</option><option>Recebido</option><option>Validado</option></select></label>
@@ -382,16 +431,11 @@ export function App() {
                         </>
                       )}
                     </div>
-                    {minor === 'Sim' && (
-                      <div className="warning-note"><AlertTriangle size={18} /><span>O cadastro de menor ficará pendente até a validação do responsável legal e da autorização correspondente.</span></div>
-                    )}
+                    {minor === 'Sim' && <div className="warning-note"><AlertTriangle size={18} /><span>O cadastro de menor ficará pendente até a validação do responsável legal e da autorização correspondente.</span></div>}
                   </section>
 
                   <section className="glass-card form-section">
-                    <div className="form-section-title">
-                      <div className="icon-box"><FileText size={20} /></div>
-                      <div><h4>Documentos</h4><p>Área demonstrativa para futura conferência documental.</p></div>
-                    </div>
+                    <div className="form-section-title"><div className="icon-box"><FileText size={20} /></div><div><h4>Documentos</h4><p>Área demonstrativa para futura conferência documental.</p></div></div>
                     <div className="document-grid">
                       <div className="document-item"><FileText size={18} /><div><strong>Documento de identificação</strong><span>Não anexado</span></div></div>
                       <div className="document-item"><FileText size={18} /><div><strong>Comprovante de vínculo escolar</strong><span>Não anexado</span></div></div>
@@ -401,8 +445,8 @@ export function App() {
                   </section>
 
                   <div className="form-actions">
-                    <button type="button" className="secondary-button" onClick={() => setDashboardSection('athletes')}>Cancelar</button>
-                    <button type="submit" className="primary-button"><CheckCircle2 size={17} /> Salvar cadastro demonstrativo</button>
+                    <button type="button" className="secondary-button" onClick={() => setDashboardSection(isAthlete ? 'athleteHome' : 'athletes')}>Cancelar</button>
+                    <button type="submit" className="primary-button"><CheckCircle2 size={17} /> {isAthlete ? 'Salvar meu cadastro' : 'Salvar cadastro demonstrativo'}</button>
                   </div>
                 </form>
               </>
@@ -434,10 +478,7 @@ export function App() {
           <div className="glass-card hero-card">
             <span className="pill">Plataforma pública estadual</span>
             <h2>Sistema Estadual Integrado de Regulação e Fomento aos E-sports</h2>
-            <p>
-              Ambiente integrado para competições, atletas, escolas, organizadores, integridade,
-              legislação e indicadores do setor.
-            </p>
+            <p>Ambiente integrado para competições, atletas, escolas, organizadores, integridade, legislação e indicadores do setor.</p>
             <div className="hero-actions">
               <button className="primary-button" onClick={() => setView('login')}>Acessar sistema</button>
               <button className="secondary-button">Conhecer módulos</button>
@@ -446,10 +487,7 @@ export function App() {
 
           <div className="side-stack">
             <div className="glass-card dark-card">
-              <div className="card-row">
-                <span className="eyebrow eyebrow-light">Visão geral</span>
-                <Gamepad2 size={18} />
-              </div>
+              <div className="card-row"><span className="eyebrow eyebrow-light">Visão geral</span><Gamepad2 size={18} /></div>
               <div className="metric"><strong>12</strong><span>competições ativas</span></div>
               <div className="metric"><strong>248</strong><span>atletas monitorados</span></div>
               <div className="metric"><strong>21</strong><span>municípios participantes</span></div>
@@ -458,9 +496,7 @@ export function App() {
             <div className="glass-card summary-card">
               <p className="eyebrow">Acesso e informação</p>
               <h3>Um ambiente único para consulta e gestão</h3>
-              <p className="muted">
-                Consulte informações públicas do setor e acesse a área restrita para realizar as rotinas de gestão do SERFES.
-              </p>
+              <p className="muted">Consulte informações públicas do setor e acesse a área restrita para realizar as rotinas de gestão do SERFES.</p>
             </div>
           </div>
         </section>
