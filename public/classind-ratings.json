@@ -1,0 +1,19 @@
+{
+  "source": "ClassInd/MJSP",
+  "sourceUrl": "https://classindportal.mj.gov.br/consulta-jogos",
+  "generatedAt": null,
+  "records": [
+    { "gameId": "free-fire", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "tekken", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "street-fighter", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "ea-fc", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "pes", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "fortnite", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "valorant", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "league-of-legends", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "counter-strike", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "brawl-stars", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "clash-royale", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null },
+    { "gameId": "just-dance", "officialTitle": null, "classification": null, "status": "pending", "sourceRecordId": null, "sourceUpdatedAt": null, "verifiedAt": null }
+  ]
+}
