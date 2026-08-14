@@ -1,0 +1,52 @@
+name: Fix ClassInd build
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-classind-build.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fix TypeScript build
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('src/App.tsx')
+          text = path.read_text(encoding='utf-8')
+
+          old = """    fetch(`${import.meta.env.BASE_URL}classind-ratings.json`, { cache: 'no-store' })"""
+          new = """    const classindBasePath = window.location.pathname.startsWith('/serfes') ? '/serfes/' : '/';\n    fetch(`${classindBasePath}classind-ratings.json`, { cache: 'no-store' })"""
+          if old not in text:
+              raise SystemExit('ClassInd fetch block not found')
+          text = text.replace(old, new, 1)
+
+          old = """    const competitionCatalog = competition ? getGameCatalogEntry(competition.officialGameTitle || competition.game) : null;"""
+          new = """    const competitionGameTitle = competition?.officialGameTitle ?? '';\n    const competitionCatalog = competitionGameTitle ? getGameCatalogEntry(competitionGameTitle) : null;"""
+          if old not in text:
+              raise SystemExit('Competition catalog block not found')
+          text = text.replace(old, new, 1)
+
+          old = """      setRegistrationMessage(`Inscrição indisponível: a classificação indicativa vigente para ${competition?.officialGameTitle || competition?.game} é ${classificationLabel(competitionRating.classification)}.`);"""
+          new = """      setRegistrationMessage(`Inscrição indisponível: a classificação indicativa vigente para ${competitionGameTitle} é ${classificationLabel(competitionRating.classification)}.`);"""
+          if old not in text:
+              raise SystemExit('Competition warning block not found')
+          text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit fix
+        run: |
+          git config user.name "Cristina-parisenti"
+          git config user.email "crislu88@hotmail.com"
+          git add src/App.tsx
+          git commit -m "Fix ClassInd eligibility build"
+          git push
