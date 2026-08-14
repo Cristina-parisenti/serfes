@@ -9,33 +9,16 @@ jobs:
   inspect:
     runs-on: ubuntu-latest
     steps:
-      - name: Inspect Dados.gov API routes
+      - name: Inspect Dados.gov service configuration
         run: |
           python - <<'PY'
-          import re, urllib.parse, urllib.request
-          url='https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil'
+          import re, urllib.request
+          url='https://dados.gov.br/static/js/app.a2f69268.js'
           req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0'})
           with urllib.request.urlopen(req,timeout=50) as r:
-              page=r.read().decode('utf-8','replace')
-          scripts=re.findall(r'<script[^>]+src="([^"]+)"',page,re.I)
-          print('scripts',scripts)
-          base='https://dados.gov.br'
-          for src in scripts:
-              full=urllib.parse.urljoin(base,src)
-              try:
-                  req=urllib.request.Request(full,headers={'User-Agent':'Mozilla/5.0'})
-                  with urllib.request.urlopen(req,timeout=50) as r:
-                      js=r.read().decode('utf-8','replace')
-              except Exception as exc:
-                  print('ERR',full,exc); continue
-              print('\n###',full,'bytes',len(js))
-              for pat in [r'/dados/api[^"\'` ]+', r'https?://[^"\'` ]+', r'conjuntos-dados[^"\'` ]+', r'distribui[^"\'` ]+', r'recurso[^"\'` ]+']:
-                  hits=[]
-                  for m in re.finditer(pat,js,re.I):
-                      val=m.group(0)[:800]
-                      if val not in hits: hits.append(val)
-                      if len(hits)>=25: break
-                  if hits:
-                      print('PAT',pat)
-                      for h in hits: print(h)
+              js=r.read().decode('utf-8','replace')
+          for needle in ['baseURL','axios.create','api/','conjunto-dados/','recurso/','package_show','publico','API_URL']:
+              print('\n###',needle)
+              for m in list(re.finditer(re.escape(needle),js,re.I))[:30]:
+                  print(js[max(0,m.start()-550):min(len(js),m.end()+1100)])
           PY
