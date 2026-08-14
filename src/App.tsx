@@ -60,6 +60,7 @@ const athleteRows = [
 
 type DashboardSection = 'overview' | 'athleteHome' | 'athletes' | 'athleteForm';
 type Municipality = { id: number; nome: string };
+type SignatureStatus = 'Não se aplica' | 'Em preenchimento' | 'Pronto para assinatura';
 
 function EsportsSymbol() {
   return (
@@ -69,16 +70,45 @@ function EsportsSymbol() {
   );
 }
 
+function isUnder18(birthDate: string): boolean | null {
+  if (!birthDate) return null;
+  const [year, month, day] = birthDate.split('-').map(Number);
+  if (!year || !month || !day) return null;
+
+  const today = new Date();
+  let age = today.getFullYear() - year;
+  const birthdayHasNotOccurred =
+    today.getMonth() + 1 < month ||
+    (today.getMonth() + 1 === month && today.getDate() < day);
+
+  if (birthdayHasNotOccurred) age -= 1;
+  return age < 18;
+}
+
+function formatInputDate(value: string) {
+  if (!value) return '';
+  const [year, month, day] = value.split('-').map(Number);
+  if (!year || !month || !day) return '';
+  return new Intl.DateTimeFormat('pt-BR').format(new Date(year, month - 1, day));
+}
+
+function currentDateLong() {
+  return new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date());
+}
+
 export function App() {
   const [view, setView] = useState<'home' | 'login' | 'dashboard'>('home');
   const [dashboardSection, setDashboardSection] = useState<DashboardSection>('overview');
   const [profile, setProfile] = useState(profiles[0]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [minor, setMinor] = useState('Não');
   const [athleteSaved, setAthleteSaved] = useState(false);
   const [termVisible, setTermVisible] = useState(false);
-  const [signatureStatus, setSignatureStatus] = useState<'Não se aplica' | 'Em preenchimento' | 'Pronto para assinatura'>('Não se aplica');
+  const [signatureStatus, setSignatureStatus] = useState<SignatureStatus>('Não se aplica');
   const [formAttempted, setFormAttempted] = useState(false);
 
   const [athleteName, setAthleteName] = useState('');
@@ -98,13 +128,15 @@ export function App() {
   const [responsiblePhone, setResponsiblePhone] = useState('');
   const [competitionPeriod, setCompetitionPeriod] = useState('');
   const [partnerInstitution, setPartnerInstitution] = useState('');
-  const [authorizationLocation, setAuthorizationLocation] = useState('');
 
   const [municipalities, setMunicipalities] = useState<string[]>([]);
   const [municipalitiesError, setMunicipalitiesError] = useState(false);
 
   const isAthlete = profile === 'Atleta';
   const isStateAdmin = profile === 'Administrador estadual';
+  const minorStatus = isUnder18(athleteBirthDate);
+  const authorizationDate = currentDateLong();
+  const authorizationPlace = athleteMunicipality ? `${athleteMunicipality}/PR` : '';
 
   const nicknameBlocked = athleteNickname.length > 0 && nicknameHasBlockedContent(athleteNickname);
   const athleteCpfInvalid = athleteCpf.length > 0 && !isValidCpf(athleteCpf);
@@ -130,17 +162,21 @@ export function App() {
     return () => { active = false; };
   }, []);
 
+  useEffect(() => {
+    if (minorStatus === true) {
+      setTermVisible(true);
+      setSignatureStatus((current) => current === 'Pronto para assinatura' ? current : 'Em preenchimento');
+    } else {
+      setTermVisible(false);
+      setSignatureStatus('Não se aplica');
+    }
+  }, [minorStatus]);
+
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setAthleteSaved(false);
     setDashboardSection(profile === 'Atleta' ? 'athleteHome' : 'overview');
     setView('dashboard');
-  }
-
-  function handleMinorChange(value: string) {
-    setMinor(value);
-    setTermVisible(false);
-    setSignatureStatus(value === 'Sim' ? 'Em preenchimento' : 'Não se aplica');
   }
 
   function handleAthleteSubmit(event: FormEvent<HTMLFormElement>) {
@@ -152,9 +188,10 @@ export function App() {
       isValidEmail(athleteEmail) &&
       isValidPhone(athletePhone) &&
       !nicknameHasBlockedContent(athleteNickname) &&
-      athleteMunicipality.length > 0;
+      athleteMunicipality.length > 0 &&
+      minorStatus !== null;
 
-    const responsibleFieldsValid = minor !== 'Sim' || (
+    const responsibleFieldsValid = minorStatus !== true || (
       isValidCpf(responsibleCpf) &&
       isValidEmail(responsibleEmail) &&
       isValidPhone(responsiblePhone)
@@ -256,7 +293,7 @@ export function App() {
                   <article className="mini-status blue"><strong>1</strong><span>Meu cadastro</span></article>
                   <article className="mini-status yellow"><strong>{athleteSaved ? 'Enviado' : 'Pendente'}</strong><span>Validação cadastral</span></article>
                   <article className="mini-status green"><strong>{athleteInstitution ? 'Informado' : '—'}</strong><span>Vínculo escolar</span></article>
-                  <article className="mini-status red"><strong>{minor === 'Sim' ? signatureStatus : '—'}</strong><span>Autorização responsável</span></article>
+                  <article className="mini-status red"><strong>{minorStatus === true ? signatureStatus : '—'}</strong><span>Autorização responsável</span></article>
                 </section>
                 <section className="panel-grid">
                   <article className="glass-card panel-card">
@@ -268,7 +305,7 @@ export function App() {
                   <article className="glass-card panel-card">
                     <div className="panel-head"><div><p className="eyebrow">Participação</p><h4>Próximas etapas</h4></div></div>
                     <div className="list-card"><strong>1</strong><span>Complete seu cadastro pessoal.</span></div>
-                    <div className="list-card"><strong>2</strong><span>Se menor de idade, prepare a autorização do responsável.</span></div>
+                    <div className="list-card"><strong>2</strong><span>Se menor de idade, confira o termo preenchido automaticamente.</span></div>
                     <div className="list-card"><strong>3</strong><span>Depois, consulte competições disponíveis para inscrição.</span></div>
                   </article>
                 </section>
@@ -346,7 +383,10 @@ export function App() {
                     <div className="form-grid">
                       <label>Nome completo<input required value={athleteName} onChange={(e) => setAthleteName(e.target.value)} placeholder="Ex.: Atleta Exemplo" /></label>
                       <label>Nome social<input placeholder="Opcional" /></label>
-                      <label>Data de nascimento<input required type="date" value={athleteBirthDate} onChange={(e) => setAthleteBirthDate(e.target.value)} /></label>
+                      <label>Data de nascimento
+                        <input required type="date" value={athleteBirthDate} onChange={(e) => setAthleteBirthDate(e.target.value)} />
+                        {athleteBirthDate && <small className="field-help">O SERFES identificou automaticamente: {minorStatus ? 'menor de 18 anos' : '18 anos ou mais'}.</small>}
+                      </label>
                       <label>CPF
                         <input required inputMode="numeric" maxLength={14} className={athleteCpfInvalid ? 'invalid' : ''} value={athleteCpf} onChange={(e) => setAthleteCpf(formatCpf(e.target.value))} placeholder="000.000.000-00" />
                         {athleteCpfInvalid && <small className="field-error">CPF inválido. Confira os 11 dígitos e os dígitos verificadores.</small>}
@@ -395,11 +435,14 @@ export function App() {
                   </section>
 
                   <section className="glass-card form-section authorization-section">
-                    <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal e autorização</h4><p>O termo é habilitado automaticamente quando o atleta é menor de 18 anos.</p></div></div>
+                    <div className="form-section-title"><div className="icon-box red-box"><ShieldCheck size={20} /></div><div><h4>Responsável legal e autorização</h4><p>A exigência do termo é definida automaticamente a partir da data de nascimento.</p></div></div>
                     <div className="form-grid">
-                      <label>Atleta menor de 18 anos?<select value={minor} onChange={(event) => handleMinorChange(event.target.value)}><option>Não</option><option>Sim</option></select></label>
+                      <label>Situação etária
+                        <input readOnly value={!athleteBirthDate ? 'Aguardando data de nascimento' : minorStatus ? 'Menor de 18 anos — autorização obrigatória' : '18 anos ou mais — autorização não exigida'} />
+                      </label>
                       <label>Situação do termo<input readOnly value={signatureStatus} /></label>
-                      {minor === 'Sim' && (
+
+                      {minorStatus === true && (
                         <>
                           <label>Nome do responsável legal<input required value={responsibleName} onChange={(e) => setResponsibleName(e.target.value)} placeholder="Responsável Exemplo" /></label>
                           <label>RG do responsável<input required value={responsibleRg} onChange={(e) => setResponsibleRg(e.target.value)} placeholder="00.000.000-0" /></label>
@@ -415,52 +458,70 @@ export function App() {
                             <input required inputMode="tel" maxLength={15} className={responsiblePhoneInvalid ? 'invalid' : ''} value={responsiblePhone} onChange={(e) => setResponsiblePhone(formatPhone(e.target.value))} placeholder="(00) 00000-0000" />
                             {responsiblePhoneInvalid && <small className="field-error">Informe DDD + telefone, com 10 ou 11 dígitos.</small>}
                           </label>
-                          <label>Local para assinatura<input value={authorizationLocation} onChange={(e) => setAuthorizationLocation(e.target.value)} placeholder="Ex.: Curitiba/PR" /></label>
-                          <label>Período da competição<input value={competitionPeriod} onChange={(e) => setCompetitionPeriod(e.target.value)} placeholder="Ex.: 10 a 12/10/2026" /></label>
-                          <label>Instituição parceira<input value={partnerInstitution} onChange={(e) => setPartnerInstitution(e.target.value)} placeholder="Informação definida pela organização" /></label>
+                          <label>Local do termo<input readOnly value={authorizationPlace || 'Será preenchido a partir do município cadastrado'} /></label>
+                          <label>Data do termo<input readOnly value={authorizationDate} /></label>
+                          <label>Período da competição<input value={competitionPeriod} onChange={(e) => setCompetitionPeriod(e.target.value)} placeholder="Será trazido do cadastro da competição" /></label>
+                          <label>Instituição parceira<input value={partnerInstitution} onChange={(e) => setPartnerInstitution(e.target.value)} placeholder="Será trazida do cadastro da competição" /></label>
                         </>
                       )}
                     </div>
 
-                    {minor === 'Sim' && (
+                    {minorStatus === true && (
                       <>
                         <div className="warning-note"><AlertTriangle size={18} /><span>A participação do estudante ficará condicionada à autorização devidamente preenchida e assinada pelo responsável legal.</span></div>
                         <div className="authorization-actions">
-                          <button type="button" className="primary-button" onClick={prepareAuthorization}><FileText size={17} /> Preencher e visualizar termo</button>
+                          <button type="button" className="primary-button" onClick={prepareAuthorization}><FileText size={17} /> Visualizar termo preenchido automaticamente</button>
                           <span className={`authorization-status ${signatureStatus === 'Pronto para assinatura' ? 'ready' : ''}`}><FileSignature size={17} /> {signatureStatus}</span>
                         </div>
                       </>
                     )}
+
+                    {athleteBirthDate && minorStatus === false && (
+                      <div className="login-highlight"><CheckCircle2 size={18} /><span>O atleta possui 18 anos ou mais. O termo de autorização do responsável legal não será exigido.</span></div>
+                    )}
                   </section>
 
-                  {minor === 'Sim' && termVisible && (
+                  {minorStatus === true && termVisible && (
                     <section className="term-preview" aria-label="Pré-visualização do termo de autorização">
                       <div className="term-toolbar no-print">
-                        <div><p className="eyebrow">Documento gerado pelo SERFES</p><h4>Pré-visualização da autorização</h4></div>
+                        <div><p className="eyebrow">Documento gerado pelo SERFES</p><h4>Termo preenchido automaticamente</h4></div>
                         <button type="button" className="secondary-button" onClick={() => window.print()}><Printer size={17} /> Imprimir / salvar em PDF</button>
                       </div>
                       <article className="term-paper">
-                        <h3>TERMO DE AUTORIZAÇÃO PARA PARTICIPAÇÃO DE ESTUDANTE EM COMPETIÇÃO DE ESPORTES ELETRÔNICOS ESCOLARES</h3>
-                        <p>Eu, <strong>{responsibleName || '_____________________________'}</strong>, portador(a) do RG nº <strong>{responsibleRg || '______________'}</strong> e inscrito(a) no CPF nº <strong>{responsibleCpf || '_______________________'}</strong>, na qualidade de responsável legal pelo(a) estudante <strong>{athleteName || '_______________________'}</strong>, regularmente matriculado(a) na instituição de ensino <strong>{athleteInstitution || '_______________________________'}</strong>, autorizo sua participação voluntária nos Jogos Eletrônicos Escolares, a serem realizados no período de <strong>{competitionPeriod || '________________'}</strong>.</p>
+                        <h3>TERMO DE AUTORIZAÇÃO DO RESPONSÁVEL LEGAL PARA PARTICIPAÇÃO DE ESTUDANTE EM COMPETIÇÃO DE ESPORTES ELETRÔNICOS ESCOLARES</h3>
+                        <p>Eu, <strong>{responsibleName || '_____________________________'}</strong>, portador(a) do RG nº <strong>{responsibleRg || '______________'}</strong> e inscrito(a) no CPF nº <strong>{responsibleCpf || '_______________________'}</strong>, na qualidade de responsável legal pelo(a) estudante <strong>{athleteName || '_______________________'}</strong>, inscrito(a) no CPF nº <strong>{athleteCpf || '_______________________'}</strong>, nascido(a) em <strong>{formatInputDate(athleteBirthDate) || '________________'}</strong>, regularmente matriculado(a) na instituição de ensino <strong>{athleteInstitution || '_______________________________'}</strong>, no Município de <strong>{athleteMunicipality || '________________'}</strong>, autorizo sua participação voluntária nos Jogos Eletrônicos Escolares, a serem realizados no período de <strong>{competitionPeriod || '________________'}</strong>.</p>
                         <p>Declaro estar ciente de que a iniciativa possui caráter educacional, formativo e recreativo, sendo organizada pela Secretaria de Esportes do Estado do Paraná, em parceria com <strong>{partnerInstitution || '________________'}</strong>, com o objetivo de promover o desenvolvimento de competências digitais, sociais e esportivas.</p>
-                        <p>Autorizo, ainda, a participação do(a) aluno(a) nas atividades previstas na programação, incluindo partidas, treinamentos e demais ações correlatas, bem como o uso gratuito de sua imagem, voz e nome, para fins institucionais e de divulgação do evento, em meios físicos e digitais, nos termos da legislação aplicável.</p>
-                        <p>Autorizo, por fim, o tratamento dos dados pessoais do(a) estudante e do responsável legal, estritamente para fins de inscrição, organização e registro da atividade, em conformidade com a Lei Geral de Proteção de Dados (LGPD).</p>
-                        <p>Por fim, declaro que as informações prestadas são verdadeiras, estando ciente de que eventual inexatidão poderá implicar o cancelamento da participação.</p>
+                        <p>Autorizo, ainda, a participação do(a) estudante nas atividades previstas na programação, incluindo partidas, treinamentos e demais ações correlatas, bem como o uso gratuito de sua imagem, voz e nome, para fins institucionais e de divulgação do evento, em meios físicos e digitais, nos termos da legislação aplicável.</p>
+                        <p>Autorizo o tratamento dos dados pessoais do(a) estudante e do responsável legal estritamente para fins de inscrição, organização, execução e registro da atividade, em conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD).</p>
+                        <p>Declaro que as informações prestadas são verdadeiras e estou ciente de que eventual inexatidão poderá implicar o cancelamento da participação.</p>
+                        <p><strong>A participação do(a) estudante fica condicionada à formalização deste termo pelo responsável legal, mediante assinatura eletrônica ou outro meio admitido pela regulamentação aplicável ao SERFES.</strong></p>
                         <div className="term-fields">
-                          <p><strong>Local:</strong> {authorizationLocation || '_______________________'}</p>
-                          <p><strong>Data:</strong> _______________________</p>
-                          <p><strong>Assinatura do responsável legal:</strong> ______________________________________________</p>
                           <p><strong>Telefone para contato:</strong> {responsiblePhone || '_______________________'}</p>
-                          <p><strong>E-mail para cadastro do aluno no torneio:</strong> {athleteEmail || responsibleEmail || '_______________________'}</p>
+                          <p><strong>E-mail para cadastro:</strong> {athleteEmail || responsibleEmail || '_______________________'}</p>
                           <p><strong>Nickname do(a) participante:</strong> {athleteNickname || '_______________________'}</p>
                           <p><strong>Jogo a ser disputado:</strong> {athleteGame || '_______________________'}</p>
+                          <p><strong>Local e data:</strong> {authorizationPlace || '_______________________'}, {authorizationDate}.</p>
+                          <p><strong>Assinatura eletrônica do responsável legal:</strong> {responsibleName || '_______________________'} — CPF {responsibleCpf || '_______________________'}</p>
                         </div>
                       </article>
+
                       <div className="signature-flow no-print">
-                        <div className="signature-step complete"><span>1</span><div><strong>Termo preenchido</strong><small>Dados do cadastro inseridos automaticamente.</small></div></div>
-                        <div className="signature-step current"><span>2</span><div><strong>Assinatura do responsável</strong><small>Etapa preparada para futura integração com assinatura eletrônica.</small></div></div>
-                        <div className="signature-step"><span>3</span><div><strong>Validação no SERFES</strong><small>O status será atualizado após o recebimento da assinatura válida.</small></div></div>
-                        <button type="button" className="govbr-button" disabled title="A integração real dependerá da habilitação institucional da API de assinatura eletrônica.">Assinar com GOV.BR — integração futura</button>
+                        <div className="signature-step complete">
+                          <span>1</span>
+                          <div><strong>Termo preenchido</strong><small>Os dados do cadastro e a data são inseridos automaticamente.</small></div>
+                        </div>
+                        <div className="signature-step current govbr-step">
+                          <span>2</span>
+                          <div>
+                            <strong>Assinatura com GOV.BR</strong>
+                            <small>O responsável assinará eletronicamente quando a integração institucional estiver habilitada.</small>
+                            <button type="button" className="govbr-button" disabled title="A integração real dependerá da habilitação institucional da API de assinatura eletrônica.">Assinar com GOV.BR — integração futura</button>
+                          </div>
+                        </div>
+                        <div className="signature-step">
+                          <span>3</span>
+                          <div><strong>Validação pelo SERFES</strong><small>Após a assinatura válida, o sistema atualizará a situação da autorização.</small></div>
+                        </div>
                       </div>
                     </section>
                   )}
@@ -470,7 +531,7 @@ export function App() {
                     <div className="document-grid">
                       <div className="document-item"><FileText size={18} /><div><strong>Documento de identificação</strong><span>Não anexado</span></div></div>
                       <div className="document-item"><FileText size={18} /><div><strong>Comprovante de vínculo escolar</strong><span>Não anexado</span></div></div>
-                      <div className="document-item"><FileSignature size={18} /><div><strong>Autorização do responsável</strong><span>{minor === 'Sim' ? signatureStatus : 'Não se aplica'}</span></div></div>
+                      <div className="document-item"><FileSignature size={18} /><div><strong>Autorização do responsável</strong><span>{minorStatus === true ? signatureStatus : 'Não se aplica'}</span></div></div>
                     </div>
                     <p className="prototype-note">O envio real de documentos e a assinatura eletrônica serão habilitados somente após a definição do armazenamento seguro e da integração institucional correspondente.</p>
                   </section>
