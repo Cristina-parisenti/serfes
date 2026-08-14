@@ -23,7 +23,16 @@ import {
 } from 'lucide-react';
 import './authorization.css';
 import './competition.css';
+import './gameEligibility.css';
 import './validation.css';
+import {
+  ClassindRatingsPayload,
+  GAME_CATALOG,
+  classificationLabel,
+  classificationMinimumAge,
+  getClassindRecord,
+  getGameCatalogEntry,
+} from './gameCatalog';
 import {
   formatCpf,
   formatPhone,
@@ -63,7 +72,8 @@ const competitions = [
   {
     id: 'jogos-escolares-2026',
     name: 'Jogos Eletrônicos Escolares do Paraná 2026',
-    game: 'EA Sports FC',
+    game: 'EA FC',
+    officialGameTitle: 'EA Sports FC 26',
     period: '10 a 12 de outubro de 2026',
     location: 'Curitiba/PR',
     organizer: 'Secretaria de Esportes do Estado do Paraná',
@@ -72,9 +82,10 @@ const competitions = [
     status: 'Inscrições abertas',
   },
   {
-    id: 'copa-rocket-league-2026',
-    name: 'Copa Paraná de Rocket League Escolar',
-    game: 'Rocket League',
+    id: 'copa-fortnite-2026',
+    name: 'Copa Paraná de Fortnite Escolar',
+    game: 'Fortnite',
+    officialGameTitle: 'Fortnite',
     period: '7 e 8 de novembro de 2026',
     location: 'Londrina/PR',
     organizer: 'Secretaria de Esportes do Estado do Paraná',
@@ -86,6 +97,7 @@ const competitions = [
     id: 'circuito-lol-2026',
     name: 'Circuito Estadual Escolar de League of Legends',
     game: 'League of Legends',
+    officialGameTitle: 'League of Legends',
     period: '21 e 22 de novembro de 2026',
     location: 'Maringá/PR',
     organizer: 'Secretaria de Esportes do Estado do Paraná',
@@ -191,6 +203,8 @@ export function App() {
   const [registrations, setRegistrations] = useState<Record<string, RegistrationStatus>>({});
   const [selectedCompetitionId, setSelectedCompetitionId] = useState<string | null>(null);
   const [registrationMessage, setRegistrationMessage] = useState('');
+  const [classindRatings, setClassindRatings] = useState<ClassindRatingsPayload | null>(null);
+  const [classindRatingsError, setClassindRatingsError] = useState(false);
 
   const isAthlete = profile === 'Atleta';
   const isStateAdmin = profile === 'Administrador estadual';
@@ -199,6 +213,11 @@ export function App() {
   const minorStatus = athleteAge === null ? null : athleteAge < 18;
   const selectedCompetition = competitions.find((competition) => competition.id === selectedCompetitionId) ?? null;
   const authorizationDate = currentDateLong();
+  const selectedGameCatalog = getGameCatalogEntry(athleteGame);
+  const selectedGameClassind = selectedGameCatalog ? getClassindRecord(classindRatings, selectedGameCatalog.id) : null;
+  const selectedGameMinimumAge = classificationMinimumAge(selectedGameClassind?.classification ?? null);
+  const selectedGameVerified = selectedGameClassind?.status === 'verified' && selectedGameMinimumAge !== null;
+  const gameAgeBlocked = selectedGameVerified && athleteAge !== null && athleteAge < selectedGameMinimumAge;
 
   const nicknameBlocked = athleteNickname.length > 0 && nicknameHasBlockedContent(athleteNickname);
   const athleteCpfInvalid = athleteCpf.length > 0 && !isValidCpf(athleteCpf);
@@ -220,6 +239,25 @@ export function App() {
       })
       .catch(() => {
         if (active) setMunicipalitiesError(true);
+      });
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    fetch(`${import.meta.env.BASE_URL}classind-ratings.json`, { cache: 'no-store' })
+      .then((response) => {
+        if (!response.ok) throw new Error('Não foi possível carregar o catálogo ClassInd.');
+        return response.json() as Promise<ClassindRatingsPayload>;
+      })
+      .then((data) => {
+        if (active) {
+          setClassindRatings(data);
+          setClassindRatingsError(false);
+        }
+      })
+      .catch(() => {
+        if (active) setClassindRatingsError(true);
       });
     return () => { active = false; };
   }, []);
@@ -252,6 +290,7 @@ export function App() {
 
     const mainFieldsValid =
       !athleteTooYoung &&
+      !gameAgeBlocked &&
       athleteAge !== null &&
       isValidCpf(athleteCpf) &&
       isValidEmail(athleteEmail) &&
@@ -295,6 +334,15 @@ export function App() {
 
     if (!athleteSaved) {
       setRegistrationMessage('Antes da inscrição em uma competição, complete e salve o seu cadastro.');
+      return;
+    }
+
+    const competition = competitions.find((item) => item.id === competitionId);
+    const competitionCatalog = competition ? getGameCatalogEntry(competition.officialGameTitle || competition.game) : null;
+    const competitionRating = competitionCatalog ? getClassindRecord(classindRatings, competitionCatalog.id) : null;
+    const competitionMinimumAge = classificationMinimumAge(competitionRating?.classification ?? null);
+    if (competitionRating?.status === 'verified' && athleteAge !== null && competitionMinimumAge !== null && athleteAge < competitionMinimumAge) {
+      setRegistrationMessage(`Inscrição indisponível: a classificação indicativa vigente para ${competition?.officialGameTitle || competition?.game} é ${classificationLabel(competitionRating.classification)}.`);
       return;
     }
 
@@ -607,7 +655,7 @@ export function App() {
                 </section>
 
                 <form className="athlete-form" onSubmit={handleAthleteSubmit}>
-                  {formAttempted && (athleteTooYoung || nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && (
+                  {formAttempted && (athleteTooYoung || gameAgeBlocked || nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && (
                     <div className="warning-note"><AlertTriangle size={18} /><span>Revise os campos destacados antes de salvar o cadastro.</span></div>
                   )}
 
@@ -656,19 +704,26 @@ export function App() {
                           <label>Modalidade principal
                             <select required value={athleteGame} onChange={(e) => setAthleteGame(e.target.value)}>
                               <option value="" disabled>Selecione</option>
-                              <option>Free Fire</option>
-                              <option>Tekken</option>
-                              <option>Street Fighter</option>
-                              <option>EA FC</option>
-                              <option>PES</option>
-                              <option>Fortnite</option>
-                              <option>Valorant</option>
-                              <option>League of Legends</option>
-                              <option>Counter Strike</option>
-                              <option>Brawl Stars</option>
-                              <option>Clash Royale</option>
-                              <option>Just Dance</option>
+                              {GAME_CATALOG.map((game) => <option key={game.id}>{game.name}</option>)}
                             </select>
+                            {athleteGame && selectedGameCatalog && (
+                              <div className={`game-eligibility-note ${selectedGameVerified ? (gameAgeBlocked ? 'blocked' : 'allowed') : 'pending'}`}>
+                                {selectedGameVerified ? (
+                                  <>
+                                    <strong>{gameAgeBlocked ? 'Modalidade incompatível com a idade informada' : 'Modalidade compatível com a idade informada'}</strong>
+                                    <small>Classificação de referência: {classificationLabel(selectedGameClassind?.classification ?? null)}{selectedGameClassind?.officialTitle ? ` — ${selectedGameClassind.officialTitle}` : ''}.</small>
+                                  </>
+                                ) : (
+                                  <>
+                                    <strong>Classificação oficial pendente de sincronização</strong>
+                                    <small>A estrutura de elegibilidade já está ativa. Assim que o catálogo oficial for conectado, o SERFES comparará automaticamente a idade do atleta com a classificação vigente.</small>
+                                  </>
+                                )}
+                                {selectedGameCatalog.requiresExactVersion && <small>A verificação definitiva será refeita na inscrição, usando o título/versão exatos informados pela competição.</small>}
+                                <a className="game-eligibility-source" href={classindRatings?.sourceUrl || 'https://classindportal.mj.gov.br/consulta-jogos'} target="_blank" rel="noreferrer">Consultar ClassInd/MJSP</a>
+                                {classindRatingsError && <small className="field-error">A fonte local de classificação não pôde ser carregada. Tente novamente.</small>}
+                              </div>
+                            )}
                           </label>
                         </div>
                       </section>
