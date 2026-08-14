@@ -1,0 +1,53 @@
+.game-eligibility-note {
+  margin-top: .75rem;
+  padding: .85rem 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: #f8fbfd;
+  display: grid;
+  gap: .25rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.game-eligibility-note strong {
+  color: var(--blue-dark);
+}
+
+.game-eligibility-note small {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.game-eligibility-note.allowed {
+  background: var(--green-soft);
+  border-color: #c7ebd9;
+}
+
+.game-eligibility-note.blocked {
+  background: var(--red-soft);
+  border-color: #efc2c2;
+}
+
+.game-eligibility-note.blocked strong {
+  color: var(--red);
+}
+
+.game-eligibility-note.pending {
+  background: var(--yellow-soft);
+  border-color: #f1df8b;
+}
+
+.game-eligibility-source {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  color: var(--blue);
+  font-size: .76rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.game-eligibility-source:hover {
+  text-decoration: underline;
+}
