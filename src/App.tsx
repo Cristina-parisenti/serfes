@@ -957,14 +957,12 @@ export function App() {
                               </select>
                             ) : (
                               <input
-                                required={enrollmentStatus === 'Sim'}
-                                disabled={enrollmentStatus !== 'Sim' || !schoolMunicipality || !schoolNetwork || !schoolLevel}
-                                value={athleteInstitution}
-                                onChange={(e) => setAthleteInstitution(e.target.value)}
-                                placeholder={!schoolLevel ? 'Selecione primeiro o nível de ensino' : 'Informe temporariamente a instituição'}
+                                disabled
+                                value=""
+                                placeholder={!schoolLevel ? 'Selecione primeiro o nível de ensino' : 'Aguardando catálogo oficial'}
                               />
                             )}
-                            {schoolLevel && !institutionCatalogReady && <small className="field-help">{schoolLevel === 'Ensino superior' ? 'A consulta automatizada ao e-MEC ainda não está disponível. Informe temporariamente a instituição.' : 'O catálogo oficial da SEED/PR está sendo sincronizado. Informe temporariamente a escola.'}</small>}
+                            {schoolLevel && !institutionCatalogReady && <small className="field-help">{schoolLevel === 'Ensino superior' ? 'Aguardando sincronização com a base oficial de instituições e cursos de ensino superior. O SERFES não aceitará instituição informada manualmente.' : 'Aguardando sincronização com a Consulta Escolas/SEED-PR. O SERFES não aceitará escola informada manualmente.'}</small>}
                             {schoolLevel !== 'Ensino superior' && schoolDirectoryError && <small className="field-error">Não foi possível carregar o catálogo da Consulta Escolas/SEED-PR.</small>}
                             {schoolLevel === 'Ensino superior' && higherEducationError && <small className="field-error">Não foi possível carregar o catálogo do MEC/e-MEC.</small>}
                           </label>
@@ -978,18 +976,16 @@ export function App() {
                           )}
                           {schoolLevel === 'Ensino superior' && (
                             <label>Curso
-                              <input
+                              <select
                                 required
-                                list="higher-education-courses"
-                                disabled={!athleteInstitution}
+                                disabled={!athleteInstitution || higherCourseOptions.length === 0}
                                 value={higherEducationCourse}
                                 onChange={(e) => setHigherEducationCourse(e.target.value)}
-                                placeholder={higherCourseOptions.length ? 'Digite ou selecione o curso' : (athleteInstitution ? 'Catálogo oficial ainda não disponível' : 'Selecione primeiro a instituição')}
-                              />
-                              <datalist id="higher-education-courses">
-                                {higherCourseOptions.map((course) => <option key={course.id} value={course.name} />)}
-                              </datalist>
-                              <small className="field-help">Os cursos são vinculados à instituição selecionada e limitados às ofertas oficiais localizadas no Paraná.</small>
+                              >
+                                <option value="" disabled>{!athleteInstitution ? 'Selecione primeiro a instituição' : (higherCourseOptions.length ? 'Selecione' : 'Aguardando catálogo oficial')}</option>
+                                {higherCourseOptions.map((course) => <option key={course.id} value={course.name}>{course.name}</option>)}
+                              </select>
+                              <small className="field-help">São exibidos somente cursos oficiais vinculados à instituição selecionada e com oferta localizada no Paraná.</small>
                             </label>
                           )}
                         </div>
