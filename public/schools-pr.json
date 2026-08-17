@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-08-16T11:16:49.234398+00:00",
+  "generatedAt": "2026-08-17T12:41:46.960510+00:00",
   "records": [
     {
       "id": "20",
@@ -3206,12 +3206,6 @@
       "name": "Vespertino F Pimpao, C E Dep-Ef M",
       "municipality": "Araucaria",
       "network": "Estadual"
-    },
-    {
-      "id": "2140",
-      "name": "br.gov.pr.celepar.consultaescolas.entity.ws.EstabelecimentoWS@17791a",
-      "municipality": "Araucaria",
-      "network": "Federal"
     },
     {
       "id": "555",
