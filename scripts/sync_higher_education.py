@@ -5,10 +5,17 @@ import json
 import re
 import subprocess
 import unicodedata
+import urllib.parse
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
+SERES_ODATA_BASE = 'https://olinda.mec.gov.br/olinda-ide/servico/PDA_SERES/versao/v1/odata'
+SERES_COURSES_URL = (
+    f'{SERES_ODATA_BASE}/PDA_Dados_Cursos_Graduacao_Brasil'
+    '?$format=json&$filter=UF%20eq%20%27PR%27&$top=10000'
+)
+MEC_DATASET_URL = 'https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil'
 MEC_CSV_URL = 'https://dadosabertos.mec.gov.br/images/conteudo/Ind-ensino-superior/2022/PDA_Dados_Cursos_Graduacao_Brasil.csv'
 MEC_SOURCE_URL = 'https://dadosabertos.mec.gov.br/indicadores-sobre-ensino-superior/item/183-cursos-de-graduacao-do-brasil'
 INEP_ZIP_URL = 'https://download.inep.gov.br/microdados/microdados_censo_da_educacao_superior_2024.zip'
@@ -27,7 +34,8 @@ def fetch(url):
         'curl', '-L', '--fail', '--silent', '--show-error', '--http1.1',
         '--retry', '5', '--retry-delay', '4', '--retry-all-errors',
         '--connect-timeout', '30', '--max-time', '600',
-        '-A', 'Mozilla/5.0 (compatible; SERFES-Higher-Education-Sync/3.0)',
+        '-H', 'Accept: application/json,text/csv,*/*',
+        '-A', 'Mozilla/5.0 (compatible; SERFES-Higher-Education-Sync/4.0)',
         url,
     ]
     completed = subprocess.run(command, check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -83,7 +91,14 @@ def network_from_category(category):
 
 
 def row_is_active(row):
-    situation = field(row, 'SITUACAO_CURSO', 'Situação do Curso', 'Situacao do Curso', 'TP_SITUACAO', 'DS_SITUACAO_CURSO')
+    situation = field(
+        row,
+        'SITUACAO_CURSO',
+        'Situação do Curso',
+        'Situacao do Curso',
+        'TP_SITUACAO',
+        'DS_SITUACAO_CURSO',
+    )
     if not situation:
         return True
     value = norm(situation)
@@ -96,17 +111,43 @@ def parse_rows(rows, source_label, source_url, data_year=None):
     pr_rows = 0
 
     for row in rows:
-        uf = field(row, 'SG_UF', 'SG_UF_IES', 'UF', 'Sigla da UF')
+        uf = field(row, 'UF', 'SG_UF', 'SG_UF_IES', 'Sigla da UF')
         if norm(uf) != 'pr' or not row_is_active(row):
             continue
 
-        institution_name = field(row, 'NO_IES', 'Nome da IES', 'Instituição de Ensino Superior', 'Instituicao de Ensino Superior')
-        institution_id = field(row, 'CO_IES', 'Código da IES', 'Codigo da IES') or institution_name
-        municipality = field(row, 'NO_MUNICIPIO', 'NO_MUNICIPIO_IES', 'Município', 'Municipio')
-        municipality_id = field(row, 'CO_MUNICIPIO', 'CO_MUNICIPIO_IES', 'Código do Município', 'Codigo do Municipio') or norm(municipality)
-        course_name = field(row, 'NO_CURSO', 'Nome do Curso', 'Curso')
-        course_id = field(row, 'CO_CURSO', 'Código do Curso', 'Codigo do Curso') or course_name
-        category = field(row, 'TP_CATEGORIA_ADMINISTRATIVA', 'Categoria Administrativa', 'Categoria da IES')
+        institution_name = field(
+            row,
+            'NOME_IES',
+            'NO_IES',
+            'Nome da IES',
+            'Instituição de Ensino Superior',
+            'Instituicao de Ensino Superior',
+        )
+        institution_id = field(
+            row,
+            'CODIGO_IES',
+            'CO_IES',
+            'Código da IES',
+            'Codigo da IES',
+        ) or institution_name
+        municipality = field(row, 'MUNICIPIO', 'NO_MUNICIPIO', 'NO_MUNICIPIO_IES', 'Município', 'Municipio')
+        municipality_id = field(
+            row,
+            'CODIGO_MUNICIPIO',
+            'CO_MUNICIPIO',
+            'CO_MUNICIPIO_IES',
+            'Código do Município',
+            'Codigo do Municipio',
+        ) or norm(municipality)
+        course_name = field(row, 'NOME_CURSO', 'NO_CURSO', 'Nome do Curso')
+        course_id = field(row, 'CODIGO_CURSO', 'CO_CURSO', 'Código do Curso', 'Codigo do Curso') or course_name
+        category = field(
+            row,
+            'CATEGORIA_ADMINISTRATIVA',
+            'TP_CATEGORIA_ADMINISTRATIVA',
+            'Categoria Administrativa',
+            'Categoria da IES',
+        )
 
         if not institution_name or not municipality:
             continue
@@ -117,9 +158,9 @@ def parse_rows(rows, source_label, source_url, data_year=None):
         if location_id not in institutions:
             institutions[location_id] = {
                 'id': location_id,
-                'name': institution_name,
-                'acronym': field(row, 'SG_IES', 'Sigla da IES', 'Sigla') or None,
-                'municipality': municipality,
+                'name': re.sub(r'\s+', ' ', institution_name).strip(),
+                'acronym': field(row, 'SIGLA', 'SG_IES', 'Sigla da IES') or None,
+                'municipality': re.sub(r'\s+', ' ', municipality).strip(),
                 'network': network,
             }
 
@@ -129,7 +170,7 @@ def parse_rows(rows, source_label, source_url, data_year=None):
                 'id': course_key,
                 'name': re.sub(r'\s+', ' ', course_name).strip(),
                 'institutionId': location_id,
-                'municipality': municipality,
+                'municipality': re.sub(r'\s+', ' ', municipality).strip(),
                 'network': network,
             }
 
@@ -158,6 +199,45 @@ def parse_rows(rows, source_label, source_url, data_year=None):
     }, pr_rows
 
 
+def load_seres_rows():
+    rows = []
+    url = SERES_COURSES_URL
+    visited = set()
+
+    while url:
+        if url in visited:
+            raise RuntimeError('Paginação circular detectada na API SERES/MEC.')
+        visited.add(url)
+        if len(visited) > 50:
+            raise RuntimeError('A API SERES/MEC excedeu o limite seguro de páginas.')
+
+        raw = fetch(url)
+        text = decode(raw).strip()
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError as exc:
+            raise RuntimeError(f'Resposta inválida da API SERES/MEC: {text[:500]}') from exc
+
+        if not isinstance(data, dict):
+            raise RuntimeError('Formato inesperado na API SERES/MEC.')
+        if data.get('codigo') and not isinstance(data.get('value'), list):
+            raise RuntimeError(str(data.get('mensagem') or data.get('message') or data)[:1000])
+
+        page_rows = data.get('value')
+        if not isinstance(page_rows, list):
+            raise RuntimeError('A API SERES/MEC não retornou a coleção esperada de cursos.')
+        rows.extend(page_rows)
+
+        next_link = data.get('@odata.nextLink') or data.get('odata.nextLink')
+        if not next_link:
+            break
+        url = urllib.parse.urljoin(SERES_ODATA_BASE + '/', str(next_link))
+
+    if not rows:
+        raise RuntimeError('A API SERES/MEC não retornou cursos localizados no Paraná.')
+    return rows
+
+
 def find_course_member(zf):
     members = [name for name in zf.namelist() if name.lower().endswith('.csv')]
     preferred = [name for name in members if 'cadastro' in norm(name) and 'curso' in norm(name)]
@@ -173,11 +253,26 @@ def load_official_payload():
     errors = []
 
     try:
-        raw_csv = fetch(MEC_CSV_URL)
-        payload, pr_rows = parse_rows(rows_from(raw_csv), 'MEC/e-MEC - Cursos de Graduação do Brasil', MEC_SOURCE_URL)
+        seres_rows = load_seres_rows()
+        payload, pr_rows = parse_rows(
+            seres_rows,
+            'SERES/MEC - Sistema e-MEC (API oficial de dados abertos)',
+            MEC_DATASET_URL,
+        )
         return payload, pr_rows
     except Exception as exc:
-        errors.append(f'MEC Dados Abertos: {exc}')
+        errors.append(f'SERES/MEC API: {exc}')
+
+    try:
+        raw_csv = fetch(MEC_CSV_URL)
+        payload, pr_rows = parse_rows(
+            rows_from(raw_csv),
+            'MEC/e-MEC - Cursos de Graduação do Brasil',
+            MEC_SOURCE_URL,
+        )
+        return payload, pr_rows
+    except Exception as exc:
+        errors.append(f'MEC Dados Abertos legado: {exc}')
 
     try:
         raw_zip = fetch(INEP_ZIP_URL)
