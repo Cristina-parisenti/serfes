@@ -23,15 +23,32 @@ export type HigherEducationInstitution = {
   network: SchoolNetwork;
 };
 
+export type HigherEducationCourse = {
+  id: string;
+  name: string;
+  institutionId: string;
+  municipality: string;
+  network: SchoolNetwork;
+};
+
 export type HigherEducationPayload = {
-  source: 'MEC/e-MEC';
+  source: string;
   sourceUrl: string;
+  emecUrl?: string;
+  dataYear?: number;
   generatedAt: string | null;
   institutions: HigherEducationInstitution[];
-  courses: string[];
+  courses: HigherEducationCourse[];
 };
 
 export const SCHOOL_NETWORKS: SchoolNetwork[] = ['Federal', 'Estadual', 'Municipal', 'Privada'];
+
+export const SCHOOL_NETWORK_FILES: Record<SchoolNetwork, string> = {
+  Federal: 'schools-pr-federal.json',
+  Estadual: 'schools-pr-estadual.json',
+  Municipal: 'schools-pr-municipal.json',
+  Privada: 'schools-pr-privada.json',
+};
 
 export function normalizeEducationText(value: string) {
   return value
@@ -42,13 +59,14 @@ export function normalizeEducationText(value: string) {
     .trim();
 }
 
-// Regra operacional do protótipo para a sequência regular de escolarização.
-// Não representa idade mínima legal para ingresso no ensino superior: a LDB exige
-// conclusão do ensino médio (ou equivalente) e classificação em processo seletivo.
+// Regra operacional do SERFES para evitar opções incompatíveis com a idade
+// esperada da sequência regular de escolarização. Não é uma idade mínima legal.
+// O ensino superior, juridicamente, depende da conclusão do ensino médio (ou
+// equivalente) e do processo de ingresso, não de uma idade mínima geral.
 export function educationLevelsForAge(age: number | null): EducationLevel[] {
   if (age === null || age < 12) return [];
-  if (age < 14) return ['Ensino fundamental'];
-  if (age < 16) return ['Ensino fundamental', 'Ensino médio'];
+  if (age < 15) return ['Ensino fundamental'];
+  if (age < 17) return ['Ensino fundamental', 'Ensino médio'];
   return ['Ensino fundamental', 'Ensino médio', 'Ensino superior'];
 }
 
