@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: schools-pr-sync
+  group: schools-pr-split-once
   cancel-in-progress: true
 
 jobs:
