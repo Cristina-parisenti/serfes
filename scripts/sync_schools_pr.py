@@ -25,6 +25,15 @@ def clean_text(value: str) -> str:
     return re.sub(r'\s+', ' ', value).strip()
 
 
+def usable_school_name(value: str) -> bool:
+    normalized = clean_text(value).lower()
+    if not normalized:
+        return False
+    # A Consulta Escolas ocasionalmente devolve o toString interno de um objeto
+    # Java no lugar do rótulo exibido. Esses valores não são nomes de escola.
+    return not normalized.startswith('br.gov.pr.') and 'estabelecimentows@' not in normalized
+
+
 def parse_options(html: str, input_id_suffix: str):
     match = re.search(
         r'<select[^>]+id="[^"]*' + re.escape(input_id_suffix) + r'".*?</select>',
@@ -135,6 +144,9 @@ def main():
                     failures.append(f'{municipality_name}/{network_name}: {retry_exc}')
                     schools = []
             for school_id, school_name in schools:
+                if not usable_school_name(school_name):
+                    print(f'AVISO: rótulo inválido ignorado em {municipality_name}/{network_name}: {school_name}')
+                    continue
                 records.append({
                     'id': str(school_id),
                     'name': school_name,
