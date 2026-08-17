@@ -9,19 +9,15 @@ jobs:
   extract:
     runs-on: ubuntu-latest
     steps:
-      - name: Inspect SERES OData service with browser
+      - name: Inspect e-MEC public search in browser
         run: |
           python -m pip install --quiet selenium
           python - <<'PY'
           from selenium import webdriver
           from selenium.webdriver.chrome.options import Options
-          import time
+          import time, re
 
-          urls=[
-            'https://olinda.mec.gov.br/olinda-ide/servico/PDA_SERES/versao/v1/odata/',
-            'https://olinda.mec.gov.br/olinda-ide/servico/PDA_SERES/versao/v1/odata/$metadata',
-            'https://olinda.mec.gov.br/olinda-ide/servico/PDA_SERES/versao/v1/odata/PDA_Lista_Instituicoes_Ensino_Superior_do_Brasil_EMEC?$format=json&$top=3',
-          ]
+          url='https://emec.mec.gov.br/emec/nova-index/'
           opts=Options()
           opts.add_argument('--headless=new')
           opts.add_argument('--no-sandbox')
@@ -29,15 +25,21 @@ jobs:
           opts.add_argument('--disable-gpu')
           driver=webdriver.Chrome(options=opts)
           try:
-            for url in urls:
-              print('\nURL',url)
-              driver.get(url)
-              time.sleep(4)
-              print('CURRENT',driver.current_url)
-              print('TITLE',driver.title)
-              source=driver.page_source
-              print('SOURCE_LEN',len(source))
-              print(source[:80000])
+            driver.get(url)
+            time.sleep(8)
+            print('CURRENT',driver.current_url)
+            print('TITLE',driver.title)
+            print('TEXT',driver.find_element('tag name','body').text[:25000])
+            source=driver.page_source
+            print('SOURCE_LEN',len(source))
+            print('FORMS')
+            for block in re.findall(r'<form.*?</form>',source,re.I|re.S):
+              print(block[:30000])
+            print('INPUTS/SELECTS')
+            for el in driver.find_elements('css selector','input,select,button,a')[:500]:
+              try:
+                print(el.tag_name, el.get_attribute('id'), el.get_attribute('name'), el.get_attribute('value'), el.text[:120], el.get_attribute('href'))
+              except Exception: pass
           finally:
             driver.quit()
           PY
