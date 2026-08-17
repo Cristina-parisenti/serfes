@@ -1,0 +1,43 @@
+{
+  "source": "Consulta Escolas/SEED-PR",
+  "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
+  "generatedAt": "2026-08-16T11:16:49.234398+00:00",
+  "records": [
+    {
+      "id": "2140",
+      "name": "br.gov.pr.celepar.consultaescolas.entity.ws.EstabelecimentoWS@17791a",
+      "municipality": "Araucaria",
+      "network": "Federal"
+    },
+    {
+      "id": "29",
+      "name": "Centro Fed de Educ Tecnologica do Parana",
+      "municipality": "Curitiba",
+      "network": "Federal"
+    },
+    {
+      "id": "10",
+      "name": "Militar de Curitiba, C",
+      "municipality": "Curitiba",
+      "network": "Federal"
+    },
+    {
+      "id": "3206",
+      "name": "Tecnica, E-Anexa Ufpr",
+      "municipality": "Curitiba",
+      "network": "Federal"
+    },
+    {
+      "id": "940",
+      "name": "Centro Fed de Educ Tecnologica do Parana",
+      "municipality": "Medianeira",
+      "network": "Federal"
+    },
+    {
+      "id": "1374",
+      "name": "Cefet - Unid de Pato Branco",
+      "municipality": "Pato Branco",
+      "network": "Federal"
+    }
+  ]
+}
