@@ -12,6 +12,12 @@ from pathlib import Path
 BASE_URL = 'https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml'
 OUTPUT = Path('public/schools-pr.json')
 NETWORKS = [('1', 'Federal'), ('2', 'Estadual'), ('3', 'Municipal'), ('4', 'Privada')]
+NETWORK_FILES = {
+    'Federal': Path('public/schools-pr-federal.json'),
+    'Estadual': Path('public/schools-pr-estadual.json'),
+    'Municipal': Path('public/schools-pr-municipal.json'),
+    'Privada': Path('public/schools-pr-privada.json'),
+}
 
 
 def clean_text(value: str) -> str:
@@ -48,7 +54,7 @@ class ConsultaEscolasSession:
         self.open()
 
     def open(self):
-        request = urllib.request.Request(BASE_URL, headers={'User-Agent': 'SERFES-School-Sync/1.0'})
+        request = urllib.request.Request(BASE_URL, headers={'User-Agent': 'SERFES-School-Sync/1.1'})
         with self.opener.open(request, timeout=50) as response:
             page = response.read().decode('utf-8', 'replace')
             self.action = response.geturl()
@@ -78,7 +84,7 @@ class ConsultaEscolasSession:
             self.action,
             data=body,
             headers={
-                'User-Agent': 'SERFES-School-Sync/1.0',
+                'User-Agent': 'SERFES-School-Sync/1.1',
                 'Faces-Request': 'partial/ajax',
                 'X-Requested-With': 'XMLHttpRequest',
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -97,6 +103,17 @@ class ConsultaEscolasSession:
         return parse_options(decoded, 'escola_input')
 
 
+def write_payload(path: Path, records, generated_at: str):
+    payload = {
+        'source': 'Consulta Escolas/SEED-PR',
+        'sourceUrl': BASE_URL,
+        'generatedAt': generated_at,
+        'records': records,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+
 def main():
     session = ConsultaEscolasSession()
     records = []
@@ -109,7 +126,7 @@ def main():
             pair_index += 1
             try:
                 schools = session.schools(municipality_code, network_code)
-            except Exception as exc:
+            except Exception:
                 try:
                     time.sleep(1)
                     session = ConsultaEscolasSession()
@@ -139,15 +156,17 @@ def main():
     if len(failures) > 25:
         raise RuntimeError(f'Muitas falhas na coleta oficial ({len(failures)}). Catálogo anterior preservado.')
 
-    payload = {
-        'source': 'Consulta Escolas/SEED-PR',
-        'sourceUrl': BASE_URL,
-        'generatedAt': datetime.now(timezone.utc).isoformat(),
-        'records': records,
-    }
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print(f'Catálogo concluído com {len(records)} instituições.')
+    generated_at = datetime.now(timezone.utc).isoformat()
+    write_payload(OUTPUT, records, generated_at)
+
+    for network_name, path in NETWORK_FILES.items():
+        network_records = [record for record in records if record['network'] == network_name]
+        if not network_records:
+            raise RuntimeError(f'Nenhuma instituição localizada para a rede {network_name}.')
+        write_payload(path, network_records, generated_at)
+        print(f'{network_name}: {len(network_records)} instituições.')
+
+    print(f'Catálogo geral concluído com {len(records)} instituições do Paraná.')
     if failures:
         print('Falhas pontuais:', *failures, sep='\n- ')
 
