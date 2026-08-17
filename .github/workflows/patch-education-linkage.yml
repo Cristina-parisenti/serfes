@@ -1,0 +1,82 @@
+name: Apply Paraná education linkage rules
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-education-linkage.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Patch athlete education form
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('src/App.tsx')
+          text = path.read_text(encoding='utf-8')
+
+          text = text.replace(
+              "  HigherEducationPayload,\n  SCHOOL_NETWORKS,\n  SchoolDirectoryPayload,",
+              "  HigherEducationPayload,\n  SCHOOL_NETWORK_FILES,\n  SCHOOL_NETWORKS,\n  SchoolDirectoryPayload,\n  SchoolNetwork,",
+              1,
+          )
+
+          old_derived = """  const institutionOptions = schoolLevel === 'Ensino superior' ? higherInstitutionOptions : basicInstitutionOptions;\n  const institutionCatalogReady = schoolLevel === 'Ensino superior'\n    ? (higherEducation?.institutions.length ?? 0) > 0\n    : (schoolDirectory?.records.length ?? 0) > 0;\n"""
+          new_derived = """  const institutionOptions = schoolLevel === 'Ensino superior' ? higherInstitutionOptions : basicInstitutionOptions;\n  const selectedHigherInstitution = schoolLevel === 'Ensino superior'\n    ? higherInstitutionOptions.find((institution) => institution.name === athleteInstitution) ?? null\n    : null;\n  const higherCourseOptions = (higherEducation?.courses ?? [])\n    .filter((course) => selectedHigherInstitution !== null && course.institutionId === selectedHigherInstitution.id)\n    .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));\n  const institutionCatalogReady = schoolLevel === 'Ensino superior'\n    ? (higherEducation?.institutions.length ?? 0) > 0\n    : (schoolDirectory?.records.length ?? 0) > 0;\n"""
+          if old_derived not in text:
+              raise SystemExit('Derived education block not found')
+          text = text.replace(old_derived, new_derived, 1)
+
+          school_fetch_pattern = re.compile(
+              r"\n    fetch\(`\$\{basePath\}schools-pr\.json`, \{ cache: 'no-store' \}\).*?\n      \.catch\(\(\) => \{\n        if \(active\) setSchoolDirectoryError\(true\);\n      \}\);\n",
+              re.S,
+          )
+          text, count = school_fetch_pattern.subn('\n', text, count=1)
+          if count != 1:
+              raise SystemExit(f'Initial school fetch block not found: {count}')
+
+          marker = """  useEffect(() => {\n    let active = true;\n    const classindBasePath = window.location.pathname.startsWith('/serfes') ? '/serfes/' : '/';\n"""
+          network_effect = """  useEffect(() => {\n    let active = true;\n\n    if (!schoolNetwork || schoolLevel === 'Ensino superior') {\n      setSchoolDirectory(null);\n      setSchoolDirectoryError(false);\n      return () => { active = false; };\n    }\n\n    const basePath = window.location.pathname.startsWith('/serfes') ? '/serfes/' : '/';\n    const networkFile = SCHOOL_NETWORK_FILES[schoolNetwork as SchoolNetwork];\n    setSchoolDirectory(null);\n    setSchoolDirectoryError(false);\n\n    fetch(`${basePath}${networkFile}`, { cache: 'no-store' })\n      .then((response) => {\n        if (!response.ok) throw new Error('Não foi possível carregar o catálogo da rede selecionada.');\n        return response.json() as Promise<SchoolDirectoryPayload>;\n      })\n      .then((data) => {\n        if (active) {\n          setSchoolDirectory(data);\n          setSchoolDirectoryError(false);\n        }\n      })\n      .catch(() => {\n        if (active) setSchoolDirectoryError(true);\n      });\n\n    return () => { active = false; };\n  }, [schoolNetwork, schoolLevel]);\n\n"""
+          if marker not in text:
+              raise SystemExit('ClassInd effect marker not found')
+          text = text.replace(marker, network_effect + marker, 1)
+
+          old_network_change = """                              onChange={(e) => {\n                                setSchoolNetwork(e.target.value);\n                                setAthleteInstitution('');\n                              }}\n"""
+          new_network_change = """                              onChange={(e) => {\n                                setSchoolNetwork(e.target.value);\n                                setAthleteInstitution('');\n                                setHigherEducationCourse('');\n                                setSchoolDirectory(null);\n                                setSchoolDirectoryError(false);\n                              }}\n"""
+          if old_network_change not in text:
+              raise SystemExit('Network onChange block not found')
+          text = text.replace(old_network_change, new_network_change, 1)
+
+          old_institution_change = "onChange={(e) => setAthleteInstitution(e.target.value)}"
+          new_institution_change = "onChange={(e) => { setAthleteInstitution(e.target.value); setHigherEducationCourse(''); }}"
+          if old_institution_change not in text:
+              raise SystemExit('Institution onChange not found')
+          text = text.replace(old_institution_change, new_institution_change, 1)
+
+          old_course = """                              <input\n                                required\n                                list=\"higher-education-courses\"\n                                value={higherEducationCourse}\n                                onChange={(e) => setHigherEducationCourse(e.target.value)}\n                                placeholder={higherEducation?.courses.length ? 'Digite ou selecione o curso' : 'Informe o curso'}\n                              />\n                              <datalist id=\"higher-education-courses\">\n                                {(higherEducation?.courses ?? []).map((course) => <option key={course} value={course} />)}\n                              </datalist>\n                              <small className=\"field-help\">O Cadastro e-MEC será a fonte oficial deste campo. Enquanto a consulta automatizada não estiver disponível, informe o curso manualmente.</small>\n"""
+          new_course = """                              <input\n                                required\n                                list=\"higher-education-courses\"\n                                disabled={!athleteInstitution}\n                                value={higherEducationCourse}\n                                onChange={(e) => setHigherEducationCourse(e.target.value)}\n                                placeholder={higherCourseOptions.length ? 'Digite ou selecione o curso' : (athleteInstitution ? 'Catálogo oficial ainda não disponível' : 'Selecione primeiro a instituição')}\n                              />\n                              <datalist id=\"higher-education-courses\">\n                                {higherCourseOptions.map((course) => <option key={course.id} value={course.name} />)}\n                              </datalist>\n                              <small className=\"field-help\">Os cursos são vinculados à instituição selecionada e limitados às ofertas oficiais localizadas no Paraná.</small>\n"""
+          if old_course not in text:
+              raise SystemExit('Higher education course field not found')
+          text = text.replace(old_course, new_course, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+      - name: Validate build
+        run: npm install && npm run build
+      - name: Commit changes
+        run: |
+          git config user.name "SERFES Education Update"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/App.tsx
+          git commit -m "Link school networks and higher education courses"
+          git pull --rebase origin main
+          git push origin main
