@@ -102,7 +102,9 @@ def row_is_active(row):
     if not situation:
         return True
     value = norm(situation)
-    return 'ativo' in value or value in {'1', 'em atividade'}
+    if any(term in value for term in ('inativo', 'desativado', 'extinto', 'em extincao')):
+        return False
+    return value == 'ativo' or value.startswith('ativo ') or value in {'1', 'em atividade'}
 
 
 def parse_rows(rows, source_label, source_url, data_year=None):
