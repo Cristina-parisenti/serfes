@@ -29,15 +29,15 @@ jobs:
       - name: Sincronizar Consulta Escolas/SEED-PR
         run: python scripts/sync_schools_pr.py
 
-      - name: Publicar catálogo atualizado
+      - name: Publicar catálogos atualizados
         run: |
-          if git diff --quiet -- public/schools-pr.json; then
-            echo "Nenhuma alteração no catálogo de escolas."
+          if git diff --quiet -- public/schools-pr.json public/schools-pr-federal.json public/schools-pr-estadual.json public/schools-pr-municipal.json public/schools-pr-privada.json; then
+            echo "Nenhuma alteração nos catálogos de escolas."
             exit 0
           fi
           git config user.name "SERFES School Sync"
           git config user.email "actions@users.noreply.github.com"
-          git add public/schools-pr.json
-          git commit -m "Atualizar catálogo oficial de escolas do Paraná"
+          git add public/schools-pr.json public/schools-pr-federal.json public/schools-pr-estadual.json public/schools-pr-municipal.json public/schools-pr-privada.json
+          git commit -m "Atualizar catálogos oficiais de escolas do Paraná"
           git pull --rebase origin main
           git push origin main
