@@ -3,7 +3,7 @@ name: Sincronizar ensino superior
 on:
   workflow_dispatch:
   schedule:
-    - cron: '35 10 1 * *'
+    - cron: '35 11 * * *'
   push:
     paths:
       - 'scripts/sync_higher_education.py'
@@ -26,7 +26,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Sincronizar dados oficiais do Inep para o Paraná
+      - name: Sincronizar dados oficiais do MEC/SERES e Inep para o Paraná
         run: python scripts/sync_higher_education.py
 
       - name: Publicar catálogo atualizado
