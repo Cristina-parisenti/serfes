@@ -4,12 +4,6 @@
   "generatedAt": "2026-08-16T11:16:49.234398+00:00",
   "records": [
     {
-      "id": "2140",
-      "name": "br.gov.pr.celepar.consultaescolas.entity.ws.EstabelecimentoWS@17791a",
-      "municipality": "Araucaria",
-      "network": "Federal"
-    },
-    {
       "id": "29",
       "name": "Centro Fed de Educ Tecnologica do Parana",
       "municipality": "Curitiba",
