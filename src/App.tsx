@@ -45,8 +45,10 @@ import {
 import {
   EducationLevel,
   HigherEducationPayload,
+  SCHOOL_NETWORK_FILES,
   SCHOOL_NETWORKS,
   SchoolDirectoryPayload,
+  SchoolNetwork,
   educationLevelsForAge,
   normalizeEducationText,
   schoolYearsForLevel,
@@ -247,6 +249,12 @@ export function App() {
     .filter((record) => record.network === schoolNetwork && normalizeEducationText(record.municipality) === normalizedSchoolMunicipality)
     .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
   const institutionOptions = schoolLevel === 'Ensino superior' ? higherInstitutionOptions : basicInstitutionOptions;
+  const selectedHigherInstitution = schoolLevel === 'Ensino superior'
+    ? higherInstitutionOptions.find((institution) => institution.name === athleteInstitution) ?? null
+    : null;
+  const higherCourseOptions = (higherEducation?.courses ?? [])
+    .filter((course) => selectedHigherInstitution !== null && course.institutionId === selectedHigherInstitution.id)
+    .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
   const institutionCatalogReady = schoolLevel === 'Ensino superior'
     ? (higherEducation?.institutions.length ?? 0) > 0
     : (schoolDirectory?.records.length ?? 0) > 0;
@@ -280,20 +288,6 @@ export function App() {
   useEffect(() => {
     let active = true;
     const basePath = window.location.pathname.startsWith('/serfes') ? '/serfes/' : '/';
-    fetch(`${basePath}schools-pr.json`, { cache: 'no-store' })
-      .then((response) => {
-        if (!response.ok) throw new Error('Não foi possível carregar o catálogo de escolas.');
-        return response.json() as Promise<SchoolDirectoryPayload>;
-      })
-      .then((data) => {
-        if (active) {
-          setSchoolDirectory(data);
-          setSchoolDirectoryError(false);
-        }
-      })
-      .catch(() => {
-        if (active) setSchoolDirectoryError(true);
-      });
 
     fetch(`${basePath}higher-education.json`, { cache: 'no-store' })
       .then((response) => {
@@ -312,6 +306,38 @@ export function App() {
 
     return () => { active = false; };
   }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    if (!schoolNetwork || schoolLevel === 'Ensino superior') {
+      setSchoolDirectory(null);
+      setSchoolDirectoryError(false);
+      return () => { active = false; };
+    }
+
+    const basePath = window.location.pathname.startsWith('/serfes') ? '/serfes/' : '/';
+    const networkFile = SCHOOL_NETWORK_FILES[schoolNetwork as SchoolNetwork];
+    setSchoolDirectory(null);
+    setSchoolDirectoryError(false);
+
+    fetch(`${basePath}${networkFile}`, { cache: 'no-store' })
+      .then((response) => {
+        if (!response.ok) throw new Error('Não foi possível carregar o catálogo da rede selecionada.');
+        return response.json() as Promise<SchoolDirectoryPayload>;
+      })
+      .then((data) => {
+        if (active) {
+          setSchoolDirectory(data);
+          setSchoolDirectoryError(false);
+        }
+      })
+      .catch(() => {
+        if (active) setSchoolDirectoryError(true);
+      });
+
+    return () => { active = false; };
+  }, [schoolNetwork, schoolLevel]);
 
   useEffect(() => {
     let active = true;
@@ -893,6 +919,9 @@ export function App() {
                               onChange={(e) => {
                                 setSchoolNetwork(e.target.value);
                                 setAthleteInstitution('');
+                                setHigherEducationCourse('');
+                                setSchoolDirectory(null);
+                                setSchoolDirectoryError(false);
                               }}
                             >
                               <option value="" disabled>Selecione</option>
@@ -921,7 +950,7 @@ export function App() {
                                 required={enrollmentStatus === 'Sim'}
                                 disabled={enrollmentStatus !== 'Sim' || !schoolMunicipality || !schoolNetwork || !schoolLevel}
                                 value={athleteInstitution}
-                                onChange={(e) => setAthleteInstitution(e.target.value)}
+                                onChange={(e) => { setAthleteInstitution(e.target.value); setHigherEducationCourse(''); }}
                               >
                                 <option value="" disabled>{institutionOptions.length ? 'Selecione' : 'Nenhuma instituição localizada para os filtros'}</option>
                                 {institutionOptions.map((institution) => <option key={`${institution.id}-${institution.name}`} value={institution.name}>{institution.name}</option>)}
@@ -952,14 +981,15 @@ export function App() {
                               <input
                                 required
                                 list="higher-education-courses"
+                                disabled={!athleteInstitution}
                                 value={higherEducationCourse}
                                 onChange={(e) => setHigherEducationCourse(e.target.value)}
-                                placeholder={higherEducation?.courses.length ? 'Digite ou selecione o curso' : 'Informe o curso'}
+                                placeholder={higherCourseOptions.length ? 'Digite ou selecione o curso' : (athleteInstitution ? 'Catálogo oficial ainda não disponível' : 'Selecione primeiro a instituição')}
                               />
                               <datalist id="higher-education-courses">
-                                {(higherEducation?.courses ?? []).map((course) => <option key={course} value={course} />)}
+                                {higherCourseOptions.map((course) => <option key={course.id} value={course.name} />)}
                               </datalist>
-                              <small className="field-help">O Cadastro e-MEC será a fonte oficial deste campo. Enquanto a consulta automatizada não estiver disponível, informe o curso manualmente.</small>
+                              <small className="field-help">Os cursos são vinculados à instituição selecionada e limitados às ofertas oficiais localizadas no Paraná.</small>
                             </label>
                           )}
                         </div>
