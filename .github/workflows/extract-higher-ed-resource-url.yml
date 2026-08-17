@@ -1,0 +1,58 @@
+name: Extract official higher education resource URL
+
+on:
+  push:
+    paths:
+      - '.github/workflows/extract-higher-ed-resource-url.yml'
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open resource button in a real browser
+        run: |
+          python -m pip install --quiet selenium
+          python - <<'PY'
+          import time
+          from selenium import webdriver
+          from selenium.webdriver.chrome.options import Options
+          from selenium.webdriver.common.by import By
+          from selenium.webdriver.support.ui import WebDriverWait
+          from selenium.webdriver.support import expected_conditions as EC
+
+          url='https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil'
+          opts=Options()
+          opts.add_argument('--headless=new')
+          opts.add_argument('--no-sandbox')
+          opts.add_argument('--disable-dev-shm-usage')
+          opts.add_argument('--disable-gpu')
+          opts.set_capability('goog:loggingPrefs', {'performance': 'ALL', 'browser': 'ALL'})
+          driver=webdriver.Chrome(options=opts)
+          try:
+              driver.get(url)
+              wait=WebDriverWait(driver,30)
+              button=wait.until(EC.presence_of_element_located((By.ID,'btnDownloadUrl')))
+              print('BUTTON', button.get_attribute('outerHTML'))
+              before=driver.window_handles[:]
+              driver.execute_script('arguments[0].scrollIntoView({block:"center"});', button)
+              driver.execute_script('arguments[0].click();', button)
+              time.sleep(5)
+              after=driver.window_handles[:]
+              print('WINDOWS BEFORE',before,'AFTER',after)
+              for handle in after:
+                  driver.switch_to.window(handle)
+                  print('WINDOW URL',driver.current_url)
+              import json
+              for entry in driver.get_log('performance'):
+                  msg=json.loads(entry['message'])['message']
+                  if msg.get('method') in ('Network.requestWillBeSent','Network.responseReceived'):
+                      params=msg.get('params',{})
+                      obj=params.get('request') or params.get('response') or {}
+                      req_url=obj.get('url','')
+                      if any(x in req_url.lower() for x in ('csv','mec','curso','download','recurso')):
+                          print(msg.get('method'),req_url)
+              for entry in driver.get_log('browser'):
+                  print('BROWSERLOG',entry)
+          finally:
+              driver.quit()
+          PY
