@@ -27,9 +27,17 @@ jobs:
           fetch-depth: 0
 
       - name: Sincronizar dados oficiais do MEC/SERES e Inep para o Paraná
+        id: official_sync
+        continue-on-error: true
         run: python scripts/sync_higher_education.py
 
+      - name: Registrar indisponibilidade temporária da fonte
+        if: steps.official_sync.outcome == 'failure'
+        run: |
+          echo "::warning::As fontes oficiais de ensino superior estão temporariamente indisponíveis. O catálogo existente foi preservado e uma nova tentativa ocorrerá automaticamente."
+
       - name: Publicar catálogo atualizado
+        if: steps.official_sync.outcome == 'success'
         run: |
           if git diff --quiet -- public/higher-education.json; then
             echo "Nenhuma alteração no catálogo do ensino superior."
