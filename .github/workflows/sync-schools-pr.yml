@@ -3,7 +3,7 @@ name: Sincronizar escolas do Paraná
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 10 * * 0'
+    - cron: '15 10 * * *'
   push:
     paths:
       - 'scripts/sync_schools_pr.py'
