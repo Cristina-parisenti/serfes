@@ -203,6 +203,8 @@ export function App() {
   const [schoolLevel, setSchoolLevel] = useState('');
   const [schoolYear, setSchoolYear] = useState('');
   const [higherEducationCourse, setHigherEducationCourse] = useState('');
+  const [schoolAnnualConfirmation, setSchoolAnnualConfirmation] = useState(false);
+  const [schoolConfirmedYear, setSchoolConfirmedYear] = useState<number | null>(null);
 
   const [responsibleName, setResponsibleName] = useState('');
   const [responsibleLegalCapacity, setResponsibleLegalCapacity] = useState('');
@@ -229,6 +231,8 @@ export function App() {
   const athleteAge = calculateAge(athleteBirthDate, ageReferenceDate);
   const athleteTooYoung = athleteAge !== null && athleteAge < 12;
   const minorStatus = athleteAge === null ? null : athleteAge < 18;
+  const schoolReferenceYear = ageReferenceDate.getFullYear();
+  const schoolConfirmationCurrent = enrollmentStatus !== 'Sim' || schoolConfirmedYear === schoolReferenceYear;
   const selectedCompetition = competitions.find((competition) => competition.id === selectedCompetitionId) ?? null;
   const authorizationDate = currentDateLong();
   const selectedGameCatalog = getGameCatalogEntry(athleteGame);
@@ -378,8 +382,16 @@ export function App() {
       setSchoolYear('');
       setHigherEducationCourse('');
       setAthleteInstitution('');
+      setSchoolAnnualConfirmation(false);
+      setSchoolConfirmedYear(null);
     }
   }, [athleteAge, schoolLevel]);
+
+  useEffect(() => {
+    if (schoolConfirmedYear !== null && schoolConfirmedYear !== schoolReferenceYear) {
+      setSchoolAnnualConfirmation(false);
+    }
+  }, [schoolConfirmedYear, schoolReferenceYear]);
 
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -414,7 +426,8 @@ export function App() {
       athleteInstitution.trim().length > 0 &&
       schoolLevel.length > 0 &&
       (!schoolYearRequired || schoolYear.length > 0) &&
-      (!higherCourseRequired || higherEducationCourse.trim().length > 0)
+      (!higherCourseRequired || higherEducationCourse.trim().length > 0) &&
+      schoolAnnualConfirmation
     );
 
     const responsibleFieldsValid = minorStatus !== true || (
@@ -428,6 +441,7 @@ export function App() {
 
     if (!mainFieldsValid || !schoolFieldsValid || !responsibleFieldsValid) return;
 
+    setSchoolConfirmedYear(enrollmentStatus === 'Sim' ? schoolReferenceYear : null);
     setAthleteSaved(true);
     setFormAttempted(false);
     setRegistrationMessage('');
@@ -445,6 +459,11 @@ export function App() {
 
     if (!athleteSaved) {
       setRegistrationMessage('Antes da inscrição em uma competição, complete e salve o seu cadastro.');
+      return;
+    }
+
+    if (enrollmentStatus === 'Sim' && schoolConfirmedYear !== schoolReferenceYear) {
+      setRegistrationMessage(`Antes da inscrição, confirme novamente seu vínculo escolar referente ao ano letivo de ${schoolReferenceYear}.`);
       return;
     }
 
@@ -590,7 +609,7 @@ export function App() {
                 <section className="athlete-summary-grid">
                   <article className="mini-status blue"><strong>1</strong><span>Meu cadastro</span></article>
                   <article className="mini-status yellow"><strong>{athleteSaved ? 'Enviado' : 'Pendente'}</strong><span>Validação cadastral</span></article>
-                  <article className="mini-status green"><strong>{athleteInstitution ? 'Informado' : '—'}</strong><span>Vínculo escolar</span></article>
+                  <article className="mini-status green"><strong>{athleteInstitution ? (schoolConfirmationCurrent ? `Confirmado ${schoolReferenceYear}` : 'Reconfirmação pendente') : '—'}</strong><span>Vínculo escolar</span></article>
                   <article className="mini-status red"><strong>{minorStatus === true ? (responsibleName ? 'Informado' : 'Pendente') : '—'}</strong><span>Responsável legal</span></article>
                 </section>
                 <section className="panel-grid">
@@ -884,6 +903,8 @@ export function App() {
                             <select required value={enrollmentStatus} onChange={(e) => {
                               const nextValue = e.target.value;
                               setEnrollmentStatus(nextValue);
+                              setSchoolAnnualConfirmation(false);
+                              setSchoolConfirmedYear(null);
                               if (nextValue !== 'Sim') {
                                 setSchoolMunicipality('');
                                 setSchoolNetwork('');
@@ -903,6 +924,8 @@ export function App() {
                               value={schoolMunicipality}
                               onChange={(e) => {
                                 setSchoolMunicipality(e.target.value);
+                                setSchoolAnnualConfirmation(false);
+                                setSchoolConfirmedYear(null);
                                 setSchoolNetwork('');
                                 setAthleteInstitution('');
                               }}
@@ -918,6 +941,8 @@ export function App() {
                               value={schoolNetwork}
                               onChange={(e) => {
                                 setSchoolNetwork(e.target.value);
+                                setSchoolAnnualConfirmation(false);
+                                setSchoolConfirmedYear(null);
                                 setAthleteInstitution('');
                                 setHigherEducationCourse('');
                                 setSchoolDirectory(null);
@@ -935,6 +960,8 @@ export function App() {
                               value={schoolLevel}
                               onChange={(e) => {
                                 setSchoolLevel(e.target.value);
+                                setSchoolAnnualConfirmation(false);
+                                setSchoolConfirmedYear(null);
                                 setSchoolYear('');
                                 setHigherEducationCourse('');
                                 setAthleteInstitution('');
@@ -950,7 +977,7 @@ export function App() {
                                 required={enrollmentStatus === 'Sim'}
                                 disabled={enrollmentStatus !== 'Sim' || !schoolMunicipality || !schoolNetwork || !schoolLevel}
                                 value={athleteInstitution}
-                                onChange={(e) => { setAthleteInstitution(e.target.value); setHigherEducationCourse(''); }}
+                                onChange={(e) => { setAthleteInstitution(e.target.value); setHigherEducationCourse(''); setSchoolAnnualConfirmation(false); setSchoolConfirmedYear(null); }}
                               >
                                 <option value="" disabled>{institutionOptions.length ? 'Selecione' : 'Nenhuma instituição localizada para os filtros'}</option>
                                 {institutionOptions.map((institution) => <option key={`${institution.id}-${institution.name}`} value={institution.name}>{institution.name}</option>)}
@@ -968,7 +995,7 @@ export function App() {
                           </label>
                           {(schoolLevel === 'Ensino fundamental' || schoolLevel === 'Ensino médio') && (
                             <label>Ano escolar
-                              <select required value={schoolYear} onChange={(e) => setSchoolYear(e.target.value)}>
+                              <select required value={schoolYear} onChange={(e) => { setSchoolYear(e.target.value); setSchoolAnnualConfirmation(false); setSchoolConfirmedYear(null); }}>
                                 <option value="" disabled>Selecione</option>
                                 {availableSchoolYears.map((year) => <option key={year}>{year}</option>)}
                               </select>
@@ -980,7 +1007,7 @@ export function App() {
                                 required
                                 disabled={!athleteInstitution || higherCourseOptions.length === 0}
                                 value={higherEducationCourse}
-                                onChange={(e) => setHigherEducationCourse(e.target.value)}
+                                onChange={(e) => { setHigherEducationCourse(e.target.value); setSchoolAnnualConfirmation(false); setSchoolConfirmedYear(null); }}
                               >
                                 <option value="" disabled>{!athleteInstitution ? 'Selecione primeiro a instituição' : (higherCourseOptions.length ? 'Selecione' : 'Aguardando catálogo oficial')}</option>
                                 {higherCourseOptions.map((course) => <option key={course.id} value={course.name}>{course.name}</option>)}
@@ -988,14 +1015,31 @@ export function App() {
                               <small className="field-help">São exibidos somente cursos oficiais vinculados à instituição selecionada e com oferta localizada no Paraná.</small>
                             </label>
                           )}
-                        </div>
-                        <div className="form-actions source-actions">
-                          {schoolLevel === 'Ensino superior' ? (
-                            <a className="secondary-button" href={higherEducation?.sourceUrl || 'https://emec.mec.gov.br/emec/nova-index/'} target="_blank" rel="noreferrer">Consultar cadastro oficial e-MEC</a>
-                          ) : (
-                            <a className="secondary-button" href={schoolDirectory?.sourceUrl || 'https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml'} target="_blank" rel="noreferrer">Consultar base oficial da SEED/PR</a>
+                          {enrollmentStatus === 'Sim' && (
+                            <div className="annual-school-confirmation">
+                              <div className="annual-school-confirmation-head">
+                                <strong>Confirmação anual do vínculo escolar</strong>
+                                <span>Ano letivo {schoolReferenceYear}</span>
+                              </div>
+                              <label className="annual-school-checkbox">
+                                <input
+                                  required
+                                  type="checkbox"
+                                  checked={schoolAnnualConfirmation}
+                                  onChange={(e) => setSchoolAnnualConfirmation(e.target.checked)}
+                                />
+                                <span>Confirmo que, no ano letivo de {schoolReferenceYear}, a instituição e o ano escolar/curso informados acima correspondem à minha matrícula atual.</span>
+                              </label>
+                              <small className="field-help">Esta confirmação será solicitada novamente no início de cada ano. Se houver mudança de escola, instituição, ano escolar ou curso, será necessário atualizar e salvar o cadastro.</small>
+                              {schoolConfirmedYear === schoolReferenceYear && <small className="annual-school-confirmed">Vínculo confirmado para {schoolReferenceYear}.</small>}
+                            </div>
                           )}
                         </div>
+                        {schoolLevel === 'Ensino superior' && (
+                          <div className="form-actions source-actions">
+                            <a className="secondary-button" href={higherEducation?.sourceUrl || 'https://emec.mec.gov.br/emec/nova-index/'} target="_blank" rel="noreferrer">Consultar cadastro oficial e-MEC</a>
+                          </div>
+                        )}
                       </section>
 
                       {minorStatus === true && (
@@ -1051,11 +1095,9 @@ export function App() {
                       <section className="glass-card form-section">
                         <div className="form-section-title"><div className="icon-box"><FileText size={20} /></div><div><h4>Documentos</h4><p>Área demonstrativa para futura conferência documental.</p></div></div>
                         <div className="document-grid">
-                          <div className="document-item"><FileText size={18} /><div><strong>Documento de identificação</strong><span>Não anexado</span></div></div>
+                          <div className="document-item"><FileText size={18} /><div><strong>Documento de identificação do aluno</strong><span>Não anexado</span></div></div>
                           <div className="document-item"><FileText size={18} /><div><strong>Comprovante de vínculo escolar</strong><span>Não anexado</span></div></div>
-                          <div className="document-item"><FileSignature size={18} /><div><strong>Autorizações por competição</strong><span>{minorStatus === true ? 'Geradas no momento da inscrição' : 'Não se aplica'}</span></div></div>
                         </div>
-                        <p className="prototype-note">Cada competição poderá possuir uma autorização própria, vinculada à respectiva solicitação de inscrição.</p>
                       </section>
                     </>
                   )}
