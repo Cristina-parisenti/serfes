@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-08-17T12:41:46.960510+00:00",
+  "generatedAt": "2026-08-18T15:34:21.947285+00:00",
   "records": [
     {
       "id": "241",
@@ -14339,7 +14339,7 @@
     },
     {
       "id": "237",
-      "name": "Reinaldo Fleck, E R M-Ei Ef",
+      "name": "Reinaldo Fleck, E M-Ei Ef",
       "municipality": "Honorio Serpa",
       "network": "Municipal"
     },
