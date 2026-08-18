@@ -46,3 +46,49 @@ select.invalid {
 .municipality-loading {
   color: var(--muted);
 }
+
+.annual-school-confirmation {
+  grid-column: 1 / -1;
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--green-soft);
+}
+
+.annual-school-confirmation-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: .8rem;
+}
+
+.annual-school-confirmation-head span {
+  color: var(--green);
+  font-size: .8rem;
+  font-weight: 800;
+}
+
+.annual-school-checkbox {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: .7rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.annual-school-checkbox input {
+  width: 18px !important;
+  height: 18px !important;
+  min-height: 18px !important;
+  margin-top: .15rem;
+  flex: 0 0 auto;
+}
+
+.annual-school-confirmed {
+  display: block;
+  margin-top: .5rem;
+  color: var(--green);
+  font-size: .78rem;
+  font-weight: 800;
+}
