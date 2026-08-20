@@ -1,0 +1,63 @@
+.athlete-home-primary-card > div:not(.athlete-home-card-icon) {
+  display: grid;
+  gap: .45rem;
+}
+
+.athlete-home-saved-menu {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.athlete-home-saved-menu .athlete-home-shortcuts {
+  display: contents;
+}
+
+.athlete-home-saved-menu .athlete-home-primary-card,
+.athlete-home-saved-menu .athlete-home-shortcut {
+  min-height: 128px;
+}
+
+.athlete-home-saved-menu .athlete-home-primary-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto;
+  column-gap: 1rem;
+  row-gap: .65rem;
+  align-items: center;
+  padding: 1.1rem 1.15rem;
+  border-radius: 19px;
+  box-shadow: 0 8px 22px rgba(20,59,99,.05);
+}
+
+.athlete-home-saved-menu .athlete-home-primary-card .athlete-home-card-icon {
+  grid-row: 1 / span 2;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+}
+
+.athlete-home-saved-menu .athlete-home-primary-card h4 {
+  margin: 0 0 .25rem;
+  font-size: .98rem;
+}
+
+.athlete-home-saved-menu .athlete-home-primary-card p {
+  font-size: .82rem;
+}
+
+.athlete-home-saved-menu .athlete-home-primary-card .primary-button {
+  justify-self: start;
+  margin-top: 0;
+  padding: .58rem .8rem;
+  font-size: .82rem;
+}
+
+.athlete-runtime-back-home {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 900px) {
+  .athlete-home-saved-menu {
+    grid-template-columns: 1fr;
+  }
+}
