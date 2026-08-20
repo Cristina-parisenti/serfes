@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-08-19T11:16:28.861194+00:00",
+  "generatedAt": "2026-08-20T11:22:15.947272+00:00",
   "records": [
     {
       "id": "241",
@@ -7667,7 +7667,7 @@
     },
     {
       "id": "202",
-      "name": "Cecilia Meireles, E M-Ef",
+      "name": "Cecilia Meireles, E M-Ei Ef",
       "municipality": "Conselheiro Mairinck",
       "network": "Municipal"
     },
@@ -20255,7 +20255,7 @@
     },
     {
       "id": "480",
-      "name": "Eugenio Mezzon, E M-Ei Ef",
+      "name": "Eugenio Mezzon, E M-Ef",
       "municipality": "Nova Aurora",
       "network": "Municipal"
     },
