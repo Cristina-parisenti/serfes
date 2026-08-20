@@ -22,48 +22,52 @@ function isStartRegistrationCard(element: Element | null) {
   return startState ? card : null;
 }
 
+type ReactButtonProps = {
+  onClick?: (event?: unknown) => void;
+};
+
+function invokeReactOnClick(button: HTMLButtonElement) {
+  const key = Object.keys(button).find((item) => item.startsWith('__reactProps$'));
+  if (!key) return false;
+
+  const props = (button as unknown as Record<string, unknown>)[key] as ReactButtonProps | undefined;
+  if (typeof props?.onClick !== 'function') return false;
+
+  props.onClick({
+    currentTarget: button,
+    target: button,
+    preventDefault() {},
+    stopPropagation() {},
+  });
+  return true;
+}
+
 function openRegistrationForm() {
   const button = cadastroNavButton();
   if (!button) return false;
 
-  const hadHiddenClass = button.classList.contains('serfes-hidden-cadastro-nav');
-  const previousDisplay = button.style.display;
-  const previousAriaHidden = button.getAttribute('aria-hidden');
-  const previousTabIndex = button.getAttribute('tabindex');
+  // No protótipo, o item "Meu cadastro" permanece no DOM mesmo quando oculto.
+  // Acionamos diretamente a função React ligada a ele para abrir athleteForm.
+  if (invokeReactOnClick(button)) return true;
 
-  button.classList.remove('serfes-hidden-cadastro-nav');
-  button.style.display = '';
-  button.removeAttribute('aria-hidden');
-  button.removeAttribute('tabindex');
-
-  button.dispatchEvent(new MouseEvent('click', {
-    bubbles: true,
-    cancelable: true,
-    view: window,
-  }));
-
-  window.requestAnimationFrame(() => {
-    if (hadHiddenClass) button.classList.add('serfes-hidden-cadastro-nav');
-    button.style.display = previousDisplay;
-    if (previousAriaHidden === null) button.removeAttribute('aria-hidden');
-    else button.setAttribute('aria-hidden', previousAriaHidden);
-    if (previousTabIndex === null) button.removeAttribute('tabindex');
-    else button.setAttribute('tabindex', previousTabIndex);
-  });
-
+  // Fallback para navegadores/versões do React em que a chave interna não esteja acessível.
+  button.click();
   return true;
 }
 
-if (typeof window !== 'undefined') {
-  document.addEventListener('click', (event) => {
-    const target = event.target instanceof Element ? event.target : null;
-    const card = isStartRegistrationCard(target);
-    if (!card) return;
+function activateFromCard(event: Event) {
+  const target = event.target instanceof Element ? event.target : null;
+  const card = isStartRegistrationCard(target);
+  if (!card) return;
 
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    openRegistrationForm();
-  }, true);
+  event.preventDefault();
+  openRegistrationForm();
+}
+
+if (typeof window !== 'undefined') {
+  // Captura o clique antes de outras rotinas que remodelam o card, mas sem bloquear
+  // a propagação global do evento.
+  document.addEventListener('click', activateFromCard, true);
 
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
@@ -72,7 +76,6 @@ if (typeof window !== 'undefined') {
     if (!card) return;
 
     event.preventDefault();
-    event.stopImmediatePropagation();
     openRegistrationForm();
   }, true);
 }
