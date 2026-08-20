@@ -162,6 +162,9 @@ function buildCard() {
 
   const storedImage = readStoredImage();
   const meta = readMeta();
+  const renderKey = `${meta?.updatedAt ?? 'empty'}:${storedImage.length}`;
+  if (card.dataset.renderKey === renderKey) return;
+  card.dataset.renderKey = renderKey;
   card.replaceChildren();
 
   const avatar = document.createElement('div');
@@ -214,6 +217,7 @@ function buildCard() {
   remove.hidden = !storedImage;
   remove.addEventListener('click', () => {
     clearImage();
+    card!.dataset.renderKey = '';
     buildCard();
   });
 
@@ -239,6 +243,7 @@ function buildCard() {
     try {
       const dataUrl = await createThumbnail(file);
       saveImage(dataUrl, file);
+      card!.dataset.renderKey = '';
       buildCard();
     } catch (caught) {
       error.textContent = caught instanceof Error ? caught.message : 'Não foi possível salvar a imagem.';
