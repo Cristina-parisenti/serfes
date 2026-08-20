@@ -4,6 +4,7 @@ import { App } from './App';
 import './styles.css';
 import './athleteHomeRefinement.css';
 import './athleteHomeRefinement';
+import './athleteHomeFinalFix';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
