@@ -25,6 +25,10 @@ function text(value: string | null | undefined) {
   return (value ?? '').replace(/\s+/g, ' ').trim();
 }
 
+function setTextContent(element: Element | null | undefined, value: string) {
+  if (element && text(element.textContent) !== text(value)) element.textContent = value;
+}
+
 function readJson<T>(key: string): T | null {
   try {
     const value = localStorage.getItem(key);
@@ -121,7 +125,7 @@ function createUploadItem(
     input.setCustomValidity('');
     input.classList.remove('invalid');
     error.hidden = true;
-    status.textContent = documentStatusText(storageKey, input.files?.[0] ?? null);
+    setTextContent(status, documentStatusText(storageKey, input.files?.[0] ?? null));
   });
 
   copy.append(strong, status, input, hint, error);
@@ -136,16 +140,21 @@ function refreshDocumentRequirements(form: HTMLFormElement) {
   const activeEnrollment = enrollmentIsActive(form);
 
   if (studentInput) {
-    studentInput.required = !storedDocument(STUDENT_DOCUMENT_KEY);
+    const studentRequired = !storedDocument(STUDENT_DOCUMENT_KEY);
+    if (studentInput.required !== studentRequired) studentInput.required = studentRequired;
   }
 
   if (schoolInput) {
-    schoolInput.disabled = !activeEnrollment;
-    schoolInput.required = activeEnrollment && !storedDocument(SCHOOL_DOCUMENT_KEY);
+    if (schoolInput.disabled === activeEnrollment) schoolInput.disabled = !activeEnrollment;
+    const schoolRequired = activeEnrollment && !storedDocument(SCHOOL_DOCUMENT_KEY);
+    if (schoolInput.required !== schoolRequired) schoolInput.required = schoolRequired;
     schoolWrapper?.classList.toggle('disabled', !activeEnrollment);
     const status = schoolWrapper?.querySelector<HTMLElement>('.serfes-document-status');
-    if (!activeEnrollment && status) status.textContent = 'Não exigido enquanto não houver vínculo escolar informado.';
-    if (activeEnrollment && status && !schoolInput.files?.[0]) status.textContent = documentStatusText(SCHOOL_DOCUMENT_KEY);
+    if (!activeEnrollment) {
+      setTextContent(status, 'Não exigido enquanto não houver vínculo escolar informado.');
+    } else if (!schoolInput.files?.[0]) {
+      setTextContent(status, documentStatusText(SCHOOL_DOCUMENT_KEY));
+    }
   }
 }
 
@@ -158,7 +167,7 @@ function injectDocumentUploads() {
   if (!section || !grid) return;
 
   const sectionDescription = section.querySelector<HTMLElement>('.form-section-title p');
-  if (sectionDescription) sectionDescription.textContent = 'Anexe os documentos necessários para conferência e validação do cadastro.';
+  setTextContent(sectionDescription, 'Anexe os documentos necessários para conferência e validação do cadastro.');
 
   if (!grid.dataset.uploadsReady) {
     const sourceIcon = grid.querySelector<SVGElement>('svg');
@@ -178,7 +187,7 @@ function showUploadError(input: HTMLInputElement, message: string) {
   input.setCustomValidity(message);
   input.classList.add('invalid');
   if (error) {
-    error.textContent = message;
+    setTextContent(error, message);
     error.hidden = false;
   }
 }
@@ -188,7 +197,7 @@ function clearUploadError(input: HTMLInputElement) {
   const error = wrapper?.querySelector<HTMLElement>('.serfes-document-error');
   input.setCustomValidity('');
   input.classList.remove('invalid');
-  if (error) error.hidden = true;
+  if (error && !error.hidden) error.hidden = true;
 }
 
 function validateDocuments(form: HTMLFormElement) {
@@ -508,5 +517,5 @@ if (typeof window !== 'undefined') {
   window.addEventListener('focus', scheduleEnhancements);
 
   const observer = new MutationObserver(scheduleEnhancements);
-  observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  observer.observe(document.documentElement, { childList: true, subtree: true });
 }
