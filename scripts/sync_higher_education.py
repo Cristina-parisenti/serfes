@@ -29,13 +29,17 @@ def norm(value):
     return re.sub(r'[^a-z0-9]+', ' ', text).strip()
 
 
+def clean(value):
+    return re.sub(r'\s+', ' ', str(value or '')).strip()
+
+
 def fetch(url):
     command = [
         'curl', '-L', '--fail', '--silent', '--show-error', '--http1.1',
         '--retry', '5', '--retry-delay', '4', '--retry-all-errors',
         '--connect-timeout', '30', '--max-time', '600',
         '-H', 'Accept: application/json,text/csv,*/*',
-        '-A', 'Mozilla/5.0 (compatible; SERFES-Higher-Education-Sync/4.0)',
+        '-A', 'Mozilla/5.0 (compatible; SERFES-Higher-Education-Sync/5.0)',
         url,
     ]
     completed = subprocess.run(command, check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -143,6 +147,25 @@ def parse_rows(rows, source_label, source_url, data_year=None):
         ) or norm(municipality)
         course_name = field(row, 'NOME_CURSO', 'NO_CURSO', 'Nome do Curso')
         course_id = field(row, 'CODIGO_CURSO', 'CO_CURSO', 'Código do Curso', 'Codigo do Curso') or course_name
+        course_degree = field(
+            row,
+            'GRAU',
+            'GRAU_CURSO',
+            'DS_GRAU',
+            'DS_GRAU_ACADEMICO',
+            'TP_GRAU_ACADEMICO',
+            'Grau do Curso',
+        )
+        course_modality = field(
+            row,
+            'MODALIDADE',
+            'MODALIDADE_ENSINO',
+            'MODALIDADE_CURSO',
+            'DS_MODALIDADE',
+            'DS_MODALIDADE_ENSINO',
+            'TP_MODALIDADE_ENSINO',
+            'Modalidade de Ensino',
+        )
         category = field(
             row,
             'CATEGORIA_ADMINISTRATIVA',
@@ -160,9 +183,9 @@ def parse_rows(rows, source_label, source_url, data_year=None):
         if location_id not in institutions:
             institutions[location_id] = {
                 'id': location_id,
-                'name': re.sub(r'\s+', ' ', institution_name).strip(),
+                'name': clean(institution_name),
                 'acronym': field(row, 'SIGLA', 'SG_IES', 'Sigla da IES') or None,
-                'municipality': re.sub(r'\s+', ' ', municipality).strip(),
+                'municipality': clean(municipality),
                 'network': network,
             }
 
@@ -170,9 +193,12 @@ def parse_rows(rows, source_label, source_url, data_year=None):
             course_key = f'{course_id}:{location_id}'
             courses[course_key] = {
                 'id': course_key,
-                'name': re.sub(r'\s+', ' ', course_name).strip(),
+                'code': clean(course_id) or None,
+                'name': clean(course_name),
+                'degree': clean(course_degree) or None,
+                'modality': clean(course_modality) or None,
                 'institutionId': location_id,
-                'municipality': re.sub(r'\s+', ' ', municipality).strip(),
+                'municipality': clean(municipality),
                 'network': network,
             }
 
@@ -182,7 +208,13 @@ def parse_rows(rows, source_label, source_url, data_year=None):
     )
     course_list = sorted(
         courses.values(),
-        key=lambda item: (norm(item['name']), norm(item['municipality']), item['institutionId']),
+        key=lambda item: (
+            norm(item['name']),
+            norm(item.get('degree')),
+            norm(item.get('modality')),
+            norm(item['municipality']),
+            item['institutionId'],
+        ),
     )
 
     if len(institution_list) < 40:
