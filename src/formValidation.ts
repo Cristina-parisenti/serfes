@@ -153,7 +153,12 @@ export function getEmailValidationError(value: string) {
 
   const localPart = email.slice(0, atIndex);
   const domain = email.slice(atIndex + 1);
-  if (localPart.length > 64 || !/^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+$/i.test(localPart)) {
+  if (
+    localPart.length > 64 ||
+    localPart.startsWith('.') ||
+    localPart.endsWith('.') ||
+    !/^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+$/i.test(localPart)
+  ) {
     return 'Informe um endereço de e-mail válido.';
   }
 
