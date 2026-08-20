@@ -68,15 +68,21 @@ function loadImage(file: File) {
 
 async function createThumbnail(file: File) {
   const image = await loadImage(file);
-  const size = Math.min(image.naturalWidth, image.naturalHeight);
-  const sourceX = Math.max(0, (image.naturalWidth - size) / 2);
-  const sourceY = Math.max(0, (image.naturalHeight - size) / 2);
   const canvas = document.createElement('canvas');
   canvas.width = 420;
   canvas.height = 420;
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Não foi possível preparar a imagem.');
-  context.drawImage(image, sourceX, sourceY, size, size, 0, 0, 420, 420);
+
+  const scale = Math.min(canvas.width / image.naturalWidth, canvas.height / image.naturalHeight);
+  const drawWidth = image.naturalWidth * scale;
+  const drawHeight = image.naturalHeight * scale;
+  const drawX = (canvas.width - drawWidth) / 2;
+  const drawY = (canvas.height - drawHeight) / 2;
+
+  context.fillStyle = '#ffffff';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
   return canvas.toDataURL('image/jpeg', 0.88);
 }
 
@@ -123,16 +129,16 @@ function injectStyles() {
       display: grid;
       justify-items: center;
       gap: .5rem;
-      width: 138px;
+      width: 142px;
       color: #fff;
     }
     .athlete-profile-image-corner[hidden] {
       display: none !important;
     }
     .athlete-profile-avatar {
-      width: 108px;
-      height: 108px;
-      border-radius: 50%;
+      width: 124px;
+      height: 124px;
+      border-radius: 20px;
       overflow: hidden;
       display: grid;
       place-items: center;
@@ -146,7 +152,9 @@ function injectStyles() {
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center;
+      background: #fff;
     }
     .athlete-profile-image-input {
       display: none;
@@ -204,8 +212,9 @@ function injectStyles() {
         display: block;
       }
       .athlete-profile-avatar {
-        width: 88px;
-        height: 88px;
+        width: 98px;
+        height: 98px;
+        border-radius: 18px;
       }
       .athlete-profile-image-actions {
         justify-content: flex-start;
