@@ -1,0 +1,44 @@
+name: Inspecionar campos SERES
+
+on:
+  push:
+    paths:
+      - '.github/workflows/inspect-seres-fields.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Consultar amostra oficial do SERES/MEC
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          url = "https://olinda.mec.gov.br/olinda-ide/servico/PDA_SERES/versao/v1/odata/PDA_Dados_Cursos_Graduacao_Brasil?$format=json&$filter=UF%20eq%20%27PR%27&$top=20"
+          p = subprocess.run(['curl','-L','--fail','--silent','--show-error','--http1.1','--retry','5','--retry-delay','3',url], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+          if p.returncode:
+              raise SystemExit(p.stderr.decode('utf-8','replace'))
+          data = json.loads(p.stdout.decode('utf-8-sig'))
+          rows = data.get('value') or []
+          if not rows:
+              raise SystemExit('A API não retornou linhas.')
+          relevant = {}
+          for key in sorted(rows[0]):
+              relevant[key] = [row.get(key) for row in rows[:10]]
+          with open('seres-fields-inspection.json','w',encoding='utf-8') as f:
+              json.dump(relevant,f,ensure_ascii=False,indent=2)
+              f.write('\n')
+          PY
+      - name: Publicar inspeção temporária
+        run: |
+          git config user.name "SERFES Field Inspection"
+          git config user.email "actions@users.noreply.github.com"
+          git add seres-fields-inspection.json
+          git commit -m "Inspect SERES higher education fields"
+          git pull --rebase origin main
+          git push origin main
