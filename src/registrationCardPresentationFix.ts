@@ -75,8 +75,15 @@ function cardCopy(titleText: string, descriptionText: string) {
   return copy;
 }
 
+function cardHasState(card: HTMLElement, state: 'start' | 'saved') {
+  const expectedTitle = state === 'start' ? 'Iniciar cadastro' : 'Meus dados cadastrais';
+  const title = text(card.querySelector<HTMLElement>('.athlete-card-copy strong')?.textContent);
+  const icon = card.querySelector<HTMLElement>('.athlete-shortcut-icon.profile');
+  return card.dataset.registrationPresentation === state && title === expectedTitle && Boolean(icon);
+}
+
 function showStartCard(card: HTMLElement) {
-  if (card.dataset.registrationPresentation === 'start') return;
+  if (cardHasState(card, 'start')) return;
 
   card.dataset.registrationPresentation = 'start';
   card.dataset.finalCard = 'start';
@@ -102,13 +109,15 @@ function showStartCard(card: HTMLElement) {
 }
 
 function prepareSavedCard(card: HTMLElement) {
+  if (cardHasState(card, 'saved') && card.classList.contains('serfes-data-card')) return;
+
   card.dataset.registrationPresentation = 'saved';
   card.dataset.finalCard = 'saved';
   card.classList.remove('final-start-card');
+  card.classList.add('registration-presentation-card');
 
   if (!card.classList.contains('serfes-data-card')) {
     delete card.dataset.registrationFlowCard;
-    card.classList.add('registration-presentation-card');
     card.replaceChildren(
       userIcon(),
       cardCopy('Meus dados cadastrais', 'Consulte as informações registradas no SERFES.'),
@@ -116,7 +125,6 @@ function prepareSavedCard(card: HTMLElement) {
     return;
   }
 
-  card.classList.add('registration-presentation-card');
   const currentIcon = card.querySelector<HTMLElement>('.athlete-home-card-icon, .athlete-shortcut-icon');
   if (!currentIcon?.classList.contains('profile')) currentIcon?.replaceWith(userIcon());
 
@@ -129,19 +137,18 @@ function prepareSavedCard(card: HTMLElement) {
   }
 }
 
-function registrationActuallyCompleted() {
-  const notice = document.querySelector<HTMLElement>('.athlete-next-step-notice');
-  return text(notice?.textContent).includes('Cadastro concluído');
-}
-
 function applyCardState() {
   const card = document.querySelector<HTMLElement>('.athlete-home-primary-card');
   if (!card) return;
 
-  if (!completedRegistration() && registrationActuallyCompleted()) markCompleted();
-
   if (completedRegistration()) prepareSavedCard(card);
   else showStartCard(card);
+}
+
+function successfulSubmitFinished(form: HTMLFormElement) {
+  const formClosed = !document.documentElement.contains(form) || !document.querySelector('form.athlete-form');
+  const returnedHome = Boolean(document.querySelector('.athlete-home-actions'));
+  return formClosed && returnedHome;
 }
 
 function injectStyles() {
@@ -202,11 +209,11 @@ if (typeof window !== 'undefined') {
     if (!form?.classList.contains('athlete-form')) return;
 
     window.setTimeout(() => {
-      if (registrationActuallyCompleted()) {
+      if (successfulSubmitFinished(form)) {
         markCompleted();
         schedule();
       }
-    }, 220);
+    }, 350);
   }, true);
 
   window.addEventListener('DOMContentLoaded', schedule, { once: true });
