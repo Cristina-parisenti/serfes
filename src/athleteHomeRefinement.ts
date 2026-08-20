@@ -1,19 +1,9 @@
-type AthleteProfileSnapshot = {
-  name: string;
-  cpf: string;
-  birthDate: string;
-  institution: string;
-  municipality: string;
-  updatedAt: string;
-};
-
 type CompetitionSnapshot = {
   name: string;
   period: string;
   location: string;
 };
 
-const PROFILE_KEY = 'serfes-athlete-profile';
 const SCHOOL_VALIDATION_KEY = 'serfes-school-validation';
 const ANNUAL_PENDING_KEY = 'serfes-annual-update-pending';
 const ANNUAL_DONE_KEY = 'serfes-last-annual-update-year';
@@ -56,122 +46,29 @@ function findNavButton(label: string) {
 }
 
 function openAthleteForm() {
-  const cadastroButton = findNavButton('Meu cadastro');
-  cadastroButton?.click();
+  findNavButton('Meu cadastro')?.click();
 }
 
-function fieldValue(form: HTMLFormElement, labelStart: string) {
-  const label = Array.from(form.querySelectorAll<HTMLLabelElement>('label')).find(
-    (item) => compactText(item.textContent).startsWith(labelStart),
-  );
-  const control = label?.querySelector<HTMLInputElement | HTMLSelectElement>('input, select');
-  return control?.value?.trim() ?? '';
-}
-
-function captureAthleteForm(form: HTMLFormElement) {
-  const snapshot: AthleteProfileSnapshot = {
-    name: fieldValue(form, 'Nome completo'),
-    cpf: fieldValue(form, 'CPF'),
-    birthDate: fieldValue(form, 'Data de nascimento'),
-    institution: fieldValue(form, 'Instituição de ensino superior') || fieldValue(form, 'Escola'),
-    municipality: fieldValue(form, 'Município'),
-    updatedAt: new Date().toISOString(),
+function setCardKeyboardAccess(card: HTMLElement, action: () => void) {
+  card.onclick = action;
+  card.onkeydown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      action();
+    }
   };
-  writeStorage(localStorage, PROFILE_KEY, snapshot);
-}
-
-function formatDate(value: string) {
-  if (!value) return 'Não informado';
-  const date = new Date(`${value}T12:00:00`);
-  return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat('pt-BR').format(date);
-}
-
-function formatUpdatedAt(value: string) {
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? 'Não informado' : new Intl.DateTimeFormat('pt-BR').format(date);
-}
-
-function maskCpf(value: string) {
-  return value ? '***.***.***-**' : 'Não informado';
-}
-
-function appendSummaryRow(container: HTMLElement, label: string, value: string) {
-  const row = document.createElement('div');
-  row.className = 'athlete-profile-row';
-  const term = document.createElement('span');
-  term.textContent = label;
-  const detail = document.createElement('strong');
-  detail.textContent = value || 'Não informado';
-  row.append(term, detail);
-  container.append(row);
-}
-
-function renderProfileCard(card: HTMLElement) {
-  if (card.querySelector('.athlete-profile-summary')) return;
-
-  card.classList.remove('athlete-home-complete-card');
-  card.classList.add('athlete-profile-card');
-  card.removeAttribute('role');
-  card.removeAttribute('tabindex');
-  card.onclick = null;
-  card.onkeydown = null;
-  card.replaceChildren();
-
-  const snapshot = readStorage<AthleteProfileSnapshot>(localStorage, PROFILE_KEY);
-  const wrapper = document.createElement('div');
-  wrapper.className = 'athlete-profile-summary';
-
-  const heading = document.createElement('div');
-  heading.className = 'athlete-profile-heading';
-  const icon = document.createElement('span');
-  icon.className = 'athlete-profile-icon';
-  icon.textContent = '✓';
-  const headingCopy = document.createElement('div');
-  const kicker = document.createElement('span');
-  kicker.className = 'athlete-home-card-kicker';
-  kicker.textContent = 'Cadastro concluído';
-  const title = document.createElement('h4');
-  title.textContent = 'Dados cadastrais';
-  headingCopy.append(kicker, title);
-  heading.append(icon, headingCopy);
-
-  const rows = document.createElement('div');
-  rows.className = 'athlete-profile-grid';
-  appendSummaryRow(rows, 'Nome', snapshot?.name || 'Não informado');
-  appendSummaryRow(rows, 'CPF', maskCpf(snapshot?.cpf ?? ''));
-  appendSummaryRow(rows, 'Data de nascimento', formatDate(snapshot?.birthDate ?? ''));
-  appendSummaryRow(rows, 'Instituição de ensino', snapshot?.institution || 'Não informado');
-  appendSummaryRow(rows, 'Município', snapshot?.municipality || 'Não informado');
-  appendSummaryRow(rows, 'Última atualização', formatUpdatedAt(snapshot?.updatedAt ?? ''));
-
-  const footer = document.createElement('div');
-  footer.className = 'athlete-profile-footer';
-  const annualYear = readStorage<number>(localStorage, ANNUAL_DONE_KEY);
-  if (annualYear === new Date().getFullYear()) {
-    const badge = document.createElement('span');
-    badge.className = 'athlete-profile-updated-badge';
-    badge.textContent = `Cadastro atualizado para ${annualYear} ✓`;
-    footer.append(badge);
-  }
-
-  const editButton = document.createElement('button');
-  editButton.type = 'button';
-  editButton.className = 'secondary-button athlete-profile-edit';
-  editButton.textContent = 'Alterar cadastro';
-  editButton.addEventListener('click', openAthleteForm);
-  footer.append(editButton);
-
-  wrapper.append(heading, rows, footer);
-  card.append(wrapper);
 }
 
 function renderCompleteCard(card: HTMLElement) {
-  if (compactText(card.textContent).includes('Complete seu cadastro')) return;
+  if (card.dataset.athleteCardMode === 'complete') return;
 
-  card.classList.remove('athlete-profile-card');
+  card.dataset.athleteCardMode = 'complete';
+  card.dataset.annualYear = '';
+  card.classList.remove('athlete-account-card');
   card.classList.add('athlete-home-complete-card');
   card.setAttribute('role', 'button');
   card.setAttribute('tabindex', '0');
+  card.setAttribute('aria-label', 'Completar cadastro');
   card.replaceChildren();
 
   const icon = document.createElement('span');
@@ -179,28 +76,65 @@ function renderCompleteCard(card: HTMLElement) {
   icon.textContent = '＋';
 
   const copy = document.createElement('span');
-  copy.className = 'athlete-complete-copy';
+  copy.className = 'athlete-card-copy';
   const title = document.createElement('strong');
   title.textContent = 'Complete seu cadastro';
   const description = document.createElement('small');
   description.textContent = 'Preencha as informações necessárias para utilizar todos os recursos da plataforma.';
   const action = document.createElement('span');
-  action.className = 'athlete-complete-action';
+  action.className = 'athlete-card-action';
   action.textContent = 'Completar cadastro';
   copy.append(title, description, action);
 
   const arrow = document.createElement('span');
-  arrow.className = 'athlete-complete-arrow';
+  arrow.className = 'athlete-card-arrow';
   arrow.textContent = '›';
-  card.append(icon, copy, arrow);
 
-  card.onclick = openAthleteForm;
-  card.onkeydown = (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      openAthleteForm();
-    }
-  };
+  card.append(icon, copy, arrow);
+  setCardKeyboardAccess(card, openAthleteForm);
+}
+
+function renderAccountCard(card: HTMLElement) {
+  const currentYear = new Date().getFullYear();
+  const annualYear = readStorage<number>(localStorage, ANNUAL_DONE_KEY);
+  const annualMarker = annualYear === currentYear ? String(currentYear) : '';
+
+  if (card.dataset.athleteCardMode === 'account' && card.dataset.annualYear === annualMarker) return;
+
+  card.dataset.athleteCardMode = 'account';
+  card.dataset.annualYear = annualMarker;
+  card.classList.remove('athlete-home-complete-card');
+  card.classList.add('athlete-account-card');
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('aria-label', 'Abrir meu cadastro');
+  card.replaceChildren();
+
+  const icon = document.createElement('span');
+  icon.className = 'athlete-account-icon';
+  icon.textContent = '✓';
+
+  const copy = document.createElement('span');
+  copy.className = 'athlete-card-copy';
+  const title = document.createElement('strong');
+  title.textContent = 'Meu cadastro';
+  const description = document.createElement('small');
+  description.textContent = 'Acesse seus dados cadastrados e faça alterações quando necessário.';
+  copy.append(title, description);
+
+  if (annualMarker) {
+    const updated = document.createElement('span');
+    updated.className = 'athlete-account-updated';
+    updated.textContent = `Cadastro atualizado para ${currentYear} ✓`;
+    copy.append(updated);
+  }
+
+  const arrow = document.createElement('span');
+  arrow.className = 'athlete-card-arrow';
+  arrow.textContent = '›';
+
+  card.append(icon, copy, arrow);
+  setCardKeyboardAccess(card, openAthleteForm);
 }
 
 function updateShortcut(
@@ -272,6 +206,7 @@ function renderAnnualUpdate(saved: boolean) {
   }
 
   if (existing || !hero) return;
+
   const year = new Date().getFullYear();
   const alert = document.createElement('section');
   alert.className = 'athlete-annual-update';
@@ -355,9 +290,11 @@ function renderNextCompetition(saved: boolean) {
   const details = document.createElement('span');
   details.textContent = `${snapshot.period}${snapshot.location ? ` • ${snapshot.location}` : ''}`;
   copy.append(kicker, title, details);
+
   const action = document.createElement('span');
   action.className = 'athlete-next-competition-action';
   action.textContent = 'Ver detalhes ›';
+
   card.append(copy, action);
   actions.before(card);
 }
@@ -400,23 +337,23 @@ function refineAthleteHome() {
     actions.classList.contains('athlete-home-saved-menu') ||
     originalHeading?.textContent?.trim() === 'Meu cadastro' ||
     originalButton?.textContent?.includes('Atualizar meu cadastro') === true ||
-    !!primaryCard?.querySelector('.athlete-profile-summary');
+    primaryCard?.dataset.athleteCardMode === 'account';
 
   actions.classList.toggle('athlete-home-saved-menu', saved);
 
-  const heroPill = document.querySelector<HTMLElement>('.athlete-home-hero .pill');
-  heroPill?.remove();
+  document.querySelector<HTMLElement>('.athlete-home-hero .pill')?.remove();
 
   const cadastroNav = findNavButton('Meu cadastro');
   if (cadastroNav) cadastroNav.hidden = saved;
 
+  renderAnnualUpdate(saved);
+
   if (primaryCard) {
-    if (saved) renderProfileCard(primaryCard);
+    if (saved) renderAccountCard(primaryCard);
     else renderCompleteCard(primaryCard);
   }
 
   refineShortcuts(saved);
-  renderAnnualUpdate(saved);
   renderNextCompetition(saved);
 }
 
@@ -431,15 +368,11 @@ function scheduleRefinement() {
 }
 
 if (typeof window !== 'undefined') {
-  document.addEventListener('submit', (event) => {
-    const form = event.target instanceof HTMLFormElement ? event.target : null;
-    if (form?.classList.contains('athlete-form')) captureAthleteForm(form);
-  }, true);
-
   document.addEventListener('click', (event) => {
     const target = event.target instanceof Element ? event.target : null;
     const button = target?.closest<HTMLButtonElement>('button');
     if (!button || compactText(button.textContent) !== 'Solicitar inscrição') return;
+
     const card = button.closest<HTMLElement>('.competition-card');
     const candidate = card ? candidateFromCompetitionCard(card) : null;
     if (candidate) {
