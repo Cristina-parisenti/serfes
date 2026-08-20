@@ -598,6 +598,16 @@ export function App() {
           <main className="dashboard-content">
             {dashboardSection === 'athleteHome' && isAthlete && (
               <>
+                {athleteSaved && enrollmentStatus === 'Sim' && !schoolConfirmationCurrent && (
+                  <div className="warning-note">
+                    <AlertTriangle size={18} />
+                    <div>
+                      <strong>Atualize seu vínculo escolar para {schoolReferenceYear}</strong>
+                      <span>Para manter seu cadastro escolar válido no novo ano letivo, confirme novamente a instituição e o ano escolar/curso atuais.</span>
+                    </div>
+                    <button type="button" className="secondary-button compact-button" onClick={() => setDashboardSection('athleteForm')}>Atualizar agora</button>
+                  </div>
+                )}
                 {athleteSaved && <div className="success-banner"><CheckCircle2 size={19} /><div><strong>Seu cadastro demonstrativo foi salvo.</strong><span>Agora você pode consultar as competições disponíveis.</span></div></div>}
                 <section className="hero-panel">
                   <div><span className="pill">Minha área</span><h3>Bem-vindo ao seu espaço no SERFES</h3><p>Complete seu cadastro e acompanhe somente informações relacionadas ao seu próprio perfil.</p></div>
