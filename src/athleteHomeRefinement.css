@@ -1,78 +1,300 @@
-.athlete-home-primary-card > div:not(.athlete-home-card-icon) {
+.athlete-home-complete-card {
+  min-height: 160px;
   display: grid;
-  gap: .45rem;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 
-.athlete-start-button {
-  font-size: 0;
+.athlete-home-complete-card:hover,
+.athlete-home-complete-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: #9fc7e5;
+  box-shadow: 0 14px 32px rgba(20,59,99,.11);
+  outline: none;
 }
 
-.athlete-start-button::after {
-  content: 'Iniciar cadastro';
-  font-size: .92rem;
+.athlete-home-complete-card .athlete-home-card-icon {
+  font-size: 1.55rem;
+  font-weight: 500;
+}
+
+.athlete-complete-copy {
+  display: grid;
+  gap: .42rem;
+}
+
+.athlete-complete-copy strong {
+  color: #143b63;
+  font-size: 1.18rem;
+}
+
+.athlete-complete-copy small {
+  color: #61758d;
+  line-height: 1.5;
+  font-size: .86rem;
+}
+
+.athlete-complete-action {
+  width: fit-content;
+  margin-top: .25rem;
+  color: #0b5aa6;
+  font-size: .83rem;
+  font-weight: 850;
+}
+
+.athlete-complete-arrow {
+  color: #0b5aa6;
+  font-size: 2rem;
   line-height: 1;
 }
 
-.athlete-start-button svg {
-  width: 17px;
-  height: 17px;
-}
-
 .athlete-home-saved-menu {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(360px, 1fr) minmax(420px, 1.05fr);
   align-items: stretch;
 }
 
 .athlete-home-saved-menu .athlete-home-shortcuts {
-  display: contents;
-}
-
-.athlete-home-saved-menu .athlete-home-primary-card,
-.athlete-home-saved-menu .athlete-home-shortcut {
-  min-height: 128px;
-}
-
-.athlete-home-saved-menu .athlete-home-primary-card {
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: 1fr auto;
-  column-gap: 1rem;
-  row-gap: .65rem;
-  align-items: center;
-  padding: 1.1rem 1.15rem;
-  border-radius: 19px;
-  box-shadow: 0 8px 22px rgba(20,59,99,.05);
+  gap: .75rem;
 }
 
-.athlete-home-saved-menu .athlete-home-primary-card .athlete-home-card-icon {
-  grid-row: 1 / span 2;
+.athlete-home-saved-menu .athlete-home-shortcut {
+  min-height: 104px;
+}
+
+.athlete-profile-card {
+  display: block;
+  padding: 1.35rem 1.4rem;
+  border-radius: 22px;
+}
+
+.athlete-profile-summary {
+  display: grid;
+  gap: 1.15rem;
+  width: 100%;
+}
+
+.athlete-profile-heading {
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+}
+
+.athlete-profile-icon {
   width: 42px;
   height: 42px;
+  flex: 0 0 42px;
+  display: grid;
+  place-items: center;
   border-radius: 13px;
+  background: #e8f7f0;
+  color: #167b50;
+  font-weight: 900;
 }
 
-.athlete-home-saved-menu .athlete-home-primary-card h4 {
-  margin: 0 0 .25rem;
+.athlete-profile-heading h4 {
+  margin: .18rem 0 0;
+  color: #143b63;
+  font-size: 1.18rem;
+}
+
+.athlete-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem 1rem;
+  padding-top: .95rem;
+  border-top: 1px solid #e5edf4;
+}
+
+.athlete-profile-row {
+  display: grid;
+  gap: .2rem;
+  min-width: 0;
+}
+
+.athlete-profile-row span {
+  color: #73859a;
+  font-size: .72rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.athlete-profile-row strong {
+  overflow-wrap: anywhere;
+  color: #17304d;
+  font-size: .88rem;
+}
+
+.athlete-profile-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  flex-wrap: wrap;
+  padding-top: .15rem;
+}
+
+.athlete-profile-updated-badge {
+  padding: .48rem .65rem;
+  border-radius: 999px;
+  background: #e8f7f0;
+  color: #167b50;
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+.athlete-profile-edit {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.athlete-annual-update {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: 1.15rem 1.25rem;
+  border: 1px solid #f0d987;
+  border-radius: 18px;
+  background: #fffaf0;
+  box-shadow: 0 8px 22px rgba(126,95,0,.06);
+}
+
+.athlete-annual-update > div {
+  display: grid;
+  gap: .3rem;
+}
+
+.athlete-annual-kicker {
+  color: #8b6900;
+  font-size: .7rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.athlete-annual-update strong {
+  color: #5f4a00;
+  font-size: 1rem;
+}
+
+.athlete-annual-update p {
+  margin: 0;
+  color: #75642d;
+  line-height: 1.45;
+  font-size: .86rem;
+}
+
+.athlete-annual-action {
+  flex: 0 0 auto;
+  padding: .72rem .9rem;
+  border: 0;
+  border-radius: 12px;
+  background: #f3c623;
+  color: #453600;
+  font-weight: 850;
+}
+
+.athlete-next-competition {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.15rem;
+  text-align: left;
+  border: 1px solid #cfe1ee;
+  border-radius: 18px;
+  background: #f8fbfe;
+  color: #17304d;
+  box-shadow: 0 7px 20px rgba(20,59,99,.045);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.athlete-next-competition:hover {
+  transform: translateY(-1px);
+  border-color: #aacde4;
+  box-shadow: 0 10px 24px rgba(20,59,99,.08);
+}
+
+.athlete-next-competition > span:first-child {
+  display: grid;
+  gap: .2rem;
+}
+
+.athlete-next-competition small {
+  color: #0b5aa6;
+  font-size: .72rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.athlete-next-competition strong {
+  color: #143b63;
   font-size: .98rem;
 }
 
-.athlete-home-saved-menu .athlete-home-primary-card p {
+.athlete-next-competition > span:first-child > span {
+  color: #61758d;
   font-size: .82rem;
 }
 
-.athlete-home-saved-menu .athlete-home-primary-card .primary-button {
-  justify-self: start;
-  margin-top: 0;
-  padding: .58rem .8rem;
+.athlete-next-competition-action {
+  flex: 0 0 auto;
+  color: #0b5aa6;
   font-size: .82rem;
+  font-weight: 850;
+}
+
+.athlete-home-shortcut[hidden],
+.sidebar-nav .nav-item[hidden],
+.athlete-next-step-notice[hidden] {
+  display: none !important;
 }
 
 .athlete-runtime-back-home {
   margin-bottom: 1rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
   .athlete-home-saved-menu {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .athlete-home-complete-card {
+    grid-template-columns: auto 1fr;
+  }
+
+  .athlete-complete-arrow {
+    display: none;
+  }
+
+  .athlete-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .athlete-profile-footer,
+  .athlete-annual-update,
+  .athlete-next-competition {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .athlete-profile-edit,
+  .athlete-annual-action {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .athlete-next-competition-action {
+    margin-top: .25rem;
   }
 }
