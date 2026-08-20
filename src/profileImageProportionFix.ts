@@ -7,18 +7,18 @@ function applyProfileImageProportionFix() {
   style.id = 'serfes-profile-image-proportion-fix';
   style.textContent = `
     .athlete-profile-image-corner {
-      width: 154px !important;
+      width: 164px !important;
     }
 
     .athlete-profile-avatar {
-      width: 138px !important;
-      height: 138px !important;
-      border-radius: 22px !important;
+      width: 146px !important;
+      height: 146px !important;
+      border-radius: 50% !important;
     }
 
     .athlete-profile-avatar img {
-      width: 118% !important;
-      height: 118% !important;
+      width: 100% !important;
+      height: 100% !important;
       max-width: none !important;
       max-height: none !important;
       object-fit: cover !important;
@@ -28,9 +28,9 @@ function applyProfileImageProportionFix() {
 
     @media (max-width: 680px) {
       .athlete-profile-avatar {
-        width: 108px !important;
-        height: 108px !important;
-        border-radius: 20px !important;
+        width: 112px !important;
+        height: 112px !important;
+        border-radius: 50% !important;
       }
     }
   `;
