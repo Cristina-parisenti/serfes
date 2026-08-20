@@ -62,13 +62,12 @@ export function normalizeEducationText(value: string) {
     .trim();
 }
 
+// Para o usuário, exibimos somente o nome do curso e, quando necessário,
+// o grau acadêmico. Código e-MEC e modalidade permanecem no catálogo interno
+// para manter a rastreabilidade e a fidelidade à base oficial do MEC.
 export function higherEducationCourseLabel(course: HigherEducationCourse) {
-  const details = [course.degree, course.modality]
-    .map((value) => value?.trim())
-    .filter((value): value is string => Boolean(value));
-  const baseLabel = details.length ? `${course.name} — ${details.join(' — ')}` : course.name;
-  const code = course.code?.trim();
-  return code ? `${baseLabel} (e-MEC ${code})` : baseLabel;
+  const degree = course.degree?.trim();
+  return degree ? `${course.name} — ${degree}` : course.name;
 }
 
 // Regra operacional do SERFES para evitar opções incompatíveis com a idade
