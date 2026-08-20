@@ -1,0 +1,70 @@
+name: Refinar identificação dos cursos superiores
+
+on:
+  push:
+    paths:
+      - '.github/workflows/refine-higher-course-options.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Aplicar grau, modalidade e código e-MEC no seletor
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('src/App.tsx')
+          text = path.read_text(encoding='utf-8')
+
+          old_import = """  educationLevelsForAge,\n  normalizeEducationText,\n  schoolYearsForLevel,\n"""
+          new_import = """  educationLevelsForAge,\n  higherEducationCourseLabel,\n  normalizeEducationText,\n  schoolYearsForLevel,\n"""
+          if new_import not in text:
+              if old_import not in text:
+                  raise SystemExit('Bloco de importação do catálogo educacional não localizado.')
+              text = text.replace(old_import, new_import, 1)
+
+          old_sort = """  const higherCourseOptions = (higherEducation?.courses ?? [])\n    .filter((course) => selectedHigherInstitution !== null && course.institutionId === selectedHigherInstitution.id)\n    .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));\n"""
+          new_sort = """  const higherCourseOptions = (higherEducation?.courses ?? [])\n    .filter((course) => selectedHigherInstitution !== null && course.institutionId === selectedHigherInstitution.id)\n    .sort((a, b) => higherEducationCourseLabel(a).localeCompare(higherEducationCourseLabel(b), 'pt-BR'));\n"""
+          if new_sort not in text:
+              if old_sort not in text:
+                  raise SystemExit('Bloco de ordenação dos cursos não localizado.')
+              text = text.replace(old_sort, new_sort, 1)
+
+          old_option = """                                {higherCourseOptions.map((course) => <option key={course.id} value={course.name}>{course.name}</option>)}\n"""
+          new_option = """                                {higherCourseOptions.map((course) => <option key={course.id} value={course.id}>{higherEducationCourseLabel(course)}</option>)}\n"""
+          if new_option not in text:
+              if old_option not in text:
+                  raise SystemExit('Opções de cursos não localizadas.')
+              text = text.replace(old_option, new_option, 1)
+
+          old_help = """                              <small className=\"field-help\">São exibidos somente cursos oficiais vinculados à instituição selecionada e com oferta localizada no Paraná.</small>\n"""
+          new_help = """                              <small className=\"field-help\">São exibidos somente cursos oficiais vinculados à instituição selecionada e com oferta localizada no Paraná. Quando disponíveis na base oficial, o grau, a modalidade e o código e-MEC identificam cada oferta.</small>\n"""
+          if new_help not in text:
+              if old_help not in text:
+                  raise SystemExit('Texto auxiliar do campo Curso não localizado.')
+              text = text.replace(old_help, new_help, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+      - name: Validar aplicação
+        run: |
+          npm install
+          npm run build
+      - name: Publicar refinamento
+        run: |
+          if git diff --quiet -- src/App.tsx; then
+            echo "Refinamento já aplicado."
+            exit 0
+          fi
+          git config user.name "SERFES UI Update"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/App.tsx
+          git commit -m "Exibir grau e modalidade nos cursos superiores"
+          git pull --rebase origin main
+          git push origin main
