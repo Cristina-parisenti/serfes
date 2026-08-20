@@ -10,6 +10,7 @@ import './responsibleCrossValidation';
 import './athleteRegistrationFlow';
 import './removeDocumentsShortcut';
 import './athleteProfileImage';
+import './registrationCardPresentationFix';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
