@@ -25,7 +25,10 @@ export type HigherEducationInstitution = {
 
 export type HigherEducationCourse = {
   id: string;
+  code?: string | null;
   name: string;
+  degree?: string | null;
+  modality?: string | null;
   institutionId: string;
   municipality: string;
   network: SchoolNetwork;
@@ -57,6 +60,15 @@ export function normalizeEducationText(value: string) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
+}
+
+export function higherEducationCourseLabel(course: HigherEducationCourse) {
+  const details = [course.degree, course.modality]
+    .map((value) => value?.trim())
+    .filter((value): value is string => Boolean(value));
+  const baseLabel = details.length ? `${course.name} — ${details.join(' — ')}` : course.name;
+  const code = course.code?.trim();
+  return code ? `${baseLabel} (e-MEC ${code})` : baseLabel;
 }
 
 // Regra operacional do SERFES para evitar opções incompatíveis com a idade
