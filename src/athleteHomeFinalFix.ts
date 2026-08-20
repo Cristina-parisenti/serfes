@@ -1,3 +1,5 @@
+export {};
+
 type AthleteSnapshot = {
   name: string;
   cpf: string;
@@ -9,6 +11,7 @@ type AthleteSnapshot = {
 
 const PROFILE_KEY = 'serfes-athlete-profile-final';
 const SCHOOL_VALIDATION_KEY = 'serfes-school-validation';
+const ANNUAL_PENDING_KEY = 'serfes-annual-update-pending';
 
 function text(value: string | null | undefined) {
   return (value ?? '').replace(/\s+/g, ' ').trim();
@@ -31,8 +34,8 @@ function fieldValue(form: HTMLFormElement, labelStart: string) {
   return label?.querySelector<HTMLInputElement | HTMLSelectElement>('input, select')?.value?.trim() ?? '';
 }
 
-function captureForm(form: HTMLFormElement) {
-  const snapshot: AthleteSnapshot = {
+function snapshotFromForm(form: HTMLFormElement): AthleteSnapshot {
+  return {
     name: fieldValue(form, 'Nome completo'),
     cpf: fieldValue(form, 'CPF'),
     birthDate: fieldValue(form, 'Data de nascimento'),
@@ -40,6 +43,9 @@ function captureForm(form: HTMLFormElement) {
     municipality: fieldValue(form, 'Município'),
     updatedAt: new Date().toISOString(),
   };
+}
+
+function saveSnapshot(snapshot: AthleteSnapshot) {
   try {
     localStorage.setItem(PROFILE_KEY, JSON.stringify(snapshot));
   } catch {
@@ -83,6 +89,10 @@ function addRow(container: HTMLElement, label: string, value: string) {
   container.append(row);
 }
 
+function fixHero() {
+  document.querySelector<HTMLElement>('.athlete-home-hero .pill')?.remove();
+}
+
 function fixSidebar() {
   const cadastro = navButton('Meu cadastro');
   if (!cadastro) return;
@@ -90,20 +100,21 @@ function fixSidebar() {
   cadastro.style.display = 'none';
 }
 
+function schoolValidationComplete() {
+  try {
+    return localStorage.getItem(SCHOOL_VALIDATION_KEY) === 'validated';
+  } catch {
+    return false;
+  }
+}
+
 function fixShortcuts() {
   const shortcuts = Array.from(document.querySelectorAll<HTMLButtonElement>('.athlete-home-shortcut'));
   const school = shortcuts.find((button) => text(button.textContent).toLowerCase().includes('validação escolar'));
   const docs = shortcuts.find((button) => text(button.textContent).toLowerCase().includes('documentos'));
 
-  let validated = false;
-  try {
-    validated = localStorage.getItem(SCHOOL_VALIDATION_KEY) === 'validated';
-  } catch {
-    validated = false;
-  }
-
   if (school) {
-    school.hidden = validated;
+    school.hidden = schoolValidationComplete();
     const copy = school.querySelector<HTMLElement>('span:nth-child(2)');
     const strong = copy?.querySelector('strong');
     const small = copy?.querySelector('small');
@@ -124,20 +135,44 @@ function fixShortcuts() {
 function renderStartCard(card: HTMLElement) {
   if (card.dataset.finalCard === 'start') return;
   card.dataset.finalCard = 'start';
-
-  const title = card.querySelector<HTMLElement>('.athlete-card-copy strong, h4');
-  const description = card.querySelector<HTMLElement>('.athlete-card-copy small, p');
-  const action = card.querySelector<HTMLElement>('.athlete-card-action');
-
-  if (title) title.textContent = 'Iniciar cadastro';
-  if (description) description.textContent = 'Informe seus dados pessoais, esportivos e de vínculo escolar.';
-  action?.remove();
+  card.classList.add('final-start-card');
+  card.replaceChildren();
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
   card.setAttribute('aria-label', 'Iniciar cadastro');
+
+  const icon = document.createElement('span');
+  icon.className = 'athlete-home-card-icon';
+  icon.textContent = '＋';
+
+  const copy = document.createElement('span');
+  copy.className = 'athlete-card-copy';
+  const title = document.createElement('strong');
+  title.textContent = 'Iniciar cadastro';
+  const description = document.createElement('small');
+  description.textContent = 'Informe seus dados pessoais, esportivos e de vínculo escolar.';
+  copy.append(title, description);
+
+  const arrow = document.createElement('span');
+  arrow.className = 'athlete-card-arrow';
+  arrow.textContent = '›';
+
+  const activate = () => openForm();
+  card.onclick = activate;
+  card.onkeydown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      activate();
+    }
+  };
+
+  card.append(icon, copy, arrow);
 }
 
 function renderSavedCard(card: HTMLElement) {
   if (card.dataset.finalCard === 'saved') return;
   card.dataset.finalCard = 'saved';
+  card.classList.remove('final-start-card');
   card.replaceChildren();
   card.removeAttribute('role');
   card.removeAttribute('tabindex');
@@ -218,19 +253,66 @@ function fixPrimaryCard() {
   const card = actions?.querySelector<HTMLElement>('.athlete-home-primary-card');
   if (!actions || !card) return;
 
+  const originalText = text(card.textContent);
   const saved =
-    actions.classList.contains('athlete-home-saved-menu') ||
-    card.dataset.athleteCardMode === 'account' ||
-    text(card.textContent).includes('Meu cadastro');
+    card.dataset.finalCard === 'saved' ||
+    originalText.includes('Meu cadastro') ||
+    originalText.includes('Atualizar meu cadastro');
 
   if (saved) renderSavedCard(card);
   else renderStartCard(card);
 }
 
+function annualUpdateNeeded() {
+  const nativeNotice = document.querySelector<HTMLElement>('.athlete-next-step-notice');
+  return text(nativeNotice?.textContent).includes('Atualize seu vínculo escolar');
+}
+
+function removeAnnualPopup() {
+  document.querySelector<HTMLElement>('.final-annual-popup')?.remove();
+}
+
 function fixAnnualPopup() {
-  const popup = document.querySelector<HTMLElement>('.athlete-annual-update');
-  if (!popup) return;
-  popup.classList.add('final-annual-popup');
+  const nativeNotice = document.querySelector<HTMLElement>('.athlete-next-step-notice');
+  if (nativeNotice) {
+    nativeNotice.hidden = true;
+    nativeNotice.style.display = 'none';
+  }
+
+  if (!annualUpdateNeeded()) {
+    removeAnnualPopup();
+    return;
+  }
+
+  if (document.querySelector('.final-annual-popup')) return;
+
+  const year = new Date().getFullYear();
+  const popup = document.createElement('section');
+  popup.className = 'final-annual-popup';
+
+  const kicker = document.createElement('span');
+  kicker.className = 'athlete-annual-kicker';
+  kicker.textContent = 'Atenção';
+  const title = document.createElement('strong');
+  title.textContent = 'Atualização cadastral necessária';
+  const description = document.createElement('p');
+  description.textContent = `Para continuar participando das competições, confirme ou atualize suas informações para ${year}.`;
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'athlete-annual-action';
+  button.textContent = 'Atualizar cadastro';
+  button.addEventListener('click', () => {
+    try {
+      sessionStorage.setItem(ANNUAL_PENDING_KEY, String(year));
+    } catch {
+      // Sem ação.
+    }
+    popup.remove();
+    openForm();
+  });
+
+  popup.append(kicker, title, description, button);
+  document.body.append(popup);
 }
 
 function injectStyles() {
@@ -238,6 +320,8 @@ function injectStyles() {
   const style = document.createElement('style');
   style.id = 'serfes-final-athlete-styles';
   style.textContent = `
+    .final-start-card { cursor: pointer; }
+    .final-start-card:hover { transform: translateY(-2px); border-color: #b8d4e9; box-shadow: 0 12px 26px rgba(20,59,99,.09); }
     .final-account-toggle {
       width: 100%; display: grid; grid-template-columns: auto 1fr auto; align-items: center;
       gap: 1rem; padding: 0; border: 0; background: transparent; text-align: left; color: inherit;
@@ -251,15 +335,20 @@ function injectStyles() {
     .final-account-row strong { color: #17304d; font-size: .88rem; overflow-wrap: anywhere; }
     .final-account-footer { display: flex; justify-content: flex-end; margin-top: 1rem; }
     .final-annual-popup {
-      position: fixed !important; left: 50% !important; top: 50% !important; transform: translate(-50%,-50%) !important;
-      z-index: 120 !important; width: min(520px, calc(100vw - 36px)) !important; margin: 0 !important;
-      box-shadow: 0 26px 75px rgba(20,59,99,.3) !important; background: #fffdf7 !important;
+      position: fixed; left: 50%; top: 50%; transform: translate(-50%,-50%); z-index: 140;
+      width: min(520px, calc(100vw - 36px)); display: grid; gap: .55rem; padding: 1.45rem;
+      border: 1px solid #f0d987; border-radius: 22px; background: #fffdf7;
+      box-shadow: 0 26px 75px rgba(20,59,99,.3);
     }
+    .final-annual-popup strong { color: #5f4a00; font-size: 1.05rem; }
+    .final-annual-popup p { margin: 0; color: #75642d; line-height: 1.5; font-size: .9rem; }
+    .final-annual-popup .athlete-annual-action { justify-self: start; margin-top: .25rem; }
     @media (max-width: 680px) {
       .final-account-toggle { grid-template-columns: auto 1fr; }
       .final-account-toggle .athlete-card-arrow { display: none; }
       .final-account-grid { grid-template-columns: 1fr; }
       .final-account-footer .secondary-button { width: 100%; justify-content: center; }
+      .final-annual-popup .athlete-annual-action { width: 100%; justify-content: center; }
     }
   `;
   document.head.append(style);
@@ -267,6 +356,7 @@ function injectStyles() {
 
 function applyFinalFixes() {
   injectStyles();
+  fixHero();
   fixSidebar();
   fixShortcuts();
   fixPrimaryCard();
@@ -286,16 +376,24 @@ function scheduleFinalFixes() {
 if (typeof window !== 'undefined') {
   document.addEventListener('submit', (event) => {
     const form = event.target instanceof HTMLFormElement ? event.target : null;
-    if (form?.classList.contains('athlete-form')) captureForm(form);
+    if (!form?.classList.contains('athlete-form')) return;
+    const snapshot = snapshotFromForm(form);
+    window.setTimeout(() => {
+      if (document.querySelector('.athlete-home-actions')) saveSnapshot(snapshot);
+      scheduleFinalFixes();
+    }, 120);
   }, true);
 
   window.addEventListener('DOMContentLoaded', scheduleFinalFixes, { once: true });
+  window.addEventListener('focus', scheduleFinalFixes);
+  window.addEventListener('storage', (event) => {
+    if (event.key === SCHOOL_VALIDATION_KEY) scheduleFinalFixes();
+  });
+
   const observer = new MutationObserver(scheduleFinalFixes);
   observer.observe(document.documentElement, {
     childList: true,
     subtree: true,
     characterData: true,
-    attributes: true,
-    attributeFilter: ['hidden', 'style', 'class'],
   });
 }
