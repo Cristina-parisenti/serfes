@@ -9,6 +9,7 @@ import './schoolValidationCycle';
 import './responsibleCrossValidation';
 import './athleteRegistrationFlow';
 import './removeDocumentsShortcut';
+import './athleteProfileImage';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
