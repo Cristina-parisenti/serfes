@@ -50,6 +50,7 @@ import {
   SchoolDirectoryPayload,
   SchoolNetwork,
   educationLevelsForAge,
+  higherEducationCourseLabel,
   normalizeEducationText,
   schoolYearsForLevel,
 } from './educationCatalog';
@@ -258,7 +259,7 @@ export function App() {
     : null;
   const higherCourseOptions = (higherEducation?.courses ?? [])
     .filter((course) => selectedHigherInstitution !== null && course.institutionId === selectedHigherInstitution.id)
-    .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+    .sort((a, b) => higherEducationCourseLabel(a).localeCompare(higherEducationCourseLabel(b), 'pt-BR'));
   const institutionCatalogReady = schoolLevel === 'Ensino superior'
     ? (higherEducation?.institutions.length ?? 0) > 0
     : (schoolDirectory?.records.length ?? 0) > 0;
@@ -1020,9 +1021,9 @@ export function App() {
                                 onChange={(e) => { setHigherEducationCourse(e.target.value); setSchoolAnnualConfirmation(false); setSchoolConfirmedYear(null); }}
                               >
                                 <option value="" disabled>{!athleteInstitution ? 'Selecione primeiro a instituição' : (higherCourseOptions.length ? 'Selecione' : 'Aguardando catálogo oficial')}</option>
-                                {higherCourseOptions.map((course) => <option key={course.id} value={course.name}>{course.name}</option>)}
+                                {higherCourseOptions.map((course) => <option key={course.id} value={course.id}>{higherEducationCourseLabel(course)}</option>)}
                               </select>
-                              <small className="field-help">São exibidos somente cursos oficiais vinculados à instituição selecionada e com oferta localizada no Paraná.</small>
+                              <small className="field-help">São exibidos somente cursos oficiais vinculados à instituição selecionada e com oferta localizada no Paraná. Quando disponíveis na base oficial, o grau, a modalidade e o código e-MEC identificam cada oferta.</small>
                             </label>
                           )}
                           {enrollmentStatus === 'Sim' && (
