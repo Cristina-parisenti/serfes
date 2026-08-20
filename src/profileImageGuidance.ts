@@ -20,39 +20,31 @@ function injectStyles() {
     }
     .${DIALOG_CLASS}[hidden] { display: none !important; }
     .${DIALOG_CLASS}-panel {
-      width: min(520px, calc(100vw - 32px));
+      width: min(500px, calc(100vw - 32px));
       padding: 1.35rem 1.4rem;
       border-radius: 22px;
       background: #fff;
       box-shadow: 0 24px 70px rgba(20,59,99,.28);
     }
     .${DIALOG_CLASS}-panel h3 {
-      margin: 0 0 .45rem;
+      margin: 0 0 .7rem;
       color: #143b63;
       font-size: 1.2rem;
     }
-    .${DIALOG_CLASS}-panel > p {
+    .${DIALOG_CLASS}-format {
       margin: 0;
-      color: #61758d;
+      color: #17304d;
       line-height: 1.5;
       font-size: .9rem;
     }
-    .${DIALOG_CLASS}-panel ul {
-      margin: 1rem 0;
-      padding-left: 1.15rem;
-      color: #17304d;
-      display: grid;
-      gap: .48rem;
-      line-height: 1.45;
-      font-size: .9rem;
-    }
     .${DIALOG_CLASS}-rule {
-      margin-top: .8rem !important;
+      margin: .9rem 0 0 !important;
       padding: .72rem .78rem;
       border-radius: 12px;
       background: #fff8e5;
       color: #7b5800 !important;
-      font-size: .82rem !important;
+      font-size: .84rem !important;
+      line-height: 1.45;
     }
     .${DIALOG_CLASS}-actions {
       display: flex;
@@ -88,23 +80,9 @@ function openGuidance(input: HTMLInputElement) {
   title.id = 'serfes-profile-image-guidance-title';
   title.textContent = 'Imagem de identificação';
 
-  const intro = document.createElement('p');
-  intro.textContent = 'Antes de selecionar o arquivo, confira as orientações:';
-
-  const list = document.createElement('ul');
-  const items = [
-    'Você pode usar uma foto do próprio aluno ou outra imagem para identificá-lo no sistema.',
-    'A imagem poderá ser escolhida, trocada ou removida a qualquer momento.',
-    'Após a seleção, haverá pré-visualização no próprio perfil.',
-    'São aceitos arquivos JPG, PNG ou WEBP, com até 5 MB.',
-    'A imagem será redimensionada automaticamente para não deixar o sistema pesado.',
-  ];
-
-  items.forEach((itemText) => {
-    const item = document.createElement('li');
-    item.textContent = itemText;
-    list.append(item);
-  });
+  const format = document.createElement('p');
+  format.className = `${DIALOG_CLASS}-format`;
+  format.textContent = 'Formatos aceitos: JPG, PNG ou WEBP, com tamanho máximo de 5 MB.';
 
   const rule = document.createElement('p');
   rule.className = `${DIALOG_CLASS}-rule`;
@@ -129,7 +107,7 @@ function openGuidance(input: HTMLInputElement) {
   });
 
   actions.append(cancel, choose);
-  panel.append(title, intro, list, rule, actions);
+  panel.append(title, format, rule, actions);
   dialog.append(panel);
 
   dialog.addEventListener('click', (event) => {
