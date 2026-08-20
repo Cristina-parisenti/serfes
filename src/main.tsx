@@ -4,6 +4,7 @@ import { App } from './App';
 import './styles.css';
 import './athleteHomeRefinement.css';
 import './athleteHomeFinalFix';
+import './athleteSidebarLock';
 import './schoolValidationCycle';
 import './responsibleCrossValidation';
 
