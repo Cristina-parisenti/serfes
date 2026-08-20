@@ -5,6 +5,7 @@ import './styles.css';
 import './athleteHomeRefinement.css';
 import './athleteHomeRefinement';
 import './athleteHomeFinalFix';
+import './schoolValidationCycle';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
