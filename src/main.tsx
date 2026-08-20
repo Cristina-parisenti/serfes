@@ -12,6 +12,7 @@ import './removeDocumentsShortcut';
 import './athleteProfileImage';
 import './profileImageGuidance';
 import './registrationCardPresentationFix';
+import './athleteSexAndGreeting';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
