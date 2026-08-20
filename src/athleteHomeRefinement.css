@@ -200,6 +200,10 @@
   display: none !important;
 }
 
+.athlete-home-hero-symbol {
+  display: none !important;
+}
+
 .athlete-runtime-back-home {
   margin-bottom: 1rem;
 }
