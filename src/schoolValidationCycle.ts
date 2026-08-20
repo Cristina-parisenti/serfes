@@ -27,6 +27,21 @@ function educationSignature(form: HTMLFormElement) {
   return JSON.stringify(data);
 }
 
+function schoolValidationIsComplete() {
+  try {
+    return localStorage.getItem(SCHOOL_VALIDATION_KEY) === 'validated';
+  } catch {
+    return false;
+  }
+}
+
+function syncSchoolValidationShortcut() {
+  const shortcut = Array.from(document.querySelectorAll<HTMLButtonElement>('.athlete-home-shortcut')).find(
+    (button) => normalized(button.textContent).toLowerCase().includes('validação escolar'),
+  );
+  if (shortcut) shortcut.hidden = schoolValidationIsComplete();
+}
+
 function markSchoolValidationPendingWhenNeeded(form: HTMLFormElement) {
   const nextSignature = educationSignature(form);
 
@@ -43,6 +58,8 @@ function markSchoolValidationPendingWhenNeeded(form: HTMLFormElement) {
   } catch {
     // O armazenamento local serve apenas para simular o fluxo de validação no protótipo.
   }
+
+  window.setTimeout(syncSchoolValidationShortcut, 0);
 }
 
 if (typeof window !== 'undefined') {
@@ -51,4 +68,10 @@ if (typeof window !== 'undefined') {
     if (!form?.classList.contains('athlete-form')) return;
     markSchoolValidationPendingWhenNeeded(form);
   }, true);
+
+  window.addEventListener('storage', (event) => {
+    if (event.key === SCHOOL_VALIDATION_KEY) syncSchoolValidationShortcut();
+  });
+  window.addEventListener('focus', syncSchoolValidationShortcut);
+  window.addEventListener('DOMContentLoaded', syncSchoolValidationShortcut, { once: true });
 }
