@@ -1,0 +1,68 @@
+name: Verificar catálogo do ensino superior
+
+on:
+  push:
+    paths:
+      - '.github/workflows/verify-higher-education.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Verificar integridade do catálogo
+        run: |
+          python - <<'PY'
+          import json, re, unicodedata
+          from collections import Counter, defaultdict
+          from pathlib import Path
+          def norm(value):
+              text = unicodedata.normalize('NFKD', str(value or '')).encode('ascii','ignore').decode().lower()
+              return re.sub(r'[^a-z0-9]+',' ',text).strip()
+          data=json.loads(Path('public/higher-education.json').read_text(encoding='utf-8'))
+          institutions=data.get('institutions',[]); courses=data.get('courses',[])
+          valid_municipalities=set()
+          for school_file in Path('public').glob('schools-pr-*.json'):
+              try: school_data=json.loads(school_file.read_text(encoding='utf-8'))
+              except Exception: continue
+              for record in school_data.get('records',[]):
+                  if record.get('municipality'): valid_municipalities.add(norm(record['municipality']))
+          inst_ids=[str(i.get('id','')) for i in institutions]; course_ids=[str(c.get('id','')) for c in courses]; inst_id_set=set(inst_ids)
+          allowed={'Federal','Estadual','Municipal','Privada'}
+          empty_inst=[i for i in institutions if not i.get('id') or not i.get('name') or not i.get('municipality') or not i.get('network')]
+          empty_courses=[c for c in courses if not c.get('id') or not c.get('name') or not c.get('institutionId')]
+          bad_networks=sorted({str(i.get('network')) for i in institutions if i.get('network') not in allowed})
+          orphans=[c for c in courses if str(c.get('institutionId','')) not in inst_id_set]
+          bad_munis=sorted({str(i.get('municipality')) for i in institutions if valid_municipalities and norm(i.get('municipality')) not in valid_municipalities})
+          dup_inst_ids=[k for k,v in Counter(inst_ids).items() if k and v>1]; dup_course_ids=[k for k,v in Counter(course_ids).items() if k and v>1]
+          by_identity=defaultdict(list)
+          for i in institutions: by_identity[(norm(i.get('name')),norm(i.get('municipality')),i.get('network'))].append(str(i.get('id')))
+          dup_identity=[{'name':k[0],'municipality':k[1],'network':k[2],'ids':ids} for k,ids in by_identity.items() if k[0] and len(set(ids))>1]
+          by_course=defaultdict(list)
+          for c in courses: by_course[(str(c.get('institutionId')),norm(c.get('name')))].append(str(c.get('id')))
+          dup_course_names=[{'institutionId':k[0],'course':k[1],'ids':ids} for k,ids in by_course.items() if k[1] and len(set(ids))>1]
+          courses_per_inst=Counter(str(c.get('institutionId')) for c in courses); no_courses=[i.get('id') for i in institutions if courses_per_inst.get(str(i.get('id')),0)==0]
+          report={'jsonValid':True,'source':data.get('source'),'sourceUrl':data.get('sourceUrl'),'emecUrl':data.get('emecUrl'),'dataYear':data.get('dataYear'),'generatedAt':data.get('generatedAt'),'institutionCount':len(institutions),'courseCount':len(courses),'networkCounts':dict(Counter(i.get('network') for i in institutions)),'municipalityCount':len({norm(i.get('municipality')) for i in institutions if i.get('municipality')}),'validMunicipalityReferenceCount':len(valid_municipalities),'emptyInstitutionRecords':len(empty_inst),'emptyCourseRecords':len(empty_courses),'badNetworks':bad_networks,'orphanCourseCount':len(orphans),'duplicateInstitutionIdCount':len(dup_inst_ids),'duplicateCourseIdCount':len(dup_course_ids),'unknownParanaMunicipalities':bad_munis,'duplicateInstitutionIdentityCount':len(dup_identity),'duplicateInstitutionIdentityExamples':dup_identity[:20],'duplicateCourseNameWithinInstitutionCount':len(dup_course_names),'duplicateCourseNameWithinInstitutionExamples':dup_course_names[:20],'institutionsWithoutCoursesCount':len(no_courses),'institutionsWithoutCoursesExamples':no_courses[:20],'sampleInstitutions':institutions[:8],'sampleCourses':courses[:8]}
+          Path('higher-education-verification.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          critical=(not institutions or not courses or empty_inst or empty_courses or bad_networks or orphans or dup_inst_ids or dup_course_ids or bad_munis)
+          Path('higher-education-verification-status.txt').write_text(('CRITICAL' if critical else 'OK')+'\n',encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - name: Validar aplicação
+        run: |
+          npm install
+          npm run build
+      - name: Publicar relatório de conferência
+        run: |
+          git config user.name "SERFES Catalog Verification"
+          git config user.email "actions@users.noreply.github.com"
+          git add higher-education-verification.json higher-education-verification-status.txt
+          git commit -m "Conferir catálogo do ensino superior do Paraná"
+          git pull --rebase origin main
+          git push origin main
