@@ -1,0 +1,84 @@
+name: Exigir vínculo escolar para menores
+
+on:
+  push:
+    paths:
+      - '.github/workflows/enforce-minor-school-enrollment.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar regra de vínculo escolar obrigatório para menores
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('src/App.tsx')
+          text = path.read_text(encoding='utf-8')
+
+          old = """  const minorStatus = athleteAge === null ? null : athleteAge < 18;\n  const schoolReferenceYear = ageReferenceDate.getFullYear();\n"""
+          new = """  const minorStatus = athleteAge === null ? null : athleteAge < 18;\n  const minorWithoutSchoolEnrollment = minorStatus === true && enrollmentStatus !== 'Sim';\n  const schoolReferenceYear = ageReferenceDate.getFullYear();\n"""
+          if old not in text:
+              raise SystemExit('Bloco de idade não localizado.')
+          text = text.replace(old, new, 1)
+
+          old = """    const schoolFieldsValid = enrollmentStatus !== 'Sim' || (\n      schoolMunicipality.length > 0 &&\n"""
+          new = """    const schoolFieldsValid = !minorWithoutSchoolEnrollment && (enrollmentStatus !== 'Sim' || (\n      schoolMunicipality.length > 0 &&\n"""
+          if old not in text:
+              raise SystemExit('Validação escolar não localizada.')
+          text = text.replace(old, new, 1)
+
+          old = """      (!higherCourseRequired || higherEducationCourse.trim().length > 0)\n    );\n\n    const responsibleFieldsValid"""
+          new = """      (!higherCourseRequired || higherEducationCourse.trim().length > 0)\n    ));\n\n    const responsibleFieldsValid"""
+          if old not in text:
+              raise SystemExit('Fechamento da validação escolar não localizado.')
+          text = text.replace(old, new, 1)
+
+          old = """    if (!athleteSaved) {\n      setRegistrationMessage('Antes da inscrição em uma competição, complete e salve o seu cadastro.');\n      return;\n    }\n\n    if (enrollmentStatus === 'Sim' && schoolConfirmedYear !== schoolReferenceYear) {\n"""
+          new = """    if (!athleteSaved) {\n      setRegistrationMessage('Antes da inscrição em uma competição, complete e salve o seu cadastro.');\n      return;\n    }\n\n    if (minorWithoutSchoolEnrollment) {\n      setRegistrationMessage('Inscrição indisponível: para atletas menores de 18 anos, o SERFES exige vínculo com instituição de ensino.');\n      return;\n    }\n\n    if (enrollmentStatus === 'Sim' && schoolConfirmedYear !== schoolReferenceYear) {\n"""
+          if old not in text:
+              raise SystemExit('Validação de inscrição não localizada.')
+          text = text.replace(old, new, 1)
+
+          old = """                  {formAttempted && (athleteTooYoung || gameAgeBlocked || nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && (\n"""
+          new = """                  {formAttempted && (athleteTooYoung || minorWithoutSchoolEnrollment || gameAgeBlocked || nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && (\n"""
+          if old not in text:
+              raise SystemExit('Aviso geral do formulário não localizado.')
+          text = text.replace(old, new, 1)
+
+          old = """                              <option>Sim</option><option>Não</option>\n                            </select>\n                          </label>\n"""
+          new = """                              <option>Sim</option><option>Não</option>\n                            </select>\n                            {minorWithoutSchoolEnrollment && <small className=\"field-error\">Cadastro indisponível: para atletas menores de 18 anos, o SERFES exige vínculo com instituição de ensino.</small>}\n                          </label>\n"""
+          if old not in text:
+              raise SystemExit('Campo de vínculo escolar não localizado.')
+          text = text.replace(old, new, 1)
+
+          old = """                    <button type=\"submit\" className=\"primary-button\" disabled={athleteTooYoung}><CheckCircle2 size={17} /> Salvar cadastro demonstrativo</button>\n"""
+          new = """                    <button type=\"submit\" className=\"primary-button\" disabled={athleteTooYoung || minorWithoutSchoolEnrollment}><CheckCircle2 size={17} /> Salvar cadastro demonstrativo</button>\n"""
+          if old not in text:
+              raise SystemExit('Botão de salvar não localizado.')
+          text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Validar aplicação
+        run: |
+          npm install
+          npm run build
+
+      - name: Publicar ajuste
+        run: |
+          git config user.name "SERFES UI Update"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/App.tsx
+          git commit -m "Exigir vínculo escolar para atletas menores"
+          git pull --rebase origin main
+          git push origin main
