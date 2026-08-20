@@ -69,31 +69,29 @@ function loadImage(file: File) {
 async function createThumbnail(file: File) {
   const image = await loadImage(file);
   const canvas = document.createElement('canvas');
-  canvas.width = 420;
-  canvas.height = 420;
+  canvas.width = 520;
+  canvas.height = 520;
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Não foi possível preparar a imagem.');
 
-  const scale = Math.min(canvas.width / image.naturalWidth, canvas.height / image.naturalHeight);
+  const scale = Math.max(canvas.width / image.naturalWidth, canvas.height / image.naturalHeight);
   const drawWidth = image.naturalWidth * scale;
   const drawHeight = image.naturalHeight * scale;
   const drawX = (canvas.width - drawWidth) / 2;
   const drawY = (canvas.height - drawHeight) / 2;
 
-  context.fillStyle = '#ffffff';
-  context.fillRect(0, 0, canvas.width, canvas.height);
   context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
-  return canvas.toDataURL('image/jpeg', 0.88);
+  return canvas.toDataURL('image/jpeg', 0.9);
 }
 
 function createUserIcon() {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 24 24');
-  svg.setAttribute('width', '38');
-  svg.setAttribute('height', '38');
+  svg.setAttribute('width', '54');
+  svg.setAttribute('height', '54');
   svg.setAttribute('fill', 'none');
   svg.setAttribute('stroke', 'currentColor');
-  svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-width', '1.7');
   svg.setAttribute('stroke-linecap', 'round');
   svg.setAttribute('stroke-linejoin', 'round');
 
@@ -115,81 +113,105 @@ function injectStyles() {
   const style = document.createElement('style');
   style.id = 'serfes-profile-image-styles';
   style.textContent = `
-    .athlete-home-hero {
-      position: relative;
-    }
-    .athlete-home-hero:has(.athlete-profile-image-corner) .athlete-home-hero-symbol {
-      display: none !important;
-    }
-    .athlete-profile-image-corner {
-      position: absolute;
-      z-index: 3;
-      top: 1.35rem;
-      right: 1.65rem;
+    .athlete-home-hero-row {
       display: grid;
-      justify-items: center;
-      gap: .5rem;
-      width: 142px;
-      color: #fff;
+      grid-template-columns: 230px minmax(0, 1fr);
+      gap: 1rem;
+      align-items: stretch;
+      margin: 0;
     }
-    .athlete-profile-image-corner[hidden] {
+
+    .athlete-home-hero-row > .athlete-home-hero {
+      min-height: 230px;
+      height: 100%;
+      margin: 0;
+    }
+
+    .athlete-profile-image-tile {
+      position: relative;
+      width: 230px;
+      min-width: 230px;
+      height: 230px;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border: 1px solid #d8e5ef;
+      border-radius: 28px;
+      background: #eaf3fb;
+      box-shadow: 0 12px 30px rgba(20,59,99,.08);
+    }
+
+    .athlete-profile-image-tile[hidden] {
       display: none !important;
     }
+
     .athlete-profile-avatar {
-      width: 124px;
-      height: 124px;
-      border-radius: 20px;
-      overflow: hidden;
+      position: absolute;
+      inset: 0;
       display: grid;
       place-items: center;
-      background: rgba(255,255,255,.14);
-      border: 2px solid rgba(255,255,255,.78);
-      color: #fff;
-      box-shadow: 0 9px 24px rgba(0,0,0,.15);
-      backdrop-filter: blur(6px);
+      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: #eaf3fb;
+      color: #0b5aa6;
+      box-shadow: none;
     }
+
     .athlete-profile-avatar img {
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
-      background: #fff;
+      background: transparent;
     }
+
     .athlete-profile-image-input {
       display: none;
     }
+
     .athlete-profile-image-actions {
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      right: 0;
+      bottom: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: .5rem;
-      flex-wrap: wrap;
+      gap: .75rem;
+      min-height: 48px;
+      padding: .8rem .85rem .7rem;
+      background: linear-gradient(to top, rgba(9,31,51,.72), rgba(9,31,51,0));
       font-size: .76rem;
     }
+
     .athlete-profile-upload,
     .athlete-profile-remove {
       padding: 0;
       border: 0;
       background: transparent;
-      color: rgba(255,255,255,.96);
+      color: #fff;
       font: inherit;
       font-weight: 800;
       text-decoration: underline;
       text-underline-offset: 3px;
       cursor: pointer;
     }
+
     .athlete-profile-upload:hover,
     .athlete-profile-remove:hover {
       color: #fff;
     }
+
     .athlete-profile-image-error {
       position: absolute;
-      top: calc(100% + .35rem);
-      right: 0;
-      width: 220px;
+      z-index: 3;
+      left: .75rem;
+      right: .75rem;
+      bottom: 3.5rem;
       margin: 0;
-      padding: .5rem .6rem;
+      padding: .52rem .62rem;
       border-radius: 10px;
       background: #fff;
       color: #b42318;
@@ -198,57 +220,85 @@ function injectStyles() {
       line-height: 1.35;
       text-align: left;
     }
+
     .athlete-profile-image-error[hidden] {
       display: none !important;
     }
+
+    @media (max-width: 820px) {
+      .athlete-home-hero-row {
+        grid-template-columns: 190px minmax(0, 1fr);
+      }
+      .athlete-profile-image-tile {
+        width: 190px;
+        min-width: 190px;
+        height: 190px;
+        border-radius: 24px;
+      }
+      .athlete-home-hero-row > .athlete-home-hero {
+        min-height: 190px;
+      }
+    }
+
     @media (max-width: 680px) {
-      .athlete-profile-image-corner {
-        position: static;
-        width: auto;
-        justify-items: start;
-        margin-top: 1rem;
+      .athlete-home-hero-row {
+        grid-template-columns: 1fr;
       }
-      .athlete-home-hero:has(.athlete-profile-image-corner) {
-        display: block;
+      .athlete-profile-image-tile {
+        width: min(230px, 100%);
+        min-width: 0;
+        height: auto;
+        justify-self: start;
       }
-      .athlete-profile-avatar {
-        width: 98px;
-        height: 98px;
-        border-radius: 18px;
-      }
-      .athlete-profile-image-actions {
-        justify-content: flex-start;
-      }
-      .athlete-profile-image-error {
-        position: static;
-        width: min(100%, 260px);
+      .athlete-home-hero-row > .athlete-home-hero {
+        min-height: 0;
       }
     }
   `;
   document.head.append(style);
 }
 
-function buildCornerProfile() {
+function ensureHeroRow() {
   const hero = document.querySelector<HTMLElement>('.athlete-home-hero');
-  if (!hero) return;
+  if (!hero) return null;
 
-  let corner = hero.querySelector<HTMLElement>('.athlete-profile-image-corner');
-  if (!corner) {
-    corner = document.createElement('div');
-    corner.className = 'athlete-profile-image-corner';
-    hero.append(corner);
+  let row = hero.parentElement?.classList.contains('athlete-home-hero-row')
+    ? hero.parentElement as HTMLElement
+    : null;
+
+  if (!row) {
+    row = document.createElement('section');
+    row.className = 'athlete-home-hero-row';
+    hero.parentElement?.insertBefore(row, hero);
+    row.append(hero);
+  }
+
+  hero.querySelector<HTMLElement>('.athlete-profile-image-corner')?.remove();
+  return { row, hero };
+}
+
+function buildProfileTile() {
+  const layout = ensureHeroRow();
+  if (!layout) return;
+  const { row, hero } = layout;
+
+  let tile = row.querySelector<HTMLElement>('.athlete-profile-image-tile');
+  if (!tile) {
+    tile = document.createElement('div');
+    tile.className = 'athlete-profile-image-tile';
+    row.insertBefore(tile, hero);
   }
 
   const dataViewOpen = Boolean(document.querySelector('.serfes-athlete-data-view'));
-  corner.hidden = dataViewOpen;
+  tile.hidden = dataViewOpen;
   if (dataViewOpen) return;
 
   const storedImage = readStoredImage();
   const meta = readMeta();
   const renderKey = `${meta?.updatedAt ?? 'empty'}:${storedImage.length}`;
-  if (corner.dataset.renderKey === renderKey) return;
-  corner.dataset.renderKey = renderKey;
-  corner.replaceChildren();
+  if (tile.dataset.renderKey === renderKey) return;
+  tile.dataset.renderKey = renderKey;
+  tile.replaceChildren();
 
   const avatar = document.createElement('div');
   avatar.className = 'athlete-profile-avatar';
@@ -286,8 +336,8 @@ function buildCornerProfile() {
   remove.hidden = !storedImage;
   remove.addEventListener('click', () => {
     clearImage();
-    corner!.dataset.renderKey = '';
-    buildCornerProfile();
+    tile!.dataset.renderKey = '';
+    buildProfileTile();
   });
 
   const error = document.createElement('p');
@@ -316,8 +366,8 @@ function buildCornerProfile() {
     try {
       const dataUrl = await createThumbnail(file);
       saveImage(dataUrl, file);
-      corner!.dataset.renderKey = '';
-      buildCornerProfile();
+      tile!.dataset.renderKey = '';
+      buildProfileTile();
     } catch (caught) {
       error.textContent = caught instanceof Error ? caught.message : 'Não foi possível salvar a imagem.';
       error.hidden = false;
@@ -325,11 +375,12 @@ function buildCornerProfile() {
   });
 
   controls.append(input, upload, remove);
-  corner.append(avatar, controls, error);
+  tile.append(avatar, controls, error);
 }
 
-function removeOldCard() {
+function removeLegacyProfileElements() {
   document.querySelector<HTMLElement>('.athlete-profile-image-card')?.remove();
+  document.querySelectorAll<HTMLElement>('.athlete-profile-image-corner').forEach((element) => element.remove());
 }
 
 let scheduled = false;
@@ -339,8 +390,8 @@ function schedule() {
   window.requestAnimationFrame(() => {
     scheduled = false;
     injectStyles();
-    removeOldCard();
-    buildCornerProfile();
+    removeLegacyProfileElements();
+    buildProfileTile();
   });
 }
 
