@@ -1,0 +1,138 @@
+name: Ajustar atualização anual e validação de e-mail
+
+on:
+  push:
+    paths:
+      - '.github/workflows/refine-annual-school-email.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar ajustes no cadastro
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('src/App.tsx')
+          text = path.read_text(encoding='utf-8')
+
+          text = text.replace(
+              "  formatPhone,\n  isValidCpf,\n  isValidEmail,\n",
+              "  formatPhone,\n  getEmailValidationError,\n  isValidCpf,\n  isValidEmail,\n",
+              1,
+          )
+
+          text = text.replace("  const [schoolAnnualConfirmation, setSchoolAnnualConfirmation] = useState(false);\n", "")
+          text = text.replace("                                setSchoolAnnualConfirmation(false);\n", "")
+          text = text.replace("                                  setSchoolAnnualConfirmation(false);\n", "")
+          text = text.replace("      setSchoolAnnualConfirmation(false);\n", "")
+          text = text.replace("      setSchoolAnnualConfirmation(false);\r\n", "")
+          text = text.replace("; setSchoolAnnualConfirmation(false); setSchoolConfirmedYear(null);", "; setSchoolConfirmedYear(null);")
+          text = text.replace("; setSchoolAnnualConfirmation(false);", ";")
+
+          old_effect = """  useEffect(() => {\n    if (schoolConfirmedYear !== null && schoolConfirmedYear !== schoolReferenceYear) {\n      setSchoolAnnualConfirmation(false);\n    }\n  }, [schoolConfirmedYear, schoolReferenceYear]);\n\n"""
+          text = text.replace(old_effect, "")
+
+          old_errors = """  const nicknameBlocked = athleteNickname.length > 0 && nicknameHasBlockedContent(athleteNickname);\n  const athleteCpfInvalid = athleteCpf.length > 0 && !isValidCpf(athleteCpf);\n  const athleteEmailInvalid = athleteEmail.length > 0 && !isValidEmail(athleteEmail);\n  const athletePhoneInvalid = athletePhone.length > 0 && !isValidPhone(athletePhone);\n  const responsibleNeedsProof = ['Tutor(a)', 'Guardião(ã)'].includes(responsibleLegalCapacity);\n  const responsibleCapacityLabel = responsibleLegalCapacity;\n  const responsibleCpfInvalid = responsibleCpf.length > 0 && !isValidCpf(responsibleCpf);\n  const responsibleEmailInvalid = responsibleEmail.length > 0 && !isValidEmail(responsibleEmail);\n  const responsiblePhoneInvalid = responsiblePhone.length > 0 && !isValidPhone(responsiblePhone);\n"""
+          new_errors = """  const loginEmailError = email.length > 0 ? getEmailValidationError(email) : null;\n  const nicknameBlocked = athleteNickname.length > 0 && nicknameHasBlockedContent(athleteNickname);\n  const athleteCpfInvalid = athleteCpf.length > 0 && !isValidCpf(athleteCpf);\n  const athleteEmailError = athleteEmail.length > 0 ? getEmailValidationError(athleteEmail) : null;\n  const athleteEmailInvalid = athleteEmailError !== null;\n  const athletePhoneInvalid = athletePhone.length > 0 && !isValidPhone(athletePhone);\n  const responsibleNeedsProof = ['Tutor(a)', 'Guardião(ã)'].includes(responsibleLegalCapacity);\n  const responsibleCapacityLabel = responsibleLegalCapacity;\n  const responsibleCpfInvalid = responsibleCpf.length > 0 && !isValidCpf(responsibleCpf);\n  const responsibleEmailError = responsibleEmail.length > 0 ? getEmailValidationError(responsibleEmail) : null;\n  const responsibleEmailInvalid = responsibleEmailError !== null;\n  const responsiblePhoneInvalid = responsiblePhone.length > 0 && !isValidPhone(responsiblePhone);\n"""
+          if old_errors not in text:
+              raise SystemExit('Bloco de validações não localizado.')
+          text = text.replace(old_errors, new_errors, 1)
+
+          old_login = """  function handleLogin(event: FormEvent<HTMLFormElement>) {\n    event.preventDefault();\n    setAthleteSaved(false);\n    setRegistrations({});\n"""
+          new_login = """  function handleLogin(event: FormEvent<HTMLFormElement>) {\n    event.preventDefault();\n    if (!isValidEmail(email)) return;\n    setRegistrations({});\n"""
+          if old_login not in text:
+              raise SystemExit('Função de login não localizada.')
+          text = text.replace(old_login, new_login, 1)
+
+          text = text.replace(
+              "      (!higherCourseRequired || higherEducationCourse.trim().length > 0) &&\n      schoolAnnualConfirmation\n",
+              "      (!higherCourseRequired || higherEducationCourse.trim().length > 0)\n",
+              1,
+          )
+
+          old_login_field = """            <label>E-mail<input type=\"email\" placeholder=\"usuario@serfes.demo\" value={email} onChange={(event) => setEmail(event.target.value)} required /></label>\n"""
+          new_login_field = """            <label>E-mail\n              <input type=\"email\" className={loginEmailError ? 'invalid' : ''} placeholder=\"usuario@example.com\" value={email} onChange={(event) => setEmail(event.target.value)} required />\n              {loginEmailError && <small className=\"field-error\">{loginEmailError}</small>}\n            </label>\n"""
+          if old_login_field not in text:
+              raise SystemExit('Campo de e-mail do login não localizado.')
+          text = text.replace(old_login_field, new_login_field, 1)
+
+          text = text.replace(
+              'placeholder="atleta@exemplo.demo"',
+              'placeholder="atleta@example.com"',
+              1,
+          )
+          text = text.replace(
+              "{athleteEmailInvalid && <small className=\"field-error\">Informe um endereço de e-mail válido.</small>}",
+              "{athleteEmailError && <small className=\"field-error\">{athleteEmailError}</small>}",
+              1,
+          )
+          text = text.replace(
+              'placeholder="email@exemplo.demo"',
+              'placeholder="responsavel@example.com"',
+              1,
+          )
+          text = text.replace(
+              "{responsibleEmailInvalid && <small className=\"field-error\">Informe um endereço de e-mail válido.</small>}",
+              "{responsibleEmailError && <small className=\"field-error\">{responsibleEmailError}</small>}",
+              1,
+          )
+
+          old_annual_block = """                          {enrollmentStatus === 'Sim' && (\n                            <div className=\"annual-school-confirmation\">\n                              <div className=\"annual-school-confirmation-head\">\n                                <strong>Confirmação anual do vínculo escolar</strong>\n                                <span>Ano letivo {schoolReferenceYear}</span>\n                              </div>\n                              <label className=\"annual-school-checkbox\">\n                                <input\n                                  required\n                                  type=\"checkbox\"\n                                  checked={schoolAnnualConfirmation}\n                                  onChange={(e) => setSchoolAnnualConfirmation(e.target.checked)}\n                                />\n                                <span>Confirmo que, no ano letivo de {schoolReferenceYear}, a instituição e o ano escolar/curso informados acima correspondem à minha matrícula atual.</span>\n                              </label>\n                              <small className=\"field-help\">Esta confirmação será solicitada novamente no início de cada ano. Se houver mudança de escola, instituição, ano escolar ou curso, será necessário atualizar e salvar o cadastro.</small>\n                              {schoolConfirmedYear === schoolReferenceYear && <small className=\"annual-school-confirmed\">Vínculo confirmado para {schoolReferenceYear}.</small>}\n                            </div>\n                          )}\n"""
+          if old_annual_block not in text:
+              raise SystemExit('Quadro de confirmação anual não localizado.')
+          text = text.replace(old_annual_block, "", 1)
+
+          text = text.replace(
+              'Para manter seu cadastro escolar válido no novo ano letivo, confirme novamente a instituição e o ano escolar/curso atuais.',
+              'Um novo ano letivo começou. Revise e atualize os dados do seu vínculo escolar, incluindo instituição e ano escolar ou curso.',
+              1,
+          )
+          text = text.replace(
+              "{athleteInstitution ? (schoolConfirmationCurrent ? `Confirmado ${schoolReferenceYear}` : 'Reconfirmação pendente') : '—'}",
+              "{athleteInstitution ? (schoolConfirmationCurrent ? `Atualizado ${schoolReferenceYear}` : 'Atualização pendente') : '—'}",
+              1,
+          )
+          text = text.replace(
+              'Antes da inscrição, confirme novamente seu vínculo escolar referente ao ano letivo de ${schoolReferenceYear}.',
+              'Antes da inscrição, atualize seu cadastro de vínculo escolar para o ano letivo de ${schoolReferenceYear}.',
+              1,
+          )
+
+          text = text.replace(
+              'Quando disponíveis na base oficial, o grau, a modalidade e o código e-MEC identificam cada oferta.',
+              'O nome e, quando aplicável, o grau acadêmico são apresentados ao aluno; os demais identificadores oficiais permanecem apenas no catálogo interno do SERFES.',
+              1,
+          )
+
+          if 'schoolAnnualConfirmation' in text or 'setSchoolAnnualConfirmation' in text:
+              raise SystemExit('Ainda existem referências à confirmação anual antiga.')
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Validar aplicação
+        run: |
+          npm install
+          npm run build
+
+      - name: Publicar ajustes
+        run: |
+          if git diff --quiet -- src/App.tsx; then
+            echo "Ajustes já aplicados."
+            exit 0
+          fi
+          git config user.name "SERFES UI Update"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/App.tsx
+          git commit -m "Ajustar atualização anual e validação de e-mails"
+          git pull --rebase origin main
+          git push origin main
