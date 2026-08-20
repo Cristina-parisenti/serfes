@@ -1,9 +1,3 @@
-function buttonWithText(text: string) {
-  return Array.from(document.querySelectorAll<HTMLButtonElement>('button')).find((button) =>
-    button.textContent?.replace(/\s+/g, ' ').trim().includes(text),
-  );
-}
-
 function replaceButtonText(button: HTMLButtonElement, text: string) {
   const svg = button.querySelector('svg');
   Array.from(button.childNodes).forEach((node) => {
@@ -19,8 +13,14 @@ function refineAthleteHome() {
     const primaryCard = actions.querySelector<HTMLElement>('.athlete-home-primary-card');
     const primaryHeading = primaryCard?.querySelector<HTMLHeadingElement>('h4');
     const primaryButton = primaryCard?.querySelector<HTMLButtonElement>('.primary-button');
-    const saved = primaryButton?.textContent?.includes('Atualizar meu cadastro') ?? false;
+    const saved =
+      actions.dataset.refinementState === 'saved' ||
+      primaryHeading?.textContent?.trim() === 'Meu cadastro' ||
+      primaryHeading?.textContent?.trim() === 'Dados cadastrais' ||
+      primaryButton?.textContent?.includes('Atualizar meu cadastro') === true ||
+      primaryButton?.textContent?.includes('Atualizar cadastro') === true;
 
+    if (saved) actions.dataset.refinementState = 'saved';
     actions.classList.toggle('athlete-home-saved-menu', saved);
 
     if (!saved) {
