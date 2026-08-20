@@ -80,124 +80,184 @@ async function createThumbnail(file: File) {
   return canvas.toDataURL('image/jpeg', 0.88);
 }
 
+function createUserIcon() {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('width', '30');
+  svg.setAttribute('height', '30');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
+
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttribute('cx', '12');
+  circle.setAttribute('cy', '8');
+  circle.setAttribute('r', '5');
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', 'M20 21a8 8 0 0 0-16 0');
+
+  svg.append(circle, path);
+  return svg;
+}
+
 function injectStyles() {
   if (document.getElementById('serfes-profile-image-styles')) return;
+
   const style = document.createElement('style');
   style.id = 'serfes-profile-image-styles';
   style.textContent = `
-    .athlete-profile-image-card {
-      display: grid;
-      grid-template-columns: auto minmax(0,1fr) auto;
-      align-items: center;
-      gap: 1rem;
-      margin: 1rem 0;
-      padding: 1rem 1.1rem;
-      border: 1px solid #d7e5ef;
-      border-radius: 20px;
-      background: #fff;
-      box-shadow: 0 7px 20px rgba(20,59,99,.045);
+    .athlete-home-hero {
+      position: relative;
     }
-    .athlete-profile-image-card[hidden] { display: none !important; }
+    .athlete-home-hero:has(.athlete-profile-image-corner) .athlete-home-hero-symbol {
+      display: none !important;
+    }
+    .athlete-profile-image-corner {
+      position: absolute;
+      z-index: 3;
+      top: 1.35rem;
+      right: 1.45rem;
+      display: grid;
+      justify-items: center;
+      gap: .42rem;
+      width: 104px;
+      color: #fff;
+    }
+    .athlete-profile-image-corner[hidden] {
+      display: none !important;
+    }
     .athlete-profile-avatar {
       width: 76px;
       height: 76px;
-      border-radius: 20px;
+      border-radius: 50%;
       overflow: hidden;
       display: grid;
       place-items: center;
-      background: #eef5fb;
-      color: #0b5aa6;
-      font-size: 2rem;
-      flex: 0 0 auto;
+      background: rgba(255,255,255,.14);
+      border: 2px solid rgba(255,255,255,.72);
+      color: #fff;
+      box-shadow: 0 7px 20px rgba(0,0,0,.13);
+      backdrop-filter: blur(6px);
     }
     .athlete-profile-avatar img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
       display: block;
+      object-fit: cover;
     }
-    .athlete-profile-image-copy { display: grid; gap: .28rem; }
-    .athlete-profile-image-copy strong { color: #143b63; font-size: 1rem; }
-    .athlete-profile-image-copy p { margin: 0; color: #61758d; font-size: .84rem; line-height: 1.45; }
-    .athlete-profile-image-rule { color: #8a5a00 !important; font-size: .78rem !important; }
-    .athlete-profile-image-status { color: #167b50 !important; font-size: .78rem !important; font-weight: 750; }
-    .athlete-profile-image-error { color: #b42318 !important; font-size: .78rem !important; font-weight: 750; }
-    .athlete-profile-image-actions { display: flex; align-items: center; gap: .55rem; flex-wrap: wrap; justify-content: flex-end; }
-    .athlete-profile-image-input { display: none; }
+    .athlete-profile-image-input {
+      display: none;
+    }
+    .athlete-profile-image-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .45rem;
+      flex-wrap: wrap;
+      font-size: .72rem;
+    }
     .athlete-profile-upload,
     .athlete-profile-remove {
-      min-height: 40px;
-      padding: .62rem .8rem;
-      border-radius: 12px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: rgba(255,255,255,.96);
+      font: inherit;
       font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
       cursor: pointer;
     }
-    .athlete-profile-upload { border: 0; background: #0b5aa6; color: #fff; }
-    .athlete-profile-remove { border: 1px solid #cad9e5; background: #fff; color: #526b82; }
-    @media (max-width: 760px) {
-      .athlete-profile-image-card { grid-template-columns: auto 1fr; align-items: start; }
-      .athlete-profile-image-actions { grid-column: 1 / -1; justify-content: stretch; }
-      .athlete-profile-upload,
-      .athlete-profile-remove { flex: 1 1 160px; }
+    .athlete-profile-upload:hover,
+    .athlete-profile-remove:hover {
+      color: #fff;
+    }
+    .athlete-profile-image-error {
+      position: absolute;
+      top: calc(100% + .35rem);
+      right: 0;
+      width: 220px;
+      margin: 0;
+      padding: .5rem .6rem;
+      border-radius: 10px;
+      background: #fff;
+      color: #b42318;
+      box-shadow: 0 8px 22px rgba(20,59,99,.14);
+      font-size: .72rem;
+      line-height: 1.35;
+      text-align: left;
+    }
+    .athlete-profile-image-error[hidden] {
+      display: none !important;
+    }
+    @media (max-width: 680px) {
+      .athlete-profile-image-corner {
+        position: static;
+        width: auto;
+        justify-items: start;
+        margin-top: 1rem;
+      }
+      .athlete-home-hero:has(.athlete-profile-image-corner) {
+        display: block;
+      }
+      .athlete-profile-avatar {
+        width: 64px;
+        height: 64px;
+      }
+      .athlete-profile-image-actions {
+        justify-content: flex-start;
+      }
+      .athlete-profile-image-error {
+        position: static;
+        width: min(100%, 260px);
+      }
     }
   `;
   document.head.append(style);
 }
 
-function buildCard() {
+function buildCornerProfile() {
   const hero = document.querySelector<HTMLElement>('.athlete-home-hero');
-  const actions = document.querySelector<HTMLElement>('.athlete-home-actions');
-  if (!hero || !actions) return;
+  if (!hero) return;
 
-  let card = document.querySelector<HTMLElement>('.athlete-profile-image-card');
-  if (!card) {
-    card = document.createElement('section');
-    card.className = 'athlete-profile-image-card';
-    hero.after(card);
+  let corner = hero.querySelector<HTMLElement>('.athlete-profile-image-corner');
+  if (!corner) {
+    corner = document.createElement('div');
+    corner.className = 'athlete-profile-image-corner';
+    hero.append(corner);
   }
 
   const dataViewOpen = Boolean(document.querySelector('.serfes-athlete-data-view'));
-  card.hidden = dataViewOpen;
+  corner.hidden = dataViewOpen;
   if (dataViewOpen) return;
 
   const storedImage = readStoredImage();
   const meta = readMeta();
   const renderKey = `${meta?.updatedAt ?? 'empty'}:${storedImage.length}`;
-  if (card.dataset.renderKey === renderKey) return;
-  card.dataset.renderKey = renderKey;
-  card.replaceChildren();
+  if (corner.dataset.renderKey === renderKey) return;
+  corner.dataset.renderKey = renderKey;
+  corner.replaceChildren();
 
   const avatar = document.createElement('div');
   avatar.className = 'athlete-profile-avatar';
+  avatar.title = 'Imagem de identificação do perfil';
+
   if (storedImage) {
     const image = document.createElement('img');
     image.src = storedImage;
     image.alt = 'Imagem de identificação do perfil';
     avatar.append(image);
   } else {
-    avatar.textContent = '👤';
+    avatar.append(createUserIcon());
     avatar.setAttribute('aria-label', 'Sem imagem de identificação');
   }
 
-  const copy = document.createElement('div');
-  copy.className = 'athlete-profile-image-copy';
-  const title = document.createElement('strong');
-  title.textContent = 'Imagem de identificação';
-  const description = document.createElement('p');
-  description.textContent = 'Inclua uma foto sua ou outra imagem para facilitar a identificação do perfil no SERFES.';
-  const rule = document.createElement('p');
-  rule.className = 'athlete-profile-image-rule';
-  rule.textContent = 'Não são permitidas imagens com conteúdo ofensivo, discriminatório, violento ou sexualmente explícito.';
-  const status = document.createElement('p');
-  status.className = 'athlete-profile-image-status';
-  status.textContent = meta ? `Imagem cadastrada: ${meta.name}` : 'Nenhuma imagem cadastrada.';
-  const error = document.createElement('p');
-  error.className = 'athlete-profile-image-error';
-  error.hidden = true;
-  copy.append(title, description, rule, status, error);
-
   const controls = document.createElement('div');
   controls.className = 'athlete-profile-image-actions';
+
   const input = document.createElement('input');
   input.type = 'file';
   input.className = 'athlete-profile-image-input';
@@ -207,7 +267,8 @@ function buildCard() {
   const upload = document.createElement('button');
   upload.type = 'button';
   upload.className = 'athlete-profile-upload';
-  upload.textContent = storedImage ? 'Trocar imagem' : 'Escolher imagem';
+  upload.textContent = storedImage ? 'Trocar' : 'Adicionar imagem';
+  upload.title = 'Não são permitidas imagens com conteúdo ofensivo, discriminatório, violento ou sexualmente explícito.';
   upload.addEventListener('click', () => input.click());
 
   const remove = document.createElement('button');
@@ -217,9 +278,13 @@ function buildCard() {
   remove.hidden = !storedImage;
   remove.addEventListener('click', () => {
     clearImage();
-    card!.dataset.renderKey = '';
-    buildCard();
+    corner!.dataset.renderKey = '';
+    buildCornerProfile();
   });
+
+  const error = document.createElement('p');
+  error.className = 'athlete-profile-image-error';
+  error.hidden = true;
 
   input.addEventListener('change', async () => {
     const file = input.files?.[0];
@@ -243,8 +308,8 @@ function buildCard() {
     try {
       const dataUrl = await createThumbnail(file);
       saveImage(dataUrl, file);
-      card!.dataset.renderKey = '';
-      buildCard();
+      corner!.dataset.renderKey = '';
+      buildCornerProfile();
     } catch (caught) {
       error.textContent = caught instanceof Error ? caught.message : 'Não foi possível salvar a imagem.';
       error.hidden = false;
@@ -252,7 +317,11 @@ function buildCard() {
   });
 
   controls.append(input, upload, remove);
-  card.append(avatar, copy, controls);
+  corner.append(avatar, controls, error);
+}
+
+function removeOldCard() {
+  document.querySelector<HTMLElement>('.athlete-profile-image-card')?.remove();
 }
 
 let scheduled = false;
@@ -262,7 +331,8 @@ function schedule() {
   window.requestAnimationFrame(() => {
     scheduled = false;
     injectStyles();
-    buildCard();
+    removeOldCard();
+    buildCornerProfile();
   });
 }
 
