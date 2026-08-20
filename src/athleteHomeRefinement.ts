@@ -1,42 +1,24 @@
-function replaceButtonText(button: HTMLButtonElement, text: string) {
-  const svg = button.querySelector('svg');
-  Array.from(button.childNodes).forEach((node) => {
-    if (node.nodeType === Node.TEXT_NODE) node.remove();
-  });
-  button.append(document.createTextNode(`${svg ? ' ' : ''}${text}`));
-  button.setAttribute('aria-label', text);
-}
-
 function refineAthleteHome() {
   const actions = document.querySelector<HTMLElement>('.athlete-home-actions');
   if (actions) {
     const primaryCard = actions.querySelector<HTMLElement>('.athlete-home-primary-card');
     const primaryHeading = primaryCard?.querySelector<HTMLHeadingElement>('h4');
     const primaryButton = primaryCard?.querySelector<HTMLButtonElement>('.primary-button');
+    const kicker = primaryCard?.querySelector<HTMLElement>('.athlete-home-card-kicker');
     const saved =
-      actions.dataset.refinementState === 'saved' ||
       primaryHeading?.textContent?.trim() === 'Meu cadastro' ||
-      primaryHeading?.textContent?.trim() === 'Dados cadastrais' ||
-      primaryButton?.textContent?.includes('Atualizar meu cadastro') === true ||
-      primaryButton?.textContent?.includes('Atualizar cadastro') === true;
+      primaryButton?.textContent?.includes('Atualizar meu cadastro') === true;
 
-    if (saved) actions.dataset.refinementState = 'saved';
     actions.classList.toggle('athlete-home-saved-menu', saved);
 
-    if (!saved) {
-      if (primaryHeading?.textContent?.trim() === 'Preencher meu cadastro') {
-        primaryHeading.remove();
-      }
-      if (primaryButton && primaryButton.textContent?.includes('Preencher meu cadastro')) {
-        replaceButtonText(primaryButton, 'Iniciar cadastro');
-      }
-    } else {
-      const kicker = primaryCard?.querySelector<HTMLElement>('.athlete-home-card-kicker');
-      if (kicker) kicker.remove();
-      if (primaryHeading) primaryHeading.textContent = 'Dados cadastrais';
-      if (primaryButton && primaryButton.textContent?.includes('Atualizar meu cadastro')) {
-        replaceButtonText(primaryButton, 'Atualizar cadastro');
-      }
+    if (primaryHeading) {
+      primaryHeading.hidden = !saved && primaryHeading.textContent?.trim() === 'Preencher meu cadastro';
+    }
+    if (kicker) kicker.hidden = saved;
+    if (primaryButton) {
+      primaryButton.classList.toggle('athlete-start-button', !saved);
+      if (!saved) primaryButton.setAttribute('aria-label', 'Iniciar cadastro');
+      else primaryButton.removeAttribute('aria-label');
     }
   }
 
@@ -77,5 +59,5 @@ function scheduleRefinement() {
 if (typeof window !== 'undefined') {
   window.addEventListener('DOMContentLoaded', scheduleRefinement, { once: true });
   const observer = new MutationObserver(scheduleRefinement);
-  observer.observe(document.documentElement, { childList: true, subtree: true });
+  observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
 }
