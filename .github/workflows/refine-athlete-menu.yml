@@ -184,3 +184,5 @@ jobs:
           git commit -m "Refinar menu principal do atleta"
           git pull --rebase origin main
           git push origin main
+
+# retrigger
