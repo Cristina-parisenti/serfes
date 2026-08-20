@@ -12,6 +12,7 @@ import './removeDocumentsShortcut';
 import './athleteProfileImage';
 import './profileImageGuidance';
 import './registrationCardPresentationFix';
+import './profileImageProportionFix';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
