@@ -1,14 +1,14 @@
 export {};
 
-const COMPLETED_SESSION_KEY = 'serfes-athlete-registration-completed-ui';
+const COMPLETED_REGISTRATION_KEY = 'serfes-athlete-registration-completed';
 
 function text(value: string | null | undefined) {
   return (value ?? '').replace(/\s+/g, ' ').trim();
 }
 
-function completedThisSession() {
+function completedRegistration() {
   try {
-    return sessionStorage.getItem(COMPLETED_SESSION_KEY) === 'true';
+    return localStorage.getItem(COMPLETED_REGISTRATION_KEY) === 'true';
   } catch {
     return false;
   }
@@ -16,7 +16,7 @@ function completedThisSession() {
 
 function markCompleted() {
   try {
-    sessionStorage.setItem(COMPLETED_SESSION_KEY, 'true');
+    localStorage.setItem(COMPLETED_REGISTRATION_KEY, 'true');
   } catch {
     // Sem ação.
   }
@@ -138,9 +138,9 @@ function applyCardState() {
   const card = document.querySelector<HTMLElement>('.athlete-home-primary-card');
   if (!card) return;
 
-  if (!completedThisSession() && registrationActuallyCompleted()) markCompleted();
+  if (!completedRegistration() && registrationActuallyCompleted()) markCompleted();
 
-  if (completedThisSession()) prepareSavedCard(card);
+  if (completedRegistration()) prepareSavedCard(card);
   else showStartCard(card);
 }
 
@@ -211,6 +211,9 @@ if (typeof window !== 'undefined') {
 
   window.addEventListener('DOMContentLoaded', schedule, { once: true });
   window.addEventListener('focus', schedule);
+  window.addEventListener('storage', (event) => {
+    if (event.key === COMPLETED_REGISTRATION_KEY) schedule();
+  });
 
   const observer = new MutationObserver(schedule);
   observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
