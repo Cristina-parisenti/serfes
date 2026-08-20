@@ -72,19 +72,19 @@ async function createThumbnail(file: File) {
   const sourceX = Math.max(0, (image.naturalWidth - size) / 2);
   const sourceY = Math.max(0, (image.naturalHeight - size) / 2);
   const canvas = document.createElement('canvas');
-  canvas.width = 360;
-  canvas.height = 360;
+  canvas.width = 420;
+  canvas.height = 420;
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Não foi possível preparar a imagem.');
-  context.drawImage(image, sourceX, sourceY, size, size, 0, 0, 360, 360);
+  context.drawImage(image, sourceX, sourceY, size, size, 0, 0, 420, 420);
   return canvas.toDataURL('image/jpeg', 0.88);
 }
 
 function createUserIcon() {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 24 24');
-  svg.setAttribute('width', '30');
-  svg.setAttribute('height', '30');
+  svg.setAttribute('width', '38');
+  svg.setAttribute('height', '38');
   svg.setAttribute('fill', 'none');
   svg.setAttribute('stroke', 'currentColor');
   svg.setAttribute('stroke-width', '2');
@@ -119,27 +119,27 @@ function injectStyles() {
       position: absolute;
       z-index: 3;
       top: 1.35rem;
-      right: 1.45rem;
+      right: 1.65rem;
       display: grid;
       justify-items: center;
-      gap: .42rem;
-      width: 104px;
+      gap: .5rem;
+      width: 138px;
       color: #fff;
     }
     .athlete-profile-image-corner[hidden] {
       display: none !important;
     }
     .athlete-profile-avatar {
-      width: 76px;
-      height: 76px;
+      width: 108px;
+      height: 108px;
       border-radius: 50%;
       overflow: hidden;
       display: grid;
       place-items: center;
       background: rgba(255,255,255,.14);
-      border: 2px solid rgba(255,255,255,.72);
+      border: 2px solid rgba(255,255,255,.78);
       color: #fff;
-      box-shadow: 0 7px 20px rgba(0,0,0,.13);
+      box-shadow: 0 9px 24px rgba(0,0,0,.15);
       backdrop-filter: blur(6px);
     }
     .athlete-profile-avatar img {
@@ -155,9 +155,9 @@ function injectStyles() {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: .45rem;
+      gap: .5rem;
       flex-wrap: wrap;
-      font-size: .72rem;
+      font-size: .76rem;
     }
     .athlete-profile-upload,
     .athlete-profile-remove {
@@ -204,8 +204,8 @@ function injectStyles() {
         display: block;
       }
       .athlete-profile-avatar {
-        width: 64px;
-        height: 64px;
+        width: 88px;
+        height: 88px;
       }
       .athlete-profile-image-actions {
         justify-content: flex-start;
@@ -268,7 +268,6 @@ function buildCornerProfile() {
   upload.type = 'button';
   upload.className = 'athlete-profile-upload';
   upload.textContent = storedImage ? 'Trocar' : 'Adicionar imagem';
-  upload.title = 'Não são permitidas imagens com conteúdo ofensivo, discriminatório, violento ou sexualmente explícito.';
   upload.addEventListener('click', () => input.click());
 
   const remove = document.createElement('button');
