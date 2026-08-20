@@ -1,0 +1,186 @@
+name: Refinar menu inicial do atleta
+
+on:
+  push:
+    paths:
+      - '.github/workflows/refine-athlete-menu.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Ajustar menu inicial e retorno das competições
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          app = Path('src/App.tsx')
+          text = app.read_text(encoding='utf-8')
+
+          old = '''                <section className="athlete-home-actions" aria-label="Acessos rápidos do atleta">
+                  <article className="athlete-home-primary-card">
+                    <div className="athlete-home-card-icon"><UserRound size={24} /></div>
+                    <div>
+                      <span className="athlete-home-card-kicker">Comece por aqui</span>
+                      <h4>{athleteSaved ? 'Meu cadastro' : 'Preencher meu cadastro'}</h4>
+                      <p>{athleteSaved ? 'Revise ou atualize seus dados sempre que necessário.' : 'Informe seus dados pessoais, esportivos e de vínculo escolar.'}</p>
+                    </div>
+                    <button type="button" className="primary-button" onClick={() => setDashboardSection('athleteForm')}>
+                      <UserRound size={17} /> {athleteSaved ? 'Atualizar meu cadastro' : 'Preencher meu cadastro'}
+                    </button>
+                  </article>
+
+                  <div className="athlete-home-shortcuts">
+                    <button type="button" className="athlete-home-shortcut">
+                      <span className="athlete-shortcut-icon school"><School size={20} /></span>
+                      <span><strong>Acompanhar validação escolar</strong><small>Consulte a situação do vínculo informado.</small></span>
+                      <ChevronRight size={18} />
+                    </button>
+                    <button type="button" className="athlete-home-shortcut">
+                      <span className="athlete-shortcut-icon docs"><FileText size={20} /></span>
+                      <span><strong>Consultar meus documentos</strong><small>Acompanhe os documentos vinculados ao cadastro.</small></span>
+                      <ChevronRight size={18} />
+                    </button>
+                    <button type="button" className="athlete-home-shortcut" onClick={() => setDashboardSection('athleteCompetitions')}>
+                      <span className="athlete-shortcut-icon competition"><Trophy size={20} /></span>
+                      <span><strong>Consultar competições e solicitar inscrição</strong><small>Veja oportunidades disponíveis e acompanhe suas solicitações.</small></span>
+                      <ChevronRight size={18} />
+                    </button>
+                  </div>
+                </section>
+'''
+
+          new = '''                <section className={`athlete-home-actions ${athleteSaved ? 'is-complete' : ''}`} aria-label="Acessos rápidos do atleta">
+                  {!athleteSaved ? (
+                    <>
+                      <article className="athlete-home-primary-card">
+                        <div className="athlete-home-card-icon"><UserRound size={24} /></div>
+                        <div>
+                          <span className="athlete-home-card-kicker">Comece por aqui</span>
+                          <p>Informe seus dados pessoais, esportivos e de vínculo escolar.</p>
+                        </div>
+                        <button type="button" className="primary-button" onClick={() => setDashboardSection('athleteForm')}>
+                          <UserRound size={17} /> Iniciar cadastro
+                        </button>
+                      </article>
+
+                      <div className="athlete-home-shortcuts">
+                        <button type="button" className="athlete-home-shortcut">
+                          <span className="athlete-shortcut-icon school"><School size={20} /></span>
+                          <span><strong>Acompanhar validação escolar</strong><small>Consulte a situação do vínculo informado.</small></span>
+                          <ChevronRight size={18} />
+                        </button>
+                        <button type="button" className="athlete-home-shortcut">
+                          <span className="athlete-shortcut-icon docs"><FileText size={20} /></span>
+                          <span><strong>Consultar meus documentos</strong><small>Acompanhe os documentos vinculados ao cadastro.</small></span>
+                          <ChevronRight size={18} />
+                        </button>
+                        <button type="button" className="athlete-home-shortcut" onClick={() => setDashboardSection('athleteCompetitions')}>
+                          <span className="athlete-shortcut-icon competition"><Trophy size={20} /></span>
+                          <span><strong>Consultar competições e solicitar inscrição</strong><small>Veja oportunidades disponíveis e acompanhe suas solicitações.</small></span>
+                          <ChevronRight size={18} />
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="athlete-home-complete-grid">
+                      <button type="button" className="athlete-home-shortcut" onClick={() => setDashboardSection('athleteForm')}>
+                        <span className="athlete-shortcut-icon profile"><UserRound size={20} /></span>
+                        <span><strong>Atualizar meu cadastro</strong><small>Revise ou altere seus dados quando necessário.</small></span>
+                        <ChevronRight size={18} />
+                      </button>
+                      <button type="button" className="athlete-home-shortcut">
+                        <span className="athlete-shortcut-icon school"><School size={20} /></span>
+                        <span><strong>Acompanhar validação escolar</strong><small>Consulte a situação do vínculo informado.</small></span>
+                        <ChevronRight size={18} />
+                      </button>
+                      <button type="button" className="athlete-home-shortcut">
+                        <span className="athlete-shortcut-icon docs"><FileText size={20} /></span>
+                        <span><strong>Consultar meus documentos</strong><small>Acompanhe os documentos vinculados ao cadastro.</small></span>
+                        <ChevronRight size={18} />
+                      </button>
+                      <button type="button" className="athlete-home-shortcut" onClick={() => setDashboardSection('athleteCompetitions')}>
+                        <span className="athlete-shortcut-icon competition"><Trophy size={20} /></span>
+                        <span><strong>Consultar competições e solicitar inscrição</strong><small>Veja oportunidades disponíveis e acompanhe suas solicitações.</small></span>
+                        <ChevronRight size={18} />
+                      </button>
+                    </div>
+                  )}
+                </section>
+'''
+
+          if old not in text:
+              raise SystemExit('Bloco de acessos rápidos não localizado.')
+          text = text.replace(old, new, 1)
+
+          old_comp = '''                <section className="section-toolbar">
+                  <div>
+                    <p className="eyebrow">Participação esportiva</p>
+                    <h3>Minhas competições</h3>
+                    <p className="muted">Consulte competições disponíveis e acompanhe a situação das suas solicitações de inscrição.</p>
+                  </div>
+                </section>
+'''
+          new_comp = '''                <section className="section-toolbar form-heading">
+                  <div>
+                    <button type="button" className="back-link" onClick={() => setDashboardSection('athleteHome')}><ArrowLeft size={16} /> Voltar ao menu principal</button>
+                    <p className="eyebrow">Participação esportiva</p>
+                    <h3>Minhas competições</h3>
+                    <p className="muted">Consulte competições disponíveis e acompanhe a situação das suas solicitações de inscrição.</p>
+                  </div>
+                </section>
+'''
+          if old_comp not in text:
+              raise SystemExit('Cabeçalho de competições não localizado.')
+          text = text.replace(old_comp, new_comp, 1)
+
+          app.write_text(text, encoding='utf-8')
+
+          css = Path('src/athleteHome.css')
+          styles = css.read_text(encoding='utf-8')
+          anchor = '''.athlete-home-shortcuts { display: grid; gap: .75rem; }
+'''
+          addition = '''.athlete-home-shortcuts { display: grid; gap: .75rem; }
+.athlete-home-actions.is-complete { display: block; }
+.athlete-home-complete-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .85rem; }
+.athlete-home-complete-grid .athlete-home-shortcut { min-height: 102px; }
+.athlete-shortcut-icon.profile { color: #0b5aa6; background: #eaf3fb; }
+'''
+          if 'athlete-home-complete-grid' not in styles:
+              if anchor not in styles:
+                  raise SystemExit('Âncora de estilos não localizada.')
+              styles = styles.replace(anchor, addition, 1)
+
+          mobile_anchor = '''@media (max-width: 680px) {
+'''
+          mobile_add = '''@media (max-width: 680px) {
+  .athlete-home-complete-grid { grid-template-columns: 1fr; }
+'''
+          if '.athlete-home-complete-grid { grid-template-columns: 1fr; }' not in styles:
+              if mobile_anchor not in styles:
+                  raise SystemExit('Bloco responsivo não localizado.')
+              styles = styles.replace(mobile_anchor, mobile_add, 1)
+
+          css.write_text(styles, encoding='utf-8')
+          PY
+
+      - name: Validar aplicação
+        run: |
+          npm install
+          npm run build
+
+      - name: Publicar ajustes
+        run: |
+          git config user.name "SERFES UI Update"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/App.tsx src/athleteHome.css
+          git commit -m "Refinar menu principal do atleta"
+          git pull --rebase origin main
+          git push origin main
