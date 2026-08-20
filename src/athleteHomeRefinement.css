@@ -3,6 +3,21 @@
   gap: .45rem;
 }
 
+.athlete-start-button {
+  font-size: 0;
+}
+
+.athlete-start-button::after {
+  content: 'Iniciar cadastro';
+  font-size: .92rem;
+  line-height: 1;
+}
+
+.athlete-start-button svg {
+  width: 17px;
+  height: 17px;
+}
+
 .athlete-home-saved-menu {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
