@@ -232,6 +232,7 @@ export function App() {
   const athleteAge = calculateAge(athleteBirthDate, ageReferenceDate);
   const athleteTooYoung = athleteAge !== null && athleteAge < 12;
   const minorStatus = athleteAge === null ? null : athleteAge < 18;
+  const minorWithoutSchoolEnrollment = minorStatus === true && enrollmentStatus !== 'Sim';
   const schoolReferenceYear = ageReferenceDate.getFullYear();
   const schoolConfirmationCurrent = enrollmentStatus !== 'Sim' || schoolConfirmedYear === schoolReferenceYear;
   const selectedCompetition = competitions.find((competition) => competition.id === selectedCompetitionId) ?? null;
@@ -422,14 +423,14 @@ export function App() {
 
     const schoolYearRequired = schoolLevel === 'Ensino fundamental' || schoolLevel === 'Ensino médio';
     const higherCourseRequired = schoolLevel === 'Ensino superior';
-    const schoolFieldsValid = enrollmentStatus !== 'Sim' || (
+    const schoolFieldsValid = !minorWithoutSchoolEnrollment && (enrollmentStatus !== 'Sim' || (
       schoolMunicipality.length > 0 &&
       schoolNetwork.length > 0 &&
       athleteInstitution.trim().length > 0 &&
       schoolLevel.length > 0 &&
       (!schoolYearRequired || schoolYear.length > 0) &&
       (!higherCourseRequired || higherEducationCourse.trim().length > 0)
-    );
+    ));
 
     const responsibleFieldsValid = minorStatus !== true || (
       responsibleName.trim().length > 0 &&
@@ -460,6 +461,11 @@ export function App() {
 
     if (!athleteSaved) {
       setRegistrationMessage('Antes da inscrição em uma competição, complete e salve o seu cadastro.');
+      return;
+    }
+
+    if (minorWithoutSchoolEnrollment) {
+      setRegistrationMessage('Inscrição indisponível: para atletas menores de 18 anos, o SERFES exige vínculo com instituição de ensino.');
       return;
     }
 
@@ -827,7 +833,7 @@ export function App() {
                 </section>
 
                 <form className="athlete-form" onSubmit={handleAthleteSubmit}>
-                  {formAttempted && (athleteTooYoung || gameAgeBlocked || nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && (
+                  {formAttempted && (athleteTooYoung || minorWithoutSchoolEnrollment || gameAgeBlocked || nicknameBlocked || athleteCpfInvalid || athleteEmailInvalid || athletePhoneInvalid || responsibleCpfInvalid || responsibleEmailInvalid || responsiblePhoneInvalid) && (
                     <div className="warning-note"><AlertTriangle size={18} /><span>Revise os campos destacados antes de salvar o cadastro.</span></div>
                   )}
 
@@ -929,6 +935,7 @@ export function App() {
                             }}>
                               <option>Sim</option><option>Não</option>
                             </select>
+                            {minorWithoutSchoolEnrollment && <small className="field-error">Cadastro indisponível: para atletas menores de 18 anos, o SERFES exige vínculo com instituição de ensino.</small>}
                           </label>
                           <label>Município da instituição
                             <select
@@ -1095,7 +1102,7 @@ export function App() {
 
                   <div className="form-actions">
                     <button type="button" className="secondary-button" onClick={() => setDashboardSection(isAthlete ? 'athleteHome' : 'athletes')}>Cancelar</button>
-                    <button type="submit" className="primary-button" disabled={athleteTooYoung}><CheckCircle2 size={17} /> Salvar cadastro demonstrativo</button>
+                    <button type="submit" className="primary-button" disabled={athleteTooYoung || minorWithoutSchoolEnrollment}><CheckCircle2 size={17} /> Salvar cadastro demonstrativo</button>
                   </div>
                 </form>
               </>
