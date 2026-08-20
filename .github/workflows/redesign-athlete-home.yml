@@ -1,0 +1,222 @@
+name: Redesenhar página inicial do atleta
+
+on:
+  push:
+    paths:
+      - '.github/workflows/redesign-athlete-home.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar novo layout da área do atleta
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          app = Path('src/App.tsx')
+          text = app.read_text(encoding='utf-8')
+
+          # Importa estilos específicos da nova página inicial.
+          old_import = "import './validation.css';\n"
+          new_import = "import './validation.css';\nimport './athleteHome.css';\n"
+          if new_import not in text:
+              if old_import not in text:
+                  raise SystemExit('Ponto de importação de estilos não localizado.')
+              text = text.replace(old_import, new_import, 1)
+
+          # Estado do recado flutuante de próxima etapa.
+          old_state = "  const [formAttempted, setFormAttempted] = useState(false);\n  const [ageReferenceDate, setAgeReferenceDate] = useState(() => new Date());\n"
+          new_state = "  const [formAttempted, setFormAttempted] = useState(false);\n  const [athleteHomeNoticeDismissed, setAthleteHomeNoticeDismissed] = useState(false);\n  const [ageReferenceDate, setAgeReferenceDate] = useState(() => new Date());\n"
+          if new_state not in text:
+              if old_state not in text:
+                  raise SystemExit('Bloco de estado da página inicial não localizado.')
+              text = text.replace(old_state, new_state, 1)
+
+          # Ao entrar novamente, o recado da próxima etapa reaparece.
+          old_login = """    setRegistrationMessage('');\n    setAgeReferenceDate(new Date());\n    setDashboardSection(profile === 'Atleta' ? 'athleteHome' : 'overview');\n"""
+          new_login = """    setRegistrationMessage('');\n    setAthleteHomeNoticeDismissed(false);\n    setAgeReferenceDate(new Date());\n    setDashboardSection(profile === 'Atleta' ? 'athleteHome' : 'overview');\n"""
+          if new_login not in text:
+              if old_login not in text:
+                  raise SystemExit('Bloco de login não localizado.')
+              text = text.replace(old_login, new_login, 1)
+
+          # Depois de salvar, mostra a nova próxima etapa.
+          old_save = """    setAthleteSaved(true);\n    setFormAttempted(false);\n    setRegistrationMessage('');\n    setDashboardSection(isAthlete ? 'athleteHome' : 'athletes');\n"""
+          new_save = """    setAthleteSaved(true);\n    setFormAttempted(false);\n    setRegistrationMessage('');\n    setAthleteHomeNoticeDismissed(false);\n    setDashboardSection(isAthlete ? 'athleteHome' : 'athletes');\n"""
+          if new_save not in text:
+              if old_save not in text:
+                  raise SystemExit('Bloco de salvamento não localizado.')
+              text = text.replace(old_save, new_save, 1)
+
+          start_marker = """            {dashboardSection === 'athleteHome' && isAthlete && (\n"""
+          end_marker = """            {dashboardSection === 'athleteCompetitions' && isAthlete && (\n"""
+          start = text.find(start_marker)
+          end = text.find(end_marker)
+          if start == -1 or end == -1 or end <= start:
+              raise SystemExit('Bloco da página inicial do atleta não localizado.')
+
+          new_home = """            {dashboardSection === 'athleteHome' && isAthlete && (\n              <>\n                {!athleteHomeNoticeDismissed && (\n                  <aside className=\"athlete-next-step-notice\" role=\"status\" aria-live=\"polite\">\n                    <button type=\"button\" className=\"athlete-notice-close\" aria-label=\"Fechar recado\" onClick={() => setAthleteHomeNoticeDismissed(true)}>×</button>\n                    <span className=\"athlete-notice-kicker\">Próxima etapa</span>\n                    {!athleteSaved ? (\n                      <>\n                        <strong>Preencha seu cadastro</strong>\n                        <p>Complete os dados necessários para utilizar as funcionalidades do SERFES.</p>\n                        <button type=\"button\" className=\"athlete-notice-action\" onClick={() => { setAthleteHomeNoticeDismissed(true); setDashboardSection('athleteForm'); }}>Preencher cadastro</button>\n                      </>\n                    ) : enrollmentStatus === 'Sim' && !schoolConfirmationCurrent ? (\n                      <>\n                        <strong>Atualize seu vínculo escolar</strong>\n                        <p>O ano letivo mudou. Atualize instituição, ano escolar ou curso antes de solicitar novas inscrições.</p>\n                        <button type=\"button\" className=\"athlete-notice-action\" onClick={() => { setAthleteHomeNoticeDismissed(true); setDashboardSection('athleteForm'); }}>Atualizar vínculo</button>\n                      </>\n                    ) : (\n                      <>\n                        <strong>Consulte as competições</strong>\n                        <p>Seu cadastro está pronto para a próxima etapa. Veja as competições disponíveis e solicite sua inscrição.</p>\n                        <button type=\"button\" className=\"athlete-notice-action\" onClick={() => { setAthleteHomeNoticeDismissed(true); setDashboardSection('athleteCompetitions'); }}>Ver competições</button>\n                      </>\n                    )}\n                  </aside>\n                )}\n\n                <section className=\"athlete-home-hero\">\n                  <div className=\"athlete-home-hero-copy\">\n                    <span className=\"pill\">Minha área</span>\n                    <h3>Bem-vindo ao seu espaço no SERFES</h3>\n                    <p>Complete o cadastro e acompanhe informações relacionadas ao seu perfil.</p>\n                  </div>\n                  <div className=\"athlete-home-hero-symbol\" aria-hidden=\"true\">\n                    <Gamepad2 size={36} />\n                  </div>\n                </section>\n\n                <section className=\"athlete-home-actions\" aria-label=\"Acessos rápidos do atleta\">\n                  <article className=\"athlete-home-primary-card\">\n                    <div className=\"athlete-home-card-icon\"><UserRound size={24} /></div>\n                    <div>\n                      <span className=\"athlete-home-card-kicker\">Comece por aqui</span>\n                      <h4>{athleteSaved ? 'Meu cadastro' : 'Preencher meu cadastro'}</h4>\n                      <p>{athleteSaved ? 'Revise ou atualize seus dados sempre que necessário.' : 'Informe seus dados pessoais, esportivos e de vínculo escolar.'}</p>\n                    </div>\n                    <button type=\"button\" className=\"primary-button\" onClick={() => setDashboardSection('athleteForm')}>\n                      <UserRound size={17} /> {athleteSaved ? 'Atualizar meu cadastro' : 'Preencher meu cadastro'}\n                    </button>\n                  </article>\n\n                  <div className=\"athlete-home-shortcuts\">\n                    <button type=\"button\" className=\"athlete-home-shortcut\">\n                      <span className=\"athlete-shortcut-icon school\"><School size={20} /></span>\n                      <span><strong>Acompanhar validação escolar</strong><small>Consulte a situação do vínculo informado.</small></span>\n                      <ChevronRight size={18} />\n                    </button>\n                    <button type=\"button\" className=\"athlete-home-shortcut\">\n                      <span className=\"athlete-shortcut-icon docs\"><FileText size={20} /></span>\n                      <span><strong>Consultar meus documentos</strong><small>Acompanhe os documentos vinculados ao cadastro.</small></span>\n                      <ChevronRight size={18} />\n                    </button>\n                    <button type=\"button\" className=\"athlete-home-shortcut\" onClick={() => setDashboardSection('athleteCompetitions')}>\n                      <span className=\"athlete-shortcut-icon competition\"><Trophy size={20} /></span>\n                      <span><strong>Consultar competições e solicitar inscrição</strong><small>Veja oportunidades disponíveis e acompanhe suas solicitações.</small></span>\n                      <ChevronRight size={18} />\n                    </button>\n                  </div>\n                </section>\n\n                <p className=\"prototype-note athlete-home-privacy\">Esta área é individual. O atleta não visualiza cadastros, documentos ou dados pessoais de outros atletas.</p>\n              </>\n            )}\n\n"""
+          text = text[:start] + new_home + text[end:]
+          app.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Criar estilos da nova página inicial
+        run: |
+          cat > src/athleteHome.css <<'CSS'
+          .athlete-home-hero {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            min-height: 230px;
+            padding: 2.2rem 2.35rem;
+            border-radius: 28px;
+            background:
+              radial-gradient(circle at 88% 20%, rgba(255,255,255,.2), transparent 24%),
+              linear-gradient(135deg, #143b63 0%, #0b5aa6 68%, #1f76bb 100%);
+            color: #fff;
+            box-shadow: 0 20px 46px rgba(20,59,99,.18);
+          }
+
+          .athlete-home-hero::after {
+            content: '';
+            position: absolute;
+            right: -70px;
+            bottom: -105px;
+            width: 260px;
+            height: 260px;
+            border: 42px solid rgba(255,255,255,.07);
+            border-radius: 50%;
+          }
+
+          .athlete-home-hero-copy { position: relative; z-index: 1; max-width: 690px; }
+          .athlete-home-hero .pill { background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.24); }
+          .athlete-home-hero h3 { margin: .75rem 0 .55rem; font-size: clamp(1.8rem, 3vw, 2.65rem); color: #fff; }
+          .athlete-home-hero p { margin: 0; max-width: 620px; font-size: 1.03rem; line-height: 1.65; color: rgba(255,255,255,.88); }
+
+          .athlete-home-hero-symbol {
+            position: relative;
+            z-index: 1;
+            width: 94px;
+            height: 94px;
+            flex: 0 0 94px;
+            display: grid;
+            place-items: center;
+            border-radius: 26px;
+            background: rgba(255,255,255,.13);
+            border: 1px solid rgba(255,255,255,.22);
+            backdrop-filter: blur(10px);
+          }
+
+          .athlete-home-actions {
+            display: grid;
+            grid-template-columns: minmax(300px,.82fr) minmax(420px,1.18fr);
+            gap: 1rem;
+            align-items: stretch;
+          }
+
+          .athlete-home-primary-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.55rem;
+            border: 1px solid #d8e5ef;
+            border-radius: 24px;
+            background: #fff;
+            box-shadow: 0 12px 30px rgba(20,59,99,.07);
+          }
+
+          .athlete-home-primary-card h4 { margin: .25rem 0 .35rem; color: #143b63; font-size: 1.35rem; }
+          .athlete-home-primary-card p { margin: 0; color: #61758d; line-height: 1.55; }
+          .athlete-home-primary-card .primary-button { margin-top: auto; }
+          .athlete-home-card-kicker { display: block; font-size: .75rem; font-weight: 850; text-transform: uppercase; letter-spacing: .08em; color: #0b5aa6; }
+          .athlete-home-card-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 15px; color: #0b5aa6; background: #eaf3fb; }
+
+          .athlete-home-shortcuts { display: grid; gap: .75rem; }
+          .athlete-home-shortcut {
+            width: 100%;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.1rem 1.15rem;
+            text-align: left;
+            border: 1px solid #d8e5ef;
+            border-radius: 19px;
+            background: #fff;
+            color: #17304d;
+            box-shadow: 0 8px 22px rgba(20,59,99,.05);
+            transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+          }
+          .athlete-home-shortcut:hover { transform: translateY(-2px); border-color: #b8d4e9; box-shadow: 0 12px 26px rgba(20,59,99,.09); }
+          .athlete-home-shortcut > span:nth-child(2) { display: grid; gap: .25rem; }
+          .athlete-home-shortcut strong { color: #143b63; font-size: .98rem; }
+          .athlete-home-shortcut small { color: #61758d; line-height: 1.4; font-size: .82rem; }
+
+          .athlete-shortcut-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px; }
+          .athlete-shortcut-icon.school { color: #167b50; background: #e8f7f0; }
+          .athlete-shortcut-icon.docs { color: #0b5aa6; background: #eaf3fb; }
+          .athlete-shortcut-icon.competition { color: #8b6900; background: #fff8d9; }
+
+          .athlete-home-privacy { margin-top: -.1rem; }
+
+          .athlete-next-step-notice {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            z-index: 80;
+            width: min(390px, calc(100vw - 40px));
+            display: grid;
+            gap: .45rem;
+            padding: 1.15rem 3rem 1.15rem 1.2rem;
+            border: 1px solid #c7ddec;
+            border-radius: 20px;
+            background: rgba(255,255,255,.98);
+            box-shadow: 0 18px 48px rgba(20,59,99,.22);
+            backdrop-filter: blur(10px);
+          }
+          .athlete-next-step-notice::before { content: ''; position: absolute; left: 0; top: 16px; bottom: 16px; width: 4px; border-radius: 0 4px 4px 0; background: #f3c623; }
+          .athlete-next-step-notice strong { color: #143b63; font-size: 1.04rem; }
+          .athlete-next-step-notice p { margin: 0; color: #61758d; line-height: 1.5; font-size: .9rem; }
+          .athlete-notice-kicker { color: #8b6900; font-size: .72rem; font-weight: 850; text-transform: uppercase; letter-spacing: .08em; }
+          .athlete-notice-close { position: absolute; right: 10px; top: 8px; width: 30px; height: 30px; display: grid; place-items: center; border: 0; background: transparent; color: #61758d; font-size: 1.35rem; line-height: 1; }
+          .athlete-notice-action { justify-self: start; margin-top: .3rem; padding: .58rem .8rem; border: 0; border-radius: 10px; background: #eaf3fb; color: #0b5aa6; font-weight: 800; }
+
+          @media (max-width: 980px) {
+            .athlete-home-actions { grid-template-columns: 1fr; }
+          }
+
+          @media (max-width: 680px) {
+            .athlete-home-hero { min-height: 0; padding: 1.55rem; border-radius: 22px; }
+            .athlete-home-hero-symbol { display: none; }
+            .athlete-home-primary-card { border-radius: 20px; }
+            .athlete-home-shortcut { grid-template-columns: auto 1fr; }
+            .athlete-home-shortcut > svg { display: none; }
+            .athlete-next-step-notice { right: 20px; bottom: 20px; }
+          }
+          CSS
+
+      - name: Validar aplicação
+        run: |
+          npm install
+          npm run build
+
+      - name: Publicar novo layout
+        run: |
+          git config user.name "SERFES UI Update"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/App.tsx src/athleteHome.css
+          git commit -m "Redesenhar página inicial do atleta"
+          git pull --rebase origin main
+          git push origin main
