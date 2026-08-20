@@ -1,4 +1,5 @@
-.athlete-home-complete-card {
+.athlete-home-complete-card,
+.athlete-account-card {
   min-height: 160px;
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -9,35 +10,53 @@
 }
 
 .athlete-home-complete-card:hover,
-.athlete-home-complete-card:focus-visible {
+.athlete-home-complete-card:focus-visible,
+.athlete-account-card:hover,
+.athlete-account-card:focus-visible {
   transform: translateY(-2px);
   border-color: #9fc7e5;
   box-shadow: 0 14px 32px rgba(20,59,99,.11);
   outline: none;
 }
 
-.athlete-home-complete-card .athlete-home-card-icon {
-  font-size: 1.55rem;
-  font-weight: 500;
+.athlete-home-complete-card .athlete-home-card-icon,
+.athlete-account-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  font-size: 1.35rem;
+  font-weight: 850;
 }
 
-.athlete-complete-copy {
+.athlete-home-complete-card .athlete-home-card-icon {
+  color: #0b5aa6;
+  background: #eaf3fb;
+}
+
+.athlete-account-icon {
+  color: #167b50;
+  background: #e8f7f0;
+}
+
+.athlete-card-copy {
   display: grid;
   gap: .42rem;
 }
 
-.athlete-complete-copy strong {
+.athlete-card-copy strong {
   color: #143b63;
   font-size: 1.18rem;
 }
 
-.athlete-complete-copy small {
+.athlete-card-copy small {
   color: #61758d;
   line-height: 1.5;
   font-size: .86rem;
 }
 
-.athlete-complete-action {
+.athlete-card-action {
   width: fit-content;
   margin-top: .25rem;
   color: #0b5aa6;
@@ -45,10 +64,21 @@
   font-weight: 850;
 }
 
-.athlete-complete-arrow {
+.athlete-card-arrow {
   color: #0b5aa6;
   font-size: 2rem;
   line-height: 1;
+}
+
+.athlete-account-updated {
+  width: fit-content;
+  margin-top: .25rem;
+  padding: .48rem .65rem;
+  border-radius: 999px;
+  background: #e8f7f0;
+  color: #167b50;
+  font-size: .76rem;
+  font-weight: 800;
 }
 
 .athlete-home-saved-menu {
@@ -63,93 +93,6 @@
 
 .athlete-home-saved-menu .athlete-home-shortcut {
   min-height: 104px;
-}
-
-.athlete-profile-card {
-  display: block;
-  padding: 1.35rem 1.4rem;
-  border-radius: 22px;
-}
-
-.athlete-profile-summary {
-  display: grid;
-  gap: 1.15rem;
-  width: 100%;
-}
-
-.athlete-profile-heading {
-  display: flex;
-  align-items: center;
-  gap: .85rem;
-}
-
-.athlete-profile-icon {
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  display: grid;
-  place-items: center;
-  border-radius: 13px;
-  background: #e8f7f0;
-  color: #167b50;
-  font-weight: 900;
-}
-
-.athlete-profile-heading h4 {
-  margin: .18rem 0 0;
-  color: #143b63;
-  font-size: 1.18rem;
-}
-
-.athlete-profile-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: .75rem 1rem;
-  padding-top: .95rem;
-  border-top: 1px solid #e5edf4;
-}
-
-.athlete-profile-row {
-  display: grid;
-  gap: .2rem;
-  min-width: 0;
-}
-
-.athlete-profile-row span {
-  color: #73859a;
-  font-size: .72rem;
-  font-weight: 750;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-}
-
-.athlete-profile-row strong {
-  overflow-wrap: anywhere;
-  color: #17304d;
-  font-size: .88rem;
-}
-
-.athlete-profile-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .8rem;
-  flex-wrap: wrap;
-  padding-top: .15rem;
-}
-
-.athlete-profile-updated-badge {
-  padding: .48rem .65rem;
-  border-radius: 999px;
-  background: #e8f7f0;
-  color: #167b50;
-  font-size: .76rem;
-  font-weight: 800;
-}
-
-.athlete-profile-edit {
-  margin-left: auto;
-  white-space: nowrap;
 }
 
 .athlete-annual-update {
@@ -268,29 +211,23 @@
 }
 
 @media (max-width: 680px) {
-  .athlete-home-complete-card {
+  .athlete-home-complete-card,
+  .athlete-account-card {
     grid-template-columns: auto 1fr;
   }
 
-  .athlete-complete-arrow {
+  .athlete-card-arrow {
     display: none;
   }
 
-  .athlete-profile-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .athlete-profile-footer,
   .athlete-annual-update,
   .athlete-next-competition {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .athlete-profile-edit,
   .athlete-annual-action {
     width: 100%;
-    margin-left: 0;
     justify-content: center;
   }
 
