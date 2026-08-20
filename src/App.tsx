@@ -612,17 +612,11 @@ export function App() {
           <main className="dashboard-content">
             {dashboardSection === 'athleteHome' && isAthlete && (
               <>
-                {!athleteHomeNoticeDismissed && (
-                  <aside className="athlete-next-step-notice" role="status" aria-live="polite">
-                    <button type="button" className="athlete-notice-close" aria-label="Fechar recado" onClick={() => setAthleteHomeNoticeDismissed(true)}>×</button>
+                {athleteSaved && !athleteHomeNoticeDismissed && (
+                  <aside className="athlete-next-step-notice" role="alertdialog" aria-live="polite" aria-label="Próxima etapa">
+                    <button type="button" className="athlete-notice-close" aria-label="Fechar aviso" onClick={() => setAthleteHomeNoticeDismissed(true)}>×</button>
                     <span className="athlete-notice-kicker">Próxima etapa</span>
-                    {!athleteSaved ? (
-                      <>
-                        <strong>Preencha seu cadastro</strong>
-                        <p>Complete os dados necessários para utilizar as funcionalidades do SERFES.</p>
-                        <button type="button" className="athlete-notice-action" onClick={() => { setAthleteHomeNoticeDismissed(true); setDashboardSection('athleteForm'); }}>Preencher cadastro</button>
-                      </>
-                    ) : enrollmentStatus === 'Sim' && !schoolConfirmationCurrent ? (
+                    {enrollmentStatus === 'Sim' && !schoolConfirmationCurrent ? (
                       <>
                         <strong>Atualize seu vínculo escolar</strong>
                         <p>O ano letivo mudou. Atualize instituição, ano escolar ou curso antes de solicitar novas inscrições.</p>
@@ -630,9 +624,9 @@ export function App() {
                       </>
                     ) : (
                       <>
-                        <strong>Consulte as competições</strong>
-                        <p>Seu cadastro está pronto para a próxima etapa. Veja as competições disponíveis e solicite sua inscrição.</p>
-                        <button type="button" className="athlete-notice-action" onClick={() => { setAthleteHomeNoticeDismissed(true); setDashboardSection('athleteCompetitions'); }}>Ver competições</button>
+                        <strong>Cadastro concluído</strong>
+                        <p>Agora você pode consultar as competições disponíveis e solicitar sua inscrição.</p>
+                        <button type="button" className="athlete-notice-action" onClick={() => { setAthleteHomeNoticeDismissed(true); setDashboardSection('athleteCompetitions'); }}>Consultar competições</button>
                       </>
                     )}
                   </aside>
@@ -642,7 +636,6 @@ export function App() {
                   <div className="athlete-home-hero-copy">
                     <span className="pill">Minha área</span>
                     <h3>Bem-vindo ao seu espaço no SERFES</h3>
-                    <p>Complete o cadastro e acompanhe informações relacionadas ao seu perfil.</p>
                   </div>
                   <div className="athlete-home-hero-symbol" aria-hidden="true">
                     <Gamepad2 size={36} />

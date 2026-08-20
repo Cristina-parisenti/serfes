@@ -26,10 +26,9 @@
   border-radius: 50%;
 }
 
-.athlete-home-hero-copy { position: relative; z-index: 1; max-width: 690px; }
+.athlete-home-hero-copy { position: relative; z-index: 1; max-width: none; flex: 1; }
 .athlete-home-hero .pill { background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.24); }
-.athlete-home-hero h3 { margin: .75rem 0 .55rem; font-size: clamp(1.8rem, 3vw, 2.65rem); color: #fff; }
-.athlete-home-hero p { margin: 0; max-width: 620px; font-size: 1.03rem; line-height: 1.65; color: rgba(255,255,255,.88); }
+.athlete-home-hero h3 { margin: .75rem 0 0; font-size: clamp(1.7rem, 2.5vw, 2.35rem); color: #fff; white-space: nowrap; }
 
 .athlete-home-hero-symbol {
   position: relative;
@@ -100,18 +99,19 @@
 
 .athlete-next-step-notice {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 80;
-  width: min(390px, calc(100vw - 40px));
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  width: min(460px, calc(100vw - 40px));
   display: grid;
-  gap: .45rem;
-  padding: 1.15rem 3rem 1.15rem 1.2rem;
-  border: 1px solid #c7ddec;
-  border-radius: 20px;
-  background: rgba(255,255,255,.98);
-  box-shadow: 0 18px 48px rgba(20,59,99,.22);
-  backdrop-filter: blur(10px);
+  gap: .55rem;
+  padding: 1.45rem 3.2rem 1.45rem 1.5rem;
+  border: 1px solid #b9d3e7;
+  border-radius: 22px;
+  background: rgba(255,255,255,.99);
+  box-shadow: 0 24px 70px rgba(20,59,99,.28);
+  backdrop-filter: blur(12px);
 }
 .athlete-next-step-notice::before { content: ''; position: absolute; left: 0; top: 16px; bottom: 16px; width: 4px; border-radius: 0 4px 4px 0; background: #f3c623; }
 .athlete-next-step-notice strong { color: #143b63; font-size: 1.04rem; }
@@ -127,8 +127,9 @@
 @media (max-width: 680px) {
   .athlete-home-hero { min-height: 0; padding: 1.55rem; border-radius: 22px; }
   .athlete-home-hero-symbol { display: none; }
+  .athlete-home-hero h3 { white-space: normal; }
   .athlete-home-primary-card { border-radius: 20px; }
   .athlete-home-shortcut { grid-template-columns: auto 1fr; }
   .athlete-home-shortcut > svg { display: none; }
-  .athlete-next-step-notice { right: 20px; bottom: 20px; }
+  .athlete-next-step-notice { width: calc(100vw - 32px); }
 }
