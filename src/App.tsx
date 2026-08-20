@@ -25,6 +25,7 @@ import './authorization.css';
 import './competition.css';
 import './gameEligibility.css';
 import './validation.css';
+import './athleteHome.css';
 import {
   ClassindRatingsPayload,
   GAME_CATALOG,
@@ -188,6 +189,7 @@ export function App() {
   const [password, setPassword] = useState('');
   const [athleteSaved, setAthleteSaved] = useState(false);
   const [formAttempted, setFormAttempted] = useState(false);
+  const [athleteHomeNoticeDismissed, setAthleteHomeNoticeDismissed] = useState(false);
   const [ageReferenceDate, setAgeReferenceDate] = useState(() => new Date());
 
   const [athleteName, setAthleteName] = useState('');
@@ -402,6 +404,7 @@ export function App() {
     setRegistrations({});
     setSelectedCompetitionId(null);
     setRegistrationMessage('');
+    setAthleteHomeNoticeDismissed(false);
     setAgeReferenceDate(new Date());
     setDashboardSection(profile === 'Atleta' ? 'athleteHome' : 'overview');
     setView('dashboard');
@@ -447,6 +450,7 @@ export function App() {
     setAthleteSaved(true);
     setFormAttempted(false);
     setRegistrationMessage('');
+    setAthleteHomeNoticeDismissed(false);
     setDashboardSection(isAthlete ? 'athleteHome' : 'athletes');
   }
 
@@ -608,45 +612,76 @@ export function App() {
           <main className="dashboard-content">
             {dashboardSection === 'athleteHome' && isAthlete && (
               <>
-                {athleteSaved && enrollmentStatus === 'Sim' && !schoolConfirmationCurrent && (
-                  <div className="warning-note">
-                    <AlertTriangle size={18} />
-                    <div>
-                      <strong>Atualize seu vínculo escolar para {schoolReferenceYear}</strong>
-                      <span>Um novo ano letivo começou. Revise e atualize os dados do seu vínculo escolar, incluindo instituição e ano escolar ou curso.</span>
-                    </div>
-                    <button type="button" className="secondary-button compact-button" onClick={() => setDashboardSection('athleteForm')}>Atualizar agora</button>
-                  </div>
+                {!athleteHomeNoticeDismissed && (
+                  <aside className="athlete-next-step-notice" role="status" aria-live="polite">
+                    <button type="button" className="athlete-notice-close" aria-label="Fechar recado" onClick={() => setAthleteHomeNoticeDismissed(true)}>×</button>
+                    <span className="athlete-notice-kicker">Próxima etapa</span>
+                    {!athleteSaved ? (
+                      <>
+                        <strong>Preencha seu cadastro</strong>
+                        <p>Complete os dados necessários para utilizar as funcionalidades do SERFES.</p>
+                        <button type="button" className="athlete-notice-action" onClick={() => { setAthleteHomeNoticeDismissed(true); setDashboardSection('athleteForm'); }}>Preencher cadastro</button>
+                      </>
+                    ) : enrollmentStatus === 'Sim' && !schoolConfirmationCurrent ? (
+                      <>
+                        <strong>Atualize seu vínculo escolar</strong>
+                        <p>O ano letivo mudou. Atualize instituição, ano escolar ou curso antes de solicitar novas inscrições.</p>
+                        <button type="button" className="athlete-notice-action" onClick={() => { setAthleteHomeNoticeDismissed(true); setDashboardSection('athleteForm'); }}>Atualizar vínculo</button>
+                      </>
+                    ) : (
+                      <>
+                        <strong>Consulte as competições</strong>
+                        <p>Seu cadastro está pronto para a próxima etapa. Veja as competições disponíveis e solicite sua inscrição.</p>
+                        <button type="button" className="athlete-notice-action" onClick={() => { setAthleteHomeNoticeDismissed(true); setDashboardSection('athleteCompetitions'); }}>Ver competições</button>
+                      </>
+                    )}
+                  </aside>
                 )}
-                {athleteSaved && <div className="success-banner"><CheckCircle2 size={19} /><div><strong>Seu cadastro demonstrativo foi salvo.</strong><span>Agora você pode consultar as competições disponíveis.</span></div></div>}
-                <section className="hero-panel">
-                  <div><span className="pill">Minha área</span><h3>Bem-vindo ao seu espaço no SERFES</h3><p>Complete seu cadastro e acompanhe somente informações relacionadas ao seu próprio perfil.</p></div>
-                  <button className="primary-button" onClick={() => setDashboardSection(athleteSaved ? 'athleteCompetitions' : 'athleteForm')}>
-                    {athleteSaved ? <Trophy size={17} /> : <UserRound size={17} />}
-                    {athleteSaved ? 'Ver competições' : 'Preencher meu cadastro'}
-                  </button>
+
+                <section className="athlete-home-hero">
+                  <div className="athlete-home-hero-copy">
+                    <span className="pill">Minha área</span>
+                    <h3>Bem-vindo ao seu espaço no SERFES</h3>
+                    <p>Complete o cadastro e acompanhe informações relacionadas ao seu perfil.</p>
+                  </div>
+                  <div className="athlete-home-hero-symbol" aria-hidden="true">
+                    <Gamepad2 size={36} />
+                  </div>
                 </section>
-                <section className="athlete-summary-grid">
-                  <article className="mini-status blue"><strong>1</strong><span>Meu cadastro</span></article>
-                  <article className="mini-status yellow"><strong>{athleteSaved ? 'Enviado' : 'Pendente'}</strong><span>Validação cadastral</span></article>
-                  <article className="mini-status green"><strong>{athleteInstitution ? (schoolConfirmationCurrent ? `Atualizado ${schoolReferenceYear}` : 'Atualização pendente') : '—'}</strong><span>Vínculo escolar</span></article>
-                  <article className="mini-status red"><strong>{minorStatus === true ? (responsibleName ? 'Informado' : 'Pendente') : '—'}</strong><span>Responsável legal</span></article>
-                </section>
-                <section className="panel-grid">
-                  <article className="glass-card panel-card">
-                    <div className="panel-head"><div><p className="eyebrow">Meu cadastro</p><h4>Etapas pessoais</h4></div></div>
-                    <button className="line-action" onClick={() => setDashboardSection('athleteForm')}><span>Preencher ou atualizar meus dados</span><ChevronRight size={16} /></button>
-                    <button className="line-action"><span>Acompanhar validação escolar</span><ChevronRight size={16} /></button>
-                    <button className="line-action"><span>Consultar meus documentos</span><ChevronRight size={16} /></button>
+
+                <section className="athlete-home-actions" aria-label="Acessos rápidos do atleta">
+                  <article className="athlete-home-primary-card">
+                    <div className="athlete-home-card-icon"><UserRound size={24} /></div>
+                    <div>
+                      <span className="athlete-home-card-kicker">Comece por aqui</span>
+                      <h4>{athleteSaved ? 'Meu cadastro' : 'Preencher meu cadastro'}</h4>
+                      <p>{athleteSaved ? 'Revise ou atualize seus dados sempre que necessário.' : 'Informe seus dados pessoais, esportivos e de vínculo escolar.'}</p>
+                    </div>
+                    <button type="button" className="primary-button" onClick={() => setDashboardSection('athleteForm')}>
+                      <UserRound size={17} /> {athleteSaved ? 'Atualizar meu cadastro' : 'Preencher meu cadastro'}
+                    </button>
                   </article>
-                  <article className="glass-card panel-card">
-                    <div className="panel-head"><div><p className="eyebrow">Participação</p><h4>Próximas etapas</h4></div></div>
-                    <div className="list-card"><strong>1</strong><span>Complete seu cadastro pessoal.</span></div>
-                    <div className="list-card"><strong>2</strong><span>Se menor de idade, complete as informações do responsável legal.</span></div>
-                    <button className="line-action" onClick={() => setDashboardSection('athleteCompetitions')}><span>3. Consultar competições e solicitar inscrição</span><ChevronRight size={16} /></button>
-                  </article>
+
+                  <div className="athlete-home-shortcuts">
+                    <button type="button" className="athlete-home-shortcut">
+                      <span className="athlete-shortcut-icon school"><School size={20} /></span>
+                      <span><strong>Acompanhar validação escolar</strong><small>Consulte a situação do vínculo informado.</small></span>
+                      <ChevronRight size={18} />
+                    </button>
+                    <button type="button" className="athlete-home-shortcut">
+                      <span className="athlete-shortcut-icon docs"><FileText size={20} /></span>
+                      <span><strong>Consultar meus documentos</strong><small>Acompanhe os documentos vinculados ao cadastro.</small></span>
+                      <ChevronRight size={18} />
+                    </button>
+                    <button type="button" className="athlete-home-shortcut" onClick={() => setDashboardSection('athleteCompetitions')}>
+                      <span className="athlete-shortcut-icon competition"><Trophy size={20} /></span>
+                      <span><strong>Consultar competições e solicitar inscrição</strong><small>Veja oportunidades disponíveis e acompanhe suas solicitações.</small></span>
+                      <ChevronRight size={18} />
+                    </button>
+                  </div>
                 </section>
-                <p className="prototype-note">Esta área é individual. O atleta não visualiza cadastros, documentos ou dados pessoais de outros atletas.</p>
+
+                <p className="prototype-note athlete-home-privacy">Esta área é individual. O atleta não visualiza cadastros, documentos ou dados pessoais de outros atletas.</p>
               </>
             )}
 
