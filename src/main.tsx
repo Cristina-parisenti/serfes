@@ -7,6 +7,7 @@ import './athleteHomeFinalFix';
 import './athleteSidebarLock';
 import './schoolValidationCycle';
 import './responsibleCrossValidation';
+import './athleteRegistrationFlow';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
