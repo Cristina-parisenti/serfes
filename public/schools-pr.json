@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-08-20T11:22:15.947272+00:00",
+  "generatedAt": "2026-08-21T11:15:54.856013+00:00",
   "records": [
     {
       "id": "20",
@@ -21198,6 +21198,12 @@
     {
       "id": "19900",
       "name": "Paixao Baby - Agua Verde, C E I",
+      "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
+      "id": "20917",
+      "name": "Palavras Magicas, Cei",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -45311,7 +45317,7 @@
     },
     {
       "id": "94",
-      "name": "Primo Savoldi, E M-Ei Ef",
+      "name": "Primo Savoldi, E M-Ef",
       "municipality": "Pinhal de Sao Bento",
       "network": "Municipal"
     },
@@ -52031,13 +52037,13 @@
     },
     {
       "id": "58",
-      "name": "Diogo Feijo, E M R Pe-Ei Ef",
+      "name": "Diogo Feijo, E M C Pe-Ei Ef",
       "municipality": "Salto do Lontra",
       "network": "Municipal"
     },
     {
       "id": "31",
-      "name": "Irma Meurer Fazolin, E R M Profa-Ei Ef",
+      "name": "Irma Meurer Fazolin, E M C Profa-Ei Ef",
       "municipality": "Salto do Lontra",
       "network": "Municipal"
     },
@@ -52061,7 +52067,7 @@
     },
     {
       "id": "406",
-      "name": "Nossa Senhora Aparecida, E R M-Ei Ef",
+      "name": "Nossa Senhora Aparecida, E M C - Ei Ef",
       "municipality": "Salto do Lontra",
       "network": "Municipal"
     },
