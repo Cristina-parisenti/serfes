@@ -16,6 +16,7 @@ import './registrationCardPresentationFix';
 import './athleteSexAndGreeting';
 import './athleteApprovalGate';
 import './supabaseAuthBridge';
+import './athleteRegistrationAuthGuard';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
