@@ -3,6 +3,7 @@ import { supabase } from './supabaseClient';
 const AUTH_STATUS_ID = 'serfes-auth-status';
 const SIGNUP_BUTTON_ID = 'serfes-signup-button';
 const EMAIL_STATE_KEY = 'serfes-athlete-email-verification';
+const SERFES_PRODUCTION_URL = 'https://cristina-parisenti.github.io/serfes/';
 
 function text(value: string | null | undefined) {
   return (value ?? '').replace(/\s+/g, ' ').trim();
@@ -120,12 +121,11 @@ async function signUpAthlete(form: HTMLFormElement) {
   }
 
   setStatus(form, 'Criando sua conta...', 'info');
-  const redirectTo = `${window.location.origin}${window.location.pathname}`;
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      emailRedirectTo: redirectTo,
+      emailRedirectTo: SERFES_PRODUCTION_URL,
       data: { serfes_role: 'athlete' },
     },
   });
