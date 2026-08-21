@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-08-20T16:20:43.201870+00:00",
+  "generatedAt": "2026-08-21T14:04:05.487436+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -22837,13 +22837,13 @@
       "network": "Privada"
     },
     {
-      "id": "1584298:1510:000000004101804",
+      "id": "1584298:1510:000000004101507",
       "code": "1584298",
       "name": "CIÊNCIAS SOCIAIS",
       "degree": "Bacharelado",
       "modality": "EAD",
-      "institutionId": "1510:000000004101804",
-      "municipality": "Araucária",
+      "institutionId": "1510:000000004101507",
+      "municipality": "Arapongas",
       "network": "Privada"
     },
     {
