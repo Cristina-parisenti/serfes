@@ -209,15 +209,18 @@ function injectStyles() {
 
     .serfes-sex-options {
       width: 100%;
-      min-height: 0;
+      height: calc(1em + 1.8rem + 2px);
+      min-height: calc(1em + 1.8rem + 2px);
+      max-height: calc(1em + 1.8rem + 2px);
       margin-top: .45rem;
-      padding: .9rem 1rem;
+      padding: 0 1rem;
       border: 1px solid var(--border);
       border-radius: 13px;
       background: #fff;
       display: flex;
       align-items: center;
       gap: 1.25rem;
+      overflow: hidden;
     }
 
     .serfes-sex-option {
@@ -230,7 +233,7 @@ function injectStyles() {
       color: #314257;
       font-size: .9rem;
       font-weight: 650;
-      line-height: normal;
+      line-height: 1;
       cursor: pointer;
     }
 
