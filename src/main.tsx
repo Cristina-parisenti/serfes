@@ -14,6 +14,7 @@ import './athleteProfileImageSafe';
 import './profileImageGuidance';
 import './registrationCardPresentationFix';
 import './athleteSexAndGreeting';
+import './athleteApprovalGate';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
