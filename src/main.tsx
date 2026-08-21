@@ -18,6 +18,7 @@ import './athleteApprovalGate';
 import './supabaseAuthBridge';
 import './athleteRegistrationAuthGuard';
 import './athleteLoginPresentationFix';
+import './athletePasswordRecovery';
 import './athleteMenuNavigation';
 import './athleteRegistrationStandalone';
 
