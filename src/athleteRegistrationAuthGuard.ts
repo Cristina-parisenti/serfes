@@ -16,7 +16,7 @@ function arrangeAccountSection() {
   const section = form?.querySelector<HTMLElement>('.serfes-account-section');
   const submit = form?.querySelector<HTMLButtonElement>('.form-actions button[type="submit"]');
   const actions = submit?.closest<HTMLElement>('.form-actions');
-  if (!form || !section || !actions) return;
+  if (!form || !section || !submit || !actions) return;
 
   if (section.nextElementSibling !== actions) actions.before(section);
   if (submit.textContent?.trim() !== 'Enviar cadastro') submit.textContent = 'Enviar cadastro';

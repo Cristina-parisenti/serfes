@@ -219,7 +219,7 @@ function createPasswordField(labelText: string, id: string, autocomplete: string
   input.type = 'password';
   input.required = true;
   input.minLength = 8;
-  input.autocomplete = autocomplete;
+  input.setAttribute('autocomplete', autocomplete);
   input.placeholder = 'Mínimo de 8 caracteres';
 
   label.append(input);
