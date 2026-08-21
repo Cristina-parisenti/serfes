@@ -186,42 +186,51 @@ function injectStyles() {
   style.id = 'serfes-sex-and-greeting-styles';
   style.textContent = `
     .${SEX_FIELD_CLASS} {
+      width: 100%;
       min-width: 0;
       margin: 0;
       padding: 0;
       border: 0;
       display: grid;
       align-content: start;
-      gap: .55rem;
+      color: #314257;
+      font-size: .9rem;
+      font-weight: 650;
     }
 
     .${SEX_FIELD_CLASS} legend {
       margin: 0;
       padding: 0;
-      color: #17304d;
-      font-size: .86rem;
-      font-weight: 750;
+      color: #314257;
+      font-size: .9rem;
+      font-weight: 650;
+      line-height: normal;
     }
 
     .serfes-sex-options {
+      width: 100%;
+      min-height: 0;
+      margin-top: .45rem;
+      padding: .9rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #fff;
       display: flex;
       align-items: center;
-      gap: 1rem;
-      min-height: 44px;
-      padding: .68rem .8rem;
-      border: 1px solid #cad9e5;
-      border-radius: 12px;
-      background: #fff;
+      gap: 1.25rem;
     }
 
     .serfes-sex-option {
+      width: auto !important;
       display: inline-flex !important;
+      grid-template-columns: none !important;
       align-items: center !important;
       gap: .45rem !important;
       margin: 0 !important;
-      color: #17304d;
-      font-size: .88rem;
+      color: #314257;
+      font-size: .9rem;
       font-weight: 650;
+      line-height: normal;
       cursor: pointer;
     }
 
@@ -233,14 +242,6 @@ function injectStyles() {
       padding: 0 !important;
       accent-color: #0b5aa6;
       cursor: pointer;
-    }
-
-    @media (max-width: 560px) {
-      .serfes-sex-options {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: .7rem;
-      }
     }
   `;
 
