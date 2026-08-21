@@ -7,26 +7,9 @@ function text(value: string | null | undefined) {
   return (value ?? '').replace(/\s+/g, ' ').trim();
 }
 
-function completedRegistration() {
-  try {
-    return localStorage.getItem(COMPLETED_REGISTRATION_KEY) === 'true';
-  } catch {
-    return false;
-  }
-}
-
 function markCompleted() {
   try {
     localStorage.setItem(COMPLETED_REGISTRATION_KEY, 'true');
-  } catch {
-    // Sem ação.
-  }
-}
-
-function clearPrematureSnapshot() {
-  if (completedRegistration()) return;
-  try {
-    localStorage.removeItem(PROFILE_SNAPSHOT_KEY);
   } catch {
     // Sem ação.
   }
@@ -85,41 +68,14 @@ function cardCopy(titleText: string, descriptionText: string) {
   return copy;
 }
 
-function cardHasState(card: HTMLElement, state: 'start' | 'saved') {
-  const expectedTitle = state === 'start' ? 'Iniciar cadastro' : 'Meus dados cadastrais';
+function cardIsReady(card: HTMLElement) {
   const title = text(card.querySelector<HTMLElement>('.athlete-card-copy strong')?.textContent);
   const icon = card.querySelector<HTMLElement>('.athlete-shortcut-icon.profile');
-  return card.dataset.registrationPresentation === state && title === expectedTitle && Boolean(icon);
+  return card.dataset.registrationPresentation === 'saved' && title === 'Meu cadastro' && Boolean(icon);
 }
 
-function showStartCard(card: HTMLElement) {
-  if (cardHasState(card, 'start')) return;
-
-  card.dataset.registrationPresentation = 'start';
-  card.dataset.finalCard = 'start';
-  delete card.dataset.registrationFlowCard;
-  card.classList.remove('final-saved-card', 'serfes-data-card');
-  card.classList.add('final-start-card', 'registration-presentation-card');
-  card.replaceChildren(
-    userIcon(),
-    cardCopy('Iniciar cadastro', 'Preencha suas informações para acessar todos os recursos do SERFES.'),
-  );
-  card.setAttribute('role', 'button');
-  card.setAttribute('tabindex', '0');
-  card.setAttribute('aria-label', 'Iniciar cadastro');
-
-  const activate = () => openForm();
-  card.onclick = activate;
-  card.onkeydown = (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      activate();
-    }
-  };
-}
-
-function prepareSavedCard(card: HTMLElement) {
-  if (cardHasState(card, 'saved') && card.classList.contains('serfes-data-card')) return;
+function prepareCadastroCard(card: HTMLElement) {
+  if (cardIsReady(card) && card.classList.contains('serfes-data-card')) return;
 
   card.dataset.registrationPresentation = 'saved';
   card.dataset.finalCard = 'saved';
@@ -130,8 +86,20 @@ function prepareSavedCard(card: HTMLElement) {
     delete card.dataset.registrationFlowCard;
     card.replaceChildren(
       userIcon(),
-      cardCopy('Meus dados cadastrais', 'Consulte as informações registradas no SERFES.'),
+      cardCopy('Meu cadastro', 'Consulte as informações registradas no SERFES.'),
     );
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', 'Meu cadastro');
+
+    const activate = () => openForm();
+    card.onclick = activate;
+    card.onkeydown = (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        activate();
+      }
+    };
     return;
   }
 
@@ -139,23 +107,23 @@ function prepareSavedCard(card: HTMLElement) {
   if (!currentIcon?.classList.contains('profile')) currentIcon?.replaceWith(userIcon());
 
   const title = card.querySelector<HTMLElement>('.athlete-card-copy strong');
-  if (title && text(title.textContent) !== 'Meus dados cadastrais') title.textContent = 'Meus dados cadastrais';
+  if (title && text(title.textContent) !== 'Meu cadastro') title.textContent = 'Meu cadastro';
 
   const description = card.querySelector<HTMLElement>('.athlete-card-copy small');
   if (description && text(description.textContent) !== 'Consulte as informações registradas no SERFES.') {
     description.textContent = 'Consulte as informações registradas no SERFES.';
   }
+
+  card.setAttribute('aria-label', 'Meu cadastro');
 }
 
 function applyCardState() {
   const card = document.querySelector<HTMLElement>('.athlete-home-primary-card');
   if (!card) return;
 
-  if (completedRegistration()) prepareSavedCard(card);
-  else {
-    clearPrematureSnapshot();
-    showStartCard(card);
-  }
+  // O cadastro inicial ocorre antes do acesso à área do atleta.
+  // Portanto, a página inicial nunca deve oferecer "Iniciar cadastro" novamente.
+  prepareCadastroCard(card);
 }
 
 function successfulSubmitFinished(form: HTMLFormElement) {
@@ -222,11 +190,7 @@ if (typeof window !== 'undefined') {
     if (!form?.classList.contains('athlete-form')) return;
 
     window.setTimeout(() => {
-      if (successfulSubmitFinished(form)) {
-        markCompleted();
-      } else {
-        clearPrematureSnapshot();
-      }
+      if (successfulSubmitFinished(form)) markCompleted();
       schedule();
     }, 350);
   }, true);
