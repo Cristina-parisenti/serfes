@@ -20,6 +20,7 @@ type CompleteProfile = {
   identification?: {
     email?: string;
   };
+  updatedAt?: string;
 };
 
 const COMPLETED_REGISTRATION_KEY = 'serfes-athlete-registration-completed';
@@ -58,8 +59,12 @@ function registrationCompleted() {
   }
 }
 
+function completeProfile() {
+  return readJson<CompleteProfile>(COMPLETE_PROFILE_KEY);
+}
+
 function profileEmail() {
-  return text(readJson<CompleteProfile>(COMPLETE_PROFILE_KEY)?.identification?.email);
+  return text(completeProfile()?.identification?.email);
 }
 
 function emailState() {
@@ -80,6 +85,18 @@ function setSecretaryState(status: SecretaryStatus, note?: string) {
     updatedAt: new Date().toISOString(),
     ...(note ? { note } : {}),
   } satisfies SecretaryState);
+}
+
+function annualUpdateRequired() {
+  if (!registrationCompleted()) return false;
+
+  const updatedAt = text(completeProfile()?.updatedAt);
+  if (!updatedAt) return false;
+
+  const date = new Date(updatedAt);
+  if (Number.isNaN(date.getTime())) return false;
+
+  return date.getFullYear() < new Date().getFullYear();
 }
 
 function athleteAreaIsOpen() {
@@ -146,8 +163,10 @@ function advanceSecretaryAfterEmailConfirmation() {
   }
 }
 
-function isApproved() {
-  return emailState()?.status === 'confirmed' && secretaryState()?.status === 'approved';
+function competitionEligible() {
+  return emailState()?.status === 'confirmed'
+    && secretaryState()?.status === 'approved'
+    && !annualUpdateRequired();
 }
 
 function statusCopy() {
@@ -187,6 +206,17 @@ function statusCopy() {
     };
   }
 
+  if (annualUpdateRequired()) {
+    const year = new Date().getFullYear();
+    return {
+      tone: 'annual',
+      kicker: 'Atualização anual',
+      title: 'Atualização cadastral necessária',
+      description: `Confirme ou atualize seus dados para ${year} antes de solicitar novas inscrições.`,
+      detail: 'As inscrições permanecem bloqueadas até a conclusão da atualização anual.',
+    };
+  }
+
   return {
     tone: 'approved',
     kicker: 'Cadastro validado',
@@ -198,6 +228,11 @@ function statusCopy() {
 
 function ensureHomeStatusBanner() {
   if (!athleteAreaIsOpen() || !registrationCompleted()) {
+    document.getElementById(STATUS_BANNER_ID)?.remove();
+    return;
+  }
+
+  if (annualUpdateRequired() && document.querySelector('.final-annual-banner')) {
     document.getElementById(STATUS_BANNER_ID)?.remove();
     return;
   }
@@ -260,7 +295,14 @@ function competitionGateMessage() {
   if (secretary?.status === 'changes_requested') {
     return 'Inscrições bloqueadas: há uma pendência no cadastro. Corrija as informações solicitadas e aguarde nova validação da Secretaria.';
   }
-  return 'Inscrições bloqueadas: seu cadastro aguarda validação da Secretaria.';
+  if (secretary?.status !== 'approved') {
+    return 'Inscrições bloqueadas: seu cadastro aguarda validação da Secretaria.';
+  }
+  if (annualUpdateRequired()) {
+    const year = new Date().getFullYear();
+    return `Inscrições bloqueadas: atualize seu cadastro para ${year} antes de solicitar participação em competições.`;
+  }
+  return '';
 }
 
 function ensureCompetitionGate() {
@@ -273,12 +315,12 @@ function ensureCompetitionGate() {
     return;
   }
 
-  const approved = isApproved();
+  const eligible = competitionEligible();
   const toolbar = heading.closest<HTMLElement>('.section-toolbar');
   const message = competitionGateMessage();
 
   let gate = document.getElementById(COMPETITION_GATE_ID);
-  if (approved) {
+  if (eligible) {
     gate?.remove();
   } else if (toolbar) {
     if (!gate) {
@@ -292,13 +334,13 @@ function ensureCompetitionGate() {
 
   document.querySelectorAll<HTMLButtonElement>('.competition-card-actions button').forEach((button) => {
     if (!text(button.textContent).startsWith('Solicitar inscrição')) return;
-    const shouldDisable = !approved;
+    const shouldDisable = !eligible;
     if (button.disabled !== shouldDisable) button.disabled = shouldDisable;
 
-    const ariaDisabled = approved ? 'false' : 'true';
+    const ariaDisabled = eligible ? 'false' : 'true';
     if (button.getAttribute('aria-disabled') !== ariaDisabled) button.setAttribute('aria-disabled', ariaDisabled);
 
-    if (approved) {
+    if (eligible) {
       if (button.hasAttribute('title')) button.removeAttribute('title');
     } else if (button.title !== message) {
       button.title = message;
@@ -324,6 +366,7 @@ function injectStyles() {
     }
     .serfes-approval-banner[data-tone='approved'] { border-left-color: #1fa86b; }
     .serfes-approval-banner[data-tone='attention'] { border-left-color: #d83a3a; }
+    .serfes-approval-banner[data-tone='annual'] { border-left-color: #f3c623; }
     .serfes-approval-banner strong { color: #143b63; font-size: 1rem; }
     .serfes-approval-banner p { margin: 0; color: #4f6179; line-height: 1.5; }
     .serfes-approval-banner small { color: #61758d; line-height: 1.45; }
