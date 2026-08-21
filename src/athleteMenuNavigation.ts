@@ -15,6 +15,10 @@ function text(value: string | null | undefined) {
   return (value ?? '').replace(/\s+/g, ' ').trim();
 }
 
+function setElementText(element: Element | null | undefined, value: string) {
+  if (element && text(element.textContent) !== value) element.textContent = value;
+}
+
 function athleteAreaOpen() {
   return text(document.querySelector('.sidebar-brand-wrap .eyebrow')?.textContent).toLowerCase() === 'área do atleta';
 }
@@ -123,11 +127,11 @@ function ensureStyles() {
 }
 
 function revealCadastro(button: HTMLButtonElement) {
-  button.dataset.serfesCadastroMenu = 'true';
-  button.hidden = false;
-  button.style.display = '';
-  button.classList.remove('serfes-hidden-cadastro-nav');
-  button.removeAttribute('aria-hidden');
+  if (button.dataset.serfesCadastroMenu !== 'true') button.dataset.serfesCadastroMenu = 'true';
+  if (button.hidden) button.hidden = false;
+  if (button.style.display) button.style.display = '';
+  if (button.classList.contains('serfes-hidden-cadastro-nav')) button.classList.remove('serfes-hidden-cadastro-nav');
+  if (button.hasAttribute('aria-hidden')) button.removeAttribute('aria-hidden');
   if (button.tabIndex < 0) button.tabIndex = 0;
 }
 
@@ -161,7 +165,7 @@ function ensureMenu() {
   const registrations = nativeRegistrationsButton();
   if (!registrations) return;
 
-  registrations.dataset.serfesRegistrationMenu = 'true';
+  if (registrations.dataset.serfesRegistrationMenu !== 'true') registrations.dataset.serfesRegistrationMenu = 'true';
   setButtonLabel(registrations, 'Inscrições');
 
   let mine = document.getElementById(MINE_BUTTON_ID) as HTMLButtonElement | null;
@@ -214,7 +218,8 @@ function ensureGateAnchor(toolbar: HTMLElement, active: boolean) {
     anchor.className = GATE_ANCHOR_CLASS;
     anchor.setAttribute('aria-hidden', 'true');
     anchor.textContent = 'Minhas competições';
-    toolbar.append(anchor);
+    const visibleHeading = toolbar.querySelector<HTMLElement>(`h3:not(.${GATE_ANCHOR_CLASS})`);
+    (visibleHeading?.parentElement ?? toolbar).append(anchor);
   }
 }
 
@@ -232,12 +237,13 @@ function renderCompetitionView() {
   const heading = toolbar?.querySelector<HTMLElement>(`h3:not(.${GATE_ANCHOR_CLASS})`);
   const description = toolbar?.querySelector<HTMLElement>('.muted');
 
-  if (heading) heading.textContent = mode === 'mine' ? 'Minhas competições' : 'Inscrições';
-  if (description) {
-    description.textContent = mode === 'mine'
+  setElementText(heading, mode === 'mine' ? 'Minhas competições' : 'Inscrições');
+  setElementText(
+    description,
+    mode === 'mine'
       ? 'Acompanhe as competições em que você já solicitou inscrição e consulte a situação de cada participação.'
-      : 'Consulte as competições disponíveis, confira os requisitos e solicite sua inscrição.';
-  }
+      : 'Consulte as competições disponíveis, confira os requisitos e solicite sua inscrição.',
+  );
 
   if (toolbar) ensureGateAnchor(toolbar, mode === 'registrations');
 
@@ -245,7 +251,8 @@ function renderCompetitionView() {
   let visible = 0;
   cards.forEach((card) => {
     const show = mode === 'registrations' || registeredCard(card);
-    card.hidden = !show;
+    const shouldHide = !show;
+    if (card.hidden !== shouldHide) card.hidden = shouldHide;
     if (show) visible += 1;
   });
 
@@ -256,7 +263,7 @@ function renderCompetitionView() {
       empty.id = EMPTY_ID;
       grid.insertAdjacentElement('afterend', empty);
     }
-    empty.textContent = 'Você ainda não possui competições vinculadas ao seu cadastro.';
+    setElementText(empty, 'Você ainda não possui competições vinculadas ao seu cadastro.');
   } else {
     empty?.remove();
   }
@@ -283,7 +290,7 @@ function syncSchoolValidationNotice() {
     text(row.querySelector('span')?.textContent) === 'Matriculado em instituição de ensino',
   );
   const enrolled = text(enrolledRow?.querySelector('strong')?.textContent);
-  let notice = section.querySelector<HTMLElement>('.serfes-school-validation-status');
+  const notice = section.querySelector<HTMLElement>('.serfes-school-validation-status');
 
   if (enrolled === 'Não' || schoolValidationStatus() === 'validated') {
     notice?.remove();
@@ -291,14 +298,14 @@ function syncSchoolValidationNotice() {
   }
 
   if (!notice) {
-    notice = document.createElement('div');
-    notice.className = 'serfes-school-validation-status';
+    const nextNotice = document.createElement('div');
+    nextNotice.className = 'serfes-school-validation-status';
     const title = document.createElement('strong');
     title.textContent = 'Validação do vínculo escolar pendente';
     const detail = document.createElement('span');
     detail.textContent = 'A confirmação pela instituição de ensino ainda não foi concluída. Este aviso desaparecerá automaticamente após a validação.';
-    notice.append(title, detail);
-    section.querySelector('h4')?.insertAdjacentElement('afterend', notice);
+    nextNotice.append(title, detail);
+    section.querySelector('h4')?.insertAdjacentElement('afterend', nextNotice);
   }
 }
 
