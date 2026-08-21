@@ -3,6 +3,9 @@ export {};
 const REGISTRATION_BUTTON_ID = 'serfes-registration-button';
 const CTA_ID = 'serfes-athlete-registration-cta';
 const STYLE_ID = 'serfes-athlete-login-presentation-styles';
+const REGISTRATION_ENTRY_KEY = 'serfes-athlete-registration-entry';
+const TEMP_LOGIN_EMAIL = 'cadastro@teste.serfes.com.br';
+const TEMP_LOGIN_PASSWORD = 'cadastro-temporario';
 
 function text(value: string | null | undefined) {
   return (value ?? '').replace(/\s+/g, ' ').trim();
@@ -21,22 +24,41 @@ function profileSelect(form: HTMLFormElement) {
   return label?.querySelector<HTMLSelectElement>('select') ?? null;
 }
 
+function field(form: HTMLFormElement, labelStart: string) {
+  const label = Array.from(form.querySelectorAll<HTMLLabelElement>('label')).find((item) =>
+    text(item.firstChild?.textContent).startsWith(labelStart),
+  );
+  return label?.querySelector<HTMLInputElement>('input') ?? null;
+}
+
 function isAthlete(form: HTMLFormElement) {
   return profileSelect(form)?.value === 'Atleta';
 }
 
-function nudgeAuthBridge(form: HTMLFormElement) {
-  if (!isAthlete(form) || form.querySelector(`#${REGISTRATION_BUTTON_ID}`)) return;
+function setNativeInputValue(input: HTMLInputElement, value: string) {
+  const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set;
+  setter?.call(input, value);
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+}
 
-  const marker = document.createElement('span');
-  marker.hidden = true;
-  marker.dataset.serfesLoginRefresh = 'true';
-  form.append(marker);
+function startRegistration(form: HTMLFormElement) {
+  if (!isAthlete(form)) return;
 
-  window.requestAnimationFrame(() => {
-    marker.remove();
-    schedule();
-  });
+  const email = field(form, 'E-mail');
+  const password = field(form, 'Senha');
+  if (!email || !password) return;
+
+  try {
+    sessionStorage.setItem(REGISTRATION_ENTRY_KEY, 'true');
+  } catch {
+    // Sem ação.
+  }
+
+  setNativeInputValue(email, TEMP_LOGIN_EMAIL);
+  setNativeInputValue(password, TEMP_LOGIN_PASSWORD);
+  form.dataset.serfesAuthBypass = 'true';
+  form.requestSubmit();
 }
 
 function ensureStyles() {
@@ -96,14 +118,20 @@ function ensurePresentation(form: HTMLFormElement) {
 
   cta.hidden = !athlete;
 
-  const registrationButton = form.querySelector<HTMLButtonElement>(`#${REGISTRATION_BUTTON_ID}`);
+  let registrationButton = form.querySelector<HTMLButtonElement>(`#${REGISTRATION_BUTTON_ID}`);
   if (!registrationButton) {
-    nudgeAuthBridge(form);
-    return;
+    registrationButton = document.createElement('button');
+    registrationButton.id = REGISTRATION_BUTTON_ID;
+    registrationButton.type = 'button';
+    registrationButton.className = 'secondary-button serfes-registration-button';
+    registrationButton.textContent = 'Criar conta';
+    registrationButton.addEventListener('click', () => startRegistration(form));
+    cta.append(registrationButton);
+  } else {
+    if (registrationButton.textContent !== 'Criar conta') registrationButton.textContent = 'Criar conta';
+    if (registrationButton.parentElement !== cta) cta.append(registrationButton);
   }
 
-  if (registrationButton.textContent !== 'Criar conta') registrationButton.textContent = 'Criar conta';
-  if (registrationButton.parentElement !== cta) cta.append(registrationButton);
   registrationButton.hidden = !athlete;
 }
 
@@ -124,11 +152,11 @@ if (typeof window !== 'undefined') {
     if (!(target instanceof HTMLSelectElement)) return;
     const form = target.closest<HTMLFormElement>('form');
     if (!form || form !== loginForm()) return;
-    schedule();
-    window.setTimeout(schedule, 0);
+    ensurePresentation(form);
   }, true);
 
   window.addEventListener('DOMContentLoaded', schedule, { once: true });
+  window.addEventListener('focus', schedule);
 
   const observer = new MutationObserver(schedule);
   observer.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
