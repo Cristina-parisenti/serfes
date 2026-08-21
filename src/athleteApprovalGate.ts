@@ -275,6 +275,7 @@ function ensureCompetitionGate() {
 
   const approved = isApproved();
   const toolbar = heading.closest<HTMLElement>('.section-toolbar');
+  const message = competitionGateMessage();
 
   let gate = document.getElementById(COMPETITION_GATE_ID);
   if (approved) {
@@ -286,15 +287,22 @@ function ensureCompetitionGate() {
       gate.className = 'warning-note serfes-competition-gate';
       toolbar.insertAdjacentElement('afterend', gate);
     }
-    gate.textContent = competitionGateMessage();
+    if (text(gate.textContent) !== message) gate.textContent = message;
   }
 
   document.querySelectorAll<HTMLButtonElement>('.competition-card-actions button').forEach((button) => {
     if (!text(button.textContent).startsWith('Solicitar inscrição')) return;
-    button.disabled = !approved;
-    button.setAttribute('aria-disabled', approved ? 'false' : 'true');
-    if (approved) button.removeAttribute('title');
-    else button.title = competitionGateMessage();
+    const shouldDisable = !approved;
+    if (button.disabled !== shouldDisable) button.disabled = shouldDisable;
+
+    const ariaDisabled = approved ? 'false' : 'true';
+    if (button.getAttribute('aria-disabled') !== ariaDisabled) button.setAttribute('aria-disabled', ariaDisabled);
+
+    if (approved) {
+      if (button.hasAttribute('title')) button.removeAttribute('title');
+    } else if (button.title !== message) {
+      button.title = message;
+    }
   });
 }
 
