@@ -8,6 +8,7 @@ import './athleteSidebarLock';
 import './schoolValidationCycle';
 import './responsibleCrossValidation';
 import './athleteRegistrationFlow';
+import './athleteCompleteDataView';
 import './removeDocumentsShortcut';
 import './athleteProfileImageSafe';
 import './profileImageGuidance';
