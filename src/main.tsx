@@ -9,11 +9,10 @@ import './schoolValidationCycle';
 import './responsibleCrossValidation';
 import './athleteRegistrationFlow';
 import './removeDocumentsShortcut';
-import './athleteProfileImage';
+import './athleteProfileImageSafe';
 import './profileImageGuidance';
 import './registrationCardPresentationFix';
 import './athleteSexAndGreeting';
-import './athleteRegistrationNavigationFix';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
