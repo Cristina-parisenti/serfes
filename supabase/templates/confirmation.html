@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Confirme seu cadastro no SERFES</title>
+  </head>
+  <body style="margin:0;padding:0;background:#f4f7fa;font-family:Arial,Helvetica,sans-serif;color:#23364d;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
+      Confirme seu e-mail para que o cadastro siga para validação da Secretaria.
+    </div>
+
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f4f7fa;padding:32px 12px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;background:#ffffff;border:1px solid #dbe5ee;border-radius:18px;overflow:hidden;box-shadow:0 12px 32px rgba(20,59,99,.08);">
+            <tr>
+              <td style="height:6px;background:linear-gradient(90deg,#0b5aa6 0 38%,#f3c623 38% 58%,#1fa86b 58% 79%,#d83a3a 79% 100%);font-size:0;line-height:0;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="padding:30px 34px 12px;">
+                <div style="font-size:24px;font-weight:800;letter-spacing:.03em;color:#143b63;">SERFES</div>
+                <div style="margin-top:4px;font-size:13px;font-weight:600;color:#6a7c90;">Cadastro do atleta</div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:12px 34px 34px;">
+                <h1 style="margin:0 0 16px;font-size:27px;line-height:1.25;color:#143b63;">Confirme seu cadastro</h1>
+
+                <p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:#40546b;">Olá!</p>
+                <p style="margin:0 0 22px;font-size:16px;line-height:1.6;color:#40546b;">
+                  Recebemos seu cadastro no SERFES. Para validar o endereço de e-mail informado e permitir que o cadastro siga para análise da Secretaria, confirme sua conta pelo botão abaixo.
+                </p>
+
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 24px;">
+                  <tr>
+                    <td bgcolor="#0b5aa6" style="border-radius:10px;">
+                      <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 24px;font-size:16px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:10px;">Confirmar cadastro</a>
+                    </td>
+                  </tr>
+                </table>
+
+                <div style="padding:16px 18px;background:#f4f8fc;border:1px solid #dce8f2;border-radius:12px;margin-bottom:22px;">
+                  <p style="margin:0;font-size:14px;line-height:1.55;color:#52677e;">
+                    Após a confirmação do e-mail, seu cadastro poderá seguir para as etapas de validação previstas no SERFES.
+                  </p>
+                </div>
+
+                <p style="margin:0 0 8px;font-size:13px;line-height:1.55;color:#6b7d90;">
+                  Se você não realizou este cadastro, basta ignorar esta mensagem.
+                </p>
+                <p style="margin:0;font-size:13px;line-height:1.55;color:#6b7d90;">
+                  Caso o botão não funcione, abra este link no navegador:<br />
+                  <a href="{{ .ConfirmationURL }}" style="color:#0b5aa6;word-break:break-all;">{{ .ConfirmationURL }}</a>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:20px 34px;background:#f7f9fb;border-top:1px solid #e4ebf1;">
+                <p style="margin:0;font-size:12px;line-height:1.5;color:#7a8a9b;">
+                  Esta é uma mensagem automática do SERFES. Não responda a este e-mail.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
