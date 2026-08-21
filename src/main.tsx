@@ -18,6 +18,7 @@ import './athleteApprovalGate';
 import './supabaseAuthBridge';
 import './athleteRegistrationAuthGuard';
 import './athleteLoginPresentationFix';
+import './athleteMenuNavigation';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
