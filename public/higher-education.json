@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-08-21T14:04:05.487436+00:00",
+  "generatedAt": "2026-08-22T12:02:34.312420+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -15757,6 +15757,16 @@
       "network": "Privada"
     },
     {
+      "id": "1702533:1472:000000004104204",
+      "code": "1702533",
+      "name": "ARQUITETURA E URBANISMO",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "1472:000000004104204",
+      "municipality": "Campo Largo",
+      "network": "Privada"
+    },
+    {
       "id": "1702556:1491:000000004104501",
       "code": "1702556",
       "name": "ARQUITETURA E URBANISMO",
@@ -22847,13 +22857,13 @@
       "network": "Privada"
     },
     {
-      "id": "1576363:1270:000000004119509",
+      "id": "1576363:1270:000000004120705",
       "code": "1576363",
       "name": "CIÊNCIAS SOCIAIS",
       "degree": "Bacharelado",
       "modality": "EAD",
-      "institutionId": "1270:000000004119509",
-      "municipality": "Piraquara",
+      "institutionId": "1270:000000004120705",
+      "municipality": "Quatiguá",
       "network": "Privada"
     },
     {
@@ -71197,6 +71207,16 @@
       "network": "Privada"
     },
     {
+      "id": "1498704:1510:000000004105805",
+      "code": "1498704",
+      "name": "SECRETARIADO EXECUTIVO",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1510:000000004105805",
+      "municipality": "Colombo",
+      "network": "Privada"
+    },
+    {
       "id": "1487704:163:000000004106902",
       "code": "1487704",
       "name": "SECRETARIADO EXECUTIVO",
@@ -71204,16 +71224,6 @@
       "modality": "EAD",
       "institutionId": "163:000000004106902",
       "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "1579384:1660:000000004125001",
-      "code": "1579384",
-      "name": "SECRETARIADO EXECUTIVO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1660:000000004125001",
-      "municipality": "São João do Ivaí",
       "network": "Privada"
     },
     {
