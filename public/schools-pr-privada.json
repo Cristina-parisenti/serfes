@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-08-21T11:15:54.856013+00:00",
+  "generatedAt": "2026-08-22T11:12:46.550914+00:00",
   "records": [
     {
       "id": "306",
@@ -3600,12 +3600,6 @@
     {
       "id": "17932",
       "name": "Cantinho da Crianca, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "19757",
-      "name": "Cantinho das Estrelas, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
