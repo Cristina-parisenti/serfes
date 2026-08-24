@@ -1,9 +1,18 @@
 export {};
 
 const INTERNAL_CAPACITY = 'representante';
+const LEGACY_RG_KEY = 'serfes-athlete-responsible-rg';
 
 function text(value: string | null | undefined) {
   return (value ?? '').replace(/\s+/g, ' ').trim();
+}
+
+function clearLegacyRg() {
+  try {
+    localStorage.removeItem(LEGACY_RG_KEY);
+  } catch {
+    // Sem ação: o dado legado não é mais utilizado pelo SERFES.
+  }
 }
 
 function responsibleSection(form: HTMLFormElement) {
@@ -81,6 +90,7 @@ function applyReadonlyFix() {
 }
 
 function apply() {
+  clearLegacyRg();
   document.querySelectorAll<HTMLFormElement>('form.athlete-form').forEach(applyFormFix);
   applyReadonlyFix();
 }
@@ -96,6 +106,8 @@ function schedule() {
 }
 
 if (typeof window !== 'undefined') {
+  clearLegacyRg();
+
   document.addEventListener('submit', (event) => {
     const form = event.target instanceof HTMLFormElement ? event.target : null;
     if (!form?.classList.contains('athlete-form')) return;
