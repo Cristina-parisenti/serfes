@@ -16,6 +16,7 @@ import './registrationCardPresentationFix';
 import './athleteSexAndGreeting';
 import './athleteApprovalGate';
 import './athleteRegistrationCompletionReturn';
+import './athleteEmailConfirmationReturn';
 import './supabaseAuthBridge';
 import './athleteRegistrationAuthGuard';
 import './athleteLoginPresentationFix';
