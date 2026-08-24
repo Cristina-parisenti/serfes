@@ -4,7 +4,6 @@ import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL, supabase } from './supabaseClie
 const DRAFT_KEY = 'serfes-athlete-backend-draft';
 const SYNC_STATE_KEY = 'serfes-athlete-backend-sync-state';
 const REGISTRATION_ENTRY_KEY = 'serfes-athlete-registration-entry';
-const RESPONSIBLE_RG_KEY = 'serfes-athlete-responsible-rg';
 
 type DraftSex = 'female' | 'male';
 
@@ -36,7 +35,6 @@ type AthleteBackendDraft = {
   };
   guardian: {
     fullName: string;
-    rg: string;
     cpf: string;
     email: string;
     phone: string;
@@ -73,14 +71,6 @@ function writeJson(key: string, value: unknown) {
     localStorage.setItem(key, JSON.stringify(value));
   } catch {
     // A sincronização continua mesmo se o navegador não permitir armazenamento local.
-  }
-}
-
-function readStoredText(key: string) {
-  try {
-    return text(localStorage.getItem(key));
-  } catch {
-    return '';
   }
 }
 
@@ -161,16 +151,14 @@ function captureDraft(form: HTMLFormElement): AthleteBackendDraft | null {
   let guardian: AthleteBackendDraft['guardian'] = null;
   if (guardianSection) {
     const guardianCpf = digits(controlValue(guardianSection, 'CPF'));
-    const rg = controlValue(guardianSection, 'RG') || readStoredText(RESPONSIBLE_RG_KEY);
     const guardianName = controlValue(guardianSection, 'Nome completo');
     const guardianEmail = controlValue(guardianSection, 'E-mail').toLowerCase();
     const guardianPhone = controlValue(guardianSection, 'Telefone');
 
-    if (!guardianName || !rg || guardianCpf.length !== 11 || !guardianEmail || !guardianPhone) return null;
+    if (!guardianName || guardianCpf.length !== 11 || !guardianEmail || !guardianPhone) return null;
 
     guardian = {
       fullName: guardianName,
-      rg,
       cpf: guardianCpf,
       email: guardianEmail,
       phone: guardianPhone,
@@ -307,7 +295,6 @@ async function syncDraftWithSession(session: Session) {
         .upsert({
           athlete_id: user.id,
           full_name: draft.guardian.fullName,
-          rg: draft.guardian.rg,
           cpf: draft.guardian.cpf,
           email: draft.guardian.email,
           phone: draft.guardian.phone,
