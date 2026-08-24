@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-08-23T12:02:52.050674+00:00",
+  "generatedAt": "2026-08-24T14:10:40.279177+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -24687,16 +24687,6 @@
       "network": "Privada"
     },
     {
-      "id": "1387141:1491:000000004104253",
-      "code": "1387141",
-      "name": "COMUNICAÇÃO SOCIAL - PUBLICIDADE E PROPAGANDA",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1491:000000004104253",
-      "municipality": "Campo Magro",
-      "network": "Privada"
-    },
-    {
       "id": "1387141:1491:000000004104709",
       "code": "1387141",
       "name": "COMUNICAÇÃO SOCIAL - PUBLICIDADE E PROPAGANDA",
@@ -36244,6 +36234,16 @@
       "modality": "Semipresencial",
       "institutionId": "1491:000000004128609",
       "municipality": "Verê",
+      "network": "Privada"
+    },
+    {
+      "id": "1660019:3649:000000004100400",
+      "code": "1660019",
+      "name": "ESTUDOS TEÓRICOS PSICANALÍTICOS E SOCIAIS",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "3649:000000004100400",
+      "municipality": "Almirante Tamandaré",
       "network": "Privada"
     },
     {
@@ -51697,6 +51697,16 @@
       "network": "Privada"
     },
     {
+      "id": "120717:322:000000004104303",
+      "code": "120717",
+      "name": "GESTÃO FINANCEIRA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "322:000000004104303",
+      "municipality": "Campo Mourão",
+      "network": "Privada"
+    },
+    {
       "id": "1427726:1430:000000004104402",
       "code": "1427726",
       "name": "GESTÃO FINANCEIRA",
@@ -64427,6 +64437,16 @@
       "network": "Privada"
     },
     {
+      "id": "1711646:1196:000000004107504",
+      "code": "1711646",
+      "name": "PEDAGOGIA",
+      "degree": "Licenciatura",
+      "modality": "Semipresencial",
+      "institutionId": "1196:000000004107504",
+      "municipality": "Engenheiro Beltrão",
+      "network": "Privada"
+    },
+    {
       "id": "1704150:1491:000000004107603",
       "code": "1704150",
       "name": "PEDAGOGIA",
@@ -67807,6 +67827,16 @@
       "network": "Privada"
     },
     {
+      "id": "1703956:1196:000000004125605",
+      "code": "1703956",
+      "name": "PSICOPEDAGOGIA",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "1196:000000004125605",
+      "municipality": "São Mateus do Sul",
+      "network": "Privada"
+    },
+    {
       "id": "1703956:1196:000000004126504",
       "code": "1703956",
       "name": "PSICOPEDAGOGIA",
@@ -68824,16 +68854,6 @@
       "modality": "Semipresencial",
       "institutionId": "1491:000000004108304",
       "municipality": "Foz do Iguaçu",
-      "network": "Privada"
-    },
-    {
-      "id": "1701288:1491:000000004113205",
-      "code": "1701288",
-      "name": "QUÍMICA",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1491:000000004113205",
-      "municipality": "Lapa",
       "network": "Privada"
     },
     {
