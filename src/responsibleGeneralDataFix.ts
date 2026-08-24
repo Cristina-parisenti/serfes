@@ -1,26 +1,17 @@
 export {};
 
-const RESPONSIBLE_RG_KEY = 'serfes-athlete-responsible-rg';
-const RG_INPUT_CLASS = 'serfes-responsible-rg-input';
 const INTERNAL_CAPACITY = 'representante';
+const LEGACY_RG_KEY = 'serfes-athlete-responsible-rg';
 
 function text(value: string | null | undefined) {
   return (value ?? '').replace(/\s+/g, ' ').trim();
 }
 
-function readStoredRg() {
+function clearLegacyRg() {
   try {
-    return text(localStorage.getItem(RESPONSIBLE_RG_KEY));
+    localStorage.removeItem(LEGACY_RG_KEY);
   } catch {
-    return '';
-  }
-}
-
-function saveRg(value: string) {
-  try {
-    localStorage.setItem(RESPONSIBLE_RG_KEY, text(value));
-  } catch {
-    // O valor permanece disponível no formulário mesmo se o armazenamento local estiver indisponível.
+    // Sem ação: o dado legado não é mais utilizado pelo SERFES.
   }
 }
 
@@ -50,7 +41,7 @@ function hideLegacyField(label: HTMLLabelElement) {
   label.style.setProperty('display', 'none', 'important');
 }
 
-function neutralizeLegacyCapacity(section: HTMLElement) {
+function neutralizeLegacyFields(section: HTMLElement) {
   const capacityLabel = labelStartingWith(section, 'Qualificação');
   const capacity = capacityLabel?.querySelector<HTMLSelectElement>('select');
 
@@ -74,62 +65,14 @@ function neutralizeLegacyCapacity(section: HTMLElement) {
     const input = proofLabel.querySelector<HTMLInputElement>('input[type="file"]');
     if (input) input.required = false;
   }
-}
 
-function createRgField(initialValue: string) {
-  const label = document.createElement('label');
-  label.className = 'serfes-responsible-rg-field';
-  label.append(document.createTextNode('RG'));
-
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.required = true;
-  input.maxLength = 20;
-  input.autocomplete = 'off';
-  input.placeholder = 'Número do RG';
-  input.className = RG_INPUT_CLASS;
-  input.value = initialValue;
-  input.addEventListener('input', () => saveRg(input.value));
-  input.addEventListener('change', () => saveRg(input.value));
-
-  label.append(input);
-  return label;
-}
-
-function ensureRgField(section: HTMLElement) {
-  const input = section.querySelector<HTMLInputElement>(`.${RG_INPUT_CLASS}`);
-  if (input) {
-    if (!input.value && readStoredRg()) input.value = readStoredRg();
-    input.required = true;
-    return;
-  }
-
-  const field = createRgField(readStoredRg());
-  const nameLabel = labelStartingWith(section, 'Nome completo');
-  if (nameLabel) nameLabel.after(field);
-  else section.querySelector<HTMLElement>('.form-grid')?.prepend(field);
+  section.querySelectorAll<HTMLElement>('.serfes-responsible-rg-field').forEach((field) => field.remove());
 }
 
 function applyFormFix(form: HTMLFormElement) {
   const section = responsibleSection(form);
   if (!section) return;
-
-  neutralizeLegacyCapacity(section);
-  ensureRgField(section);
-}
-
-function createReadonlyRow(labelText: string, valueText: string) {
-  const row = document.createElement('div');
-  row.className = 'final-account-row serfes-responsible-rg-readonly-row';
-
-  const label = document.createElement('span');
-  label.textContent = labelText;
-
-  const value = document.createElement('strong');
-  value.textContent = valueText || 'Não informado';
-
-  row.append(label, value);
-  return row;
+  neutralizeLegacyFields(section);
 }
 
 function applyReadonlyFix() {
@@ -142,24 +85,12 @@ function applyReadonlyFix() {
 
   Array.from(grid.querySelectorAll<HTMLElement>('.final-account-row')).forEach((row) => {
     const label = text(row.querySelector('span')?.textContent);
-    if (label === 'Qualificação' || label === 'Documento comprobatório') row.remove();
+    if (label === 'Qualificação' || label === 'Documento comprobatório' || label === 'RG') row.remove();
   });
-
-  let rgRow = grid.querySelector<HTMLElement>('.serfes-responsible-rg-readonly-row');
-  if (!rgRow) {
-    rgRow = createReadonlyRow('RG', readStoredRg());
-    const nameRow = Array.from(grid.querySelectorAll<HTMLElement>('.final-account-row')).find(
-      (row) => text(row.querySelector('span')?.textContent) === 'Nome completo',
-    );
-    if (nameRow) nameRow.after(rgRow);
-    else grid.prepend(rgRow);
-  } else {
-    const value = rgRow.querySelector<HTMLElement>('strong');
-    if (value) value.textContent = readStoredRg() || 'Não informado';
-  }
 }
 
 function apply() {
+  clearLegacyRg();
   document.querySelectorAll<HTMLFormElement>('form.athlete-form').forEach(applyFormFix);
   applyReadonlyFix();
 }
@@ -175,19 +106,16 @@ function schedule() {
 }
 
 if (typeof window !== 'undefined') {
+  clearLegacyRg();
+
   document.addEventListener('submit', (event) => {
     const form = event.target instanceof HTMLFormElement ? event.target : null;
     if (!form?.classList.contains('athlete-form')) return;
     applyFormFix(form);
-    const rg = form.querySelector<HTMLInputElement>(`.${RG_INPUT_CLASS}`);
-    if (rg) saveRg(rg.value);
   }, true);
 
   window.addEventListener('DOMContentLoaded', schedule, { once: true });
   window.addEventListener('focus', schedule);
-  window.addEventListener('storage', (event) => {
-    if (event.key === RESPONSIBLE_RG_KEY) schedule();
-  });
 
   const observer = new MutationObserver(schedule);
   observer.observe(document.documentElement, { childList: true, subtree: true });
