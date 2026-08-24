@@ -43,6 +43,13 @@ function setNativeSelectValue(select: HTMLSelectElement, value: string) {
   select.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
+function hideLegacyField(label: HTMLLabelElement) {
+  label.hidden = true;
+  label.dataset.serfesLegacyResponsibleField = 'true';
+  label.setAttribute('aria-hidden', 'true');
+  label.style.setProperty('display', 'none', 'important');
+}
+
 function neutralizeLegacyCapacity(section: HTMLElement) {
   const capacityLabel = labelStartingWith(section, 'Qualificação');
   const capacity = capacityLabel?.querySelector<HTMLSelectElement>('select');
@@ -59,15 +66,11 @@ function neutralizeLegacyCapacity(section: HTMLElement) {
     if (capacity.value !== INTERNAL_CAPACITY) setNativeSelectValue(capacity, INTERNAL_CAPACITY);
   }
 
-  if (capacityLabel) {
-    capacityLabel.hidden = true;
-    capacityLabel.dataset.serfesLegacyResponsibleField = 'true';
-  }
+  if (capacityLabel) hideLegacyField(capacityLabel);
 
   const proofLabel = labelStartingWith(section, 'Documento comprobatório da responsabilidade legal');
   if (proofLabel) {
-    proofLabel.hidden = true;
-    proofLabel.dataset.serfesLegacyResponsibleField = 'true';
+    hideLegacyField(proofLabel);
     const input = proofLabel.querySelector<HTMLInputElement>('input[type="file"]');
     if (input) input.required = false;
   }
@@ -94,7 +97,7 @@ function createRgField(initialValue: string) {
 }
 
 function ensureRgField(section: HTMLElement) {
-  let input = section.querySelector<HTMLInputElement>(`.${RG_INPUT_CLASS}`);
+  const input = section.querySelector<HTMLInputElement>(`.${RG_INPUT_CLASS}`);
   if (input) {
     if (!input.value && readStoredRg()) input.value = readStoredRg();
     input.required = true;
