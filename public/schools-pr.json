@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-08-25T11:30:38.761795+00:00",
+  "generatedAt": "2026-08-26T12:02:51.658960+00:00",
   "records": [
     {
       "id": "20",
@@ -39910,6 +39910,12 @@
       "network": "Municipal"
     },
     {
+      "id": "467",
+      "name": "Primeiros Passos - C M E I",
+      "municipality": "Missal",
+      "network": "Municipal"
+    },
+    {
       "id": "378",
       "name": "Renascer, E M-Ei Ef",
       "municipality": "Missal",
@@ -41160,6 +41166,12 @@
     {
       "id": "283",
       "name": "Crispim Gy Mu, C E I Cacique-Ei Ef M",
+      "municipality": "Ortigueira",
+      "network": "Estadual"
+    },
+    {
+      "id": "1751",
+      "name": "Francisco, C E C Papa - Ef M",
       "municipality": "Ortigueira",
       "network": "Estadual"
     },
