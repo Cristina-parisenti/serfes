@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-08-26T12:02:51.658960+00:00",
+  "generatedAt": "2026-08-28T22:02:46.298405+00:00",
   "records": [
     {
       "id": "306",
@@ -832,12 +832,6 @@
       "network": "Privada"
     },
     {
-      "id": "567",
-      "name": "Sesi-Assai, C-Em",
-      "municipality": "Assai",
-      "network": "Privada"
-    },
-    {
       "id": "575",
       "name": "Zilda Arns, E Dra - Ei Ef Mod Ed Esp",
       "municipality": "Assai",
@@ -960,12 +954,6 @@
     {
       "id": "613",
       "name": "Sao Miguel, C-Ei Ef M",
-      "municipality": "Bandeirantes",
-      "network": "Privada"
-    },
-    {
-      "id": "907",
-      "name": "Sesi Bandeirantes, C - Ens Fund Med",
       "municipality": "Bandeirantes",
       "network": "Privada"
     },
@@ -1968,12 +1956,6 @@
     {
       "id": "1114",
       "name": "Passo Certo, C E I",
-      "municipality": "Cascavel",
-      "network": "Privada"
-    },
-    {
-      "id": "3656",
-      "name": "Perfil do Oeste, C E I",
       "municipality": "Cascavel",
       "network": "Privada"
     },
@@ -3600,6 +3582,12 @@
     {
       "id": "17932",
       "name": "Cantinho da Crianca, C E I",
+      "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
+      "id": "20925",
+      "name": "Cantinho das Estrelas, Cei",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -10834,12 +10822,6 @@
       "network": "Privada"
     },
     {
-      "id": "7960",
-      "name": "Star Baby, C E I",
-      "municipality": "Londrina",
-      "network": "Privada"
-    },
-    {
       "id": "5879",
       "name": "Tema, E-Ef",
       "municipality": "Londrina",
@@ -11526,12 +11508,6 @@
     {
       "id": "3211",
       "name": "Eximius, E-Ef",
-      "municipality": "Maringa",
-      "network": "Privada"
-    },
-    {
-      "id": "3548",
-      "name": "Expansao, C E I-Subs",
       "municipality": "Maringa",
       "network": "Privada"
     },
@@ -12556,12 +12532,6 @@
       "network": "Privada"
     },
     {
-      "id": "1675",
-      "name": "Alegria do Saber, C E I",
-      "municipality": "Paranagua",
-      "network": "Privada"
-    },
-    {
       "id": "580",
       "name": "Alfa, E-Ei Ef",
       "municipality": "Paranagua",
@@ -13338,12 +13308,6 @@
     {
       "id": "400",
       "name": "Suico-Brasileiro, C-Ei Ef M",
-      "municipality": "Pinhais",
-      "network": "Privada"
-    },
-    {
-      "id": "1032",
-      "name": "Tapete Magico, C E I",
       "municipality": "Pinhais",
       "network": "Privada"
     },
@@ -14165,7 +14129,7 @@
     },
     {
       "id": "660",
-      "name": "Centro Educ Profis de Quitndinha",
+      "name": "Centro Educ Profis de Quitandinha",
       "municipality": "Quitandinha",
       "network": "Privada"
     },

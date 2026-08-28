@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-08-26T12:02:51.658960+00:00",
+  "generatedAt": "2026-08-28T22:02:46.298405+00:00",
   "records": [
     {
       "id": "241",
@@ -162,12 +162,6 @@
     {
       "id": "951",
       "name": "Bortolo Lovato, E M-Ei Ef",
-      "municipality": "Almirante Tamandare",
-      "network": "Municipal"
-    },
-    {
-      "id": "1257",
-      "name": "Branca de Neve, C M E I",
       "municipality": "Almirante Tamandare",
       "network": "Municipal"
     },
@@ -1918,12 +1912,6 @@
       "network": "Municipal"
     },
     {
-      "id": "1748",
-      "name": "Centro Ii, C M E I",
-      "municipality": "Araucaria",
-      "network": "Municipal"
-    },
-    {
       "id": "1942",
       "name": "Centro M A E E Transt Espectro Autista",
       "municipality": "Araucaria",
@@ -1932,12 +1920,6 @@
     {
       "id": "784",
       "name": "Centro M Atend E E A I Joelma do R Tulio",
-      "municipality": "Araucaria",
-      "network": "Municipal"
-    },
-    {
-      "id": "1802",
-      "name": "Centro M Atend E E A I Pde Jose Anusz",
       "municipality": "Araucaria",
       "network": "Municipal"
     },
@@ -2094,6 +2076,12 @@
     {
       "id": "768",
       "name": "Juscelino K Oliveira, E M Pres-Ei Ef",
+      "municipality": "Araucaria",
+      "network": "Municipal"
+    },
+    {
+      "id": "2140",
+      "name": "Lucy Moreira Machado, E M - Pedagoga",
       "municipality": "Araucaria",
       "network": "Municipal"
     },
@@ -6317,7 +6305,7 @@
     },
     {
       "id": "79",
-      "name": "Henrique S Coimbra, E R M Fr-Ei Ef",
+      "name": "Henrique S Coimbra, E M R Fr-Ei Ef",
       "municipality": "Catanduvas",
       "network": "Municipal"
     },
@@ -6341,7 +6329,7 @@
     },
     {
       "id": "52",
-      "name": "Valentin Bernardo Thisen, E R M Pr-Ei Ef",
+      "name": "Valentin Bernardo Thisen, E M R Pr-Ei Ef",
       "municipality": "Catanduvas",
       "network": "Municipal"
     },
@@ -19276,12 +19264,6 @@
       "network": "Municipal"
     },
     {
-      "id": "3858",
-      "name": "Recanto do Menor Alvorada, C M E I",
-      "municipality": "Maringa",
-      "network": "Municipal"
-    },
-    {
       "id": "1324",
       "name": "Renato Bernardi, E M Prof-Ef",
       "municipality": "Maringa",
@@ -21006,12 +20988,6 @@
     {
       "id": "1701",
       "name": "Carmem Solange Brasil Mattos, C M E I",
-      "municipality": "Palmas",
-      "network": "Municipal"
-    },
-    {
-      "id": "1710",
-      "name": "Ga Kosin Ag, C M E I",
       "municipality": "Palmas",
       "network": "Municipal"
     },

@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-08-26T12:02:51.658960+00:00",
+  "generatedAt": "2026-08-28T22:02:46.298405+00:00",
   "records": [
     {
       "id": "20",
@@ -336,12 +336,6 @@
     {
       "id": "951",
       "name": "Bortolo Lovato, E M-Ei Ef",
-      "municipality": "Almirante Tamandare",
-      "network": "Municipal"
-    },
-    {
-      "id": "1257",
-      "name": "Branca de Neve, C M E I",
       "municipality": "Almirante Tamandare",
       "network": "Municipal"
     },
@@ -3352,12 +3346,6 @@
       "network": "Municipal"
     },
     {
-      "id": "1748",
-      "name": "Centro Ii, C M E I",
-      "municipality": "Araucaria",
-      "network": "Municipal"
-    },
-    {
       "id": "1942",
       "name": "Centro M A E E Transt Espectro Autista",
       "municipality": "Araucaria",
@@ -3366,12 +3354,6 @@
     {
       "id": "784",
       "name": "Centro M Atend E E A I Joelma do R Tulio",
-      "municipality": "Araucaria",
-      "network": "Municipal"
-    },
-    {
-      "id": "1802",
-      "name": "Centro M Atend E E A I Pde Jose Anusz",
       "municipality": "Araucaria",
       "network": "Municipal"
     },
@@ -3528,6 +3510,12 @@
     {
       "id": "768",
       "name": "Juscelino K Oliveira, E M Pres-Ei Ef",
+      "municipality": "Araucaria",
+      "network": "Municipal"
+    },
+    {
+      "id": "2140",
+      "name": "Lucy Moreira Machado, E M - Pedagoga",
       "municipality": "Araucaria",
       "network": "Municipal"
     },
@@ -4008,12 +3996,6 @@
     {
       "id": "605",
       "name": "Libanio, E-Ei Ef",
-      "municipality": "Assai",
-      "network": "Privada"
-    },
-    {
-      "id": "567",
-      "name": "Sesi-Assai, C-Em",
       "municipality": "Assai",
       "network": "Privada"
     },
@@ -4782,12 +4764,6 @@
     {
       "id": "613",
       "name": "Sao Miguel, C-Ei Ef M",
-      "municipality": "Bandeirantes",
-      "network": "Privada"
-    },
-    {
-      "id": "907",
-      "name": "Sesi Bandeirantes, C - Ens Fund Med",
       "municipality": "Bandeirantes",
       "network": "Privada"
     },
@@ -10336,12 +10312,6 @@
       "network": "Privada"
     },
     {
-      "id": "3656",
-      "name": "Perfil do Oeste, C E I",
-      "municipality": "Cascavel",
-      "network": "Privada"
-    },
-    {
       "id": "4326",
       "name": "Phoenix, C-Ei Ef M",
       "municipality": "Cascavel",
@@ -10931,7 +10901,7 @@
     },
     {
       "id": "79",
-      "name": "Henrique S Coimbra, E R M Fr-Ei Ef",
+      "name": "Henrique S Coimbra, E M R Fr-Ei Ef",
       "municipality": "Catanduvas",
       "network": "Municipal"
     },
@@ -10955,7 +10925,7 @@
     },
     {
       "id": "52",
-      "name": "Valentin Bernardo Thisen, E R M Pr-Ei Ef",
+      "name": "Valentin Bernardo Thisen, E M R Pr-Ei Ef",
       "municipality": "Catanduvas",
       "network": "Municipal"
     },
@@ -18684,6 +18654,12 @@
     {
       "id": "17932",
       "name": "Cantinho da Crianca, C E I",
+      "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
+      "id": "20925",
+      "name": "Cantinho das Estrelas, Cei",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -35548,12 +35524,6 @@
       "network": "Privada"
     },
     {
-      "id": "7960",
-      "name": "Star Baby, C E I",
-      "municipality": "Londrina",
-      "network": "Privada"
-    },
-    {
       "id": "5879",
       "name": "Tema, E-Ef",
       "municipality": "Londrina",
@@ -38002,12 +37972,6 @@
       "network": "Municipal"
     },
     {
-      "id": "3858",
-      "name": "Recanto do Menor Alvorada, C M E I",
-      "municipality": "Maringa",
-      "network": "Municipal"
-    },
-    {
       "id": "1324",
       "name": "Renato Bernardi, E M Prof-Ef",
       "municipality": "Maringa",
@@ -38418,12 +38382,6 @@
     {
       "id": "3211",
       "name": "Eximius, E-Ef",
-      "municipality": "Maringa",
-      "network": "Privada"
-    },
-    {
-      "id": "3548",
-      "name": "Expansao, C E I-Subs",
       "municipality": "Maringa",
       "network": "Privada"
     },
@@ -41650,12 +41608,6 @@
       "network": "Municipal"
     },
     {
-      "id": "1710",
-      "name": "Ga Kosin Ag, C M E I",
-      "municipality": "Palmas",
-      "network": "Municipal"
-    },
-    {
       "id": "225",
       "name": "Isolda B Knolseisen, E M do C-Ei Ef",
       "municipality": "Palmas",
@@ -43080,12 +43032,6 @@
     {
       "id": "296",
       "name": "Adventista Paranagua, C-Ei Ef M",
-      "municipality": "Paranagua",
-      "network": "Privada"
-    },
-    {
-      "id": "1675",
-      "name": "Alegria do Saber, C E I",
       "municipality": "Paranagua",
       "network": "Privada"
     },
@@ -45288,12 +45234,6 @@
     {
       "id": "400",
       "name": "Suico-Brasileiro, C-Ei Ef M",
-      "municipality": "Pinhais",
-      "network": "Privada"
-    },
-    {
-      "id": "1032",
-      "name": "Tapete Magico, C E I",
       "municipality": "Pinhais",
       "network": "Privada"
     },
@@ -49889,7 +49829,7 @@
     },
     {
       "id": "660",
-      "name": "Centro Educ Profis de Quitndinha",
+      "name": "Centro Educ Profis de Quitandinha",
       "municipality": "Quitandinha",
       "network": "Privada"
     },
