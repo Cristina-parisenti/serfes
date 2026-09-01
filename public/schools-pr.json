@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-08-31T10:28:18.081652+00:00",
+  "generatedAt": "2026-09-01T10:38:10.964215+00:00",
   "records": [
     {
       "id": "20",
@@ -59322,12 +59322,6 @@
     {
       "id": "574",
       "name": "Jose Emidio Martins, E M C -Ei Ef",
-      "municipality": "Tomazina",
-      "network": "Municipal"
-    },
-    {
-      "id": "558",
-      "name": "Malfina C de Lima, E M-Ef",
       "municipality": "Tomazina",
       "network": "Municipal"
     },
