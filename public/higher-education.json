@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-01T11:43:23.694084+00:00",
+  "generatedAt": "2026-09-02T11:42:04.346940+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -10205,13 +10205,6 @@
       "network": "Privada"
     },
     {
-      "id": "1658:000000004127106",
-      "name": "CENTRO UNIVERSITÁRIO DA GRANDE FORTALEZA",
-      "acronym": null,
-      "municipality": "Telêmaco Borba",
-      "network": "Privada"
-    },
-    {
       "id": "1775:000000004127106",
       "name": "Centro Universitário Favip Wyden",
       "acronym": null,
@@ -12439,16 +12432,6 @@
       "network": "Privada"
     },
     {
-      "id": "1713724:1658:000000004109401",
-      "code": "1713724",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1658:000000004109401",
-      "municipality": "Guarapuava",
-      "network": "Privada"
-    },
-    {
       "id": "1718522:496:000000004115200",
       "code": "1718522",
       "name": "ADMINISTRAÇÃO",
@@ -12456,6 +12439,16 @@
       "modality": "Semipresencial",
       "institutionId": "496:000000004115200",
       "municipality": "Maringá",
+      "network": "Privada"
+    },
+    {
+      "id": "1718568:1042:000000004115804",
+      "code": "1718568",
+      "name": "ADMINISTRAÇÃO",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "1042:000000004115804",
+      "municipality": "Medianeira",
       "network": "Privada"
     },
     {
@@ -17125,16 +17118,6 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "3985:000000004104808",
-      "municipality": "Cascavel",
-      "network": "Privada"
-    },
-    {
-      "id": "1728269:437:000000004104808",
-      "code": "1728269",
-      "name": "BANCO DE DADOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "437:000000004104808",
       "municipality": "Cascavel",
       "network": "Privada"
     },
@@ -25429,6 +25412,16 @@
       "network": "Privada"
     },
     {
+      "id": "1527833:17854:000000004127700",
+      "code": "1527833",
+      "name": "DEFESA CIBERNÉTICA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "17854:000000004127700",
+      "municipality": "Toledo",
+      "network": "Privada"
+    },
+    {
       "id": "1666457:437:000000004128104",
       "code": "1666457",
       "name": "DEFESA CIBERNÉTICA",
@@ -28199,6 +28192,16 @@
       "network": "Privada"
     },
     {
+      "id": "1537494:1042:000000004126256",
+      "code": "1537494",
+      "name": "DESIGN DE PRODUTO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1042:000000004126256",
+      "municipality": "Sarandi",
+      "network": "Privada"
+    },
+    {
       "id": "1483677:1472:000000004127106",
       "code": "1483677",
       "name": "DESIGN DE PRODUTO",
@@ -29766,16 +29769,6 @@
       "modality": "Semipresencial",
       "institutionId": "221:000000004102901",
       "municipality": "Bituruna",
-      "network": "Privada"
-    },
-    {
-      "id": "1701705:1196:000000004104006",
-      "code": "1701705",
-      "name": "EDUCAÇÃO FÍSICA",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1196:000000004104006",
-      "municipality": "Campina Grande do Sul",
       "network": "Privada"
     },
     {
@@ -33556,16 +33549,6 @@
       "modality": "EAD",
       "institutionId": "1658:000000004101408",
       "municipality": "Apucarana",
-      "network": "Privada"
-    },
-    {
-      "id": "1712444:1658:000000004127106",
-      "code": "1712444",
-      "name": "ENGENHARIA DE PRODUÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1658:000000004127106",
-      "municipality": "Telêmaco Borba",
       "network": "Privada"
     },
     {
@@ -39669,16 +39652,6 @@
       "network": "Privada"
     },
     {
-      "id": "1427695:1491:000000004115200",
-      "code": "1427695",
-      "name": "GEOGRAFIA",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1491:000000004115200",
-      "municipality": "Maringá",
-      "network": "Privada"
-    },
-    {
       "id": "1516617:496:000000004115200",
       "code": "1516617",
       "name": "GEOGRAFIA",
@@ -40026,6 +39999,16 @@
       "modality": "Semipresencial",
       "institutionId": "1472:000000004122206",
       "municipality": "Rio Branco do Sul",
+      "network": "Privada"
+    },
+    {
+      "id": "1703967:1196:000000004123501",
+      "code": "1703967",
+      "name": "GEOGRAFIA",
+      "degree": "Licenciatura",
+      "modality": "Semipresencial",
+      "institutionId": "1196:000000004123501",
+      "municipality": "Santa Helena",
       "network": "Privada"
     },
     {
@@ -45726,6 +45709,16 @@
       "modality": "EAD",
       "institutionId": "1270:000000004120705",
       "municipality": "Quatiguá",
+      "network": "Privada"
+    },
+    {
+      "id": "1551265:1491:000000004100509",
+      "code": "1551265",
+      "name": "GESTÃO DE MÍDIAS SOCIAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1491:000000004100509",
+      "municipality": "Altônia",
       "network": "Privada"
     },
     {
@@ -56939,16 +56932,6 @@
       "network": "Privada"
     },
     {
-      "id": "1487836:1270:000000004124103",
-      "code": "1487836",
-      "name": "JORNALISMO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1270:000000004124103",
-      "municipality": "Santo Antônio da Platina",
-      "network": "Privada"
-    },
-    {
       "id": "1537493:1042:000000004125506",
       "code": "1537493",
       "name": "JORNALISMO",
@@ -56986,16 +56969,6 @@
       "modality": "EAD",
       "institutionId": "1491:000000004126801",
       "municipality": "Tapejara",
-      "network": "Privada"
-    },
-    {
-      "id": "1676096:1658:000000004127106",
-      "code": "1676096",
-      "name": "JORNALISMO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1658:000000004127106",
-      "municipality": "Telêmaco Borba",
       "network": "Privada"
     },
     {
@@ -62779,6 +62752,16 @@
       "network": "Privada"
     },
     {
+      "id": "1632511:3649:000000004116901",
+      "code": "1632511",
+      "name": "MÍDIAS SOCIAIS DIGITAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "3649:000000004116901",
+      "municipality": "Nova Esperança",
+      "network": "Privada"
+    },
+    {
       "id": "1573046:1472:000000004118402",
       "code": "1573046",
       "name": "MÍDIAS SOCIAIS DIGITAIS",
@@ -63746,16 +63729,6 @@
       "modality": "Semipresencial",
       "institutionId": "1487:000000004125506",
       "municipality": "São José dos Pinhais",
-      "network": "Privada"
-    },
-    {
-      "id": "1701881:1658:000000004127106",
-      "code": "1701881",
-      "name": "NUTRIÇÃO",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1658:000000004127106",
-      "municipality": "Telêmaco Borba",
       "network": "Privada"
     },
     {
@@ -70879,16 +70852,6 @@
       "network": "Privada"
     },
     {
-      "id": "1314141:1196:000000004124103",
-      "code": "1314141",
-      "name": "SECRETARIADO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1196:000000004124103",
-      "municipality": "Santo Antônio da Platina",
-      "network": "Privada"
-    },
-    {
       "id": "1575750:4751:000000004124103",
       "code": "1575750",
       "name": "SECRETARIADO",
@@ -71659,6 +71622,16 @@
       "network": "Privada"
     },
     {
+      "id": "1690599:1491:000000004101606",
+      "code": "1690599",
+      "name": "SEGURANÇA DO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1491:000000004101606",
+      "municipality": "Arapoti",
+      "network": "Privada"
+    },
+    {
       "id": "1719057:1430:000000004101804",
       "code": "1719057",
       "name": "SEGURANÇA DO TRABALHO",
@@ -72409,6 +72382,16 @@
       "network": "Privada"
     },
     {
+      "id": "1739294:1510:000000004101002",
+      "code": "1739294",
+      "name": "SEGURANÇA NO TRÂNSITO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1510:000000004101002",
+      "municipality": "Ampére",
+      "network": "Privada"
+    },
+    {
       "id": "1650832:4751:000000004101408",
       "code": "1650832",
       "name": "SEGURANÇA NO TRÂNSITO",
@@ -73066,16 +73049,6 @@
       "modality": "EAD",
       "institutionId": "1472:000000004122404",
       "municipality": "Rolândia",
-      "network": "Privada"
-    },
-    {
-      "id": "1377544:298:000000004122651",
-      "code": "1377544",
-      "name": "SEGURANÇA PÚBLICA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004122651",
-      "municipality": "Rosário do Ivaí",
       "network": "Privada"
     },
     {
