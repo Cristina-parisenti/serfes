@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-01T10:38:10.964215+00:00",
+  "generatedAt": "2026-09-02T10:40:05.603367+00:00",
   "records": [
     {
       "id": "241",
@@ -27612,12 +27612,6 @@
     {
       "id": "904",
       "name": "Ercilio Custodio, E M-Ei Ef",
-      "municipality": "Santo Antonio da Platina",
-      "network": "Municipal"
-    },
-    {
-      "id": "122",
-      "name": "Franklin D Roosevelt, E R M-Ei Ef",
       "municipality": "Santo Antonio da Platina",
       "network": "Municipal"
     },
