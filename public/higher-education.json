@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-02T11:42:04.346940+00:00",
+  "generatedAt": "2026-09-03T11:41:27.285631+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -801,13 +801,6 @@
       "name": "UNIVERSIDADE POSITIVO",
       "acronym": null,
       "municipality": "Assaí",
-      "network": "Privada"
-    },
-    {
-      "id": "810:000000004102000",
-      "name": "CENTRO TÉCNICO-EDUCACIONAL SUPERIOR DO OESTE PARANAENSE",
-      "acronym": null,
-      "municipality": "Assis Chateaubriand",
       "network": "Privada"
     },
     {
@@ -17909,16 +17902,6 @@
       "modality": "Semipresencial",
       "institutionId": "1430:000000004126256",
       "municipality": "Sarandi",
-      "network": "Privada"
-    },
-    {
-      "id": "1322791:810:000000004102000",
-      "code": "1322791",
-      "name": "BIOMEDICINA",
-      "degree": "Bacharelado",
-      "modality": "Presencial",
-      "institutionId": "810:000000004102000",
-      "municipality": "Assis Chateaubriand",
       "network": "Privada"
     },
     {
@@ -63439,6 +63422,16 @@
       "modality": "EAD",
       "institutionId": "1196:000000004127700",
       "municipality": "Toledo",
+      "network": "Privada"
+    },
+    {
+      "id": "1743099:10:000000004113700",
+      "code": "1743099",
+      "name": "NEUROTECNOLOGIA EM SAÚDE",
+      "degree": "Tecnológico",
+      "modality": "Presencial",
+      "institutionId": "10:000000004113700",
+      "municipality": "Londrina",
       "network": "Privada"
     },
     {
