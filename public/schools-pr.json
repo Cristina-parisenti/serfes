@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-02T10:40:05.603367+00:00",
+  "generatedAt": "2026-09-03T10:40:27.784054+00:00",
   "records": [
     {
       "id": "20",
@@ -1433,7 +1433,7 @@
     },
     {
       "id": "14",
-      "name": "Moyses Lupion, C E C-M-Ef M N Profis",
+      "name": "Moyses Lupion, C E C-M-Ef M Profis",
       "municipality": "Antonina",
       "network": "Estadual"
     },
@@ -1949,7 +1949,7 @@
     },
     {
       "id": "2243",
-      "name": "Maria Tereza Gebrim Preto, E M-Ei Ef",
+      "name": "Maria Teresa Gebrin Preto, E M-Ei Ef",
       "municipality": "Apucarana",
       "network": "Municipal"
     },
