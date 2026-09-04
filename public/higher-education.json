@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-03T11:41:27.285631+00:00",
+  "generatedAt": "2026-09-04T11:44:11.753020+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -12422,6 +12422,16 @@
       "modality": "Semipresencial",
       "institutionId": "1658:000000004106902",
       "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
+      "id": "1713724:1658:000000004109401",
+      "code": "1713724",
+      "name": "ADMINISTRAÇÃO",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "1658:000000004109401",
+      "municipality": "Guarapuava",
       "network": "Privada"
     },
     {
@@ -71615,16 +71625,6 @@
       "network": "Privada"
     },
     {
-      "id": "1690599:1491:000000004101606",
-      "code": "1690599",
-      "name": "SEGURANÇA DO TRABALHO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1491:000000004101606",
-      "municipality": "Arapoti",
-      "network": "Privada"
-    },
-    {
       "id": "1719057:1430:000000004101804",
       "code": "1719057",
       "name": "SEGURANÇA DO TRABALHO",
@@ -74255,16 +74255,6 @@
       "network": "Privada"
     },
     {
-      "id": "1630191:17854:000000004104204",
-      "code": "1630191",
-      "name": "SISTEMAS DE INFORMAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "17854:000000004104204",
-      "municipality": "Campo Largo",
-      "network": "Privada"
-    },
-    {
       "id": "1575759:4751:000000004104204",
       "code": "1575759",
       "name": "SISTEMAS DE INFORMAÇÃO",
@@ -74381,16 +74371,6 @@
       "degree": "Bacharelado",
       "modality": "EAD",
       "institutionId": "1491:000000004109401",
-      "municipality": "Guarapuava",
-      "network": "Privada"
-    },
-    {
-      "id": "1630191:17854:000000004109401",
-      "code": "1630191",
-      "name": "SISTEMAS DE INFORMAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "17854:000000004109401",
       "municipality": "Guarapuava",
       "network": "Privada"
     },
