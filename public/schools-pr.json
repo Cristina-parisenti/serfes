@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-03T10:40:27.784054+00:00",
+  "generatedAt": "2026-09-04T10:34:58.943110+00:00",
   "records": [
     {
       "id": "20",
@@ -26290,12 +26290,6 @@
       "network": "Municipal"
     },
     {
-      "id": "253",
-      "name": "Tome de Souza, E M C-Ef",
-      "municipality": "General Carneiro",
-      "network": "Municipal"
-    },
-    {
       "id": "679",
       "name": "Joceli Pichurski, E-Ei Ef Mod Ed Esp",
       "municipality": "General Carneiro",
@@ -38616,6 +38610,12 @@
     {
       "id": "670",
       "name": "Pequeno Aprendiz, E-Ei Ef",
+      "municipality": "Maringa",
+      "network": "Privada"
+    },
+    {
+      "id": "4803",
+      "name": "Pequeno Casulo, Cei",
       "municipality": "Maringa",
       "network": "Privada"
     },
