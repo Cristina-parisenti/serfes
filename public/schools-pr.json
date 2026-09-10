@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-09T10:37:21.673997+00:00",
+  "generatedAt": "2026-09-10T10:38:34.168034+00:00",
   "records": [
     {
       "id": "20",
@@ -12210,12 +12210,6 @@
     {
       "id": "1490",
       "name": "Berco de ouro, C M E I",
-      "municipality": "Colombo",
-      "network": "Municipal"
-    },
-    {
-      "id": "841",
-      "name": "Betania, C M E I",
       "municipality": "Colombo",
       "network": "Municipal"
     },
