@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-09T11:42:46.792757+00:00",
+  "generatedAt": "2026-09-10T11:43:27.608393+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -3186,6 +3186,13 @@
     {
       "id": "1388:000000004106902",
       "name": "CENTRO UNIVERSITÁRIO SUMARÉ",
+      "acronym": null,
+      "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
+      "id": "1716:000000004106902",
+      "name": "Centro Universitário União das Américas Descomplica",
       "acronym": null,
       "municipality": "Curitiba",
       "network": "Privada"
@@ -11822,16 +11829,6 @@
       "network": "Privada"
     },
     {
-      "id": "1159796:1510:000000004114302",
-      "code": "1159796",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1510:000000004114302",
-      "municipality": "Mandirituba",
-      "network": "Privada"
-    },
-    {
       "id": "1331601:918:000000004114609",
       "code": "1331601",
       "name": "ADMINISTRAÇÃO",
@@ -11839,16 +11836,6 @@
       "modality": "EAD",
       "institutionId": "918:000000004114609",
       "municipality": "Marechal Cândido Rondon",
-      "network": "Privada"
-    },
-    {
-      "id": "1159796:1510:000000004114807",
-      "code": "1159796",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1510:000000004114807",
-      "municipality": "Marialva",
       "network": "Privada"
     },
     {
@@ -12179,16 +12166,6 @@
       "modality": "EAD",
       "institutionId": "4751:000000004124103",
       "municipality": "Santo Antônio da Platina",
-      "network": "Privada"
-    },
-    {
-      "id": "1159796:1510:000000004124400",
-      "code": "1159796",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1510:000000004124400",
-      "municipality": "Santo Antônio do Sudoeste",
       "network": "Privada"
     },
     {
@@ -18169,6 +18146,16 @@
       "modality": "Semipresencial",
       "institutionId": "1205:000000004109609",
       "municipality": "Guaratuba",
+      "network": "Privada"
+    },
+    {
+      "id": "1701826:1491:000000004112009",
+      "code": "1701826",
+      "name": "BIOMEDICINA",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "1491:000000004112009",
+      "municipality": "Jaguariaíva",
       "network": "Privada"
     },
     {
@@ -75542,6 +75529,16 @@
       "network": "Privada"
     },
     {
+      "id": "1704013:1270:000000004126603",
+      "code": "1704013",
+      "name": "SOCIOLOGIA",
+      "degree": "Licenciatura",
+      "modality": "Semipresencial",
+      "institutionId": "1270:000000004126603",
+      "municipality": "Siqueira Campos",
+      "network": "Privada"
+    },
+    {
       "id": "1704144:1491:000000004127205",
       "code": "1704144",
       "name": "SOCIOLOGIA",
@@ -76019,6 +76016,16 @@
       "modality": "EAD",
       "institutionId": "1472:000000004106407",
       "municipality": "Cornélio Procópio",
+      "network": "Privada"
+    },
+    {
+      "id": "1665250:1716:000000004106902",
+      "code": "1665250",
+      "name": "TEOLOGIA",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1716:000000004106902",
+      "municipality": "Curitiba",
       "network": "Privada"
     },
     {
