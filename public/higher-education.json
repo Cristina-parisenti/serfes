@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-13T15:02:31.828624+00:00",
+  "generatedAt": "2026-09-14T17:03:37.304319+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -14299,16 +14299,6 @@
       "network": "Privada"
     },
     {
-      "id": "1627434:1759:000000004106902",
-      "code": "1627434",
-      "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1759:000000004106902",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "1454503:17854:000000004106902",
       "code": "1454503",
       "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
@@ -17155,16 +17145,6 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "163:000000004106902",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "1662747:1759:000000004106902",
-      "code": "1662747",
-      "name": "BANCO DE DADOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1759:000000004106902",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -24039,16 +24019,6 @@
       "network": "Privada"
     },
     {
-      "id": "1710255:3649:000000004125506",
-      "code": "1710255",
-      "name": "COMPUTAÇÃO E INFORMÁTICA",
-      "degree": "Licenciatura",
-      "modality": "Semipresencial",
-      "institutionId": "3649:000000004125506",
-      "municipality": "São José dos Pinhais",
-      "network": "Privada"
-    },
-    {
       "id": "1527832:17854:000000004104204",
       "code": "1527832",
       "name": "COMPUTAÇÃO EM NUVEM",
@@ -25649,6 +25619,16 @@
       "network": "Privada"
     },
     {
+      "id": "1599632:1510:000000004104204",
+      "code": "1599632",
+      "name": "DESENVOLVIMENTO FULL STACK",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1510:000000004104204",
+      "municipality": "Campo Largo",
+      "network": "Privada"
+    },
+    {
       "id": "1600249:1270:000000004106902",
       "code": "1600249",
       "name": "DESENVOLVIMENTO FULL STACK",
@@ -25676,6 +25656,16 @@
       "modality": "EAD",
       "institutionId": "221:000000004110706",
       "municipality": "Irati",
+      "network": "Privada"
+    },
+    {
+      "id": "1599632:1510:000000004113700",
+      "code": "1599632",
+      "name": "DESENVOLVIMENTO FULL STACK",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1510:000000004113700",
+      "municipality": "Londrina",
       "network": "Privada"
     },
     {
@@ -33985,6 +33975,16 @@
       "degree": "Bacharelado",
       "modality": "EAD",
       "institutionId": "1270:000000004106902",
+      "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
+      "id": "1666007:1759:000000004106902",
+      "code": "1666007",
+      "name": "ENGENHARIA DE SOFTWARE",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1759:000000004106902",
       "municipality": "Curitiba",
       "network": "Privada"
     },
