@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-14T17:03:37.304319+00:00",
+  "generatedAt": "2026-09-15T15:40:18.382094+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -47879,6 +47879,16 @@
       "network": "Privada"
     },
     {
+      "id": "1744948:1078:000000004104303",
+      "code": "1744948",
+      "name": "GESTÃO DE RECURSOS HUMANOS",
+      "degree": "Tecnológico",
+      "modality": "Semipresencial",
+      "institutionId": "1078:000000004104303",
+      "municipality": "Campo Mourão",
+      "network": "Privada"
+    },
+    {
       "id": "1716123:1508:000000004104907",
       "code": "1716123",
       "name": "GESTÃO DE RECURSOS HUMANOS",
@@ -75506,16 +75516,6 @@
       "modality": "Semipresencial",
       "institutionId": "1196:000000004125704",
       "municipality": "São Miguel do Iguaçu",
-      "network": "Privada"
-    },
-    {
-      "id": "1704013:1270:000000004126603",
-      "code": "1704013",
-      "name": "SOCIOLOGIA",
-      "degree": "Licenciatura",
-      "modality": "Semipresencial",
-      "institutionId": "1270:000000004126603",
-      "municipality": "Siqueira Campos",
       "network": "Privada"
     },
     {
