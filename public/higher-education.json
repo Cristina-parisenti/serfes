@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-16T15:32:22.658494+00:00",
+  "generatedAt": "2026-09-17T15:42:12.856189+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -3564,13 +3564,6 @@
     {
       "id": "4751:000000004107207",
       "name": "CENTRO UNIVERSITÁRIO UNIFATECIE",
-      "acronym": null,
-      "municipality": "Dois Vizinhos",
-      "network": "Privada"
-    },
-    {
-      "id": "25474:000000004107207",
-      "name": "Faculdade Microlins",
       "acronym": null,
       "municipality": "Dois Vizinhos",
       "network": "Privada"
@@ -11529,16 +11522,6 @@
       "network": "Privada"
     },
     {
-      "id": "1650761:25474:000000004107207",
-      "code": "1650761",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "25474:000000004107207",
-      "municipality": "Dois Vizinhos",
-      "network": "Privada"
-    },
-    {
       "id": "97980:298:000000004107256",
       "code": "97980",
       "name": "ADMINISTRAÇÃO",
@@ -18129,16 +18112,6 @@
       "network": "Privada"
     },
     {
-      "id": "1701826:1491:000000004112009",
-      "code": "1701826",
-      "name": "BIOMEDICINA",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1491:000000004112009",
-      "municipality": "Jaguariaíva",
-      "network": "Privada"
-    },
-    {
       "id": "1701789:1430:000000004112108",
       "code": "1701789",
       "name": "BIOMEDICINA",
@@ -20985,6 +20958,16 @@
       "degree": "Bacharelado",
       "modality": "EAD",
       "institutionId": "1326:000000004122404",
+      "municipality": "Rolândia",
+      "network": "Privada"
+    },
+    {
+      "id": "1427710:1430:000000004122404",
+      "code": "1427710",
+      "name": "CIÊNCIAS CONTÁBEIS",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1430:000000004122404",
       "municipality": "Rolândia",
       "network": "Privada"
     },
@@ -59016,6 +58999,16 @@
       "modality": "EAD",
       "institutionId": "3840:000000004104204",
       "municipality": "Campo Largo",
+      "network": "Privada"
+    },
+    {
+      "id": "1313199:1042:000000004104709",
+      "code": "1313199",
+      "name": "LOGÍSTICA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1042:000000004104709",
+      "municipality": "Carlópolis",
       "network": "Privada"
     },
     {
