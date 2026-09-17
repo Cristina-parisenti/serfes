@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-16T15:08:22.304045+00:00",
+  "generatedAt": "2026-09-17T15:13:14.939072+00:00",
   "records": [
     {
       "id": "20",
@@ -21778,12 +21778,6 @@
       "network": "Privada"
     },
     {
-      "id": "14267",
-      "name": "Romanni, E-Ei Ef",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "15662",
       "name": "Saber, C-Em",
       "municipality": "Curitiba",
@@ -33018,12 +33012,6 @@
     {
       "id": "578",
       "name": "Sesi de Loanda, C-Em",
-      "municipality": "Loanda",
-      "network": "Privada"
-    },
-    {
-      "id": "586",
-      "name": "Sonho Encantado, C E I",
       "municipality": "Loanda",
       "network": "Privada"
     },
