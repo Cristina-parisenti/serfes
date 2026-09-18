@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-17T15:13:14.939072+00:00",
+  "generatedAt": "2026-09-18T14:41:09.105647+00:00",
   "records": [
     {
       "id": "20",
@@ -32891,7 +32891,7 @@
     },
     {
       "id": "292",
-      "name": "Lamartine R Soares, Cec-M Dr - Ef Eti Em",
+      "name": "Lamartine R Soares, Ee C-M Dr-Ef Eti",
       "municipality": "Loanda",
       "network": "Estadual"
     },
@@ -58596,6 +58596,12 @@
     {
       "id": "1850",
       "name": "Francisco G de Lima, C E Ver-Ef M",
+      "municipality": "Toledo",
+      "network": "Estadual"
+    },
+    {
+      "id": "2890",
+      "name": "Inovacao Educacional, C E",
       "municipality": "Toledo",
       "network": "Estadual"
     },
