@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-17T15:42:12.856189+00:00",
+  "generatedAt": "2026-09-18T15:07:03.771488+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -1854,13 +1854,6 @@
       "network": "Estadual"
     },
     {
-      "id": "1365:000000004104808",
-      "name": "CENTRO UNIVERSITÁRIO ADVENTISTA DE SÃO PAULO",
-      "acronym": null,
-      "municipality": "Cascavel",
-      "network": "Privada"
-    },
-    {
       "id": "242:000000004104808",
       "name": "CENTRO UNIVERSITÁRIO ANHANGUERA PITÁGORAS AMPLI",
       "acronym": null,
@@ -2930,6 +2923,13 @@
       "acronym": null,
       "municipality": "Curitiba",
       "network": "Federal"
+    },
+    {
+      "id": "1365:000000004106902",
+      "name": "CENTRO UNIVERSITÁRIO ADVENTISTA DE SÃO PAULO",
+      "acronym": null,
+      "municipality": "Curitiba",
+      "network": "Privada"
     },
     {
       "id": "242:000000004106902",
@@ -5186,13 +5186,6 @@
       "network": "Privada"
     },
     {
-      "id": "1365:000000004111605",
-      "name": "CENTRO UNIVERSITÁRIO ADVENTISTA DE SÃO PAULO",
-      "acronym": null,
-      "municipality": "Ivatuba",
-      "network": "Privada"
-    },
-    {
       "id": "15015:000000004111803",
       "name": "Universidade Estadual do Norte do Paraná",
       "acronym": null,
@@ -7120,6 +7113,13 @@
     {
       "id": "1430:000000004117305",
       "name": "CENTRO UNIVERSITÁRIO INGÁ",
+      "acronym": null,
+      "municipality": "Ortigueira",
+      "network": "Privada"
+    },
+    {
+      "id": "1536:000000004117305",
+      "name": "Centro Universitário UNIFATEB",
       "acronym": null,
       "municipality": "Ortigueira",
       "network": "Privada"
@@ -12312,16 +12312,6 @@
       "network": "Privada"
     },
     {
-      "id": "1439830:1196:000000004109401",
-      "code": "1439830",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "Presencial",
-      "institutionId": "1196:000000004109401",
-      "municipality": "Guarapuava",
-      "network": "Privada"
-    },
-    {
       "id": "1547927:5511:000000004113304",
       "code": "1547927",
       "name": "ADMINISTRAÇÃO",
@@ -12339,16 +12329,6 @@
       "modality": "Presencial",
       "institutionId": "1574:000000004115804",
       "municipality": "Medianeira",
-      "network": "Privada"
-    },
-    {
-      "id": "1439967:1196:000000004119905",
-      "code": "1439967",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "Presencial",
-      "institutionId": "1196:000000004119905",
-      "municipality": "Ponta Grossa",
       "network": "Privada"
     },
     {
@@ -20962,16 +20942,6 @@
       "network": "Privada"
     },
     {
-      "id": "1427710:1430:000000004122404",
-      "code": "1427710",
-      "name": "CIÊNCIAS CONTÁBEIS",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1430:000000004122404",
-      "municipality": "Rolândia",
-      "network": "Privada"
-    },
-    {
       "id": "1115471:163:000000004122404",
       "code": "1115471",
       "name": "CIÊNCIAS CONTÁBEIS",
@@ -23902,16 +23872,6 @@
       "network": "Privada"
     },
     {
-      "id": "1661087:1365:000000004127106",
-      "code": "1661087",
-      "name": "COMÉRCIO EXTERIOR",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1365:000000004127106",
-      "municipality": "Telêmaco Borba",
-      "network": "Privada"
-    },
-    {
       "id": "1541389:242:000000004127700",
       "code": "1541389",
       "name": "COMÉRCIO EXTERIOR",
@@ -24369,16 +24329,6 @@
       "modality": "EAD",
       "institutionId": "1491:000000004108601",
       "municipality": "Goioerê",
-      "network": "Privada"
-    },
-    {
-      "id": "1551208:1365:000000004111605",
-      "code": "1551208",
-      "name": "COMUNICAÇÃO SOCIAL - PUBLICIDADE E PROPAGANDA",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1365:000000004111605",
-      "municipality": "Ivatuba",
       "network": "Privada"
     },
     {
@@ -28709,16 +28659,6 @@
       "modality": "EAD",
       "institutionId": "1430:000000004125001",
       "municipality": "São João do Ivaí",
-      "network": "Privada"
-    },
-    {
-      "id": "1575705:1365:000000004125506",
-      "code": "1575705",
-      "name": "DESIGN GRÁFICO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1365:000000004125506",
-      "municipality": "São José dos Pinhais",
       "network": "Privada"
     },
     {
@@ -39242,6 +39182,16 @@
       "network": "Privada"
     },
     {
+      "id": "1745989:1658:000000004118204",
+      "code": "1745989",
+      "name": "GASTRONOMIA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1658:000000004118204",
+      "municipality": "Paranaguá",
+      "network": "Privada"
+    },
+    {
       "id": "1314140:1196:000000004118402",
       "code": "1314140",
       "name": "GASTRONOMIA",
@@ -41172,16 +41122,6 @@
       "network": "Privada"
     },
     {
-      "id": "1619485:1365:000000004111605",
-      "code": "1619485",
-      "name": "GESTÃO COMERCIAL",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1365:000000004111605",
-      "municipality": "Ivatuba",
-      "network": "Privada"
-    },
-    {
       "id": "1353153:3294:000000004111902",
       "code": "1353153",
       "name": "GESTÃO COMERCIAL",
@@ -41508,6 +41448,16 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "1196:000000004125506",
+      "municipality": "São José dos Pinhais",
+      "network": "Privada"
+    },
+    {
+      "id": "1619485:1365:000000004125506",
+      "code": "1619485",
+      "name": "GESTÃO COMERCIAL",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1365:000000004125506",
       "municipality": "São José dos Pinhais",
       "network": "Privada"
     },
@@ -42972,6 +42922,16 @@
       "network": "Privada"
     },
     {
+      "id": "1661088:1365:000000004127106",
+      "code": "1661088",
+      "name": "GESTÃO DA QUALIDADE",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1365:000000004127106",
+      "municipality": "Telêmaco Borba",
+      "network": "Privada"
+    },
+    {
       "id": "1451972:1336:000000004127700",
       "code": "1451972",
       "name": "GESTÃO DA QUALIDADE",
@@ -43848,6 +43808,16 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "1196:000000004127106",
+      "municipality": "Telêmaco Borba",
+      "network": "Privada"
+    },
+    {
+      "id": "1599596:1365:000000004127106",
+      "code": "1599596",
+      "name": "GESTÃO DA TECNOLOGIA DA INFORMAÇÃO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1365:000000004127106",
       "municipality": "Telêmaco Borba",
       "network": "Privada"
     },
@@ -59002,16 +58972,6 @@
       "network": "Privada"
     },
     {
-      "id": "1313199:1042:000000004104709",
-      "code": "1313199",
-      "name": "LOGÍSTICA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1042:000000004104709",
-      "municipality": "Carlópolis",
-      "network": "Privada"
-    },
-    {
       "id": "1205174:1196:000000004104709",
       "code": "1205174",
       "name": "LOGÍSTICA",
@@ -64322,6 +64282,16 @@
       "network": "Privada"
     },
     {
+      "id": "1704183:1536:000000004117305",
+      "code": "1704183",
+      "name": "PEDAGOGIA",
+      "degree": "Licenciatura",
+      "modality": "Semipresencial",
+      "institutionId": "1536:000000004117305",
+      "municipality": "Ortigueira",
+      "network": "Privada"
+    },
+    {
       "id": "1704150:1491:000000004117909",
       "code": "1704150",
       "name": "PEDAGOGIA",
@@ -66262,6 +66232,16 @@
       "network": "Privada"
     },
     {
+      "id": "1575707:1365:000000004106902",
+      "code": "1575707",
+      "name": "PRODUÇÃO AUDIOVISUAL",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1365:000000004106902",
+      "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
       "id": "1739281:1510:000000004109807",
       "code": "1739281",
       "name": "PRODUÇÃO AUDIOVISUAL",
@@ -66842,16 +66822,6 @@
       "network": "Privada"
     },
     {
-      "id": "1575709:1365:000000004104808",
-      "code": "1575709",
-      "name": "PRODUÇÃO MULTIMÍDIA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1365:000000004104808",
-      "municipality": "Cascavel",
-      "network": "Privada"
-    },
-    {
       "id": "1599472:1487:000000004108205",
       "code": "1599472",
       "name": "PRODUÇÃO MULTIMÍDIA",
@@ -66899,6 +66869,16 @@
       "modality": "EAD",
       "institutionId": "1430:000000004122602",
       "municipality": "Rondon",
+      "network": "Privada"
+    },
+    {
+      "id": "1575709:1365:000000004125506",
+      "code": "1575709",
+      "name": "PRODUÇÃO MULTIMÍDIA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1365:000000004125506",
+      "municipality": "São José dos Pinhais",
       "network": "Privada"
     },
     {
@@ -70372,16 +70352,6 @@
       "network": "Privada"
     },
     {
-      "id": "1545406:1365:000000004104808",
-      "code": "1545406",
-      "name": "SECRETARIADO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1365:000000004104808",
-      "municipality": "Cascavel",
-      "network": "Privada"
-    },
-    {
       "id": "89851:1491:000000004104808",
       "code": "89851",
       "name": "SECRETARIADO",
@@ -70549,16 +70519,6 @@
       "modality": "EAD",
       "institutionId": "1472:000000004111506",
       "municipality": "Ivaiporã",
-      "network": "Privada"
-    },
-    {
-      "id": "1545406:1365:000000004111605",
-      "code": "1545406",
-      "name": "SECRETARIADO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1365:000000004111605",
-      "municipality": "Ivatuba",
       "network": "Privada"
     },
     {
@@ -70809,6 +70769,16 @@
       "modality": "EAD",
       "institutionId": "4751:000000004124103",
       "municipality": "Santo Antônio da Platina",
+      "network": "Privada"
+    },
+    {
+      "id": "1545406:1365:000000004125506",
+      "code": "1545406",
+      "name": "SECRETARIADO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1365:000000004125506",
+      "municipality": "São José dos Pinhais",
       "network": "Privada"
     },
     {
@@ -71309,6 +71279,16 @@
       "modality": "EAD",
       "institutionId": "3985:000000004106407",
       "municipality": "Cornélio Procópio",
+      "network": "Privada"
+    },
+    {
+      "id": "1619489:1365:000000004106902",
+      "code": "1619489",
+      "name": "SEGURANÇA DA INFORMAÇÃO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1365:000000004106902",
+      "municipality": "Curitiba",
       "network": "Privada"
     },
     {
