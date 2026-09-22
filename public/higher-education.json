@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-21T17:11:01.878922+00:00",
+  "generatedAt": "2026-09-22T15:37:59.180969+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -20292,6 +20292,16 @@
       "network": "Privada"
     },
     {
+      "id": "1185929:1491:000000004107652",
+      "code": "1185929",
+      "name": "CIÊNCIAS CONTÁBEIS",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1491:000000004107652",
+      "municipality": "Fazenda Rio Grande",
+      "network": "Privada"
+    },
+    {
       "id": "1658097:25451:000000004107652",
       "code": "1658097",
       "name": "CIÊNCIAS CONTÁBEIS",
@@ -40292,6 +40302,16 @@
       "network": "Privada"
     },
     {
+      "id": "1746408:1658:000000004106902",
+      "code": "1746408",
+      "name": "GESTÃO AMBIENTAL",
+      "degree": "Tecnológico",
+      "modality": "Semipresencial",
+      "institutionId": "1658:000000004106902",
+      "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
       "id": "1702761:3649:000000004106902",
       "code": "1702761",
       "name": "GESTÃO AMBIENTAL",
@@ -49732,6 +49752,16 @@
       "network": "Privada"
     },
     {
+      "id": "1619113:1196:000000004118204",
+      "code": "1619113",
+      "name": "GESTÃO DE TURISMO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1196:000000004118204",
+      "municipality": "Paranaguá",
+      "network": "Privada"
+    },
+    {
       "id": "1746079:1658:000000004118402",
       "code": "1746079",
       "name": "GESTÃO DE TURISMO",
@@ -56729,16 +56759,6 @@
       "modality": "EAD",
       "institutionId": "1491:000000004122206",
       "municipality": "Rio Branco do Sul",
-      "network": "Privada"
-    },
-    {
-      "id": "1563269:242:000000004122404",
-      "code": "1563269",
-      "name": "JORNALISMO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "242:000000004122404",
-      "municipality": "Rolândia",
       "network": "Privada"
     },
     {
@@ -70422,16 +70442,6 @@
       "network": "Privada"
     },
     {
-      "id": "89851:1491:000000004107207",
-      "code": "89851",
-      "name": "SECRETARIADO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1491:000000004107207",
-      "municipality": "Dois Vizinhos",
-      "network": "Privada"
-    },
-    {
       "id": "1595468:1872:000000004107652",
       "code": "1595468",
       "name": "SECRETARIADO",
@@ -74129,16 +74139,6 @@
       "modality": "EAD",
       "institutionId": "1472:000000004122206",
       "municipality": "Rio Branco do Sul",
-      "network": "Privada"
-    },
-    {
-      "id": "1379289:1510:000000004101507",
-      "code": "1379289",
-      "name": "SISTEMAS DE INFORMAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1510:000000004101507",
-      "municipality": "Arapongas",
       "network": "Privada"
     },
     {
