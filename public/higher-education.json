@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-22T15:37:59.180969+00:00",
+  "generatedAt": "2026-09-23T15:33:04.535052+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -6621,6 +6621,13 @@
       "network": "Privada"
     },
     {
+      "id": "24553:000000004115200",
+      "name": "Faculdade Integração",
+      "acronym": null,
+      "municipality": "Maringá",
+      "network": "Privada"
+    },
+    {
       "id": "671:000000004115200",
       "name": "UNIVERSIDADE ANHANGUERA",
       "acronym": null,
@@ -11819,6 +11826,16 @@
       "modality": "EAD",
       "institutionId": "918:000000004114609",
       "municipality": "Marechal Cândido Rondon",
+      "network": "Privada"
+    },
+    {
+      "id": "1659759:24553:000000004115200",
+      "code": "1659759",
+      "name": "ADMINISTRAÇÃO",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "24553:000000004115200",
+      "municipality": "Maringá",
       "network": "Privada"
     },
     {
@@ -20289,16 +20306,6 @@
       "modality": "EAD",
       "institutionId": "1336:000000004107207",
       "municipality": "Dois Vizinhos",
-      "network": "Privada"
-    },
-    {
-      "id": "1185929:1491:000000004107652",
-      "code": "1185929",
-      "name": "CIÊNCIAS CONTÁBEIS",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1491:000000004107652",
-      "municipality": "Fazenda Rio Grande",
       "network": "Privada"
     },
     {
