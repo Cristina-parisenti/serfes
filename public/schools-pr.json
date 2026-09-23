@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-22T15:00:09.752970+00:00",
+  "generatedAt": "2026-09-23T15:15:03.931768+00:00",
   "records": [
     {
       "id": "20",
@@ -5878,12 +5878,6 @@
       "network": "Municipal"
     },
     {
-      "id": "60",
-      "name": "Souza Naves, E M-Ei Ef",
-      "municipality": "Cafezal do Sul",
-      "network": "Municipal"
-    },
-    {
       "id": "178",
       "name": "Talita Bresolin, C E-Ef Eti Em Profis",
       "municipality": "California",
@@ -7757,7 +7751,7 @@
     },
     {
       "id": "144",
-      "name": "Centro Est Educ Profis Agric de C Mourao",
+      "name": "Ceep Agric de C Mourao Dep Darcy Deitos",
       "municipality": "Campo Mourao",
       "network": "Estadual"
     },
@@ -15017,7 +15011,7 @@
     },
     {
       "id": "5195",
-      "name": "Pinheiro do Parana, C E C-M-Ef M P",
+      "name": "Pinheiro do Parana, C E C-M-Ef M",
       "municipality": "Curitiba",
       "network": "Estadual"
     },
@@ -32159,7 +32153,7 @@
     },
     {
       "id": "1255",
-      "name": "Centro Est Educ Profis Agric da Lapa",
+      "name": "Cent Est Ed Profis Agr Jose L de Castro",
       "municipality": "Lapa",
       "network": "Estadual"
     },
@@ -49178,12 +49172,6 @@
       "name": "Santa Maria, C M E I",
       "municipality": "Quatigua",
       "network": "Municipal"
-    },
-    {
-      "id": "229",
-      "name": "Lumen, E-Ei Ef",
-      "municipality": "Quatigua",
-      "network": "Privada"
     },
     {
       "id": "202",
