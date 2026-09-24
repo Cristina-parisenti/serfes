@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-23T15:33:04.535052+00:00",
+  "generatedAt": "2026-09-24T15:54:36.549045+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -2227,13 +2227,6 @@
     {
       "id": "3649:000000004105409",
       "name": "CENTRO UNIVERSITÁRIO CIDADE VERDE",
-      "acronym": null,
-      "municipality": "Chopinzinho",
-      "network": "Privada"
-    },
-    {
-      "id": "1846:000000004105409",
-      "name": "CENTRO UNIVERSITÁRIO DE LINS",
       "acronym": null,
       "municipality": "Chopinzinho",
       "network": "Privada"
@@ -11789,16 +11782,6 @@
       "network": "Privada"
     },
     {
-      "id": "5000986:3985:000000004113700",
-      "code": "5000986",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "3985:000000004113700",
-      "municipality": "Londrina",
-      "network": "Privada"
-    },
-    {
       "id": "1495586:4017:000000004113700",
       "code": "1495586",
       "name": "ADMINISTRAÇÃO",
@@ -12155,16 +12138,6 @@
       "degree": "Bacharelado",
       "modality": "EAD",
       "institutionId": "298:000000004124103",
-      "municipality": "Santo Antônio da Platina",
-      "network": "Privada"
-    },
-    {
-      "id": "1441589:4751:000000004124103",
-      "code": "1441589",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "4751:000000004124103",
       "municipality": "Santo Antônio da Platina",
       "network": "Privada"
     },
@@ -19879,6 +19852,16 @@
       "network": "Privada"
     },
     {
+      "id": "1704114:1472:000000004108403",
+      "code": "1704114",
+      "name": "CIÊNCIAS BIOLÓGICAS",
+      "degree": "Licenciatura",
+      "modality": "Semipresencial",
+      "institutionId": "1472:000000004108403",
+      "municipality": "Francisco Beltrão",
+      "network": "Privada"
+    },
+    {
       "id": "1704155:1491:000000004113304",
       "code": "1704155",
       "name": "CIÊNCIAS BIOLÓGICAS",
@@ -23265,16 +23248,6 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "1196:000000004101408",
-      "municipality": "Apucarana",
-      "network": "Privada"
-    },
-    {
-      "id": "1382602:322:000000004101408",
-      "code": "1382602",
-      "name": "COMÉRCIO EXTERIOR",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "322:000000004101408",
       "municipality": "Apucarana",
       "network": "Privada"
     },
@@ -29416,16 +29389,6 @@
       "modality": "Semipresencial",
       "institutionId": "221:000000004125704",
       "municipality": "São Miguel do Iguaçu",
-      "network": "Privada"
-    },
-    {
-      "id": "1704107:1472:000000004126256",
-      "code": "1704107",
-      "name": "EDUCAÇÃO ESPECIAL",
-      "degree": "Licenciatura",
-      "modality": "Semipresencial",
-      "institutionId": "1472:000000004126256",
-      "municipality": "Sarandi",
       "network": "Privada"
     },
     {
@@ -39329,16 +39292,6 @@
       "network": "Privada"
     },
     {
-      "id": "1516592:221:000000004102901",
-      "code": "1516592",
-      "name": "GEOGRAFIA",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "221:000000004102901",
-      "municipality": "Bituruna",
-      "network": "Privada"
-    },
-    {
       "id": "1427695:1491:000000004105508",
       "code": "1427695",
       "name": "GEOGRAFIA",
@@ -39786,6 +39739,16 @@
       "modality": "Semipresencial",
       "institutionId": "1472:000000004101200",
       "municipality": "Antonina",
+      "network": "Privada"
+    },
+    {
+      "id": "1701287:1472:000000004105805",
+      "code": "1701287",
+      "name": "GEOPROCESSAMENTO",
+      "degree": "Tecnológico",
+      "modality": "Semipresencial",
+      "institutionId": "1472:000000004105805",
+      "municipality": "Colombo",
       "network": "Privada"
     },
     {
@@ -40816,6 +40779,16 @@
       "modality": "EAD",
       "institutionId": "17854:000000004104303",
       "municipality": "Campo Mourão",
+      "network": "Privada"
+    },
+    {
+      "id": "1258620:3985:000000004104808",
+      "code": "1258620",
+      "name": "GESTÃO COMERCIAL",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "3985:000000004104808",
+      "municipality": "Cascavel",
       "network": "Privada"
     },
     {
@@ -41916,16 +41889,6 @@
       "modality": "EAD",
       "institutionId": "298:000000004114807",
       "municipality": "Marialva",
-      "network": "Privada"
-    },
-    {
-      "id": "1357958:298:000000004115200",
-      "code": "1357958",
-      "name": "GESTÃO DA PRODUÇÃO INDUSTRIAL",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004115200",
-      "municipality": "Maringá",
       "network": "Privada"
     },
     {
@@ -46189,16 +46152,6 @@
       "network": "Privada"
     },
     {
-      "id": "1442282:1508:000000004113700",
-      "code": "1442282",
-      "name": "GESTÃO DE NEGÓCIOS IMOBILIÁRIOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1508:000000004113700",
-      "municipality": "Londrina",
-      "network": "Privada"
-    },
-    {
       "id": "1551541:3797:000000004113700",
       "code": "1551541",
       "name": "GESTÃO DE NEGÓCIOS IMOBILIÁRIOS",
@@ -49759,16 +49712,6 @@
       "network": "Privada"
     },
     {
-      "id": "1619113:1196:000000004118204",
-      "code": "1619113",
-      "name": "GESTÃO DE TURISMO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1196:000000004118204",
-      "municipality": "Paranaguá",
-      "network": "Privada"
-    },
-    {
       "id": "1746079:1658:000000004118402",
       "code": "1746079",
       "name": "GESTÃO DE TURISMO",
@@ -52766,6 +52709,16 @@
       "modality": "EAD",
       "institutionId": "1472:000000004103701",
       "municipality": "Cambé",
+      "network": "Privada"
+    },
+    {
+      "id": "1575911:242:000000004104204",
+      "code": "1575911",
+      "name": "GESTÃO PORTUÁRIA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "242:000000004104204",
+      "municipality": "Campo Largo",
       "network": "Privada"
     },
     {
@@ -56769,6 +56722,16 @@
       "network": "Privada"
     },
     {
+      "id": "1563269:242:000000004122404",
+      "code": "1563269",
+      "name": "JORNALISMO",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "242:000000004122404",
+      "municipality": "Rolândia",
+      "network": "Privada"
+    },
+    {
       "id": "1427728:1430:000000004122602",
       "code": "1427728",
       "name": "JORNALISMO",
@@ -59479,16 +59442,6 @@
       "network": "Privada"
     },
     {
-      "id": "89853:1491:000000004117909",
-      "code": "89853",
-      "name": "LOGÍSTICA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1491:000000004117909",
-      "municipality": "Palotina",
-      "network": "Privada"
-    },
-    {
       "id": "1258041:918:000000004117909",
       "code": "1258041",
       "name": "LOGÍSTICA",
@@ -60316,16 +60269,6 @@
       "modality": "EAD",
       "institutionId": "1196:000000004107504",
       "municipality": "Engenheiro Beltrão",
-      "network": "Privada"
-    },
-    {
-      "id": "1577487:1660:000000004107603",
-      "code": "1577487",
-      "name": "MARKETING",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1660:000000004107603",
-      "municipality": "Faxinal",
       "network": "Privada"
     },
     {
@@ -63576,6 +63519,16 @@
       "modality": "Semipresencial",
       "institutionId": "1491:000000004118402",
       "municipality": "Paranavaí",
+      "network": "Privada"
+    },
+    {
+      "id": "1701813:1487:000000004121208",
+      "code": "1701813",
+      "name": "NUTRIÇÃO",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "1487:000000004121208",
+      "municipality": "Quitandinha",
       "network": "Privada"
     },
     {
@@ -70449,6 +70402,16 @@
       "network": "Privada"
     },
     {
+      "id": "89851:1491:000000004107207",
+      "code": "89851",
+      "name": "SECRETARIADO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1491:000000004107207",
+      "municipality": "Dois Vizinhos",
+      "network": "Privada"
+    },
+    {
       "id": "1595468:1872:000000004107652",
       "code": "1595468",
       "name": "SECRETARIADO",
@@ -70976,16 +70939,6 @@
       "modality": "EAD",
       "institutionId": "1196:000000004104709",
       "municipality": "Carlópolis",
-      "network": "Privada"
-    },
-    {
-      "id": "1649036:1846:000000004105409",
-      "code": "1649036",
-      "name": "SEGURANÇA CIBERNÉTICA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1846:000000004105409",
-      "municipality": "Chopinzinho",
       "network": "Privada"
     },
     {
@@ -71639,6 +71592,16 @@
       "network": "Privada"
     },
     {
+      "id": "1620248:3649:000000004105409",
+      "code": "1620248",
+      "name": "SEGURANÇA DO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "3649:000000004105409",
+      "municipality": "Chopinzinho",
+      "network": "Privada"
+    },
+    {
       "id": "1690689:3797:000000004105409",
       "code": "1690689",
       "name": "SEGURANÇA DO TRABALHO",
@@ -72086,6 +72049,16 @@
       "modality": "EAD",
       "institutionId": "1042:000000004104303",
       "municipality": "Campo Mourão",
+      "network": "Privada"
+    },
+    {
+      "id": "1498782:1270:000000004104808",
+      "code": "1498782",
+      "name": "SEGURANÇA NO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1270:000000004104808",
+      "municipality": "Cascavel",
       "network": "Privada"
     },
     {
@@ -74149,6 +74122,16 @@
       "network": "Privada"
     },
     {
+      "id": "1379289:1510:000000004101507",
+      "code": "1379289",
+      "name": "SISTEMAS DE INFORMAÇÃO",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1510:000000004101507",
+      "municipality": "Arapongas",
+      "network": "Privada"
+    },
+    {
       "id": "1575759:4751:000000004102703",
       "code": "1575759",
       "name": "SISTEMAS DE INFORMAÇÃO",
@@ -75825,6 +75808,16 @@
       "degree": "Bacharelado",
       "modality": "EAD",
       "institutionId": "1430:000000004104501",
+      "municipality": "Capanema",
+      "network": "Privada"
+    },
+    {
+      "id": "1314232:1491:000000004104501",
+      "code": "1314232",
+      "name": "TEOLOGIA",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1491:000000004104501",
       "municipality": "Capanema",
       "network": "Privada"
     },
