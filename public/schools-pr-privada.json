@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-23T15:15:03.931768+00:00",
+  "generatedAt": "2026-09-24T15:12:39.242063+00:00",
   "records": [
     {
       "id": "306",
@@ -14190,12 +14190,6 @@
     {
       "id": "583",
       "name": "Cultive, E-Ei Ef",
-      "municipality": "Ribeirao Claro",
-      "network": "Privada"
-    },
-    {
-      "id": "575",
-      "name": "Maranata, E-Ei Ef",
       "municipality": "Ribeirao Claro",
       "network": "Privada"
     },
