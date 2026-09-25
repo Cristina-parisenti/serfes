@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-24T15:12:39.242063+00:00",
+  "generatedAt": "2026-09-25T15:27:36.928462+00:00",
   "records": [
     {
       "id": "241",
@@ -1595,7 +1595,7 @@
     },
     {
       "id": "600",
-      "name": "Sao Carlos, E M R-Ei Ef",
+      "name": "Sao Carlos, E M C-Ei Ef",
       "municipality": "Arapongas",
       "network": "Municipal"
     },
@@ -23164,12 +23164,6 @@
       "network": "Municipal"
     },
     {
-      "id": "127",
-      "name": "Joao Iii, E R M D-Ef",
-      "municipality": "Pirai do Sul",
-      "network": "Municipal"
-    },
-    {
       "id": "550",
       "name": "Jorge Rivadavia Vargas, E M-Ei Ef",
       "municipality": "Pirai do Sul",
@@ -29759,7 +29753,7 @@
     },
     {
       "id": "461",
-      "name": "Atacio M de Castilho, E M Prof-Ei Ef",
+      "name": "Atacio M de Castilho, E M C Prof-Ei Ef",
       "municipality": "Siqueira Campos",
       "network": "Municipal"
     },
@@ -31103,7 +31097,7 @@
     },
     {
       "id": "61",
-      "name": "Marques de Abrantes, E R M-Ef",
+      "name": "Marques de Abrantes, E M-Ef",
       "municipality": "Tunas do Parana",
       "network": "Municipal"
     },
