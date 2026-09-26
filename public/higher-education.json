@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-25T15:55:11.594657+00:00",
+  "generatedAt": "2026-09-26T15:05:59.417597+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -3011,6 +3011,13 @@
     {
       "id": "1900:000000004106902",
       "name": "Centro Universitário de Ensino, Ciência e Tecnologia do Paraná",
+      "acronym": null,
+      "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
+      "id": "1892:000000004106902",
+      "name": "Centro Universitário de Excelência Eniac",
       "acronym": null,
       "municipality": "Curitiba",
       "network": "Privada"
@@ -9764,6 +9771,13 @@
       "network": "Privada"
     },
     {
+      "id": "24981:000000004125506",
+      "name": "Faculdade de Tecnologia Senac São José dos Pinhais",
+      "acronym": null,
+      "municipality": "São José dos Pinhais",
+      "network": "Privada"
+    },
+    {
       "id": "1196:000000004125506",
       "name": "UNIVERSIDADE CESUMAR",
       "acronym": null,
@@ -12025,16 +12039,6 @@
       "network": "Privada"
     },
     {
-      "id": "111720:1472:000000004120606",
-      "code": "111720",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1472:000000004120606",
-      "municipality": "Prudentópolis",
-      "network": "Privada"
-    },
-    {
       "id": "1258519:221:000000004120606",
       "code": "1258519",
       "name": "ADMINISTRAÇÃO",
@@ -12663,6 +12667,16 @@
       "institutionId": "57:000000004126256",
       "municipality": "Sarandi",
       "network": "Estadual"
+    },
+    {
+      "id": "1596573:298:000000004126603",
+      "code": "1596573",
+      "name": "ADMINISTRAÇÃO PÚBLICA",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "298:000000004126603",
+      "municipality": "Siqueira Campos",
+      "network": "Privada"
     },
     {
       "id": "1516725:1491:000000004127601",
@@ -14195,6 +14209,16 @@
       "network": "Privada"
     },
     {
+      "id": "1589948:22578:000000004106456",
+      "code": "1589948",
+      "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "22578:000000004106456",
+      "municipality": "Coronel Domingos Soares",
+      "network": "Privada"
+    },
+    {
       "id": "1170053:1196:000000004106506",
       "code": "1170053",
       "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
@@ -14241,6 +14265,16 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "17854:000000004106902",
+      "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
+      "id": "1308555:1892:000000004106902",
+      "code": "1308555",
+      "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1892:000000004106902",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -14922,6 +14956,16 @@
       "modality": "Presencial",
       "institutionId": "24980:000000004119905",
       "municipality": "Ponta Grossa",
+      "network": "Privada"
+    },
+    {
+      "id": "50017086:24981:000000004125506",
+      "code": "50017086",
+      "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
+      "degree": "Tecnológico",
+      "modality": "Presencial",
+      "institutionId": "24981:000000004125506",
+      "municipality": "São José dos Pinhais",
       "network": "Privada"
     },
     {
@@ -17835,6 +17879,16 @@
       "network": "Privada"
     },
     {
+      "id": "1701417:298:000000004101507",
+      "code": "1701417",
+      "name": "BIOMEDICINA",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "298:000000004101507",
+      "municipality": "Arapongas",
+      "network": "Privada"
+    },
+    {
       "id": "1701801:1472:000000004101804",
       "code": "1701801",
       "name": "BIOMEDICINA",
@@ -18202,6 +18256,16 @@
       "modality": "Semipresencial",
       "institutionId": "3649:000000004127403",
       "municipality": "Terra Roxa",
+      "network": "Privada"
+    },
+    {
+      "id": "1701358:163:000000004127700",
+      "code": "1701358",
+      "name": "BIOMEDICINA",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "163:000000004127700",
+      "municipality": "Toledo",
       "network": "Privada"
     },
     {
@@ -19642,16 +19706,6 @@
       "modality": "Semipresencial",
       "institutionId": "1491:000000004127601",
       "municipality": "Tijucas do Sul",
-      "network": "Privada"
-    },
-    {
-      "id": "1701224:163:000000004127700",
-      "code": "1701224",
-      "name": "CIÊNCIAS BIOLÓGICAS",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "163:000000004127700",
-      "municipality": "Toledo",
       "network": "Privada"
     },
     {
@@ -23975,16 +24029,6 @@
       "network": "Privada"
     },
     {
-      "id": "1615339:1196:000000004105805",
-      "code": "1615339",
-      "name": "COMUNICAÇÃO INSTITUCIONAL",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1196:000000004105805",
-      "municipality": "Colombo",
-      "network": "Privada"
-    },
-    {
       "id": "1615339:1196:000000004106506",
       "code": "1615339",
       "name": "COMUNICAÇÃO INSTITUCIONAL",
@@ -25372,6 +25416,16 @@
       "modality": "EAD",
       "institutionId": "1196:000000004112009",
       "municipality": "Jaguariaíva",
+      "network": "Privada"
+    },
+    {
+      "id": "1617841:1472:000000004113205",
+      "code": "1617841",
+      "name": "DESENVOLVIMENTO DE APLICATIVOS MÓVEIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1472:000000004113205",
+      "municipality": "Lapa",
       "network": "Privada"
     },
     {
@@ -27322,16 +27376,6 @@
       "modality": "EAD",
       "institutionId": "1508:000000004115200",
       "municipality": "Maringá",
-      "network": "Privada"
-    },
-    {
-      "id": "1713183:1270:000000004115804",
-      "code": "1713183",
-      "name": "DESIGN DE MODA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1270:000000004115804",
-      "municipality": "Medianeira",
       "network": "Privada"
     },
     {
@@ -35575,6 +35619,16 @@
       "network": "Privada"
     },
     {
+      "id": "1705249:1042:000000004118501",
+      "code": "1705249",
+      "name": "ESTÉTICA E COSMÉTICA",
+      "degree": "Tecnológico",
+      "modality": "Semipresencial",
+      "institutionId": "1042:000000004118501",
+      "municipality": "Pato Branco",
+      "network": "Privada"
+    },
+    {
       "id": "1705342:1491:000000004119152",
       "code": "1705342",
       "name": "ESTÉTICA E COSMÉTICA",
@@ -41195,16 +41249,6 @@
       "network": "Privada"
     },
     {
-      "id": "1304616:1205:000000004118204",
-      "code": "1304616",
-      "name": "GESTÃO COMERCIAL",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1205:000000004118204",
-      "municipality": "Paranaguá",
-      "network": "Privada"
-    },
-    {
       "id": "1285860:221:000000004119152",
       "code": "1285860",
       "name": "GESTÃO COMERCIAL",
@@ -45515,16 +45559,6 @@
       "network": "Privada"
     },
     {
-      "id": "1576565:163:000000004125704",
-      "code": "1576565",
-      "name": "GESTÃO DE MÍDIAS SOCIAIS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "163:000000004125704",
-      "municipality": "São Miguel do Iguaçu",
-      "network": "Privada"
-    },
-    {
       "id": "1612409:1472:000000004101408",
       "code": "1612409",
       "name": "GESTÃO DE NEGÓCIOS",
@@ -47972,16 +48006,6 @@
       "modality": "EAD",
       "institutionId": "22578:000000004120903",
       "municipality": "Quedas do Iguaçu",
-      "network": "Privada"
-    },
-    {
-      "id": "1382935:1491:000000004124053",
-      "code": "1382935",
-      "name": "GESTÃO DE SAÚDE PÚBLICA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1491:000000004124053",
-      "municipality": "Santa Terezinha de Itaipu",
       "network": "Privada"
     },
     {
@@ -51035,16 +51059,6 @@
       "network": "Privada"
     },
     {
-      "id": "1427329:1491:000000004101408",
-      "code": "1427329",
-      "name": "GESTÃO EM VIGILÂNCIA EM SAÚDE",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1491:000000004101408",
-      "municipality": "Apucarana",
-      "network": "Privada"
-    },
-    {
       "id": "1427329:1491:000000004101507",
       "code": "1427329",
       "name": "GESTÃO EM VIGILÂNCIA EM SAÚDE",
@@ -52995,6 +53009,16 @@
       "network": "Privada"
     },
     {
+      "id": "1321867:3985:000000004104907",
+      "code": "1321867",
+      "name": "GESTÃO PÚBLICA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "3985:000000004104907",
+      "municipality": "Castro",
+      "network": "Privada"
+    },
+    {
       "id": "1574896:1078:000000004105508",
       "code": "1574896",
       "name": "GESTÃO PÚBLICA",
@@ -53451,16 +53475,6 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "2835:000000004119905",
-      "municipality": "Ponta Grossa",
-      "network": "Privada"
-    },
-    {
-      "id": "1375384:3840:000000004119905",
-      "code": "1375384",
-      "name": "GESTÃO PÚBLICA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "3840:000000004119905",
       "municipality": "Ponta Grossa",
       "network": "Privada"
     },
@@ -54745,6 +54759,16 @@
       "network": "Privada"
     },
     {
+      "id": "1748498:1658:000000004108403",
+      "code": "1748498",
+      "name": "INTELIGÊNCIA ARTIFICIAL",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1658:000000004108403",
+      "municipality": "Francisco Beltrão",
+      "network": "Privada"
+    },
+    {
       "id": "1724002:3649:000000004111803",
       "code": "1724002",
       "name": "INTELIGÊNCIA ARTIFICIAL",
@@ -54762,6 +54786,16 @@
       "modality": "EAD",
       "institutionId": "1042:000000004113700",
       "municipality": "Londrina",
+      "network": "Privada"
+    },
+    {
+      "id": "1748498:1658:000000004118204",
+      "code": "1748498",
+      "name": "INTELIGÊNCIA ARTIFICIAL",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1658:000000004118204",
+      "municipality": "Paranaguá",
       "network": "Privada"
     },
     {
@@ -55102,16 +55136,6 @@
       "modality": "EAD",
       "institutionId": "163:000000004128104",
       "municipality": "Umuarama",
-      "network": "Privada"
-    },
-    {
-      "id": "1598930:221:000000004101408",
-      "code": "1598930",
-      "name": "INTERDISCIPLINAR EM HUMANIDADES",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "221:000000004101408",
-      "municipality": "Apucarana",
       "network": "Privada"
     },
     {
@@ -56182,16 +56206,6 @@
       "modality": "EAD",
       "institutionId": "1196:000000004124103",
       "municipality": "Santo Antônio da Platina",
-      "network": "Privada"
-    },
-    {
-      "id": "1487989:1510:000000004125506",
-      "code": "1487989",
-      "name": "JOGOS DIGITAIS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1510:000000004125506",
-      "municipality": "São José dos Pinhais",
       "network": "Privada"
     },
     {
@@ -57882,6 +57896,16 @@
       "modality": "Semipresencial",
       "institutionId": "1491:000000004109609",
       "municipality": "Guaratuba",
+      "network": "Privada"
+    },
+    {
+      "id": "1704157:1491:000000004114609",
+      "code": "1704157",
+      "name": "LETRAS - LÍNGUA PORTUGUESA",
+      "degree": "Licenciatura",
+      "modality": "Semipresencial",
+      "institutionId": "1491:000000004114609",
+      "municipality": "Marechal Cândido Rondon",
       "network": "Privada"
     },
     {
@@ -64655,16 +64679,6 @@
       "network": "Privada"
     },
     {
-      "id": "1739307:1510:000000004103701",
-      "code": "1739307",
-      "name": "PODOLOGIA",
-      "degree": "Tecnológico",
-      "modality": "Semipresencial",
-      "institutionId": "1510:000000004103701",
-      "municipality": "Cambé",
-      "network": "Privada"
-    },
-    {
       "id": "1701821:1491:000000004104709",
       "code": "1701821",
       "name": "PODOLOGIA",
@@ -66842,6 +66856,16 @@
       "modality": "EAD",
       "institutionId": "4751:000000004103503",
       "municipality": "Califórnia",
+      "network": "Privada"
+    },
+    {
+      "id": "1632639:4751:000000004116901",
+      "code": "1632639",
+      "name": "PRODUÇÃO PUBLICITÁRIA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "4751:000000004116901",
+      "municipality": "Nova Esperança",
       "network": "Privada"
     },
     {
