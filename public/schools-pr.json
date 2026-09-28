@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-27T15:25:10.622817+00:00",
+  "generatedAt": "2026-09-28T18:23:22.266592+00:00",
   "records": [
     {
       "id": "20",
@@ -30341,7 +30341,7 @@
     },
     {
       "id": "15",
-      "name": "Isidoro Dumont, E E C-M Ir-Efm",
+      "name": "Isidoro Dumont, C E C-M Ir-Efm",
       "municipality": "Itapejara D'oeste",
       "network": "Estadual"
     },
