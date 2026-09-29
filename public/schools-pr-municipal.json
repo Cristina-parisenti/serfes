@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-28T18:23:22.266592+00:00",
+  "generatedAt": "2026-09-29T16:41:34.184389+00:00",
   "records": [
     {
       "id": "241",
@@ -12551,7 +12551,7 @@
     },
     {
       "id": "1283",
-      "name": "Suzana Moraes Balen, E M Profa - Ef",
+      "name": "Susana Morais Balem, E M Profa - Ef",
       "municipality": "Foz do Iguacu",
       "network": "Municipal"
     },
@@ -17682,6 +17682,12 @@
     {
       "id": "7375",
       "name": "Tiao Balalao, C M E I",
+      "municipality": "Londrina",
+      "network": "Municipal"
+    },
+    {
+      "id": "8452",
+      "name": "Trabalho E Saber, E M C - Ei Ef",
       "municipality": "Londrina",
       "network": "Municipal"
     },
@@ -26963,7 +26969,7 @@
     },
     {
       "id": "155",
-      "name": "Jose de Anchieta, E M R Pe-Ei Ef",
+      "name": "Jose de Anchieta, E M C Pe-Ei Ef",
       "municipality": "Salto do Lontra",
       "network": "Municipal"
     },

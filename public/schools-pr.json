@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-28T18:23:22.266592+00:00",
+  "generatedAt": "2026-09-29T16:41:34.184389+00:00",
   "records": [
     {
       "id": "20",
@@ -25199,7 +25199,7 @@
     },
     {
       "id": "1283",
-      "name": "Suzana Moraes Balen, E M Profa - Ef",
+      "name": "Susana Morais Balem, E M Profa - Ef",
       "municipality": "Foz do Iguacu",
       "network": "Municipal"
     },
@@ -25452,6 +25452,12 @@
     {
       "id": "2328",
       "name": "Meu Jardim, C E I",
+      "municipality": "Foz do Iguacu",
+      "network": "Privada"
+    },
+    {
+      "id": "2549",
+      "name": "Mini Genius, E-Desenolvimento Infantil",
       "municipality": "Foz do Iguacu",
       "network": "Privada"
     },
@@ -34120,6 +34126,12 @@
       "network": "Municipal"
     },
     {
+      "id": "8452",
+      "name": "Trabalho E Saber, E M C - Ei Ef",
+      "municipality": "Londrina",
+      "network": "Municipal"
+    },
+    {
       "id": "6239",
       "name": "Valeria Veronesi, C M E I",
       "municipality": "Londrina",
@@ -34566,6 +34578,12 @@
     {
       "id": "6441",
       "name": "Dominos, E-Ei Ef",
+      "municipality": "Londrina",
+      "network": "Privada"
+    },
+    {
+      "id": "8460",
+      "name": "Edificar, Cei",
       "municipality": "Londrina",
       "network": "Privada"
     },
@@ -51941,7 +51959,7 @@
     },
     {
       "id": "155",
-      "name": "Jose de Anchieta, E M R Pe-Ei Ef",
+      "name": "Jose de Anchieta, E M C Pe-Ei Ef",
       "municipality": "Salto do Lontra",
       "network": "Municipal"
     },

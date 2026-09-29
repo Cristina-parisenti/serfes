@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-28T18:23:22.266592+00:00",
+  "generatedAt": "2026-09-29T16:41:34.184389+00:00",
   "records": [
     {
       "id": "306",
@@ -8092,6 +8092,12 @@
       "network": "Privada"
     },
     {
+      "id": "2549",
+      "name": "Mini Genius, E-Desenolvimento Infantil",
+      "municipality": "Foz do Iguacu",
+      "network": "Privada"
+    },
+    {
       "id": "1380",
       "name": "Monjolo, C-Ei Ef M",
       "municipality": "Foz do Iguacu",
@@ -9888,6 +9894,12 @@
     {
       "id": "6441",
       "name": "Dominos, E-Ei Ef",
+      "municipality": "Londrina",
+      "network": "Privada"
+    },
+    {
+      "id": "8460",
+      "name": "Edificar, Cei",
       "municipality": "Londrina",
       "network": "Privada"
     },
