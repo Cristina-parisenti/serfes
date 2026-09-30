@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-29T16:41:34.184389+00:00",
+  "generatedAt": "2026-09-30T16:37:31.788419+00:00",
   "records": [
     {
       "id": "306",
@@ -2369,7 +2369,7 @@
     },
     {
       "id": "2054",
-      "name": "Agape Kids, C E I",
+      "name": "Agape Kids, E - Eief",
       "municipality": "Colombo",
       "network": "Privada"
     },
@@ -2842,12 +2842,6 @@
       "network": "Privada"
     },
     {
-      "id": "2889",
-      "name": "Abelhinha, Pre Esc-Ei",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "20046",
       "name": "Acacias Ii, C E I",
       "municipality": "Curitiba",
@@ -2892,12 +2886,6 @@
     {
       "id": "15514",
       "name": "Acesso Santa Felicidade, C-Ef M",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "1122",
-      "name": "Adolfo B de Menezes, C E I Dr",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -3274,12 +3262,6 @@
       "network": "Privada"
     },
     {
-      "id": "5268",
-      "name": "Bambino Ano Dois Mil, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "3460",
       "name": "Bandeirantes, E-Ei Ef",
       "municipality": "Curitiba",
@@ -3454,18 +3436,6 @@
       "network": "Privada"
     },
     {
-      "id": "14186",
-      "name": "Brincando Com Letras, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "6159",
-      "name": "Brincando E Criando, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "12078",
       "name": "Brincando de Aprender, C E I",
       "municipality": "Curitiba",
@@ -3516,12 +3486,6 @@
     {
       "id": "20712",
       "name": "Cabana dos Brinquedos - C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "13511",
-      "name": "Caminho Ideal, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -4030,12 +3994,6 @@
       "network": "Privada"
     },
     {
-      "id": "13040",
-      "name": "Cia da Alegria, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "12647",
       "name": "Cia do Bebe E da Crianca, C E I",
       "municipality": "Curitiba",
@@ -4068,12 +4026,6 @@
     {
       "id": "18610",
       "name": "Ciranda, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "13023",
-      "name": "Circo das Letras, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -4180,12 +4132,6 @@
       "network": "Privada"
     },
     {
-      "id": "10784",
-      "name": "Corujinha Encantada, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "4954",
       "name": "Corujinha Feliz, C E I",
       "municipality": "Curitiba",
@@ -4260,12 +4206,6 @@
     {
       "id": "18521",
       "name": "Criar, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "8380",
-      "name": "Criarte, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -4366,12 +4306,6 @@
       "network": "Privada"
     },
     {
-      "id": "14151",
-      "name": "Dente de Leite, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "18050",
       "name": "Desafio do Saber, C E I",
       "municipality": "Curitiba",
@@ -4392,12 +4326,6 @@
     {
       "id": "19803",
       "name": "Descobrinque, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "14143",
-      "name": "Despertando As Estrelinhas, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -4452,12 +4380,6 @@
     {
       "id": "10067",
       "name": "Dulce, Creche Irma",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "11888",
-      "name": "Dunamys Kids, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -4542,12 +4464,6 @@
     {
       "id": "11322",
       "name": "Ensitec, C-E F M Prof",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "12124",
-      "name": "Equilibrio, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -4710,12 +4626,6 @@
     {
       "id": "15190",
       "name": "Estimulacao E Desenv-Cedae, Cei M Ee",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "11225",
-      "name": "Estimulo, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -4914,18 +4824,6 @@
     {
       "id": "18750",
       "name": "Futuro Ideal, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "13414",
-      "name": "Futuro da Crianca, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "13570",
-      "name": "Futuro, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -5938,12 +5836,6 @@
       "network": "Privada"
     },
     {
-      "id": "13104",
-      "name": "Nosso Amiguinho Blue, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "20267",
       "name": "Nosso Jardim, C E I",
       "municipality": "Curitiba",
@@ -6132,18 +6024,6 @@
     {
       "id": "11527",
       "name": "Passo A Frente, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "10393",
-      "name": "Passo Certo, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "11276",
-      "name": "Passo Livre, Creche-Ei Ef",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -6664,12 +6544,6 @@
       "network": "Privada"
     },
     {
-      "id": "14135",
-      "name": "Rei Leao, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "20003",
       "name": "Reino das Ideias, E-Ei Ef",
       "municipality": "Curitiba",
@@ -6870,12 +6744,6 @@
     {
       "id": "19609",
       "name": "Semeando O Futuro Com Amor, Cei",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "14526",
-      "name": "Semeando O Futuro, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -7096,12 +6964,6 @@
       "network": "Privada"
     },
     {
-      "id": "10814",
-      "name": "Super Anjo, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "13562",
       "name": "Supremo, E-Ei Ef",
       "municipality": "Curitiba",
@@ -7254,12 +7116,6 @@
     {
       "id": "11969",
       "name": "Trem da Alegria, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "19277",
-      "name": "Trem do Futuro Baby, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
