@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-09-30T16:37:31.788419+00:00",
+  "generatedAt": "2026-10-01T17:12:24.265570+00:00",
   "records": [
     {
       "id": "20",
@@ -18670,12 +18670,6 @@
       "network": "Privada"
     },
     {
-      "id": "9239",
-      "name": "Carrossel, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "18459",
       "name": "Casa da Arvore, C E I",
       "municipality": "Curitiba",
@@ -18768,12 +18762,6 @@
     {
       "id": "18483",
       "name": "Ceci Baby, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "7970",
-      "name": "Ceci, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -20800,12 +20788,6 @@
       "network": "Privada"
     },
     {
-      "id": "2439",
-      "name": "Naviozinho, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "10911",
       "name": "Nazare, C E I",
       "municipality": "Curitiba",
@@ -20986,12 +20968,6 @@
       "network": "Privada"
     },
     {
-      "id": "4601",
-      "name": "Oasis, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "8135",
       "name": "Oasis, Esc Ed Esp",
       "municipality": "Curitiba",
@@ -21102,12 +21078,6 @@
     {
       "id": "1610",
       "name": "Paula Amaral, E-Ei Ef",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "7678",
-      "name": "Pe da Serra, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -21348,18 +21318,6 @@
     {
       "id": "12493",
       "name": "Pipa Encantada, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "1831",
-      "name": "Pirilampo Espacial, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "6140",
-      "name": "Pirulim, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -21606,12 +21564,6 @@
     {
       "id": "20003",
       "name": "Reino das Ideias, E-Ei Ef",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "7481",
-      "name": "Reino dos Baixinhos, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -22182,12 +22134,6 @@
     {
       "id": "12930",
       "name": "Trem do Futuro, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "3770",
-      "name": "Trenzinho Encantado, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -32015,7 +31961,7 @@
     },
     {
       "id": "1255",
-      "name": "Cent Est Ed Profis Agr Jose L de Castro",
+      "name": "Cen Es Ed Prof Agr Prof Jose L de Castro",
       "municipality": "Lapa",
       "network": "Estadual"
     },
