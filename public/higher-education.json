@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-09-30T16:59:10.091584+00:00",
+  "generatedAt": "2026-10-01T17:29:25.118037+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -2346,13 +2346,6 @@
     {
       "id": "1472:000000004105508",
       "name": "CENTRO UNIVERSITÁRIO LEONARDO DA VINCI",
-      "acronym": null,
-      "municipality": "Cianorte",
-      "network": "Privada"
-    },
-    {
-      "id": "4751:000000004105508",
-      "name": "CENTRO UNIVERSITÁRIO UNIFATECIE",
       "acronym": null,
       "municipality": "Cianorte",
       "network": "Privada"
@@ -9547,6 +9540,13 @@
       "network": "Privada"
     },
     {
+      "id": "3649:000000004124400",
+      "name": "CENTRO UNIVERSITÁRIO CIDADE VERDE",
+      "acronym": null,
+      "municipality": "Santo Antônio do Sudoeste",
+      "network": "Privada"
+    },
+    {
       "id": "1510:000000004124400",
       "name": "CENTRO UNIVERSITÁRIO ESTÁCIO DE SANTA CATARINA - ESTÁCIO SANTA CATARINA",
       "acronym": null,
@@ -11959,16 +11959,6 @@
       "network": "Privada"
     },
     {
-      "id": "1336308:17854:000000004119400",
-      "code": "1336308",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "17854:000000004119400",
-      "municipality": "Piraí do Sul",
-      "network": "Privada"
-    },
-    {
       "id": "1336308:17854:000000004119509",
       "code": "1336308",
       "name": "ADMINISTRAÇÃO",
@@ -12429,6 +12419,16 @@
       "network": "Privada"
     },
     {
+      "id": "1562637:526:000000004101804",
+      "code": "1562637",
+      "name": "ADMINISTRAÇÃO PÚBLICA",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "526:000000004101804",
+      "municipality": "Araucária",
+      "network": "Privada"
+    },
+    {
       "id": "1363694:1472:000000004103701",
       "code": "1363694",
       "name": "ADMINISTRAÇÃO PÚBLICA",
@@ -12475,16 +12475,6 @@
       "degree": "Bacharelado",
       "modality": "EAD",
       "institutionId": "1491:000000004108403",
-      "municipality": "Francisco Beltrão",
-      "network": "Privada"
-    },
-    {
-      "id": "1665666:1658:000000004108403",
-      "code": "1665666",
-      "name": "ADMINISTRAÇÃO PÚBLICA",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1658:000000004108403",
       "municipality": "Francisco Beltrão",
       "network": "Privada"
     },
@@ -13155,16 +13145,6 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "1472:000000004105508",
-      "municipality": "Cianorte",
-      "network": "Privada"
-    },
-    {
-      "id": "1575760:4751:000000004105508",
-      "code": "1575760",
-      "name": "AGROCOMPUTAÇÃO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "4751:000000004105508",
       "municipality": "Cianorte",
       "network": "Privada"
     },
@@ -14469,16 +14449,6 @@
       "network": "Privada"
     },
     {
-      "id": "1471682:15450:000000004113700",
-      "code": "1471682",
-      "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "15450:000000004113700",
-      "municipality": "Londrina",
-      "network": "Privada"
-    },
-    {
       "id": "1616585:2625:000000004113700",
       "code": "1616585",
       "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
@@ -14769,6 +14739,16 @@
       "network": "Privada"
     },
     {
+      "id": "1563016:515:000000004127007",
+      "code": "1563016",
+      "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "515:000000004127007",
+      "municipality": "Teixeira Soares",
+      "network": "Privada"
+    },
+    {
       "id": "1266797:1472:000000004127106",
       "code": "1266797",
       "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
@@ -14866,6 +14846,16 @@
       "modality": "EAD",
       "institutionId": "1491:000000004128203",
       "municipality": "União da Vitória",
+      "network": "Privada"
+    },
+    {
+      "id": "1596355:437:000000004104808",
+      "code": "1596355",
+      "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
+      "degree": "Tecnológico",
+      "modality": "Presencial",
+      "institutionId": "437:000000004104808",
+      "municipality": "Cascavel",
       "network": "Privada"
     },
     {
@@ -20069,16 +20059,6 @@
       "network": "Privada"
     },
     {
-      "id": "1538757:4751:000000004105508",
-      "code": "1538757",
-      "name": "CIÊNCIAS CONTÁBEIS",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "4751:000000004105508",
-      "municipality": "Cianorte",
-      "network": "Privada"
-    },
-    {
       "id": "1538757:4751:000000004105607",
       "code": "1538757",
       "name": "CIÊNCIAS CONTÁBEIS",
@@ -21476,16 +21456,6 @@
       "modality": "EAD",
       "institutionId": "1196:000000004124400",
       "municipality": "Santo Antônio do Sudoeste",
-      "network": "Privada"
-    },
-    {
-      "id": "1674857:4751:000000004105508",
-      "code": "1674857",
-      "name": "CIÊNCIAS DO FUTURO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "4751:000000004105508",
-      "municipality": "Cianorte",
       "network": "Privada"
     },
     {
@@ -27089,16 +27059,6 @@
       "network": "Privada"
     },
     {
-      "id": "1575590:4751:000000004105508",
-      "code": "1575590",
-      "name": "DESIGN DE MODA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "4751:000000004105508",
-      "municipality": "Cianorte",
-      "network": "Privada"
-    },
-    {
       "id": "1342813:1196:000000004106308",
       "code": "1342813",
       "name": "DESIGN DE MODA",
@@ -29566,6 +29526,16 @@
       "modality": "Semipresencial",
       "institutionId": "1205:000000004113502",
       "municipality": "Loanda",
+      "network": "Privada"
+    },
+    {
+      "id": "1701804:1472:000000004113700",
+      "code": "1701804",
+      "name": "EDUCAÇÃO FÍSICA",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "1472:000000004113700",
+      "municipality": "Londrina",
       "network": "Privada"
     },
     {
@@ -34109,16 +34079,6 @@
       "network": "Privada"
     },
     {
-      "id": "1612622:1775:000000004128104",
-      "code": "1612622",
-      "name": "ENGENHARIA DE SOFTWARE",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1775:000000004128104",
-      "municipality": "Umuarama",
-      "network": "Privada"
-    },
-    {
       "id": "1556803:3797:000000004128104",
       "code": "1556803",
       "name": "ENGENHARIA DE SOFTWARE",
@@ -34266,16 +34226,6 @@
       "modality": "Presencial",
       "institutionId": "1519:000000004118501",
       "municipality": "Pato Branco",
-      "network": "Privada"
-    },
-    {
-      "id": "1702532:1472:000000004101507",
-      "code": "1702532",
-      "name": "ENGENHARIA ELÉTRICA",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1472:000000004101507",
-      "municipality": "Arapongas",
       "network": "Privada"
     },
     {
@@ -40929,6 +40879,16 @@
       "network": "Privada"
     },
     {
+      "id": "99012:1196:000000004110102",
+      "code": "99012",
+      "name": "GESTÃO COMERCIAL",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1196:000000004110102",
+      "municipality": "Imbituva",
+      "network": "Privada"
+    },
+    {
       "id": "89857:1491:000000004110102",
       "code": "89857",
       "name": "GESTÃO COMERCIAL",
@@ -41936,6 +41896,16 @@
       "modality": "EAD",
       "institutionId": "3840:000000004124103",
       "municipality": "Santo Antônio da Platina",
+      "network": "Privada"
+    },
+    {
+      "id": "1465699:3649:000000004124400",
+      "code": "1465699",
+      "name": "GESTÃO DA PRODUÇÃO INDUSTRIAL",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "3649:000000004124400",
+      "municipality": "Santo Antônio do Sudoeste",
       "network": "Privada"
     },
     {
@@ -46359,16 +46329,6 @@
       "network": "Privada"
     },
     {
-      "id": "1550857:1491:000000004118204",
-      "code": "1550857",
-      "name": "GESTÃO DE PARTIDOS POLÍTICOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1491:000000004118204",
-      "municipality": "Paranaguá",
-      "network": "Privada"
-    },
-    {
       "id": "1550857:1491:000000004120903",
       "code": "1550857",
       "name": "GESTÃO DE PARTIDOS POLÍTICOS",
@@ -50259,6 +50219,16 @@
       "network": "Privada"
     },
     {
+      "id": "111266:1196:000000004111258",
+      "code": "111266",
+      "name": "GESTÃO DO AGRONEGÓCIO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1196:000000004111258",
+      "municipality": "Itaperuçu",
+      "network": "Privada"
+    },
+    {
       "id": "1427725:1430:000000004111902",
       "code": "1427725",
       "name": "GESTÃO DO AGRONEGÓCIO",
@@ -50466,16 +50436,6 @@
       "modality": "EAD",
       "institutionId": "4751:000000004123709",
       "municipality": "Santa Isabel do Ivaí",
-      "network": "Privada"
-    },
-    {
-      "id": "1618808:1491:000000004124053",
-      "code": "1618808",
-      "name": "GESTÃO DO AGRONEGÓCIO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1491:000000004124053",
-      "municipality": "Santa Terezinha de Itaipu",
       "network": "Privada"
     },
     {
@@ -54769,6 +54729,16 @@
       "network": "Privada"
     },
     {
+      "id": "1656715:17854:000000004100400",
+      "code": "1656715",
+      "name": "INTELIGÊNCIA ARTIFICIAL E AUTOMAÇÃO DIGITAL",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "17854:000000004100400",
+      "municipality": "Almirante Tamandaré",
+      "network": "Privada"
+    },
+    {
       "id": "1656715:17854:000000004106456",
       "code": "1656715",
       "name": "INTELIGÊNCIA ARTIFICIAL E AUTOMAÇÃO DIGITAL",
@@ -58109,16 +58079,6 @@
       "network": "Privada"
     },
     {
-      "id": "1711791:221:000000004102406",
-      "code": "1711791",
-      "name": "LETRAS - PORTUGUÊS E ESPANHOL",
-      "degree": "Licenciatura",
-      "modality": "Semipresencial",
-      "institutionId": "221:000000004102406",
-      "municipality": "Bandeirantes",
-      "network": "Privada"
-    },
-    {
       "id": "1704497:3649:000000004104303",
       "code": "1704497",
       "name": "LETRAS - PORTUGUÊS E ESPANHOL",
@@ -59995,16 +59955,6 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "242:000000004105508",
-      "municipality": "Cianorte",
-      "network": "Privada"
-    },
-    {
-      "id": "1538605:4751:000000004105508",
-      "code": "1538605",
-      "name": "MARKETING",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "4751:000000004105508",
       "municipality": "Cianorte",
       "network": "Privada"
     },
@@ -68919,16 +68869,6 @@
       "network": "Privada"
     },
     {
-      "id": "1595777:1196:000000004103305",
-      "code": "1595777",
-      "name": "REDES DE COMPUTADORES",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1196:000000004103305",
-      "municipality": "Borrazópolis",
-      "network": "Privada"
-    },
-    {
       "id": "1617729:1472:000000004103701",
       "code": "1617729",
       "name": "REDES DE COMPUTADORES",
@@ -74669,16 +74609,6 @@
       "network": "Privada"
     },
     {
-      "id": "1540629:4751:000000004105508",
-      "code": "1540629",
-      "name": "SISTEMAS PARA INTERNET",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "4751:000000004105508",
-      "municipality": "Cianorte",
-      "network": "Privada"
-    },
-    {
       "id": "1540629:4751:000000004105607",
       "code": "1540629",
       "name": "SISTEMAS PARA INTERNET",
@@ -76335,6 +76265,16 @@
       "degree": "Bacharelado",
       "modality": "EAD",
       "institutionId": "1491:000000004119509",
+      "municipality": "Piraquara",
+      "network": "Privada"
+    },
+    {
+      "id": "1550206:4751:000000004119509",
+      "code": "1550206",
+      "name": "TEOLOGIA",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "4751:000000004119509",
       "municipality": "Piraquara",
       "network": "Privada"
     },
