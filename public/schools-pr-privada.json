@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-01T17:12:24.265570+00:00",
+  "generatedAt": "2026-10-02T16:30:14.517718+00:00",
   "records": [
     {
       "id": "306",
@@ -4960,12 +4960,6 @@
       "network": "Privada"
     },
     {
-      "id": "19994",
-      "name": "Grao Saber, E-Ef",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "1971",
       "name": "Grilo Falante, Pre Esc-Ei",
       "municipality": "Curitiba",
@@ -7302,6 +7296,12 @@
     {
       "id": "9670",
       "name": "Vovo Lina, C E I",
+      "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
+      "id": "19994",
+      "name": "Waldorf Grao Saber, E - Ef",
       "municipality": "Curitiba",
       "network": "Privada"
     },
