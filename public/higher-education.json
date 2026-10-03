@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-10-02T16:48:34.322733+00:00",
+  "generatedAt": "2026-10-03T15:13:43.819902+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -3303,13 +3303,6 @@
       "network": "Privada"
     },
     {
-      "id": "20053:000000004106902",
-      "name": "FACULDADE UNIMED",
-      "acronym": null,
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "3876:000000004106902",
       "name": "Faculdade Unyleya",
       "acronym": null,
@@ -5508,13 +5501,6 @@
       "network": "Privada"
     },
     {
-      "id": "298:000000004113205",
-      "name": "Universidade Pitágoras Unopar Anhanguera",
-      "acronym": null,
-      "municipality": "Lapa",
-      "network": "Privada"
-    },
-    {
       "id": "1042:000000004113205",
       "name": "UNIVERSIDADE POSITIVO",
       "acronym": null,
@@ -6742,6 +6728,13 @@
     {
       "id": "1270:000000004115606",
       "name": "CENTRO UNIVERSITÁRIO ESTÁCIO DE RIBEIRÃO PRETO",
+      "acronym": null,
+      "municipality": "Matelândia",
+      "network": "Privada"
+    },
+    {
+      "id": "3840:000000004115606",
+      "name": "CENTRO UNIVERSITÁRIO FACVEST",
       "acronym": null,
       "municipality": "Matelândia",
       "network": "Privada"
@@ -11673,16 +11666,6 @@
       "network": "Privada"
     },
     {
-      "id": "1427705:1430:000000004110102",
-      "code": "1427705",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1430:000000004110102",
-      "municipality": "Imbituva",
-      "network": "Privada"
-    },
-    {
       "id": "121026:1196:000000004111258",
       "code": "121026",
       "name": "ADMINISTRAÇÃO",
@@ -15213,16 +15196,6 @@
       "network": "Privada"
     },
     {
-      "id": "1548987:298:000000004113205",
-      "code": "1548987",
-      "name": "ARQUITETURA DE DADOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004113205",
-      "municipality": "Lapa",
-      "network": "Privada"
-    },
-    {
       "id": "1582524:242:000000004113700",
       "code": "1582524",
       "name": "ARQUITETURA DE DADOS",
@@ -18473,16 +18446,6 @@
       "network": "Privada"
     },
     {
-      "id": "1613448:298:000000004113502",
-      "code": "1613448",
-      "name": "CIÊNCIA DA COMPUTAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "298:000000004113502",
-      "municipality": "Loanda",
-      "network": "Privada"
-    },
-    {
       "id": "1690487:4017:000000004113700",
       "code": "1690487",
       "name": "CIÊNCIA DA COMPUTAÇÃO",
@@ -19713,6 +19676,16 @@
       "network": "Privada"
     },
     {
+      "id": "1703961:1196:000000004107603",
+      "code": "1703961",
+      "name": "CIÊNCIAS BIOLÓGICAS",
+      "degree": "Licenciatura",
+      "modality": "Semipresencial",
+      "institutionId": "1196:000000004107603",
+      "municipality": "Faxinal",
+      "network": "Privada"
+    },
+    {
       "id": "1704155:1491:000000004108304",
       "code": "1704155",
       "name": "CIÊNCIAS BIOLÓGICAS",
@@ -20529,16 +20502,6 @@
       "degree": "Bacharelado",
       "modality": "EAD",
       "institutionId": "1326:000000004118204",
-      "municipality": "Paranaguá",
-      "network": "Privada"
-    },
-    {
-      "id": "111726:1472:000000004118204",
-      "code": "111726",
-      "name": "CIÊNCIAS CONTÁBEIS",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1472:000000004118204",
       "municipality": "Paranaguá",
       "network": "Privada"
     },
@@ -23383,16 +23346,6 @@
       "network": "Privada"
     },
     {
-      "id": "1177033:163:000000004115200",
-      "code": "1177033",
-      "name": "COMÉRCIO EXTERIOR",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "163:000000004115200",
-      "municipality": "Maringá",
-      "network": "Privada"
-    },
-    {
       "id": "1524033:1775:000000004115200",
       "code": "1524033",
       "name": "COMÉRCIO EXTERIOR",
@@ -23780,6 +23733,16 @@
       "modality": "EAD",
       "institutionId": "242:000000004109708",
       "municipality": "Ibaiti",
+      "network": "Privada"
+    },
+    {
+      "id": "1652688:221:000000004113205",
+      "code": "1652688",
+      "name": "COMPUTAÇÃO EM NUVEM",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "221:000000004113205",
+      "municipality": "Lapa",
       "network": "Privada"
     },
     {
@@ -24743,16 +24706,6 @@
       "network": "Privada"
     },
     {
-      "id": "1703962:1196:000000004114609",
-      "code": "1703962",
-      "name": "DANÇA",
-      "degree": "Licenciatura",
-      "modality": "Semipresencial",
-      "institutionId": "1196:000000004114609",
-      "municipality": "Marechal Cândido Rondon",
-      "network": "Privada"
-    },
-    {
       "id": "1704115:1472:000000004118402",
       "code": "1704115",
       "name": "DANÇA",
@@ -24910,6 +24863,16 @@
       "modality": "EAD",
       "institutionId": "437:000000004109401",
       "municipality": "Guarapuava",
+      "network": "Privada"
+    },
+    {
+      "id": "1666457:437:000000004113700",
+      "code": "1666457",
+      "name": "DEFESA CIBERNÉTICA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "437:000000004113700",
+      "municipality": "Londrina",
       "network": "Privada"
     },
     {
@@ -27443,16 +27406,6 @@
       "network": "Privada"
     },
     {
-      "id": "1427663:221:000000004102901",
-      "code": "1427663",
-      "name": "DESIGN DE PRODUTO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "221:000000004102901",
-      "municipality": "Bituruna",
-      "network": "Privada"
-    },
-    {
       "id": "1537494:1042:000000004103602",
       "code": "1537494",
       "name": "DESIGN DE PRODUTO",
@@ -28329,6 +28282,16 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "1472:000000004119608",
+      "municipality": "Pitanga",
+      "network": "Privada"
+    },
+    {
+      "id": "1562873:242:000000004119608",
+      "code": "1562873",
+      "name": "DESIGN GRÁFICO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "242:000000004119608",
       "municipality": "Pitanga",
       "network": "Privada"
     },
@@ -29290,6 +29253,16 @@
       "modality": "Semipresencial",
       "institutionId": "221:000000004102901",
       "municipality": "Bituruna",
+      "network": "Privada"
+    },
+    {
+      "id": "1701710:1205:000000004104006",
+      "code": "1701710",
+      "name": "EDUCAÇÃO FÍSICA",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "1205:000000004104006",
+      "municipality": "Campina Grande do Sul",
       "network": "Privada"
     },
     {
@@ -30740,16 +30713,6 @@
       "modality": "EAD",
       "institutionId": "221:000000004119509",
       "municipality": "Piraquara",
-      "network": "Privada"
-    },
-    {
-      "id": "1382793:298:000000004120903",
-      "code": "1382793",
-      "name": "EMPREENDEDORISMO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004120903",
-      "municipality": "Quedas do Iguaçu",
       "network": "Privada"
     },
     {
@@ -32213,6 +32176,16 @@
       "network": "Privada"
     },
     {
+      "id": "1702770:3840:000000004108304",
+      "code": "1702770",
+      "name": "ENGENHARIA CIVIL",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "3840:000000004108304",
+      "municipality": "Foz do Iguaçu",
+      "network": "Privada"
+    },
+    {
       "id": "1709469:5511:000000004109401",
       "code": "1709469",
       "name": "ENGENHARIA CIVIL",
@@ -32390,6 +32363,16 @@
       "modality": "Semipresencial",
       "institutionId": "1491:000000004119400",
       "municipality": "Piraí do Sul",
+      "network": "Privada"
+    },
+    {
+      "id": "1702552:1491:000000004119509",
+      "code": "1702552",
+      "name": "ENGENHARIA CIVIL",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "1491:000000004119509",
+      "municipality": "Piraquara",
       "network": "Privada"
     },
     {
@@ -34910,16 +34893,6 @@
       "modality": "Semipresencial",
       "institutionId": "1491:000000004107603",
       "municipality": "Faxinal",
-      "network": "Privada"
-    },
-    {
-      "id": "1702220:375:000000004108304",
-      "code": "1702220",
-      "name": "ENGENHARIA MECÂNICA",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "375:000000004108304",
-      "municipality": "Foz do Iguaçu",
       "network": "Privada"
     },
     {
@@ -37853,6 +37826,16 @@
       "network": "Privada"
     },
     {
+      "id": "1702056:3840:000000004115606",
+      "code": "1702056",
+      "name": "FISIOTERAPIA",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "3840:000000004115606",
+      "municipality": "Matelândia",
+      "network": "Privada"
+    },
+    {
       "id": "1701809:1472:000000004118402",
       "code": "1701809",
       "name": "FISIOTERAPIA",
@@ -40100,16 +40083,6 @@
       "modality": "Semipresencial",
       "institutionId": "1491:000000004104808",
       "municipality": "Cascavel",
-      "network": "Privada"
-    },
-    {
-      "id": "1702438:1196:000000004105805",
-      "code": "1702438",
-      "name": "GESTÃO AMBIENTAL",
-      "degree": "Tecnológico",
-      "modality": "Semipresencial",
-      "institutionId": "1196:000000004105805",
-      "municipality": "Colombo",
       "network": "Privada"
     },
     {
@@ -45403,6 +45376,16 @@
       "network": "Privada"
     },
     {
+      "id": "1578566:1270:000000004113205",
+      "code": "1578566",
+      "name": "GESTÃO DE MÍDIAS SOCIAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1270:000000004113205",
+      "municipality": "Lapa",
+      "network": "Privada"
+    },
+    {
       "id": "1579594:1660:000000004117909",
       "code": "1579594",
       "name": "GESTÃO DE MÍDIAS SOCIAIS",
@@ -45533,6 +45516,16 @@
       "network": "Privada"
     },
     {
+      "id": "1612409:1472:000000004128203",
+      "code": "1612409",
+      "name": "GESTÃO DE NEGÓCIOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1472:000000004128203",
+      "municipality": "União da Vitória",
+      "network": "Privada"
+    },
+    {
       "id": "1483437:1491:000000004105508",
       "code": "1483437",
       "name": "GESTÃO DE NEGÓCIOS DIGITAIS",
@@ -45620,16 +45613,6 @@
       "modality": "EAD",
       "institutionId": "1487:000000004128625",
       "municipality": "Alto Paraíso",
-      "network": "Privada"
-    },
-    {
-      "id": "1539033:4751:000000004100509",
-      "code": "1539033",
-      "name": "GESTÃO DE NEGÓCIOS IMOBILIÁRIOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "4751:000000004100509",
-      "municipality": "Altônia",
       "network": "Privada"
     },
     {
@@ -47443,6 +47426,16 @@
       "network": "Privada"
     },
     {
+      "id": "1537976:4751:000000004124053",
+      "code": "1537976",
+      "name": "GESTÃO DE RECURSOS HUMANOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "4751:000000004124053",
+      "municipality": "Santa Terezinha de Itaipu",
+      "network": "Privada"
+    },
+    {
       "id": "1185941:1491:000000004124400",
       "code": "1185941",
       "name": "GESTÃO DE RECURSOS HUMANOS",
@@ -47893,6 +47886,16 @@
       "network": "Privada"
     },
     {
+      "id": "1458158:1196:000000004101101",
+      "code": "1458158",
+      "name": "GESTÃO DE SEGURANÇA PRIVADA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1196:000000004101101",
+      "municipality": "Andirá",
+      "network": "Privada"
+    },
+    {
       "id": "1458158:1196:000000004101408",
       "code": "1458158",
       "name": "GESTÃO DE SEGURANÇA PRIVADA",
@@ -47950,6 +47953,16 @@
       "modality": "EAD",
       "institutionId": "4751:000000004102000",
       "municipality": "Assis Chateaubriand",
+      "network": "Privada"
+    },
+    {
+      "id": "1458158:1196:000000004102109",
+      "code": "1458158",
+      "name": "GESTÃO DE SEGURANÇA PRIVADA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1196:000000004102109",
+      "municipality": "Astorga",
       "network": "Privada"
     },
     {
@@ -50603,6 +50616,16 @@
       "network": "Privada"
     },
     {
+      "id": "1632545:3649:000000004120507",
+      "code": "1632545",
+      "name": "GESTÃO DO ESPORTE",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "3649:000000004120507",
+      "municipality": "Primeiro de Maio",
+      "network": "Privada"
+    },
+    {
       "id": "1632545:3649:000000004122008",
       "code": "1632545",
       "name": "GESTÃO DO ESPORTE",
@@ -50910,16 +50933,6 @@
       "modality": "EAD",
       "institutionId": "1491:000000004107009",
       "municipality": "Curiúva",
-      "network": "Privada"
-    },
-    {
-      "id": "1427329:1491:000000004109609",
-      "code": "1427329",
-      "name": "GESTÃO EM VIGILÂNCIA EM SAÚDE",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1491:000000004109609",
-      "municipality": "Guaratuba",
       "network": "Privada"
     },
     {
@@ -53551,16 +53564,6 @@
       "institutionId": "609:000000004128005",
       "municipality": "Ubiratã",
       "network": "Estadual"
-    },
-    {
-      "id": "1164570:1196:000000004128203",
-      "code": "1164570",
-      "name": "GESTÃO PÚBLICA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1196:000000004128203",
-      "municipality": "União da Vitória",
-      "network": "Privada"
     },
     {
       "id": "1525836:437:000000004105607",
@@ -63353,6 +63356,16 @@
       "network": "Privada"
     },
     {
+      "id": "1702053:3840:000000004115606",
+      "code": "1702053",
+      "name": "NUTRIÇÃO",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "3840:000000004115606",
+      "municipality": "Matelândia",
+      "network": "Privada"
+    },
+    {
       "id": "1701811:1472:000000004116208",
       "code": "1701811",
       "name": "NUTRIÇÃO",
@@ -64370,6 +64383,16 @@
       "modality": "EAD",
       "institutionId": "221:000000004111258",
       "municipality": "Itaperuçu",
+      "network": "Privada"
+    },
+    {
+      "id": "1671949:221:000000004128104",
+      "code": "1671949",
+      "name": "PERÍCIA JUDICIAL E EXTRAJUDICIAL",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "221:000000004128104",
+      "municipality": "Umuarama",
       "network": "Privada"
     },
     {
@@ -68033,6 +68056,16 @@
       "network": "Privada"
     },
     {
+      "id": "1427736:1430:000000004123303",
+      "code": "1427736",
+      "name": "PUBLICIDADE E PROPAGANDA",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1430:000000004123303",
+      "municipality": "Santa Cruz de Monte Castelo",
+      "network": "Privada"
+    },
+    {
       "id": "1577438:1660:000000004125001",
       "code": "1577438",
       "name": "PUBLICIDADE E PROPAGANDA",
@@ -68780,6 +68813,16 @@
       "modality": "Semipresencial",
       "institutionId": "1658:000000004115200",
       "municipality": "Maringá",
+      "network": "Privada"
+    },
+    {
+      "id": "1702057:3840:000000004115606",
+      "code": "1702057",
+      "name": "RADIOLOGIA",
+      "degree": "Tecnológico",
+      "modality": "Semipresencial",
+      "institutionId": "3840:000000004115606",
+      "municipality": "Matelândia",
       "network": "Privada"
     },
     {
@@ -70213,12 +70256,12 @@
       "network": "Privada"
     },
     {
-      "id": "1533879:20053:000000004106902",
-      "code": "1533879",
+      "id": "1595468:1872:000000004106902",
+      "code": "1595468",
       "name": "SECRETARIADO",
       "degree": "Tecnológico",
       "modality": "EAD",
-      "institutionId": "20053:000000004106902",
+      "institutionId": "1872:000000004106902",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -75163,16 +75206,6 @@
       "network": "Privada"
     },
     {
-      "id": "1704144:1491:000000004100400",
-      "code": "1704144",
-      "name": "SOCIOLOGIA",
-      "degree": "Licenciatura",
-      "modality": "Semipresencial",
-      "institutionId": "1491:000000004100400",
-      "municipality": "Almirante Tamandaré",
-      "network": "Privada"
-    },
-    {
       "id": "1704144:1491:000000004101804",
       "code": "1704144",
       "name": "SOCIOLOGIA",
@@ -75190,16 +75223,6 @@
       "modality": "Semipresencial",
       "institutionId": "1472:000000004104303",
       "municipality": "Campo Mourão",
-      "network": "Privada"
-    },
-    {
-      "id": "1704499:3649:000000004105508",
-      "code": "1704499",
-      "name": "SOCIOLOGIA",
-      "degree": "Licenciatura",
-      "modality": "Semipresencial",
-      "institutionId": "3649:000000004105508",
-      "municipality": "Cianorte",
       "network": "Privada"
     },
     {
@@ -77430,16 +77453,6 @@
       "modality": "Semipresencial",
       "institutionId": "1430:000000004101903",
       "municipality": "Assaí",
-      "network": "Privada"
-    },
-    {
-      "id": "1702889:1430:000000004103503",
-      "code": "1702889",
-      "name": "ZOOTECNIA",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1430:000000004103503",
-      "municipality": "Califórnia",
       "network": "Privada"
     },
     {
