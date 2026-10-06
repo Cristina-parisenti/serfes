@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-05T19:33:12.497366+00:00",
+  "generatedAt": "2026-10-06T17:01:33.299938+00:00",
   "records": [
     {
       "id": "241",
@@ -27551,7 +27551,7 @@
     },
     {
       "id": "255",
-      "name": "Olimpio Spricigo, E M-Ef",
+      "name": "Olimpio Spricigo, E M-Ei Ef",
       "municipality": "Santa Terezinha de Itaipu",
       "network": "Municipal"
     },
