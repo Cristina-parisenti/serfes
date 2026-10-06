@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-10-04T15:56:39.092383+00:00",
+  "generatedAt": "2026-10-06T17:22:50.892991+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -5974,6 +5974,13 @@
       "name": "UNIVERSIDADE SANTO AMARO",
       "acronym": null,
       "municipality": "Londrina",
+      "network": "Privada"
+    },
+    {
+      "id": "3649:000000004113734",
+      "name": "CENTRO UNIVERSITÁRIO CIDADE VERDE",
+      "acronym": null,
+      "municipality": "Luiziana",
       "network": "Privada"
     },
     {
@@ -18926,16 +18933,6 @@
       "network": "Privada"
     },
     {
-      "id": "1500138:1510:000000004114807",
-      "code": "1500138",
-      "name": "CIÊNCIA DE DADOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1510:000000004114807",
-      "municipality": "Marialva",
-      "network": "Privada"
-    },
-    {
       "id": "1500138:1510:000000004115200",
       "code": "1500138",
       "name": "CIÊNCIA DE DADOS",
@@ -24726,33 +24723,13 @@
       "network": "Privada"
     },
     {
-      "id": "1634507:1205:000000004100400",
+      "id": "1634507:1205:000000004109401",
       "code": "1634507",
       "name": "DATA SCIENCE",
       "degree": "Tecnológico",
       "modality": "EAD",
-      "institutionId": "1205:000000004100400",
-      "municipality": "Almirante Tamandaré",
-      "network": "Privada"
-    },
-    {
-      "id": "1634507:1205:000000004118501",
-      "code": "1634507",
-      "name": "DATA SCIENCE",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1205:000000004118501",
-      "municipality": "Pato Branco",
-      "network": "Privada"
-    },
-    {
-      "id": "1634507:1205:000000004127700",
-      "code": "1634507",
-      "name": "DATA SCIENCE",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1205:000000004127700",
-      "municipality": "Toledo",
+      "institutionId": "1205:000000004109401",
+      "municipality": "Guarapuava",
       "network": "Privada"
     },
     {
@@ -46986,6 +46963,16 @@
       "network": "Privada"
     },
     {
+      "id": "1465705:3649:000000004113734",
+      "code": "1465705",
+      "name": "GESTÃO DE RECURSOS HUMANOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "3649:000000004113734",
+      "municipality": "Luiziana",
+      "network": "Privada"
+    },
+    {
       "id": "1258531:221:000000004114104",
       "code": "1258531",
       "name": "GESTÃO DE RECURSOS HUMANOS",
@@ -61706,16 +61693,6 @@
       "network": "Privada"
     },
     {
-      "id": "1703198:221:000000004126603",
-      "code": "1703198",
-      "name": "MATEMÁTICA",
-      "degree": "Licenciatura",
-      "modality": "Semipresencial",
-      "institutionId": "221:000000004126603",
-      "municipality": "Siqueira Campos",
-      "network": "Privada"
-    },
-    {
       "id": "1704156:1491:000000004127205",
       "code": "1704156",
       "name": "MATEMÁTICA",
@@ -74672,6 +74649,16 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "1846:000000004107207",
+      "municipality": "Dois Vizinhos",
+      "network": "Privada"
+    },
+    {
+      "id": "1516597:221:000000004107207",
+      "code": "1516597",
+      "name": "SISTEMAS PARA INTERNET",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "221:000000004107207",
       "municipality": "Dois Vizinhos",
       "network": "Privada"
     },
