@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-10-06T17:22:50.892991+00:00",
+  "generatedAt": "2026-10-07T17:57:19.993718+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -33633,16 +33633,6 @@
       "network": "Privada"
     },
     {
-      "id": "1314138:1196:000000004105508",
-      "code": "1314138",
-      "name": "ENGENHARIA DE SOFTWARE",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1196:000000004105508",
-      "municipality": "Cianorte",
-      "network": "Privada"
-    },
-    {
       "id": "1314138:1196:000000004105607",
       "code": "1314138",
       "name": "ENGENHARIA DE SOFTWARE",
@@ -47420,6 +47410,16 @@
       "modality": "EAD",
       "institutionId": "4751:000000004124053",
       "municipality": "Santa Terezinha de Itaipu",
+      "network": "Privada"
+    },
+    {
+      "id": "99008:1196:000000004124400",
+      "code": "99008",
+      "name": "GESTÃO DE RECURSOS HUMANOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1196:000000004124400",
+      "municipality": "Santo Antônio do Sudoeste",
       "network": "Privada"
     },
     {
@@ -76810,6 +76810,16 @@
       "modality": "Semipresencial",
       "institutionId": "1430:000000004123501",
       "municipality": "Santa Helena",
+      "network": "Privada"
+    },
+    {
+      "id": "1709001:3649:000000004125506",
+      "code": "1709001",
+      "name": "TERAPIA OCUPACIONAL",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "3649:000000004125506",
+      "municipality": "São José dos Pinhais",
       "network": "Privada"
     },
     {
