@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-06T17:01:33.299938+00:00",
+  "generatedAt": "2026-10-07T17:38:33.813707+00:00",
   "records": [
     {
       "id": "20",
@@ -23992,6 +23992,12 @@
       "network": "Municipal"
     },
     {
+      "id": "207",
+      "name": "Terezinha de Jesus Meira Kuller, Cmei",
+      "municipality": "Fernandes Pinheiro",
+      "network": "Municipal"
+    },
+    {
       "id": "177",
       "name": "Tia Aurora, C M E I",
       "municipality": "Fernandes Pinheiro",
@@ -31961,7 +31967,7 @@
     },
     {
       "id": "1255",
-      "name": "Cen Es Ed Prof Agr Prof Jose L de Castro",
+      "name": "Ceepa Prof Jose Luiz de Castro",
       "municipality": "Lapa",
       "network": "Estadual"
     },
@@ -40157,7 +40163,7 @@
     },
     {
       "id": "13",
-      "name": "Costa Monteiro, C E-Ef Eti Em",
+      "name": "Costa Monteiro, E E-Ef Eti",
       "municipality": "Nova Esperanca",
       "network": "Estadual"
     },
@@ -40307,7 +40313,7 @@
     },
     {
       "id": "11",
-      "name": "Angastao Cruz, E R M-Ei Ef",
+      "name": "Angastao Cruz, E M C-Ei Ef",
       "municipality": "Nova Esperanca do Sudoeste",
       "network": "Municipal"
     },
@@ -44208,12 +44214,6 @@
     {
       "id": "648",
       "name": "Pingo de Gente, E-Ei Ef",
-      "municipality": "Peabiru",
-      "network": "Privada"
-    },
-    {
-      "id": "656",
-      "name": "Sao Boaventura V Mae de Deus, E-Ei Ef",
       "municipality": "Peabiru",
       "network": "Privada"
     },
@@ -57011,7 +57011,7 @@
     },
     {
       "id": "496",
-      "name": "Guabiroba, E M-Ei Ef",
+      "name": "Guabiroba, E M do C - Ei Ef",
       "municipality": "Siqueira Campos",
       "network": "Municipal"
     },
