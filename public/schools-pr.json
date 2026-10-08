@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-07T17:38:33.813707+00:00",
+  "generatedAt": "2026-10-08T17:37:08.594496+00:00",
   "records": [
     {
       "id": "20",
@@ -413,7 +413,7 @@
     },
     {
       "id": "544",
-      "name": "Ignacio Lipski, E M Prof-Ef",
+      "name": "Ignacio Lipski, E M Prof-Ei Ef",
       "municipality": "Almirante Tamandare",
       "network": "Municipal"
     },
@@ -6743,7 +6743,7 @@
     },
     {
       "id": "593",
-      "name": "Andres Kasper, E-Ei Ef",
+      "name": "Andres Kasper, Cei",
       "municipality": "Campina Grande do Sul",
       "network": "Privada"
     },
