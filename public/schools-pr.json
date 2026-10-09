@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-08T17:37:08.594496+00:00",
+  "generatedAt": "2026-10-09T17:10:09.046968+00:00",
   "records": [
     {
       "id": "20",
@@ -10062,12 +10062,6 @@
     {
       "id": "1106",
       "name": "Anjo Dourado, C E I",
-      "municipality": "Cascavel",
-      "network": "Privada"
-    },
-    {
-      "id": "3737",
-      "name": "Anjo da Guarda, C E I",
       "municipality": "Cascavel",
       "network": "Privada"
     },
@@ -35261,7 +35255,7 @@
     },
     {
       "id": "7243",
-      "name": "Sigma, C - Efm",
+      "name": "Sigma, C - Ei Ef M",
       "municipality": "Londrina",
       "network": "Privada"
     },
@@ -38105,7 +38099,7 @@
     },
     {
       "id": "4285",
-      "name": "Cristao Int de Maringa_zona 3, C-Em",
+      "name": "Cristao Int de Maringa_zona 3, C-Efm",
       "municipality": "Maringa",
       "network": "Privada"
     },
