@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-10-11T16:45:02.741370+00:00",
+  "generatedAt": "2026-10-12T20:25:07.930048+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -32606,16 +32606,6 @@
       "degree": "Bacharelado",
       "modality": "Semipresencial",
       "institutionId": "1430:000000004128203",
-      "municipality": "União da Vitória",
-      "network": "Privada"
-    },
-    {
-      "id": "1702552:1491:000000004128203",
-      "code": "1702552",
-      "name": "ENGENHARIA CIVIL",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1491:000000004128203",
       "municipality": "União da Vitória",
       "network": "Privada"
     },
@@ -66900,6 +66890,16 @@
       "network": "Privada"
     },
     {
+      "id": "1632639:4751:000000004116901",
+      "code": "1632639",
+      "name": "PRODUÇÃO PUBLICITÁRIA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "4751:000000004116901",
+      "municipality": "Nova Esperança",
+      "network": "Privada"
+    },
+    {
       "id": "1632639:4751:000000004117602",
       "code": "1632639",
       "name": "PRODUÇÃO PUBLICITÁRIA",
@@ -76807,16 +76807,6 @@
       "modality": "Semipresencial",
       "institutionId": "221:000000004107652",
       "municipality": "Fazenda Rio Grande",
-      "network": "Privada"
-    },
-    {
-      "id": "1701805:1472:000000004108304",
-      "code": "1701805",
-      "name": "TERAPIA OCUPACIONAL",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1472:000000004108304",
-      "municipality": "Foz do Iguaçu",
       "network": "Privada"
     },
     {
