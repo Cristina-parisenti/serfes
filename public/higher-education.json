@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-10-12T20:25:07.930048+00:00",
+  "generatedAt": "2026-10-13T18:30:09.028605+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -19210,6 +19210,16 @@
       "network": "Privada"
     },
     {
+      "id": "1662796:3649:000000004104402",
+      "code": "1662796",
+      "name": "CIÊNCIA POLÍTICA",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "3649:000000004104402",
+      "municipality": "Cândido de Abreu",
+      "network": "Privada"
+    },
+    {
       "id": "1562834:242:000000004105508",
       "code": "1562834",
       "name": "CIÊNCIA POLÍTICA",
@@ -24437,16 +24447,6 @@
       "modality": "EAD",
       "institutionId": "298:000000004101606",
       "municipality": "Arapoti",
-      "network": "Privada"
-    },
-    {
-      "id": "1576059:298:000000004102406",
-      "code": "1576059",
-      "name": "CRIMINOLOGIA",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "298:000000004102406",
-      "municipality": "Bandeirantes",
       "network": "Privada"
     },
     {
@@ -31090,6 +31090,16 @@
       "network": "Privada"
     },
     {
+      "id": "1702536:1472:000000004100400",
+      "code": "1702536",
+      "name": "ENERGIAS RENOVÁVEIS",
+      "degree": "Tecnológico",
+      "modality": "Semipresencial",
+      "institutionId": "1472:000000004100400",
+      "municipality": "Almirante Tamandaré",
+      "network": "Privada"
+    },
+    {
       "id": "1709307:1491:000000004100509",
       "code": "1709307",
       "name": "ENERGIAS RENOVÁVEIS",
@@ -32947,16 +32957,6 @@
       "modality": "Semipresencial",
       "institutionId": "1430:000000004116703",
       "municipality": "Nova Aurora",
-      "network": "Privada"
-    },
-    {
-      "id": "1702413:1042:000000004119509",
-      "code": "1702413",
-      "name": "ENGENHARIA DE COMPUTAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1042:000000004119509",
-      "municipality": "Piraquara",
       "network": "Privada"
     },
     {
@@ -36707,6 +36707,16 @@
       "modality": "Semipresencial",
       "institutionId": "1430:000000004126603",
       "municipality": "Siqueira Campos",
+      "network": "Privada"
+    },
+    {
+      "id": "1486093:2835:000000004119905",
+      "code": "1486093",
+      "name": "FILMMAKER",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "2835:000000004119905",
+      "municipality": "Ponta Grossa",
       "network": "Privada"
     },
     {
@@ -41720,16 +41730,6 @@
       "network": "Privada"
     },
     {
-      "id": "1457697:1510:000000004106902",
-      "code": "1457697",
-      "name": "GESTÃO DA PRODUÇÃO INDUSTRIAL",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1510:000000004106902",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "1550072:4751:000000004106902",
       "code": "1550072",
       "name": "GESTÃO DA PRODUÇÃO INDUSTRIAL",
@@ -44078,6 +44078,16 @@
       "institutionId": "535:000000004114203",
       "municipality": "Mandaguari",
       "network": "Municipal"
+    },
+    {
+      "id": "1572910:1472:000000004101507",
+      "code": "1572910",
+      "name": "GESTÃO DE CIDADES INTELIGENTES E SUSTENTÁVEIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1472:000000004101507",
+      "municipality": "Arapongas",
+      "network": "Privada"
     },
     {
       "id": "1632603:3649:000000004107702",
@@ -63570,16 +63580,6 @@
       "network": "Privada"
     },
     {
-      "id": "1701811:1472:000000004116208",
-      "code": "1701811",
-      "name": "NUTRIÇÃO",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "1472:000000004116208",
-      "municipality": "Morretes",
-      "network": "Privada"
-    },
-    {
       "id": "1701811:1472:000000004118204",
       "code": "1701811",
       "name": "NUTRIÇÃO",
@@ -67367,6 +67367,16 @@
       "modality": "Semipresencial",
       "institutionId": "1042:000000004117305",
       "municipality": "Ortigueira",
+      "network": "Privada"
+    },
+    {
+      "id": "1703956:1196:000000004117503",
+      "code": "1703956",
+      "name": "PSICOPEDAGOGIA",
+      "degree": "Bacharelado",
+      "modality": "Semipresencial",
+      "institutionId": "1196:000000004117503",
+      "municipality": "Paiçandu",
       "network": "Privada"
     },
     {
