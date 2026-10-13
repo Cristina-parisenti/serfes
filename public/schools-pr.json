@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-12T20:03:09.938185+00:00",
+  "generatedAt": "2026-10-13T17:50:10.676619+00:00",
   "records": [
     {
       "id": "20",
@@ -10373,7 +10373,7 @@
     },
     {
       "id": "2854",
-      "name": "Saber, E-Ei Ef",
+      "name": "Saber, E-Ei Ef M",
       "municipality": "Cascavel",
       "network": "Privada"
     },
@@ -30526,12 +30526,6 @@
       "network": "Municipal"
     },
     {
-      "id": "660",
-      "name": "Joao Vi, E M C D-Ei Ef",
-      "municipality": "Ivaipora",
-      "network": "Municipal"
-    },
-    {
       "id": "415",
       "name": "Jose Aparecido Peres, E M C - Ef",
       "municipality": "Ivaipora",
@@ -38099,7 +38093,7 @@
     },
     {
       "id": "4285",
-      "name": "Cristao Int de Maringa_zona 3, C-Efm",
+      "name": "Cristao Int de Maringa Zona 3, C-Efm",
       "municipality": "Maringa",
       "network": "Privada"
     },
@@ -43686,6 +43680,12 @@
     {
       "id": "1536",
       "name": "Genesis, E M-Ei Ef",
+      "municipality": "Pato Branco",
+      "network": "Municipal"
+    },
+    {
+      "id": "1943",
+      "name": "Gentil Antonio Balbinotti, Cmei",
       "municipality": "Pato Branco",
       "network": "Municipal"
     },
@@ -53560,6 +53560,12 @@
       "network": "Municipal"
     },
     {
+      "id": "488",
+      "name": "Barbara P de Queiroz Vovo Barbara,cmei",
+      "municipality": "Sao Joao do Ivai",
+      "network": "Municipal"
+    },
+    {
       "id": "372",
       "name": "Crianca Feliz, C M E I",
       "municipality": "Sao Joao do Ivai",
@@ -53598,12 +53604,6 @@
     {
       "id": "623",
       "name": "Tancredo Neves, E M-Ef",
-      "municipality": "Sao Joao do Ivai",
-      "network": "Municipal"
-    },
-    {
-      "id": "488",
-      "name": "Vovo Barbara, C M E I",
       "municipality": "Sao Joao do Ivai",
       "network": "Municipal"
     },

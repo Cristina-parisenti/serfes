@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-12T20:03:09.938185+00:00",
+  "generatedAt": "2026-10-13T17:50:10.676619+00:00",
   "records": [
     {
       "id": "306",
@@ -2027,7 +2027,7 @@
     },
     {
       "id": "2854",
-      "name": "Saber, E-Ei Ef",
+      "name": "Saber, E-Ei Ef M",
       "municipality": "Cascavel",
       "network": "Privada"
     },
@@ -11237,7 +11237,7 @@
     },
     {
       "id": "4285",
-      "name": "Cristao Int de Maringa_zona 3, C-Efm",
+      "name": "Cristao Int de Maringa Zona 3, C-Efm",
       "municipality": "Maringa",
       "network": "Privada"
     },
