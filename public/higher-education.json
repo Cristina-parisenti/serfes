@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-10-13T18:30:09.028605+00:00",
+  "generatedAt": "2026-10-14T16:02:03.897461+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -7783,6 +7783,13 @@
       "network": "Privada"
     },
     {
+      "id": "298:000000004118402",
+      "name": "Universidade Pitágoras Unopar Anhanguera",
+      "acronym": null,
+      "municipality": "Paranavaí",
+      "network": "Privada"
+    },
+    {
       "id": "1519:000000004118501",
       "name": "Afya Centro Universitário de Pato Branco",
       "acronym": null,
@@ -11680,6 +11687,16 @@
       "network": "Privada"
     },
     {
+      "id": "1427705:1430:000000004111209",
+      "code": "1427705",
+      "name": "ADMINISTRAÇÃO",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1430:000000004111209",
+      "municipality": "Itapejara d´Oeste",
+      "network": "Privada"
+    },
+    {
       "id": "121026:1196:000000004111258",
       "code": "121026",
       "name": "ADMINISTRAÇÃO",
@@ -14447,6 +14464,16 @@
       "modality": "EAD",
       "institutionId": "1196:000000004108601",
       "municipality": "Goioerê",
+      "network": "Privada"
+    },
+    {
+      "id": "1453363:1508:000000004109401",
+      "code": "1453363",
+      "name": "ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1508:000000004109401",
+      "municipality": "Guarapuava",
       "network": "Privada"
     },
     {
@@ -19660,16 +19687,6 @@
       "network": "Privada"
     },
     {
-      "id": "1701224:163:000000004127700",
-      "code": "1701224",
-      "name": "CIÊNCIAS BIOLÓGICAS",
-      "degree": "Bacharelado",
-      "modality": "Semipresencial",
-      "institutionId": "163:000000004127700",
-      "municipality": "Toledo",
-      "network": "Privada"
-    },
-    {
       "id": "1701291:1491:000000004128005",
       "code": "1701291",
       "name": "CIÊNCIAS BIOLÓGICAS",
@@ -21947,6 +21964,16 @@
       "modality": "EAD",
       "institutionId": "4751:000000004114203",
       "municipality": "Mandaguari",
+      "network": "Privada"
+    },
+    {
+      "id": "1342812:1196:000000004114906",
+      "code": "1342812",
+      "name": "CIÊNCIAS ECONÔMICAS",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1196:000000004114906",
+      "municipality": "Marilândia do Sul",
       "network": "Privada"
     },
     {
@@ -41240,16 +41267,6 @@
       "network": "Privada"
     },
     {
-      "id": "1304616:1205:000000004118204",
-      "code": "1304616",
-      "name": "GESTÃO COMERCIAL",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1205:000000004118204",
-      "municipality": "Paranaguá",
-      "network": "Privada"
-    },
-    {
       "id": "1285860:221:000000004119152",
       "code": "1285860",
       "name": "GESTÃO COMERCIAL",
@@ -45547,16 +45564,6 @@
       "modality": "EAD",
       "institutionId": "1491:000000004125506",
       "municipality": "São José dos Pinhais",
-      "network": "Privada"
-    },
-    {
-      "id": "1576565:163:000000004125704",
-      "code": "1576565",
-      "name": "GESTÃO DE MÍDIAS SOCIAIS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "163:000000004125704",
-      "municipality": "São Miguel do Iguaçu",
       "network": "Privada"
     },
     {
@@ -55177,16 +55184,6 @@
       "modality": "EAD",
       "institutionId": "163:000000004128104",
       "municipality": "Umuarama",
-      "network": "Privada"
-    },
-    {
-      "id": "1598930:221:000000004101408",
-      "code": "1598930",
-      "name": "INTERDISCIPLINAR EM HUMANIDADES",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "221:000000004101408",
-      "municipality": "Apucarana",
       "network": "Privada"
     },
     {
@@ -72207,6 +72204,16 @@
       "modality": "EAD",
       "institutionId": "1042:000000004117602",
       "municipality": "Palmas",
+      "network": "Privada"
+    },
+    {
+      "id": "1190160:298:000000004118402",
+      "code": "1190160",
+      "name": "SEGURANÇA NO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004118402",
+      "municipality": "Paranavaí",
       "network": "Privada"
     },
     {
