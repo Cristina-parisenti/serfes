@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-13T17:50:10.676619+00:00",
+  "generatedAt": "2026-10-14T15:17:15.757327+00:00",
   "records": [
     {
       "id": "20",
@@ -23357,7 +23357,7 @@
     },
     {
       "id": "298",
-      "name": "Rondon, E R M Mal-Ef",
+      "name": "Rondon, E M R Mal-Ef",
       "municipality": "Faxinal",
       "network": "Municipal"
     },
@@ -57011,7 +57011,7 @@
     },
     {
       "id": "348",
-      "name": "Irineu Humberto Giacom, E M R-Ei Ef",
+      "name": "Irineu Humberto Giacom, E M C-Ei Ef",
       "municipality": "Siqueira Campos",
       "network": "Municipal"
     },
