@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-10-14T16:02:03.897461+00:00",
+  "generatedAt": "2026-10-15T15:43:12.239907+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -12064,16 +12064,6 @@
       "modality": "EAD",
       "institutionId": "1508:000000004120408",
       "municipality": "Presidente Castelo Branco",
-      "network": "Privada"
-    },
-    {
-      "id": "111720:1472:000000004120606",
-      "code": "111720",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1472:000000004120606",
-      "municipality": "Prudentópolis",
       "network": "Privada"
     },
     {
@@ -25214,6 +25204,16 @@
       "modality": "EAD",
       "institutionId": "1042:000000004126504",
       "municipality": "Sertanópolis",
+      "network": "Privada"
+    },
+    {
+      "id": "1749276:1270:000000004126603",
+      "code": "1749276",
+      "name": "DESENVOLVIMENTO BACK-END",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1270:000000004126603",
+      "municipality": "Siqueira Campos",
       "network": "Privada"
     },
     {
@@ -65187,6 +65187,16 @@
       "network": "Privada"
     },
     {
+      "id": "1427735:1430:000000004104303",
+      "code": "1427735",
+      "name": "PROCESSOS GERENCIAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1430:000000004104303",
+      "municipality": "Campo Mourão",
+      "network": "Privada"
+    },
+    {
       "id": "1258536:221:000000004104303",
       "code": "1258536",
       "name": "PROCESSOS GERENCIAIS",
@@ -68654,6 +68664,16 @@
       "modality": "Semipresencial",
       "institutionId": "1491:000000004112009",
       "municipality": "Jaguariaíva",
+      "network": "Privada"
+    },
+    {
+      "id": "1703899:1042:000000004114104",
+      "code": "1703899",
+      "name": "QUÍMICA",
+      "degree": "Licenciatura",
+      "modality": "Semipresencial",
+      "institutionId": "1042:000000004114104",
+      "municipality": "Mandaguaçu",
       "network": "Privada"
     },
     {
