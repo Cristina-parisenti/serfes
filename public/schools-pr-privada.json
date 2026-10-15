@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-14T15:17:15.757327+00:00",
+  "generatedAt": "2026-10-15T15:10:04.813581+00:00",
   "records": [
     {
       "id": "306",
@@ -7366,6 +7366,12 @@
       "network": "Privada"
     },
     {
+      "id": "1532",
+      "name": "Doce Infancia Dv - C E I",
+      "municipality": "Dois Vizinhos",
+      "network": "Privada"
+    },
+    {
       "id": "1524",
       "name": "Nossa Senhora das Gracas, E - Ei Ef",
       "municipality": "Dois Vizinhos",
@@ -9929,7 +9935,7 @@
     },
     {
       "id": "6867",
-      "name": "Ilece Cafezal, E-Ei Ef Mod Ed Esp",
+      "name": "Ilece Cafezal, E-Ef Mod Ed Esp",
       "municipality": "Londrina",
       "network": "Privada"
     },
