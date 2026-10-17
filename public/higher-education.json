@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-10-16T15:28:43.702916+00:00",
+  "generatedAt": "2026-10-17T14:28:15.594106+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -3263,13 +3263,6 @@
     {
       "id": "22814:000000004106902",
       "name": "Faculdade Auden Educacional",
-      "acronym": null,
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "22578:000000004106902",
-      "name": "FACULDADE CENSUPEG",
       "acronym": null,
       "municipality": "Curitiba",
       "network": "Privada"
@@ -11428,6 +11421,16 @@
       "modality": "EAD",
       "institutionId": "437:000000004104501",
       "municipality": "Capanema",
+      "network": "Privada"
+    },
+    {
+      "id": "1185928:1491:000000004104808",
+      "code": "1185928",
+      "name": "ADMINISTRAÇÃO",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1491:000000004104808",
+      "municipality": "Cascavel",
       "network": "Privada"
     },
     {
@@ -25061,16 +25064,6 @@
       "network": "Privada"
     },
     {
-      "id": "1749123:1660:000000004110805",
-      "code": "1749123",
-      "name": "DESENVOLVIMENTO BACK-END",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1660:000000004110805",
-      "municipality": "Iretama",
-      "network": "Privada"
-    },
-    {
       "id": "1598937:221:000000004113205",
       "code": "1598937",
       "name": "DESENVOLVIMENTO BACK-END",
@@ -33771,16 +33764,6 @@
       "network": "Privada"
     },
     {
-      "id": "1590426:22578:000000004106902",
-      "code": "1590426",
-      "name": "ENGENHARIA DE SOFTWARE",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "22578:000000004106902",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "1556803:3797:000000004106902",
       "code": "1556803",
       "name": "ENGENHARIA DE SOFTWARE",
@@ -36678,6 +36661,16 @@
       "modality": "EAD",
       "institutionId": "135:000000004106902",
       "municipality": "Curitiba",
+      "network": "Privada"
+    },
+    {
+      "id": "1586201:1430:000000004107603",
+      "code": "1586201",
+      "name": "FILOSOFIA",
+      "degree": "Bacharelado",
+      "modality": "EAD",
+      "institutionId": "1430:000000004107603",
+      "municipality": "Faxinal",
       "network": "Privada"
     },
     {
@@ -42571,16 +42564,6 @@
       "network": "Privada"
     },
     {
-      "id": "1595448:1491:000000004119103",
-      "code": "1595448",
-      "name": "GESTÃO DA QUALIDADE",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1491:000000004119103",
-      "municipality": "Piên",
-      "network": "Privada"
-    },
-    {
       "id": "1550077:4751:000000004119152",
       "code": "1550077",
       "name": "GESTÃO DA QUALIDADE",
@@ -48151,6 +48134,16 @@
       "network": "Privada"
     },
     {
+      "id": "1458158:1196:000000004109302",
+      "code": "1458158",
+      "name": "GESTÃO DE SEGURANÇA PRIVADA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "1196:000000004109302",
+      "municipality": "Guaraniaçu",
+      "network": "Privada"
+    },
+    {
       "id": "1458158:1196:000000004109609",
       "code": "1458158",
       "name": "GESTÃO DE SEGURANÇA PRIVADA",
@@ -52578,6 +52571,16 @@
       "modality": "EAD",
       "institutionId": "163:000000004108304",
       "municipality": "Foz do Iguaçu",
+      "network": "Privada"
+    },
+    {
+      "id": "1575911:242:000000004109401",
+      "code": "1575911",
+      "name": "GESTÃO PORTUÁRIA",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "242:000000004109401",
+      "municipality": "Guarapuava",
       "network": "Privada"
     },
     {
@@ -62978,16 +62981,6 @@
       "modality": "EAD",
       "institutionId": "3649:000000004107702",
       "municipality": "Fênix",
-      "network": "Privada"
-    },
-    {
-      "id": "1661800:1196:000000004117503",
-      "code": "1661800",
-      "name": "NEGÓCIOS SUSTENTÁVEIS E ESG",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "1196:000000004117503",
-      "municipality": "Paiçandu",
       "network": "Privada"
     },
     {
@@ -76288,16 +76281,6 @@
       "modality": "EAD",
       "institutionId": "5025:000000004119608",
       "municipality": "Pitanga",
-      "network": "Privada"
-    },
-    {
-      "id": "1712384:1508:000000004119905",
-      "code": "1712384",
-      "name": "TEOLOGIA",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1508:000000004119905",
-      "municipality": "Ponta Grossa",
       "network": "Privada"
     },
     {
