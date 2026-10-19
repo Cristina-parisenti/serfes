@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-18T14:10:14.747186+00:00",
+  "generatedAt": "2026-10-19T17:13:48.125420+00:00",
   "records": [
     {
       "id": "306",
@@ -13824,6 +13824,12 @@
     {
       "id": "55",
       "name": "Imaculada Virgem Maria, C-Ei Ef M",
+      "municipality": "Prudentopolis",
+      "network": "Privada"
+    },
+    {
+      "id": "1892",
+      "name": "Nossa Senhora do Carmo, Cei",
       "municipality": "Prudentopolis",
       "network": "Privada"
     },
