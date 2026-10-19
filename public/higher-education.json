@@ -3,7 +3,7 @@
   "sourceUrl": "https://dados.gov.br/dados/conjuntos-dados/sistema-e-mec---cursos-de-graduacao-do-brasil",
   "emecUrl": "https://emec.mec.gov.br/emec/nova-index/",
   "dataYear": null,
-  "generatedAt": "2026-10-18T14:47:09.069250+00:00",
+  "generatedAt": "2026-10-19T17:40:50.166132+00:00",
   "institutions": [
     {
       "id": "15450:000000004100301",
@@ -11421,16 +11421,6 @@
       "modality": "EAD",
       "institutionId": "437:000000004104501",
       "municipality": "Capanema",
-      "network": "Privada"
-    },
-    {
-      "id": "1185928:1491:000000004104808",
-      "code": "1185928",
-      "name": "ADMINISTRAÇÃO",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1491:000000004104808",
-      "municipality": "Cascavel",
       "network": "Privada"
     },
     {
@@ -35984,26 +35974,6 @@
       "network": "Privada"
     },
     {
-      "id": "1605818:242:000000004102406",
-      "code": "1605818",
-      "name": "EVENTOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "242:000000004102406",
-      "municipality": "Bandeirantes",
-      "network": "Privada"
-    },
-    {
-      "id": "1576069:298:000000004102406",
-      "code": "1576069",
-      "name": "EVENTOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004102406",
-      "municipality": "Bandeirantes",
-      "network": "Privada"
-    },
-    {
       "id": "1562628:1042:000000004105508",
       "code": "1562628",
       "name": "EVENTOS",
@@ -36021,16 +35991,6 @@
       "modality": "EAD",
       "institutionId": "221:000000004105508",
       "municipality": "Cianorte",
-      "network": "Privada"
-    },
-    {
-      "id": "1576297:515:000000004106902",
-      "code": "1576297",
-      "name": "EVENTOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "515:000000004106902",
-      "municipality": "Curitiba",
       "network": "Privada"
     },
     {
@@ -36054,16 +36014,6 @@
       "network": "Privada"
     },
     {
-      "id": "1576297:515:000000004113700",
-      "code": "1576297",
-      "name": "EVENTOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "515:000000004113700",
-      "municipality": "Londrina",
-      "network": "Privada"
-    },
-    {
       "id": "1562593:221:000000004115804",
       "code": "1562593",
       "name": "EVENTOS",
@@ -36071,16 +36021,6 @@
       "modality": "EAD",
       "institutionId": "221:000000004115804",
       "municipality": "Medianeira",
-      "network": "Privada"
-    },
-    {
-      "id": "1605818:242:000000004121703",
-      "code": "1605818",
-      "name": "EVENTOS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "242:000000004121703",
-      "municipality": "Reserva",
       "network": "Privada"
     },
     {
@@ -36611,16 +36551,6 @@
       "modality": "EAD",
       "institutionId": "135:000000004106902",
       "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "1586201:1430:000000004107603",
-      "code": "1586201",
-      "name": "FILOSOFIA",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1430:000000004107603",
-      "municipality": "Faxinal",
       "network": "Privada"
     },
     {
@@ -44724,6 +44654,16 @@
       "network": "Privada"
     },
     {
+      "id": "1576069:298:000000004102406",
+      "code": "1576069",
+      "name": "GESTÃO DE EVENTOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004102406",
+      "municipality": "Bandeirantes",
+      "network": "Privada"
+    },
+    {
       "id": "1739285:1510:000000004103701",
       "code": "1739285",
       "name": "GESTÃO DE EVENTOS",
@@ -44741,6 +44681,16 @@
       "modality": "EAD",
       "institutionId": "1472:000000004105904",
       "municipality": "Colorado",
+      "network": "Privada"
+    },
+    {
+      "id": "1576069:298:000000004108403",
+      "code": "1576069",
+      "name": "GESTÃO DE EVENTOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004108403",
+      "municipality": "Francisco Beltrão",
       "network": "Privada"
     },
     {
@@ -44784,6 +44734,36 @@
       "network": "Privada"
     },
     {
+      "id": "1605818:242:000000004117909",
+      "code": "1605818",
+      "name": "GESTÃO DE EVENTOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "242:000000004117909",
+      "municipality": "Palotina",
+      "network": "Privada"
+    },
+    {
+      "id": "1605818:242:000000004118204",
+      "code": "1605818",
+      "name": "GESTÃO DE EVENTOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "242:000000004118204",
+      "municipality": "Paranaguá",
+      "network": "Privada"
+    },
+    {
+      "id": "1576069:298:000000004118204",
+      "code": "1576069",
+      "name": "GESTÃO DE EVENTOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004118204",
+      "municipality": "Paranaguá",
+      "network": "Privada"
+    },
+    {
       "id": "1739430:1660:000000004119905",
       "code": "1739430",
       "name": "GESTÃO DE EVENTOS",
@@ -44801,6 +44781,36 @@
       "modality": "EAD",
       "institutionId": "1472:000000004120606",
       "municipality": "Prudentópolis",
+      "network": "Privada"
+    },
+    {
+      "id": "1576069:298:000000004120606",
+      "code": "1576069",
+      "name": "GESTÃO DE EVENTOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004120606",
+      "municipality": "Prudentópolis",
+      "network": "Privada"
+    },
+    {
+      "id": "1605818:242:000000004121703",
+      "code": "1605818",
+      "name": "GESTÃO DE EVENTOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "242:000000004121703",
+      "municipality": "Reserva",
+      "network": "Privada"
+    },
+    {
+      "id": "1576069:298:000000004122404",
+      "code": "1576069",
+      "name": "GESTÃO DE EVENTOS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004122404",
+      "municipality": "Rolândia",
       "network": "Privada"
     },
     {
@@ -48504,6 +48514,16 @@
       "network": "Privada"
     },
     {
+      "id": "1541398:242:000000004101507",
+      "code": "1541398",
+      "name": "GESTÃO DE SERVIÇOS JUDICIAIS E NOTARIAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "242:000000004101507",
+      "municipality": "Arapongas",
+      "network": "Privada"
+    },
+    {
       "id": "1596133:1196:000000004101804",
       "code": "1596133",
       "name": "GESTÃO DE SERVIÇOS JUDICIAIS E NOTARIAIS",
@@ -48511,6 +48531,26 @@
       "modality": "EAD",
       "institutionId": "1196:000000004101804",
       "municipality": "Araucária",
+      "network": "Privada"
+    },
+    {
+      "id": "1421550:298:000000004101804",
+      "code": "1421550",
+      "name": "GESTÃO DE SERVIÇOS JUDICIAIS E NOTARIAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004101804",
+      "municipality": "Araucária",
+      "network": "Privada"
+    },
+    {
+      "id": "1421550:298:000000004104303",
+      "code": "1421550",
+      "name": "GESTÃO DE SERVIÇOS JUDICIAIS E NOTARIAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004104303",
+      "municipality": "Campo Mourão",
       "network": "Privada"
     },
     {
@@ -48554,6 +48594,16 @@
       "network": "Privada"
     },
     {
+      "id": "1421550:298:000000004116901",
+      "code": "1421550",
+      "name": "GESTÃO DE SERVIÇOS JUDICIAIS E NOTARIAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004116901",
+      "municipality": "Nova Esperança",
+      "network": "Privada"
+    },
+    {
       "id": "1596133:1196:000000004117503",
       "code": "1596133",
       "name": "GESTÃO DE SERVIÇOS JUDICIAIS E NOTARIAIS",
@@ -48590,6 +48640,16 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "1196:000000004118501",
+      "municipality": "Pato Branco",
+      "network": "Privada"
+    },
+    {
+      "id": "1421550:298:000000004118501",
+      "code": "1421550",
+      "name": "GESTÃO DE SERVIÇOS JUDICIAIS E NOTARIAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004118501",
       "municipality": "Pato Branco",
       "network": "Privada"
     },
@@ -48644,6 +48704,16 @@
       "network": "Privada"
     },
     {
+      "id": "1421550:298:000000004126504",
+      "code": "1421550",
+      "name": "GESTÃO DE SERVIÇOS JUDICIAIS E NOTARIAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004126504",
+      "municipality": "Sertanópolis",
+      "network": "Privada"
+    },
+    {
       "id": "1596133:1196:000000004127304",
       "code": "1596133",
       "name": "GESTÃO DE SERVIÇOS JUDICIAIS E NOTARIAIS",
@@ -48660,6 +48730,16 @@
       "degree": "Tecnológico",
       "modality": "EAD",
       "institutionId": "1196:000000004127700",
+      "municipality": "Toledo",
+      "network": "Privada"
+    },
+    {
+      "id": "1421550:298:000000004127700",
+      "code": "1421550",
+      "name": "GESTÃO DE SERVIÇOS JUDICIAIS E NOTARIAIS",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004127700",
       "municipality": "Toledo",
       "network": "Privada"
     },
@@ -49914,26 +49994,6 @@
       "network": "Privada"
     },
     {
-      "id": "1286756:322:000000004104808",
-      "code": "1286756",
-      "name": "GESTÃO DO AGRONEGÓCIO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "322:000000004104808",
-      "municipality": "Cascavel",
-      "network": "Privada"
-    },
-    {
-      "id": "1286756:322:000000004104907",
-      "code": "1286756",
-      "name": "GESTÃO DO AGRONEGÓCIO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "322:000000004104907",
-      "municipality": "Castro",
-      "network": "Privada"
-    },
-    {
       "id": "1427725:1430:000000004105201",
       "code": "1427725",
       "name": "GESTÃO DO AGRONEGÓCIO",
@@ -50021,16 +50081,6 @@
       "modality": "EAD",
       "institutionId": "1430:000000004107751",
       "municipality": "Figueira",
-      "network": "Privada"
-    },
-    {
-      "id": "1286756:322:000000004108304",
-      "code": "1286756",
-      "name": "GESTÃO DO AGRONEGÓCIO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "322:000000004108304",
-      "municipality": "Foz do Iguaçu",
       "network": "Privada"
     },
     {
@@ -52521,16 +52571,6 @@
       "modality": "EAD",
       "institutionId": "163:000000004108304",
       "municipality": "Foz do Iguaçu",
-      "network": "Privada"
-    },
-    {
-      "id": "1575911:242:000000004109401",
-      "code": "1575911",
-      "name": "GESTÃO PORTUÁRIA",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "242:000000004109401",
-      "municipality": "Guarapuava",
       "network": "Privada"
     },
     {
@@ -67544,16 +67584,6 @@
       "network": "Privada"
     },
     {
-      "id": "1427736:1430:000000004105508",
-      "code": "1427736",
-      "name": "PUBLICIDADE E PROPAGANDA",
-      "degree": "Bacharelado",
-      "modality": "EAD",
-      "institutionId": "1430:000000004105508",
-      "municipality": "Cianorte",
-      "network": "Privada"
-    },
-    {
       "id": "1596135:1196:000000004106308",
       "code": "1596135",
       "name": "PUBLICIDADE E PROPAGANDA",
@@ -71404,6 +71434,16 @@
       "network": "Privada"
     },
     {
+      "id": "1190160:298:000000004105805",
+      "code": "1190160",
+      "name": "SEGURANÇA DO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004105805",
+      "municipality": "Colombo",
+      "network": "Privada"
+    },
+    {
       "id": "118760:1472:000000004105904",
       "code": "118760",
       "name": "SEGURANÇA DO TRABALHO",
@@ -71514,6 +71554,16 @@
       "network": "Privada"
     },
     {
+      "id": "1190160:298:000000004111803",
+      "code": "1190160",
+      "name": "SEGURANÇA DO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004111803",
+      "municipality": "Jacarezinho",
+      "network": "Privada"
+    },
+    {
       "id": "1739589:1508:000000004114203",
       "code": "1739589",
       "name": "SEGURANÇA DO TRABALHO",
@@ -71591,6 +71641,16 @@
       "modality": "EAD",
       "institutionId": "1430:000000004118501",
       "municipality": "Pato Branco",
+      "network": "Privada"
+    },
+    {
+      "id": "1190160:298:000000004119152",
+      "code": "1190160",
+      "name": "SEGURANÇA DO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004119152",
+      "municipality": "Pinhais",
       "network": "Privada"
     },
     {
@@ -71674,6 +71734,16 @@
       "network": "Privada"
     },
     {
+      "id": "1190160:298:000000004124103",
+      "code": "1190160",
+      "name": "SEGURANÇA DO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004124103",
+      "municipality": "Santo Antônio da Platina",
+      "network": "Privada"
+    },
+    {
       "id": "1719057:1430:000000004124707",
       "code": "1719057",
       "name": "SEGURANÇA DO TRABALHO",
@@ -71711,6 +71781,16 @@
       "modality": "EAD",
       "institutionId": "1430:000000004126504",
       "municipality": "Sertanópolis",
+      "network": "Privada"
+    },
+    {
+      "id": "1190160:298:000000004126603",
+      "code": "1190160",
+      "name": "SEGURANÇA DO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004126603",
+      "municipality": "Siqueira Campos",
       "network": "Privada"
     },
     {
@@ -71761,6 +71841,16 @@
       "modality": "EAD",
       "institutionId": "1430:000000004127700",
       "municipality": "Toledo",
+      "network": "Privada"
+    },
+    {
+      "id": "1190160:298:000000004128500",
+      "code": "1190160",
+      "name": "SEGURANÇA DO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "298:000000004128500",
+      "municipality": "Wenceslau Braz",
       "network": "Privada"
     },
     {
@@ -71844,26 +71934,6 @@
       "network": "Privada"
     },
     {
-      "id": "1190160:298:000000004104808",
-      "code": "1190160",
-      "name": "SEGURANÇA NO TRABALHO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004104808",
-      "municipality": "Cascavel",
-      "network": "Privada"
-    },
-    {
-      "id": "1190160:298:000000004106407",
-      "code": "1190160",
-      "name": "SEGURANÇA NO TRABALHO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004106407",
-      "municipality": "Cornélio Procópio",
-      "network": "Privada"
-    },
-    {
       "id": "1498719:1510:000000004107652",
       "code": "1498719",
       "name": "SEGURANÇA NO TRABALHO",
@@ -71871,16 +71941,6 @@
       "modality": "EAD",
       "institutionId": "1510:000000004107652",
       "municipality": "Fazenda Rio Grande",
-      "network": "Privada"
-    },
-    {
-      "id": "1190160:298:000000004108304",
-      "code": "1190160",
-      "name": "SEGURANÇA NO TRABALHO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004108304",
-      "municipality": "Foz do Iguaçu",
       "network": "Privada"
     },
     {
@@ -71901,6 +71961,16 @@
       "modality": "EAD",
       "institutionId": "4751:000000004109807",
       "municipality": "Ibiporã",
+      "network": "Privada"
+    },
+    {
+      "id": "1286755:322:000000004110953",
+      "code": "1286755",
+      "name": "SEGURANÇA NO TRABALHO",
+      "degree": "Tecnológico",
+      "modality": "EAD",
+      "institutionId": "322:000000004110953",
+      "municipality": "Itaipulândia",
       "network": "Privada"
     },
     {
@@ -71941,16 +72011,6 @@
       "modality": "EAD",
       "institutionId": "221:000000004117305",
       "municipality": "Ortigueira",
-      "network": "Privada"
-    },
-    {
-      "id": "1190160:298:000000004118402",
-      "code": "1190160",
-      "name": "SEGURANÇA NO TRABALHO",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004118402",
-      "municipality": "Paranavaí",
       "network": "Privada"
     },
     {
@@ -73384,16 +73444,6 @@
       "network": "Privada"
     },
     {
-      "id": "1421550:298:000000004100400",
-      "code": "1421550",
-      "name": "SERVIÇOS JURÍDICOS, CARTORÁRIOS E NOTARIAIS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004100400",
-      "municipality": "Almirante Tamandaré",
-      "network": "Privada"
-    },
-    {
       "id": "1468675:1508:000000004116901",
       "code": "1468675",
       "name": "SERVIÇOS JURÍDICOS, CARTORÁRIOS E NOTARIAIS",
@@ -73411,56 +73461,6 @@
       "modality": "EAD",
       "institutionId": "1508:000000004117503",
       "municipality": "Paiçandu",
-      "network": "Privada"
-    },
-    {
-      "id": "1421550:298:000000004117602",
-      "code": "1421550",
-      "name": "SERVIÇOS JURÍDICOS, CARTORÁRIOS E NOTARIAIS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004117602",
-      "municipality": "Palmas",
-      "network": "Privada"
-    },
-    {
-      "id": "1421550:298:000000004125605",
-      "code": "1421550",
-      "name": "SERVIÇOS JURÍDICOS, CARTORÁRIOS E NOTARIAIS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004125605",
-      "municipality": "São Mateus do Sul",
-      "network": "Privada"
-    },
-    {
-      "id": "1421550:298:000000004126504",
-      "code": "1421550",
-      "name": "SERVIÇOS JURÍDICOS, CARTORÁRIOS E NOTARIAIS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004126504",
-      "municipality": "Sertanópolis",
-      "network": "Privada"
-    },
-    {
-      "id": "1576425:515:000000004127007",
-      "code": "1576425",
-      "name": "SERVIÇOS JURÍDICOS, CARTORÁRIOS E NOTARIAIS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "515:000000004127007",
-      "municipality": "Teixeira Soares",
-      "network": "Privada"
-    },
-    {
-      "id": "1421550:298:000000004127700",
-      "code": "1421550",
-      "name": "SERVIÇOS JURÍDICOS, CARTORÁRIOS E NOTARIAIS",
-      "degree": "Tecnológico",
-      "modality": "EAD",
-      "institutionId": "298:000000004127700",
-      "municipality": "Toledo",
       "network": "Privada"
     },
     {
