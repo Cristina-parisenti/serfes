@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-19T17:13:48.125420+00:00",
+  "generatedAt": "2026-10-20T15:14:58.934445+00:00",
   "records": [
     {
       "id": "306",
@@ -3520,12 +3520,6 @@
       "network": "Privada"
     },
     {
-      "id": "18599",
-      "name": "Cantinho Feliz, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "14453",
       "name": "Cantinho da Abelhinha, C E I",
       "municipality": "Curitiba",
@@ -4108,12 +4102,6 @@
       "network": "Privada"
     },
     {
-      "id": "11683",
-      "name": "Corujinha & Cia, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "4954",
       "name": "Corujinha Feliz, C E I",
       "municipality": "Curitiba",
@@ -4236,12 +4224,6 @@
     {
       "id": "20526",
       "name": "Curiola, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "4806",
-      "name": "Curiosa Idade, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -4385,7 +4367,7 @@
     },
     {
       "id": "15085",
-      "name": "Ecumenica Juril Carnascialli, E-Ef M E E",
+      "name": "Ecumenica J Carnascialli, E-Ef Mod E E",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -4584,12 +4566,6 @@
     {
       "id": "12108",
       "name": "Estacao Felicidade, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "4784",
-      "name": "Estacao Verde, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -5076,12 +5052,6 @@
     {
       "id": "20852",
       "name": "Interacao, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "4407",
-      "name": "Interagindo, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -5626,12 +5596,6 @@
       "network": "Privada"
     },
     {
-      "id": "14364",
-      "name": "Minuto do Saber, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "1858",
       "name": "Miriam, C E I",
       "municipality": "Curitiba",
@@ -5808,12 +5772,6 @@
     {
       "id": "20267",
       "name": "Nosso Jardim, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "3761",
-      "name": "Nosso Tempo, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -6462,12 +6420,6 @@
     {
       "id": "10334",
       "name": "Recanto Infantil 22, E-Ei Ef",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "14755",
-      "name": "Recanto da Crianca, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -11160,12 +11112,6 @@
     {
       "id": "4501",
       "name": "Centro Cristao Interativo, E-Ef",
-      "municipality": "Maringa",
-      "network": "Privada"
-    },
-    {
-      "id": "3092",
-      "name": "Centro Educ Profis Agata-Cenpa",
       "municipality": "Maringa",
       "network": "Privada"
     },
