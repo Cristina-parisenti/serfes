@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-20T15:14:58.934445+00:00",
+  "generatedAt": "2026-10-21T15:23:13.477274+00:00",
   "records": [
     {
       "id": "20",
@@ -10409,7 +10409,7 @@
     },
     {
       "id": "3591",
-      "name": "Sesi Parana, C-Em",
+      "name": "Sesi Parana, C-Ef Em",
       "municipality": "Cascavel",
       "network": "Privada"
     },
@@ -19138,12 +19138,6 @@
       "network": "Privada"
     },
     {
-      "id": "18548",
-      "name": "Cooper, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "4741",
       "name": "Cor E Vida, C E I",
       "municipality": "Curitiba",
@@ -19348,20 +19342,8 @@
       "network": "Privada"
     },
     {
-      "id": "19803",
-      "name": "Descobrinque, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "20208",
       "name": "Diversao de Crianca, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "18068",
-      "name": "Divina Misericordia - Boqueirao, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -20212,12 +20194,6 @@
       "network": "Privada"
     },
     {
-      "id": "5063",
-      "name": "Josefina Rocha, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "19986",
       "name": "Journey, C-Ef M",
       "municipality": "Curitiba",
@@ -21024,12 +21000,6 @@
     {
       "id": "1610",
       "name": "Paula Amaral, E-Ei Ef",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "18343",
-      "name": "Pedacinho de Gente, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -48857,7 +48827,7 @@
     },
     {
       "id": "1892",
-      "name": "Nossa Senhora do Carmo, Cei",
+      "name": "Nossa Senhora do Carmo, E - Eief",
       "municipality": "Prudentopolis",
       "network": "Privada"
     },
