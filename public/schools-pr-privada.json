@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-21T15:23:13.477274+00:00",
+  "generatedAt": "2026-10-22T15:27:35.373778+00:00",
   "records": [
     {
       "id": "306",
@@ -4002,12 +4002,6 @@
     {
       "id": "18610",
       "name": "Ciranda, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "14194",
-      "name": "Claudio Longen, C E I Pe",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -8088,6 +8082,12 @@
     {
       "id": "1024",
       "name": "Clube da Tarefa, C E I",
+      "municipality": "Goioere",
+      "network": "Privada"
+    },
+    {
+      "id": "1326",
+      "name": "Mundo Magico Kid S, Cei",
       "municipality": "Goioere",
       "network": "Privada"
     },
@@ -12629,7 +12629,7 @@
     },
     {
       "id": "1846",
-      "name": "Alfa Pato Branco, C-Ef M",
+      "name": "Alfa Pato Branco, C - E M",
       "municipality": "Pato Branco",
       "network": "Privada"
     },
