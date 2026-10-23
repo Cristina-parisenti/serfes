@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-22T15:27:35.373778+00:00",
+  "generatedAt": "2026-10-23T15:12:38.269047+00:00",
   "records": [
     {
       "id": "306",
@@ -8087,7 +8087,7 @@
     },
     {
       "id": "1326",
-      "name": "Mundo Magico Kid S, Cei",
+      "name": "Mundo Magico Kids, Cei",
       "municipality": "Goioere",
       "network": "Privada"
     },
