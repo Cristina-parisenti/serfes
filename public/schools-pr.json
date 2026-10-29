@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-10-28T16:49:36.810021+00:00",
+  "generatedAt": "2026-10-29T17:11:00.923035+00:00",
   "records": [
     {
       "id": "20",
@@ -56568,6 +56568,12 @@
     {
       "id": "848",
       "name": "Sonho de Crianca, C E I",
+      "municipality": "Sarandi",
+      "network": "Privada"
+    },
+    {
+      "id": "970",
+      "name": "Sonhos E Cores, Cei",
       "municipality": "Sarandi",
       "network": "Privada"
     },
