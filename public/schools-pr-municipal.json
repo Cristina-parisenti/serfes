@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-02T20:33:49.201707+00:00",
+  "generatedAt": "2026-11-03T18:04:00.088602+00:00",
   "records": [
     {
       "id": "241",
@@ -29879,7 +29879,7 @@
     },
     {
       "id": "301",
-      "name": "Taeko Lima Almeida, E M Prof-Ei Ef",
+      "name": "Taeko Lima Almeida, E M Profa -Ei Ef",
       "municipality": "Tamarana",
       "network": "Municipal"
     },

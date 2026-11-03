@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-02T20:33:49.201707+00:00",
+  "generatedAt": "2026-11-03T18:04:00.088602+00:00",
   "records": [
     {
       "id": "20",
@@ -19576,12 +19576,6 @@
       "network": "Privada"
     },
     {
-      "id": "18114",
-      "name": "Esperanca, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "20690",
       "name": "Essencial - C E I",
       "municipality": "Curitiba",
@@ -35339,7 +35333,7 @@
     },
     {
       "id": "18",
-      "name": "Geremia Lunardelli, C E-Efm Eti N",
+      "name": "Geremia Lunardelli, C E-Efm Eti",
       "municipality": "Lunardelli",
       "network": "Estadual"
     },
@@ -51953,7 +51947,7 @@
     },
     {
       "id": "18",
-      "name": "Humberto de A C Branco, C E-M N Profis",
+      "name": "Humberto de A C Branco, C E-Ef M N P",
       "municipality": "Santa Helena",
       "network": "Estadual"
     },
@@ -57089,7 +57083,7 @@
     },
     {
       "id": "301",
-      "name": "Taeko Lima Almeida, E M Prof-Ei Ef",
+      "name": "Taeko Lima Almeida, E M Profa -Ei Ef",
       "municipality": "Tamarana",
       "network": "Municipal"
     },

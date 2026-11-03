@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-02T20:33:49.201707+00:00",
+  "generatedAt": "2026-11-03T18:04:00.088602+00:00",
   "records": [
     {
       "id": "306",
@@ -4512,12 +4512,6 @@
     {
       "id": "8259",
       "name": "Espaco do Saber, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "18114",
-      "name": "Esperanca, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
