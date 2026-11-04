@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-03T18:04:00.088602+00:00",
+  "generatedAt": "2026-11-04T18:10:46.950923+00:00",
   "records": [
     {
       "id": "306",
@@ -2812,12 +2812,6 @@
       "network": "Privada"
     },
     {
-      "id": "17819",
-      "name": "A Mao Cooperadora-Uberaba 2, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "9522",
       "name": "A Projecao, E-Ei Ef",
       "municipality": "Curitiba",
@@ -2958,12 +2952,6 @@
     {
       "id": "17983",
       "name": "Alegria de Ser Crianca, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "6566",
-      "name": "Alegria de Ser, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -3238,12 +3226,6 @@
       "network": "Privada"
     },
     {
-      "id": "11870",
-      "name": "Baby Disney, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "5853",
       "name": "Balao Vermelho, C E I",
       "municipality": "Curitiba",
@@ -3424,12 +3406,6 @@
       "network": "Privada"
     },
     {
-      "id": "17916",
-      "name": "Brilho do Sol, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "12078",
       "name": "Brincando de Aprender, C E I",
       "municipality": "Curitiba",
@@ -3576,12 +3552,6 @@
     {
       "id": "9379",
       "name": "Carinho da Mamae, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "18238",
-      "name": "Carmela de Jesus, C E I Madre",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -4282,12 +4252,6 @@
       "network": "Privada"
     },
     {
-      "id": "18076",
-      "name": "Divina Misericordia - Sabara, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "11926",
       "name": "Do Hospital Pequeno Principe, Cei",
       "municipality": "Curitiba",
@@ -4458,12 +4422,6 @@
     {
       "id": "18696",
       "name": "Espaco Feliz Kids, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "18688",
-      "name": "Espaco Feliz, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -5392,12 +5350,6 @@
       "network": "Privada"
     },
     {
-      "id": "12060",
-      "name": "Maria Jose Coutinho Camargo, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "45510",
       "name": "Maria R Junqueira, E Profis",
       "municipality": "Curitiba",
@@ -6160,12 +6112,6 @@
       "network": "Privada"
     },
     {
-      "id": "12493",
-      "name": "Pipa Encantada, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "19820",
       "name": "Planeta Kids, C E I",
       "municipality": "Curitiba",
@@ -6210,12 +6156,6 @@
     {
       "id": "13384",
       "name": "Pontinho de Luz, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "10822",
-      "name": "Ponto A Ponto, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -6366,12 +6306,6 @@
     {
       "id": "9646",
       "name": "Raizes, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "3109",
-      "name": "Rapunzel, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -6754,12 +6688,6 @@
       "network": "Privada"
     },
     {
-      "id": "7783",
-      "name": "Soletrando, C E I",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
       "id": "19951",
       "name": "Solos, E-Ei Ef",
       "municipality": "Curitiba",
@@ -6834,12 +6762,6 @@
     {
       "id": "12485",
       "name": "Tecnico de Curitiba, C-E M Profis",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "2064",
-      "name": "Tempo de Aprender, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -7170,12 +7092,6 @@
     {
       "id": "13791",
       "name": "Vivian Marcal, Esc Educ Esp - Subsede Ii",
-      "municipality": "Curitiba",
-      "network": "Privada"
-    },
-    {
-      "id": "8097",
-      "name": "Vo Batuta, C E I",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -8100,6 +8016,12 @@
     {
       "id": "877",
       "name": "Santa Clara, C E I",
+      "municipality": "Goioere",
+      "network": "Privada"
+    },
+    {
+      "id": "1334",
+      "name": "Sao Jose de Maria Auxiliadora,e - Eief",
       "municipality": "Goioere",
       "network": "Privada"
     },
