@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-08T16:50:22.129374+00:00",
+  "generatedAt": "2026-11-09T20:57:06.066147+00:00",
   "records": [
     {
       "id": "20",
@@ -54815,7 +54815,7 @@
     },
     {
       "id": "3612",
-      "name": "Divina Misericordia,e -Ef",
+      "name": "Divina Misericordia,e -Ef M",
       "municipality": "Sao Jose dos Pinhais",
       "network": "Privada"
     },
