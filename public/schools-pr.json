@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-11T18:03:40.675107+00:00",
+  "generatedAt": "2026-11-12T18:28:57.984730+00:00",
   "records": [
     {
       "id": "20",
@@ -158,114 +158,6 @@
       "name": "Israel Camargo, E-Ei Ef Mod Ed Esp",
       "municipality": "Agudos do Sul",
       "network": "Privada"
-    },
-    {
-      "id": "455",
-      "name": "Alberto Krause, C E C-M Prof-Ef M P",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "293",
-      "name": "Ambrosio Bini, C E-Ef M Profis",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "331",
-      "name": "Angela Sandri Teixeira, C E Prof-Ef M P",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "1109",
-      "name": "Ceebja Ayrton Senna da Silva-E F M",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "1044",
-      "name": "Edimar Wright, C E Prof-Ef M N Profis",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "1087",
-      "name": "Floripa Teixeira de Faria, C E-Ef M Prof",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "1117",
-      "name": "Jaci Real P Oliveira, C E C-M Profa-Efmp",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "471",
-      "name": "Jardim Apucarana, C E-Ef Mp",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "447",
-      "name": "Jardim Paraiso, C E-Ef M",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "510",
-      "name": "Joao Paulo I, C E Papa-Efm Eti",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "1079",
-      "name": "Lamenha Pequena, C E-Ef M",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "463",
-      "name": "Maria L de Paula, C E C-M Profa-Ef M P",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "1206",
-      "name": "Pedro Piekas, C E Ver-Ef M Profis",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "536",
-      "name": "Rosa F Johnson, E E C-M Profa- Ef",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "609",
-      "name": "Tancredo Neves, C E-Ef M P",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "1320",
-      "name": "Terezinha E Kepp, E E Profa-Ef",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "1389",
-      "name": "Theodoro de Bona, C E-Ef M Profis N",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
-    },
-    {
-      "id": "307",
-      "name": "Vila Ajambi, C E De-Ef M",
-      "municipality": "Almirante Tamandare",
-      "network": "Estadual"
     },
     {
       "id": "1443",
