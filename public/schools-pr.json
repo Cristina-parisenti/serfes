@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-13T17:56:40.803627+00:00",
+  "generatedAt": "2026-11-14T16:46:20.901188+00:00",
   "records": [
     {
       "id": "20",
@@ -58198,6 +58198,12 @@
       "network": "Estadual"
     },
     {
+      "id": "2890",
+      "name": "Conecta, C E",
+      "municipality": "Toledo",
+      "network": "Estadual"
+    },
+    {
       "id": "48",
       "name": "Dario Vellozo, C E-Ef M Profis",
       "municipality": "Toledo",
@@ -58224,12 +58230,6 @@
     {
       "id": "1850",
       "name": "Francisco G de Lima, C E Ver-Ef M",
-      "municipality": "Toledo",
-      "network": "Estadual"
-    },
-    {
-      "id": "2890",
-      "name": "Inovacao Educacional, C E",
       "municipality": "Toledo",
       "network": "Estadual"
     },
