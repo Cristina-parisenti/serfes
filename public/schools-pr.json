@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-16T20:36:37.977436+00:00",
+  "generatedAt": "2026-11-17T19:22:03.780126+00:00",
   "records": [
     {
       "id": "20",
@@ -53,7 +53,7 @@
     },
     {
       "id": "415",
-      "name": "Santa Barbara, C E-Ef M N",
+      "name": "Santa Barbara, C E-Ef M",
       "municipality": "Adrianopolis",
       "network": "Estadual"
     },
@@ -21719,7 +21719,7 @@
     },
     {
       "id": "20461",
-      "name": "Sinerge, C - Em",
+      "name": "Sinerge, C - Emp",
       "municipality": "Curitiba",
       "network": "Privada"
     },
@@ -57250,12 +57250,6 @@
       "network": "Estadual"
     },
     {
-      "id": "47778",
-      "name": "Ceebja Profa Ronilce A G Mainardes-Ef M",
-      "municipality": "Telemaco Borba",
-      "network": "Estadual"
-    },
-    {
       "id": "1069",
       "name": "Custodio Netto, C E C-M Prof-Ef M Profis",
       "municipality": "Telemaco Borba",
@@ -57300,6 +57294,12 @@
     {
       "id": "950",
       "name": "Nossa Sra de Fatima, E E-Ef",
+      "municipality": "Telemaco Borba",
+      "network": "Estadual"
+    },
+    {
+      "id": "47778",
+      "name": "Ronilce A G Mainardes, Ce Profa - Efetim",
       "municipality": "Telemaco Borba",
       "network": "Estadual"
     },
