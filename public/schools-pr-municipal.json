@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-17T19:22:03.780126+00:00",
+  "generatedAt": "2026-11-18T19:03:12.080054+00:00",
   "records": [
     {
       "id": "241",
@@ -7798,12 +7798,6 @@
       "network": "Municipal"
     },
     {
-      "id": "728",
-      "name": "Primeira Infancia, C M E I",
-      "municipality": "Corbelia",
-      "network": "Municipal"
-    },
-    {
       "id": "566",
       "name": "Sao Jose, E M-Ei Ef",
       "municipality": "Corbelia",
@@ -7812,6 +7806,12 @@
     {
       "id": "574",
       "name": "Tancredo Neves, E M-Ei Ef",
+      "municipality": "Corbelia",
+      "network": "Municipal"
+    },
+    {
+      "id": "728",
+      "name": "Verginia Durigon, Prof - Cmei",
       "municipality": "Corbelia",
       "network": "Municipal"
     },

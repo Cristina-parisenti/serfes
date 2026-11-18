@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-17T19:22:03.780126+00:00",
+  "generatedAt": "2026-11-18T19:03:12.080054+00:00",
   "records": [
     {
       "id": "306",
@@ -10799,7 +10799,7 @@
     },
     {
       "id": "640",
-      "name": "Unilife, E-Ei Ef",
+      "name": "Unilife, C-Ei Ef Em",
       "municipality": "Marialva",
       "network": "Privada"
     },
@@ -11309,7 +11309,7 @@
     },
     {
       "id": "867",
-      "name": "Novo Horizonte, E-Ei Ef",
+      "name": "Novo Horizonte, C-Ei E M",
       "municipality": "Maringa",
       "network": "Privada"
     },
@@ -15354,6 +15354,12 @@
     {
       "id": "970",
       "name": "Sonhos E Cores, Cei",
+      "municipality": "Sarandi",
+      "network": "Privada"
+    },
+    {
+      "id": "988",
+      "name": "Talentos, C - E M",
       "municipality": "Sarandi",
       "network": "Privada"
     },

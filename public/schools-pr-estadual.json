@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-17T19:22:03.780126+00:00",
+  "generatedAt": "2026-11-18T19:03:12.080054+00:00",
   "records": [
     {
       "id": "20",
@@ -11482,12 +11482,6 @@
       "network": "Estadual"
     },
     {
-      "id": "47771",
-      "name": "Ceebja Sarandi-Ef M",
-      "municipality": "Sarandi",
-      "network": "Estadual"
-    },
-    {
       "id": "392",
       "name": "Cora Coralina, C E C-M-Ef M Profis",
       "municipality": "Sarandi",
@@ -11526,6 +11520,12 @@
     {
       "id": "66",
       "name": "Olavo Bilac, C E-Ef M Eti P N",
+      "municipality": "Sarandi",
+      "network": "Estadual"
+    },
+    {
+      "id": "47771",
+      "name": "Sarandi, C E de - Ef M",
       "municipality": "Sarandi",
       "network": "Estadual"
     },

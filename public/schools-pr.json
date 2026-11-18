@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-17T19:22:03.780126+00:00",
+  "generatedAt": "2026-11-18T19:03:12.080054+00:00",
   "records": [
     {
       "id": "20",
@@ -13336,12 +13336,6 @@
       "network": "Municipal"
     },
     {
-      "id": "728",
-      "name": "Primeira Infancia, C M E I",
-      "municipality": "Corbelia",
-      "network": "Municipal"
-    },
-    {
       "id": "566",
       "name": "Sao Jose, E M-Ei Ef",
       "municipality": "Corbelia",
@@ -13350,6 +13344,12 @@
     {
       "id": "574",
       "name": "Tancredo Neves, E M-Ei Ef",
+      "municipality": "Corbelia",
+      "network": "Municipal"
+    },
+    {
+      "id": "728",
+      "name": "Verginia Durigon, Prof - Cmei",
       "municipality": "Corbelia",
       "network": "Municipal"
     },
@@ -36623,7 +36623,7 @@
     },
     {
       "id": "640",
-      "name": "Unilife, E-Ei Ef",
+      "name": "Unilife, C-Ei Ef Em",
       "municipality": "Marialva",
       "network": "Privada"
     },
@@ -38165,7 +38165,7 @@
     },
     {
       "id": "867",
-      "name": "Novo Horizonte, E-Ei Ef",
+      "name": "Novo Horizonte, C-Ei E M",
       "municipality": "Maringa",
       "network": "Privada"
     },
@@ -56068,12 +56068,6 @@
       "network": "Estadual"
     },
     {
-      "id": "47771",
-      "name": "Ceebja Sarandi-Ef M",
-      "municipality": "Sarandi",
-      "network": "Estadual"
-    },
-    {
       "id": "392",
       "name": "Cora Coralina, C E C-M-Ef M Profis",
       "municipality": "Sarandi",
@@ -56112,6 +56106,12 @@
     {
       "id": "66",
       "name": "Olavo Bilac, C E-Ef M Eti P N",
+      "municipality": "Sarandi",
+      "network": "Estadual"
+    },
+    {
+      "id": "47771",
+      "name": "Sarandi, C E de - Ef M",
       "municipality": "Sarandi",
       "network": "Estadual"
     },
@@ -56490,6 +56490,12 @@
     {
       "id": "970",
       "name": "Sonhos E Cores, Cei",
+      "municipality": "Sarandi",
+      "network": "Privada"
+    },
+    {
+      "id": "988",
+      "name": "Talentos, C - E M",
       "municipality": "Sarandi",
       "network": "Privada"
     },
