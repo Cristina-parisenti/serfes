@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-24T20:49:37.105045+00:00",
+  "generatedAt": "2026-11-26T19:46:31.077089+00:00",
   "records": [
     {
       "id": "20",
@@ -7091,7 +7091,7 @@
     },
     {
       "id": "17",
-      "name": "Hercilia F Nascimento, Ce Prof-Efm Eti P",
+      "name": "Hercilia F Nascimento, Ce Prof-Efm Eti",
       "municipality": "Mangueirinha",
       "network": "Estadual"
     },

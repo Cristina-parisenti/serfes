@@ -1,7 +1,7 @@
 {
   "source": "Consulta Escolas/SEED-PR",
   "sourceUrl": "https://www.consultaescolas.pr.gov.br/consultaescolas/pages/templates/initial2.xhtml",
-  "generatedAt": "2026-11-24T20:49:37.105045+00:00",
+  "generatedAt": "2026-11-26T19:46:31.077089+00:00",
   "records": [
     {
       "id": "241",
@@ -12984,6 +12984,12 @@
     {
       "id": "385",
       "name": "Helena Wolf, E M C-Ei Ef",
+      "municipality": "General Carneiro",
+      "network": "Municipal"
+    },
+    {
+      "id": "709",
+      "name": "Irene Barrida Gauer, Em Profa - Ef",
       "municipality": "General Carneiro",
       "network": "Municipal"
     },
